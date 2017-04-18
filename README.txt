@@ -4,6 +4,11 @@ I AM NOT RESPONSIBLE HOW YOU USE THIS TOOL.BE LEGAL AND NOT STUPID.
 
 This script will make your life easier, and of course faster.
 
+Are you trying to memorize all the commands to capture a handshake? hahahaha
+
+----------------------What is this----------------------
+This is a script that automates many procedures about wifi penetration and hacking.
+
 Features:
 -----You dont need to remember commands anymore!!-----
 	Enabling-Disabling interfaces faster

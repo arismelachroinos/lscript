@@ -29,6 +29,8 @@ fi
 export MYINT
 }
 #su
+if [ -f "/root/lscript/IAGREE.txt" ]
+then
 clear
 echo -e "   ////////////////////////////////////////////////////////////////"
 echo -e "  //                    The LAZY script v.1                     //"
@@ -513,5 +515,28 @@ else
 	clear
 	exit
 fi
-
-
+else
+	echo -e "You need to accept the terms."
+	sleep 1
+	echo -e "Press enter to continue..."
+	read
+	clear
+	echo -e "This tool is only for educational purposes only."
+	sleep 3
+	echo -e "Use this tool only on yourown network and never without permission."
+	sleep 3
+	echo -e "I am not responsible for anything you do with this tool."
+	sleep 3
+	echo -e "Will you use this tool only on yourown network and only with yourown responsibility?(YES/NO): "
+	read YESORNO
+	if [ "$YESORNO" = "YES" ]
+	then 
+		echo "You have agreed the terms and you use this tool with yourown responsibility." > /root/lscript/IAGREE.txt
+		exec bash "$0"
+	else 
+		echo -e "Ok bye then..."
+		sleep 1
+		clear
+		exit
+	fi
+fi

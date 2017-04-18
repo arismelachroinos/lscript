@@ -1,6 +1,6 @@
 Welcome to the LAZY script
 
-I AM NOT RESPONSIBLE HOW YOU USE THIS TOOL.BE LEGGAL AND NOT STUPID.
+I AM NOT RESPONSIBLE HOW YOU USE THIS TOOL.BE LEGAL AND NOT STUPID.
 
 This script will make your life easier, and of course faster.
 
@@ -22,7 +22,7 @@ Features:
 		Cupp				by Muris Kurgas
 		Dracnmap			by Edo -maland-
 		Fern Wifi Cracker	by Savio-code
-		Kichthemout			by Nikolaos Kamarinakis & David Schütz
+		Kichthemout			by Nikolaos Kamarinakis & David SchÃ¼tz
 		BeeLogger			by Alisson Moretto - 4w4k3
 		Torghost			by SusmithHCK
 		Anonsurf			by Und3rf10w

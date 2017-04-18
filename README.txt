@@ -1,5 +1,7 @@
 Welcome to the LAZY script
 
+For feature-recomendation , contact me on facebook https://www.facebook.com/arismelachroinos
+
 I AM NOT RESPONSIBLE HOW YOU USE THIS TOOL.BE LEGAL AND NOT STUPID.
 
 This script will make your life easier, and of course faster.

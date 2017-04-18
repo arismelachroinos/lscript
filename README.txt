@@ -17,9 +17,11 @@ Features:
 	View your public IP faster
 	View your MAC faster
 	TOOLS
+		(The installer installs every tool you need automatically! (except Zatacker))
 		Fluxion				by Deltaxflux
 		WifiTe				by derv82
 		Wifiphisher			by Dan McInerney
+		Zatacker			by ???
 		Morpheus			by Pedro ubuntu  [ r00t-3xp10it ]
 		Osrframework			by i3visio
 		Hakku				by 4shadoww

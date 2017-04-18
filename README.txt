@@ -56,3 +56,12 @@ cd /root/lscript
 ./uninstall.sh
 rmdir -r /root/lscript
 -------------------------------------------------------
+Things to keep in mind:
+1)only some interface-names are supported:
+	eth0
+	wlan0
+	wlan0mon
+	(not wlan1 wlan2 etc)
+2)you should be a root user to run the script 
+3)you should contact me if something doesnt work (fb link is on the top)
+4)you should contact me if you want a featureto be added (fb link is on the top)

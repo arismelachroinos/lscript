@@ -33,7 +33,7 @@ if [ -f "/root/lscript/IAGREE.txt" ]
 then
 clear
 echo -e "   ////////////////////////////////////////////////////////////////"
-echo -e "  //                    The LAZY script v.1                     //"
+echo -e "  //                    The LAZY script v0.1                     //"
 echo -e " //                   by ARIS MELACHROINOS                     //"
 echo -e "////////////////////////////////////////////////////////////////"
 echo -e "if) Ifconfig"
@@ -51,6 +51,7 @@ echo -e "11) Find WPS pin    (WPA-WPA2)"
 #~ echo -e "12) WEP hacking     (WEP)"
 echo -e "start) 1 2 3"
 echo -e "stop) d2 d3"
+echo -e "update"
 echo -e "0) EXIT"
 echo "Choose: "
 read -e YORNAA
@@ -390,6 +391,59 @@ clear
 		gnome-terminal -e lh3
 		sleep 1
 		exec bash "$0"
+	elif [ "$YORNAA" = "update" ]
+	then
+		clear
+		echo -e "Okay, listen..."
+		sleep 1
+		echo -e "First , make sure that there is an update.This is version 0.1 ...Go to https://github.com/arismelachroinos/lscript an see on the description if the version is newer."
+		echo -e "Press any key to continue..."
+		read
+		clear
+		echo -e "I dont know if this works.So if it doesn't, to update the script just delete the /root/lscript folder from your system and then go again to https://github.com/arismelachroinos/lscript and reinstall it to get the newest one."
+		sleep 5		
+		echo -e ""
+		echo -e "Do you still want to try to update automatically?(y/n): "
+		read UPDATEYN
+		if [ "$UPDATEYN" = "y" ]
+		then
+			clear
+			echo -e "Making new directory for the old lscript (will pass it to /root/lscriptold)"
+			sleep 2
+			mkdir /root/lscriptold
+			echo -e ""
+			echo -e "Moving lscript to lscriptold"
+			sleep 2
+			mv /root/lscript /root/lscriptold
+			echo -e "Cloning the latest github version to new /root/lscript"
+			sleep 2
+			cd
+			git clone https://github.com/arismelachroinos/lscript.git
+			cd /root/lscript
+			chmod +x install.sh
+			clear
+			echo -e "Ok , everything seems to be fine by now."
+			sleep 1
+			echo -e "A new terminal will open, and then the new install.sh will run to update the lscript.I will close."
+			echo -e ""
+			sleep 3
+			echo -e "Press any key to continue..."
+			read
+			cd /root/lscript
+			gnome-terminal -e ./install.sh
+			clear 
+			echo -e "If it doesn't work , please contact me"
+			sleep 4
+			echo -e ""
+			echo -e "Removing old lscript"
+			rmdir -r /root/lscriptold
+			exit
+		else 
+			clear
+			echo -e "You didnt select "y" so you go back..."
+			sleep 3
+			exec bash "$0"
+		fi
 	elif [ "$YORNAA" = "if" ]
 	then
 		ifconfig

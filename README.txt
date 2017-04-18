@@ -46,6 +46,7 @@ chmod +x install.sh
 open terminal
 type  "l"
 press enter
+(Not even "lazy"!! Just "l"! The less you type , the better!)
 --------------------How to uninstall-------------------
 cd /root/lscript
 ./uninstall.sh

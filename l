@@ -41,8 +41,8 @@ echo -e " 1) Enable wlan0                      d1) Disable wlan0"
 echo -e " 2) Enable wlan0mon                   d2) Disable wlan0mon"
 echo -e " 3) Change MAC                        d3) Restore original MAC"
 echo -e " 4) Enable torghost                   d4) Disable torghost"
-echo -e " 5) Enable anonsurf                   d5) Disable anonsurf"
-echo -e " 6) Restart anonsurf"
+echo -e " 5) Enable anonym8                    d5) Disable anonym8"
+echo -e " 6) Status of anonym8                 r6) Restart anonym8"
 echo -e " 7) View your Public IP"
 echo -e " 8) View your MAC"
 echo -e " 9) TOOLS"
@@ -338,18 +338,23 @@ clear
 		echo -e "Done."
 	elif [ "$YORNAA" = "5" ]
 	then
-		echo -e "Enabling anonsurf..."
-		anonsurf start
+		echo -e "Enabling anonym8..."
+		anonym8 start
 		echo -e "Done."
 	elif [ "$YORNAA" = "d5" ]
 	then
-		echo -e "Disabling anonsurf..."
-		anonsurf stop
+		echo -e "Disabling anonym8..."
+		anonym8 stop
 		echo -e "Done."
 	elif [ "$YORNAA" = "6" ]
 	then
-		echo -e "Restarting anonsurf..."
-		anonsurf start
+		echo -e "Status of anonym8..."
+		anonym8 status
+		echo -e "Done."
+	elif [ "$YORNAA" = "r6" ]
+	then
+		echo -e "Restarting anonym8..."
+		anonym8 change
 		echo -e "Done."
 	elif [ "$YORNAA" = "7" ]
 	then
@@ -516,27 +521,21 @@ else
 	exit
 fi
 else
-	echo -e "You need to accept the terms."
-	sleep 1
-	echo -e "Press enter to continue..."
-	read
-	clear
-	echo -e "This tool is only for educational purposes only."
-	sleep 3
-	echo -e "Use this tool only on yourown network and never without permission."
-	sleep 3
-	echo -e "I am not responsible for anything you do with this tool."
-	sleep 3
-	echo -e "Will you use this tool only on yourown network and only with yourown responsibility?(YES/NO): "
-	read YESORNO
-	if [ "$YESORNO" = "YES" ]
-	then 
-		echo "You have agreed the terms and you use this tool with yourown responsibility." > /root/lscript/IAGREE.txt
-		exec bash "$0"
-	else 
-		echo -e "Ok bye then..."
-		sleep 1
-		clear
-		exit
-	fi
+echo -e "You need to accept the terms."
+sleep 1
+echo -e "Press enter to continue..."
+read
+clear
+echo -e "This tool is only for educational purposes only."
+sleep 1
+echo -e "Use this tool only on yourown network and never without permission."
+sleep 1
+echo -e "I am not responsible for anything you do with this tool."
+sleep 1
+echo -e "Will you use this tool only on yourown network and only with yourown responsibility?(YES/NO): "
+read YESORNO
+if [ "$YESORNO" = "YES" ]
+then 
+	echo "You have agreed the terms and you use this tool with yourown responsibility." > /root/lscript/IAGREE.txt
+fi
 fi

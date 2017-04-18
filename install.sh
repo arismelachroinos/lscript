@@ -21,6 +21,15 @@ if [ -z $ENT ]
 then
 	clear
 	cd
+	echo -e "Installing anonym8"
+	echo -e "Tool by HiroshiManRise"
+	git clone https://github.com/HiroshiManRise/anonym8.git
+	cd anonym8
+	chmod +x INSTALL.sh
+	./INSTALL
+	sleep 1
+	clear
+	cd
 	echo -e "Installing Torghost"
 	echo -e "Tool by SusmithHCK"
 	git clone https://github.com/susmithHCK/torghost.git
@@ -29,15 +38,15 @@ then
 	./install
 	sleep 1
 	clear
-	cd
-	echo -e "Installing Anonsurf"
-	echo -e "Tool by Und3rf10w"
-	git clone https://github.com/Und3rf10w/kali-anonsurf.git
-	cd kali-anonsurf
-	chmod +x install.sh
-	./install
-	sleep 1
-	clear
+	# cd
+	# echo -e "Installing Anonsurf"
+	# echo -e "Tool by Und3rf10w"
+	# git clone https://github.com/Und3rf10w/kali-anonsurf.git
+	# cd kali-anonsurf
+	# chmod +x install.sh
+	# ./install
+	# sleep 1
+	# clear
 	cd
 	echo -e "Installing Fluxion"
 	echo -e "Tool by Deltaxflux"

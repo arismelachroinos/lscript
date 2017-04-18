@@ -35,7 +35,7 @@ cd
 git clone https://github.com/arismelachroinos/lscript.git
 cd lscript
 chmod +x install.sh
-./install
+./install.sh
 ---------------How to run the script-------------------
 (make sure you are a root user)
 open terminal

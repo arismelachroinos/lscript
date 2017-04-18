@@ -1,0 +1,212 @@
+#! /bin/bash
+#-----------------FUNCTIONS-----------------
+function scan_networks
+{
+FJC=0
+airodump-ng wlan0mon
+}
+function capture_handshake
+{
+AA=-1
+echo -e "Enter your target's bssid: "
+read -e TARGB
+echo -e "Enter your target's channel: "
+read -e TARGC
+echo -e "Enter the name of the handshake file(no extension): "
+echo -e "(don't use the same name twice)"
+read -e HANDF
+HANDFFP="/root/handshakes/$HANDF-01.cap"
+export HANDFFP
+#HANDLC="$HANDF"
+export TARGB
+clear
+gnome-terminal -e lh2
+airodump-ng --bssid $TARGB -c $TARGC -w /root/handshakes/$HANDF wlan0mon
+clear
+FJC=1
+exec bash "$0"	
+}
+function aircrack_handshakejust
+{
+	clear
+	echo -e "Do you want to use the file you just captured?(y/n)(Enter=yes): "
+	read -e YORN
+	clear
+	if [ "$YORN" = "n" ] 
+	then
+		cd /root/handshakes
+		ls | sort
+		cd
+		echo -e "Enter handshake name(no extension)(on folder /root/handshakes/): "
+		read -e HANDFK
+		HANDFFK="/root/handshakes/$HANDFK-01.cap"
+		if [ -f "$HANDFFK" ];
+		then
+			echo -e "OK."
+			HANDFFP="$HANDFFK"
+			sleep 1
+			clear
+		else
+			echo -e "File $HANDFK does not exist"
+			sleep 2
+			clear
+			exec bash "$0"
+		fi
+		cd /root/wordlists
+		ls | sort
+		cd
+		echo -e "Enter wordlist name(include extension)(on folder /root/wordlists/): "
+		read -e WORDF
+		WORDFF="/root/wordlists/$WORDF"
+		if [ -f "$WORDFF" ];
+		then
+			echo -e "OK."
+			sleep 1
+			clear
+		else
+			echo -e "File $WORDF does not exist"
+			sleep 2
+			clear
+			exec bash "$0"
+		fi
+	else
+		cd /root/wordlists
+		ls | sort
+		cd
+		echo -e "Enter wordlist name(include extension)(on folder /root/wordlists/): "
+		read -e WORDF
+		WORDFF="/root/wordlists/$WORDF"
+		if [ -f "$WORDFF" ];
+		then
+			echo -e "OK."
+			sleep 1
+		else
+			echo -e "File $WORDF does not exist"
+			sleep 2
+			clear
+			exec bash "$0"
+		fi
+	fi
+	clear
+	aircrack-ng -w $WORDFF $HANDFFP
+}
+function aircrack_handshake
+{
+	clear
+	cd /root/handshakes
+	ls | sort
+	cd
+	echo -e "Enter handshake name(include ectension)(on folder /root/handshakes/): "
+	read -e HANDFT
+	HANDFFT="/root/handshakes/$HANDFT"
+	if [ -f "$HANDFFT" ];
+	then
+		echo -e "OK."
+		sleep 1
+		clear
+	else
+		echo -e "File $HANDFT does not exist"
+		sleep 2
+		clear
+		exec bash "$0"
+	fi
+	cd /root/wordlists
+	ls | sort
+	cd
+	echo -e "Enter wordlist name(include extension)(on folder /root/wordlists/): "
+	read -e WORDF
+	WORDFF="/root/wordlists/$WORDF"
+	if [ -f "$WORDFF" ];
+	then
+		echo -e "OK."
+		sleep 1
+		clear
+	else
+		echo -e "File $WORDF does not exist"
+		sleep 2
+		clear
+		exec bash "$0"
+	fi
+
+	clear
+	aircrack-ng -w $WORDFF $HANDFFT
+}
+
+#-------------------------------------------
+echo -e "----------------------------Handshake----------------------------"
+echo -e " 1) Scan networks nearby"
+echo -e " 2) Capture handshake"
+echo -e " 3) Aircrack the handshake"
+echo -e " 0) EXIT"
+echo -e " Choose: "
+sleep 1
+CH=0
+read -e AA
+if [ "$AA" = "1" ]
+then
+	clear
+	CH=1
+	scan_networks
+elif [ "$AA" = "2" ]
+then
+	capture_handshake
+	#gnome-terminal -e lh2	
+elif [ "$AA" = "3" ]
+then
+	if [ "$FJC" = "1" ]
+	then
+	AAGAIN=1
+	aircrack_handshakejust
+	else
+	AAGAIN=2
+	aircrack_handshake
+	fi
+elif [ "$AA" = "0" ]
+then
+	exit
+else
+	echo -e "I can't do that bro..."
+	sleep 2
+	clear
+	echo -e "Let's try again..."
+	sleep 1
+	exec bash "$0"
+fi
+if [ "$CH" = "1" ]
+then
+	echo -e "Do you want to capture a handshake now?(y/n)(Enter=yes): "
+	read CHCH
+	if [ "$CHCH" = "n" ]
+	then
+	clear
+	exec bash "$0"
+	CH=0
+	
+	else
+		capture_handshake
+	fi
+fi
+echo -e "Choose again?(y/n)(Enter=yes): "
+read -e BB
+if [ -z "$BB" ]
+then
+	if [ "$AA" = "1" ]
+		then
+		exec bash "$0"
+	else
+		clear
+		exec bash "$0"
+	fi
+elif [ "$BB" = "y" ]
+then
+	if [ "$AA" = "1" ]
+		then
+		exec bash "$0"
+	else
+		clear
+		exec bash "$0"
+	fi
+else
+	clear
+	exit
+fi

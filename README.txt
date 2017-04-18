@@ -10,6 +10,7 @@ Are you trying to memorize all the commands to capture a handshake? hahahaha
 
 ----------------------What is this----------------------
 This is a script that automates many procedures about wifi penetration and hacking.
+I actually made it for fun for me just to save some time, but i don't mind publicing it.(my code is a mess,sorry)
 
 Features:
 ------You dont need to remember commands anymore!!------

@@ -21,7 +21,7 @@ if [ -z $ENT ]
 then
 	clear
 	cd
-	echo -e "Installing Torghost..."
+	echo -e "Installing Torghost"
 	echo -e "Tool by SusmithHCK"
 	git clone https://github.com/susmithHCK/torghost.git
 	cd torghost
@@ -95,7 +95,7 @@ then
 	chmod +x hakku
 	chmod +x install
 	cd
-	echo -e "Installing Triity"
+	echo -e "Installing Trity"
 	echo -e "Tool by Toxic-ig"
 	sleep 1
 	git clone https://github.com/toxic-ig/Trity.git
@@ -119,7 +119,7 @@ then
 	chmod +x Dracnmap.sh
 	cd
 	echo -e "Installing Fern"
-	echo -e "Tool by "
+	echo -e "Tool by Savio-code"
 	sleep 1
 	cd 
 	svn checkout http://github.com/savio-code/fern-wifi-cracker/trunk/Fern-Wifi-Cracker/

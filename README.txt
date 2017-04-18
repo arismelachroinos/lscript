@@ -58,6 +58,11 @@ press enter
 cd /root/lscript
 ./uninstall.sh
 rmdir -r /root/lscript
+---------------------How to update---------------------
+Check if there is new version
+Run the script
+Type "update"
+Report if it works
 -------------------------------------------------------
 Things to keep in mind:
 1)only some interface-names are supported:

@@ -34,14 +34,14 @@ Features:
 	Wifi password cripts
 		Handshake       (WPA-WPA2) (WORKING PERFECTLY-NO COMMANDS)
 		Find WPS pin    (WPA-WPA2) (NOT TESTED)
---------------------Installation-----------------------
+---------------------Installation----------------------
 (make sure you are a root user)
 cd
 git clone https://github.com/arismelachroinos/lscript.git
 cd lscript
 chmod +x install.sh
 ./install.sh
----------------How to run the script-------------------
+-----------------How to run the script-----------------
 (make sure you are a root user)
 open terminal
 type  "l"

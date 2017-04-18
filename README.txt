@@ -2,6 +2,7 @@ Welcome to the LAZY script   VERSION 0.1
 
 For feature-recomendation , add it on the "Issues" tab. NOW!
 
+
 I AM NOT RESPONSIBLE HOW YOU USE THIS TOOL.BE LEGAL AND NOT STUPID.
 
 This script will make your life easier, and of course faster.
@@ -64,5 +65,5 @@ Things to keep in mind:
 	wlan0mon
 	(not wlan1 wlan2 etc)
 2)you should be a root user to run the script 
-3)you should contact me if something doesnt work (fb link is on the top)
-4)you should contact me if you want a featureto be added (fb link is on the top)
+3)you should contact me if something doesnt work (Write it on the "issues" tab at the top)
+4)you should contact me if you want a feature to be added (Write it on the "issues" tab at the top)

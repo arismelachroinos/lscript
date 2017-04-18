@@ -10,7 +10,7 @@ Are you trying to memorize all the commands to capture a handshake? hahahaha
 This is a script that automates many procedures about wifi penetration and hacking.
 
 Features:
------You dont need to remember commands anymore!!-----
+------You dont need to remember commands anymore!!------
 	Enabling-Disabling interfaces faster
 	Changing Mac faster
 	Anonymizing yourself faster
@@ -21,12 +21,12 @@ Features:
 		WifiTe				by derv82
 		Wifiphisher			by Dan McInerney
 		Morpheus			by Pedro ubuntu  [ r00t-3xp10it ]
-		Osrframework		by i3visio
+		Osrframework			by i3visio
 		Hakku				by 4shadoww
 		Trity				by Toxic-ig
 		Cupp				by Muris Kurgas
 		Dracnmap			by Edo -maland-
-		Fern Wifi Cracker	by Savio-code
+		Fern Wifi Cracker		by Savio-code
 		Kichthemout			by Nikolaos Kamarinakis & David Schütz
 		BeeLogger			by Alisson Moretto - 4w4k3
 		Torghost			by SusmithHCK

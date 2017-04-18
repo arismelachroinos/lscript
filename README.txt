@@ -1,4 +1,4 @@
-Welcome to the LAZY script
+Welcome to the LAZY script   VERSION 0.1
 
 For feature-recomendation , contact me on facebook https://www.facebook.com/arismelachroinos
 

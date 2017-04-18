@@ -1,6 +1,6 @@
 Welcome to the LAZY script   VERSION 0.1
 
-For feature-recomendation , contact me on facebook https://www.facebook.com/arismelachroinos
+For feature-recomendation , add it on the "Issues" tab. NOW!
 
 I AM NOT RESPONSIBLE HOW YOU USE THIS TOOL.BE LEGAL AND NOT STUPID.
 

@@ -42,6 +42,7 @@ Features:
 		Find WPS pin    (WPA-WPA2) (NOT TESTED)
 ---------------------Installation----------------------
 (make sure you are a root user)
+Be carefull.If you download it as a .zip file, it will not run.Make sure to follow these simple instructions.
 cd
 git clone https://github.com/arismelachroinos/lscript.git
 cd lscript

@@ -1,8 +1,4 @@
 #! /bin/bash
-#echo -n "Load the list? (y/n): "
-#read -e YORNA
-#if [ "$YORNA" = "y" ]
-#then
 function interface_selection
 {
 echo -e " 1) Wlan0"
@@ -85,6 +81,7 @@ clear
 				echo -e "11) Fern               Wifi cracker GUI"
 				echo -e "12) Netdiscover        IPs and MACs on your net"
 				echo -e "13) KickThemOut        Kick clients out of your network"
+				echo -e "14) Ghost-Phisher      Fake AP,MITM,Session hijacking etc..."
 				echo -e "00) Main menu"
 				echo -e " 0) EXIT"
 				echo "Choose: "
@@ -158,6 +155,12 @@ clear
 					clear	
 					cd /root/kickthemout
 					python kickthemout.py
+					cd
+				elif [ "$APPP" = "14" ]
+				then
+					clear	
+					cd /root/ghost-phisher/Ghost-Phisher
+					python ghost.py
 					cd
 				elif [ "$APPP" = "6" ]
 				then

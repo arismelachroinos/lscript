@@ -82,7 +82,7 @@ clear
 				echo -e "12) Netdiscover        IPs and MACs on your net"
 				echo -e "13) KickThemOut        Kick clients out of your network"
 				echo -e "14) Ghost-Phisher      Fake AP,MITM,Session hijacking etc..."
-				echo -e "15) The Eye		Detects ARP poisoning DNS spoofing etc..."
+				echo -e "15) The Eye            Detects ARP poisoning DNS spoofing etc..."
 				echo -e "00) Main menu"
 				echo -e " 0) EXIT"
 				echo "Choose: "

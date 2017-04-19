@@ -67,6 +67,15 @@ then
 		sleep 1
 		clear
 	fi
+	echo -e "Installing Ghost-Phisher"
+	echo -e "Tool by Savio-code"
+	sleep 1
+	cd
+	git clone https://github.com/savio-code/ghost-phisher.git
+	sleep 1
+	chmod +x /root/ghost-phisher/Ghost-Phisher/ghost.py
+	clear
+	cd
 	echo -e "Installing WifiTe"
 	echo -e "Tool by derv82"
 	sleep 1

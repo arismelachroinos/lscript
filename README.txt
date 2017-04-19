@@ -36,7 +36,7 @@ Features:
 		Kichthemout			by Nikolaos Kamarinakis & David Schütz
 		BeeLogger			by Alisson Moretto - 4w4k3
 		Torghost			by SusmithHCK
-		Anonsurf			by Und3rf10w
+		Ghost-Phisher			by Savio-code
 	Wifi password scripts
 		Handshake       (WPA-WPA2) (WORKING PERFECTLY-NO COMMANDS)
 		Find WPS pin    (WPA-WPA2) (NOT TESTED)

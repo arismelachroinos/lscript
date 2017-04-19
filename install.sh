@@ -185,6 +185,9 @@ chmod +x /root/lscript/lh2
 chmod +x /root/lscript/lh3
 chmod +x /root/lscript/lh31
 chmod +x /root/lscript/l
+chmod +x /root/lscript/lh4
+chmod +x /root/lscript/lh41
+chmod +x /root/lscript/lh42
 chmod +x /root/lscript/uninstall.sh
 clear
 echo -e "Copying script to /bin/lscript"
@@ -196,6 +199,9 @@ cp lh1 /bin/lscript
 cp lh2 /bin/lscript
 cp lh3 /bin/lscript
 cp lh31 /bin/lscript
+cp lh4 /bin/lscript
+cp lh41 /bin/lscript
+cp lh42 /bin/lscript
 clear
 echo -e "Adding lscript to PATH so you can access it from anywhere"
 export PATH=/bin/lscript:$PATH

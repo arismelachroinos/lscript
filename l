@@ -24,19 +24,18 @@ exec bash "$0"
 fi
 export MYINT
 }
-#su
 if [ -f "/root/lscript/IAGREE.txt" ]
 then
 clear
 echo -e "   ////////////////////////////////////////////////////////////////"
-echo -e "  //                    The LAZY script v0.1                    //"
+echo -e "  //                    The LAZY script v0.2                    //"
 echo -e " //                   by ARIS MELACHROINOS                     //"
 echo -e "////////////////////////////////////////////////////////////////"
 echo -e "if) Ifconfig"
 echo -e " 1) Enable wlan0                      d1) Disable wlan0"
 echo -e " 2) Enable wlan0mon                   d2) Disable wlan0mon"
 echo -e " 3) Change MAC                        d3) Restore original MAC "
-echo -e " 4) Enable torghost                   d4) Disable torghost"
+echo -e " 4) Enable torghost(BROKEN TOOL)      d4) Disable torghost"
 echo -e " 5) Enable anonym8                    d5) Disable anonym8"
 echo -e " 6) Status of anonym8                 r6) Restart anonym8"
 echo -e " 7) View your Public IP"
@@ -44,7 +43,7 @@ echo -e " 8) View your MAC"
 echo -e " 9) TOOLS"
 echo -e "10) Handshake       (WPA-WPA2)"
 echo -e "11) Find WPS pin    (WPA-WPA2)"
-#~ echo -e "12) WEP hacking     (WEP)"
+echo -e "12) WEP hacking     (WEP)"
 echo -e "start) 1 2 3"
 echo -e "stop) d2 d3"
 echo -e "update"
@@ -85,7 +84,7 @@ clear
 				echo -e "15) The Eye            Detects ARP poisoning DNS spoofing etc..."
 				echo -e "00) Main menu"
 				echo -e " 0) EXIT"
-				echo "Choose: "
+				echo -e "Choose: "
 				read -e APPP
 				if [ "$APPP" = "1" ]
 				then
@@ -221,7 +220,7 @@ clear
 						elif [ "$OSFR" = "00" ]
 						then
 							clear
-						exec bash "$0"
+							exec bash "$0"
 						else 
 							echo -e "I can't do that bro..."
 							sleep 2
@@ -340,8 +339,13 @@ clear
 	elif [ "$YORNAA" = "4" ]
 	then
 		echo -e "Enabling torghost..."
-		torghost start
-		echo -e "Done."
+		sleep 1
+		echo -e ""
+		echo -e "Torghost is problematic for now.Choose anonym8 instead."
+		sleep 5
+		exec bash "$0"
+		#~ torghost start
+		#~ echo -e "Done."
 	elif [ "$YORNAA" = "d4" ]
 	then
 		echo -e "Disabling torghost..."
@@ -370,8 +374,6 @@ clear
 	elif [ "$YORNAA" = "7" ]
 	then
 		echo "Your public IP is: "
-		#curl ifconfg.me
-		#curl ipinfo.io/ip
 		curl -s checkip.dyndns.org | sed -e 's/.*Current IP Address: //' -e 's/<.*$//'
 	elif [ "$YORNAA" = "8" ]
 	then
@@ -384,13 +386,9 @@ clear
 		clear
 		echo -e "Moving into new terminal..."
 		sleep 1
-		#gnome-terminal "bash -c \"cd /root/lscript && sh ./lh.sh; exec bash\""
-		#xterm -hold -e './root/lscript/lh.sh' & 
 		FJC=0
 		export FJC
 		gnome-terminal -e lh1
-		#konsole -e --noclose ./lh.sh   
-		#exit
 		sleep 1
 		exec bash "$0"
 	elif [ "$YORNAA" = "11" ]
@@ -401,12 +399,20 @@ clear
 		gnome-terminal -e lh3
 		sleep 1
 		exec bash "$0"
+	elif [ "$YORNAA" = "12" ]
+	then
+		clear
+		echo -e "Moving into new terminal..."
+		sleep 1
+		gnome-terminal -e lh4
+		sleep 1
+		exec bash "$0"
 	elif [ "$YORNAA" = "update" ]
 	then
 		clear
 		echo -e "Okay, listen..."
 		sleep 1
-		echo -e "First , make sure that there is an update.This is version 0.1 ...Go to https://github.com/arismelachroinos/lscript an see on the description if the version is newer."
+		echo -e "First , make sure that there is an update.This is version 0.2 ...Go to https://github.com/arismelachroinos/lscript an see on the description if the version is newer."
 		echo -e "Press any key to continue..."
 		read
 		clear
@@ -591,11 +597,11 @@ echo -e "Press enter to continue..."
 read
 clear
 echo -e "This tool is only for educational purposes only."
-sleep 1
+sleep 2
 echo -e "Use this tool only on yourown network and never without permission."
-sleep 1
+sleep 2
 echo -e "I am not responsible for anything you do with this tool."
-sleep 1
+sleep 2
 echo -e "Will you use this tool only on yourown network and only with yourown responsibility?(YES/NO): "
 read YESORNO
 if [ "$YESORNO" = "YES" ]

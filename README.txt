@@ -5,6 +5,7 @@ For feature-recommendation , add it on the "Issues" tab. NOW!
 I AM NOT RESPONSIBLE HOW YOU USE THIS TOOL.BE LEGAL AND NOT STUPID.
 
 This script will make your life easier, and of course faster.
+Its not only for noobs.Its for whoever wants to type less and do actually more.
 
 Are you trying to memorize all the commands to capture a handshake? hahahaha
 

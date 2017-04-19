@@ -39,7 +39,8 @@ Features:
 		Ghost-Phisher			by Savio-code
 	Wifi password scripts
 		Handshake       (WPA-WPA2) (WORKING PERFECTLY-NO COMMANDS)
-		Find WPS pin    (WPA-WPA2) (NOT TESTED)
+		Find WPS pin    (WPA-WPA2) (NOT TESTED-maybe works)
+		WEP hacking     (WEP)      (NOT TESTED-maybe works)
 ---------------------Installation----------------------
 (make sure you are a root user)
 Be carefull.If you download it as a .zip file, it will not run.Make sure to follow these simple instructions.

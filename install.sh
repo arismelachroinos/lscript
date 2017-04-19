@@ -67,6 +67,15 @@ then
 		sleep 1
 		clear
 	fi
+	echo -e "Installing The Eye"
+	echo -e "Tool by EgeBalci"
+	sleep 1
+	cd
+	git clone https://github.com/EgeBalci/The-Eye.git
+	cd The-Eye
+	chmod +x TheEye
+	clear
+	cd
 	echo -e "Installing Ghost-Phisher"
 	echo -e "Tool by Savio-code"
 	sleep 1

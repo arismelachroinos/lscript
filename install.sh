@@ -2,7 +2,7 @@
 echo -e "Installing all the tools needed for LAZY script..."
 echo -e "(You should be a root user)"
 sleep 2
-echo -e "Did you run 'apt-get install' recently?(y/n)(Enter=y): "
+echo -e "Did you run 'apt-get install' recently?(\e[1;33my\e[0m/\e[1;33mn\e[0m)(Enter=\e[1;33myes\e[0m): "
 read -e APTG
 if [ "$APTG" = "n" ]
 then
@@ -15,7 +15,7 @@ else
 fi
 clear
 echo -e "All scripts will be installed on /root/ directory(needed for the script)"
-echo -e "Press enter to start..."
+echo -e "Press \e[1;33menter\e[0m to start..."
 read ENT
 if [ -z $ENT ]
 then
@@ -64,7 +64,7 @@ then
 	echo -e "Installing Fluxion"
 	echo -e "Tool by Deltaxflux"
 	sleep 1
-	echo -e "Deltaxflux deleted the project.Do you want to download it from user disquette38 by yourown responsibility?(y/n): "
+	echo -e "Deltaxflux deleted the project.Do you want to download it from user disquette38 by yourown responsibility?(\e[1;33my\e[0m/\e[1;33mn\e[0m): "
 	read -e FLUX
 	if [ "$FLUX" = "y" ]
 	then
@@ -218,7 +218,7 @@ cp lh41 /bin/lscript
 cp lh42 /bin/lscript
 cp lh43 /bin/lscript
 clear
-echo -e "Are you updating or installing the script?(u/i): "
+echo -e "Are you updating or installing the script?(\e[1;33mu\e[0m/\e[1;33mi\e[0m): "
 read UORI
 if [ "$UORI" = "u" ]
 then 

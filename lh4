@@ -1,5 +1,5 @@
 #! /bin/bash
-echo -e "---------------------------WEP hacking---------------------------"
+echo -e "---------------------------\e[1;33mWEP hacking\e[0m---------------------------"
 if [ ! -z ${WEPB+x} ]
 then
 	echo -e "BSSID: $WEPB"
@@ -12,14 +12,15 @@ then
 else
 	echo -e "Target's channel not set"
 fi
-echo -e " 1) Scan for nearby networks"
-echo -e " 2) Start capturing ivs"
-echo -e " 3) Fakeauth                      If no clients connected"
-echo -e " 4) Fragmentation                 soon"
-echo -e " 5) Chop-chop                     soon"
-echo -e " 6) Aircrack the ivs"
-echo -e "00) Main menu"
-echo -e " 0) EXIT"
+echo -e "\e[1;33mw\e[0m) WifiTe                           All attacks"
+echo -e "\e[1;33m1\e[0m) Scan for nearby networks"
+echo -e "\e[1;33m2\e[0m) Start capturing ivs"
+echo -e "\e[1;33m3\e[0m) Fakeauth-arpreplay               If no clients connected"
+echo -e "\e[1;33m4\e[0m) Fakeauth-fragmentation           soon"
+echo -e "\e[1;33m5\e[0m) Chop-chop                        soon"
+echo -e "\e[1;33m6\e[0m) Aircrack the ivs"
+echo -e "\e[1;33m00\e[0m) Main menu"
+echo -e "\e[1;33m 0\e[0m) EXIT"
 echo -e "Choose: "
 read WEP
 if [ "$WEP" = "1" ]
@@ -42,6 +43,10 @@ then
 	export WEPF
 	export WEPFF
 	gnome-terminal -e lh41
+elif [ "$WEP" = "w" ]
+then
+	clear
+	wifite
 elif [ "$WEP" = "3" ]
 then
 	gnome-terminal -e lh43
@@ -71,7 +76,7 @@ else
 	sleep 1
 	exec bash "$0"
 fi
-echo -e "Choose again?(y/n)(Enter=yes): "
+echo -e "Choose again?(\e[1;33my\e[0m/\e[1;33mn\e[0m)(Enter=\e[1;33myes\e[0m): "
 read -e CAG
 if [ "$CAG" = "n" ]
 then

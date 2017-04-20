@@ -1,9 +1,6 @@
 #! /bin/bash
-<<<<<<< HEAD
 WLANNM=$(cat /root/lscript/wlanmon.txt)
 export WLANNM
-=======
->>>>>>> origin/master
 echo -e "---------------------------\e[1;33mWEP hacking\e[0m---------------------------"
 if [ ! -z ${WEPB+x} ]
 then
@@ -31,11 +28,7 @@ read WEP
 if [ "$WEP" = "1" ]
 then
 	clear
-<<<<<<< HEAD
 	airodump-ng $WLANNM
-=======
-	airodump-ng wlan0mon
->>>>>>> origin/master
 elif [ "$WEP" = "2" ]
 then
 	WEP=-1

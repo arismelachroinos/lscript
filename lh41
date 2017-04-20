@@ -1,12 +1,6 @@
 #! /bin/bash
-<<<<<<< HEAD
 WLANNM=$(cat /root/lscript/wlanmon.txt)
 export WLANNM
 echo -e "Leave me opened."
 sleep 1
 airodump-ng --bssid $WEPB -c $WEPC -w /root/handshakes/WEP/$WEPF $WLANNM
-=======
-echo -e "Leave me opened."
-sleep 1
-airodump-ng --bssid $WEPB -c $WEPC -w /root/handshakes/WEP/$WEPF wlan0mon
->>>>>>> origin/master

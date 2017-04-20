@@ -2,7 +2,7 @@
 echo -e "Installing all the tools needed for LAZY script..."
 echo -e "(You should be a root user)"
 sleep 2
-echo -e "Did you run 'apt-get install' recently?(y/n)(Enter=y): "
+echo -e "Did you run 'apt-get install' recently?(\e[1;33my\e[0m/\e[1;33mn\e[0m)(\e[1;33mEnter\e[0m=yes): "
 read -e APTG
 if [ "$APTG" = "n" ]
 then
@@ -15,10 +15,23 @@ else
 fi
 clear
 echo -e "All scripts will be installed on /root/ directory(needed for the script)"
-echo -e "Press enter to start..."
+echo -e "Press \e[1;33menter\e[0m to start..."
 read ENT
 if [ -z $ENT ]
 then
+	echo -e "Installing mdk3-master"
+	echo -e "Tool by Musket Developer"
+	cd
+	git clone https://github.com/wi-fi-analyzer/mdk3-master.git
+	cd /root/mdk3-master
+	make
+	make install
+	echo -e "Installing shARP"
+	echo -e "Tool by europa502"
+	cd
+	git clone https://github.com/europa502/shARP.git
+	cd /root/shARP
+	chmod +x shARP.sh
 	clear
 	cd
 	echo -e "Installing anonym8"
@@ -51,7 +64,7 @@ then
 	echo -e "Installing Fluxion"
 	echo -e "Tool by Deltaxflux"
 	sleep 1
-	echo -e "Deltaxflux deleted the project.Do you want to download it from user disquette38 by yourown responsibility?(y/n): "
+	echo -e "Deltaxflux deleted the project.Do you want to download it from user disquette38 by yourown responsibility?(\e[1;33my\e[0m/\e[1;33mn\e[0m): "
 	read -e FLUX
 	if [ "$FLUX" = "y" ]
 	then
@@ -67,6 +80,24 @@ then
 		sleep 1
 		clear
 	fi
+	echo -e "Installing The Eye"
+	echo -e "Tool by EgeBalci"
+	sleep 1
+	cd
+	git clone https://github.com/EgeBalci/The-Eye.git
+	cd The-Eye
+	chmod +x TheEye
+	clear
+	cd
+	echo -e "Installing Ghost-Phisher"
+	echo -e "Tool by Savio-code"
+	sleep 1
+	cd
+	git clone https://github.com/savio-code/ghost-phisher.git
+	sleep 1
+	chmod +x /root/ghost-phisher/Ghost-Phisher/ghost.py
+	clear
+	cd
 	echo -e "Installing WifiTe"
 	echo -e "Tool by derv82"
 	sleep 1
@@ -167,6 +198,10 @@ chmod +x /root/lscript/lh2
 chmod +x /root/lscript/lh3
 chmod +x /root/lscript/lh31
 chmod +x /root/lscript/l
+chmod +x /root/lscript/lh4
+chmod +x /root/lscript/lh41
+chmod +x /root/lscript/lh42
+chmod +x /root/lscript/lh43
 chmod +x /root/lscript/uninstall.sh
 clear
 echo -e "Copying script to /bin/lscript"
@@ -178,11 +213,22 @@ cp lh1 /bin/lscript
 cp lh2 /bin/lscript
 cp lh3 /bin/lscript
 cp lh31 /bin/lscript
+cp lh4 /bin/lscript
+cp lh41 /bin/lscript
+cp lh42 /bin/lscript
+cp lh43 /bin/lscript
 clear
-echo -e "Adding lscript to PATH so you can access it from anywhere"
-export PATH=/bin/lscript:$PATH
-echo "export PATH=/bin/lscript:$PATH" >> ~/.bashrc
-clear
+echo -e "Are you updating or installing the script?(\e[1;33mu\e[0m/\e[1;33mi\e[0m): "
+read UORI
+if [ "$UORI" = "u" ]
+then 
+	clear
+else
+	echo -e "Adding lscript to PATH so you can access it from anywhere"
+	export PATH=/bin/lscript:$PATH
+	echo "export PATH=/bin/lscript:$PATH" >> ~/.bashrc
+	clear
+fi
 echo -e "DONEEEE"
 sleep 1
 echo -e "Just open a terminal and type "l""

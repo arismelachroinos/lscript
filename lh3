@@ -1,8 +1,10 @@
 #! /bin/bash
+WLANNM=$(cat /root/lscript/wlanmon.txt)
+export WLANNM
 function reaver_wpastart
 {
-	reaver -i wlan0mon -b $BSSIDT -p $WPST -vv
-	echo -e "Press any key to continue..."
+	reaver -i $WLANNM -b $BSSIDT -p $WPST -vv
+	echo -e "Press \e[1;33many key\e[0m to continue..."
 	read
 }
 function associate_aireplay
@@ -15,21 +17,21 @@ function associate_aireplay
 	clear
 	exec bash "$0"
 }
-echo -e "-------------------------Finding WPS pin-------------------------"
-echo -e " 1) Scan with wash"
-echo -e " 2) Reaver"
-echo -e " 3) Reaver (if you already have the WPS pin)"
-echo -e " 4) Association with aireplay"
-echo -e " 0) EXIT"
+echo -e "-------------------------\e[1;31mFinding WPS pin\e[0m-------------------------"
+echo -e "\e[1;33m 1\e[0m) Scan with wash"
+echo -e "\e[1;33m 2\e[0m) Reaver"
+echo -e "\e[1;33m 3\e[0m) Reaver (if you already have the WPS pin)"
+echo -e "\e[1;33m 4\e[0m) Association with aireplay"
+echo -e "\e[1;33m 0\e[0m) EXIT"
 read -e YN
 if [ "$YN" = "1" ]
 then
 	echo -e "Scaning in new terminal..."
 	sleep 1
-	gnome-terminal -x sh -c "wash -i wlan0mon; bash"
-	#gnome-terminal -e 'wash -i wlan0mon'
-	#xterm -e bash -c 'wash -i wlan0mon; exec bash'
-	echo -e "Start reaver?(y/n)(Enter=yes): "
+	gnome-terminal -x sh -c "wash -i $WLANNM; bash"
+	#gnome-terminal -e 'wash -i $WLANNM'
+	#xterm -e bash -c 'wash -i $WLANNM; exec bash'
+	echo -e "Start reaver?(\e[1;33my\e[0m/\e[1;33mn\e[0m)(\e[1;33mEnter\e[0m=yes): "
 	read YNN
 	if [ "$YNN" = "n" ]
 	then
@@ -97,14 +99,14 @@ then
 	read -e BSSIDT
 	export BSSIDT
 	export -f aireplay_command
-	xterm -e bash -c 'aireplay-ng -1 0 -a $BSSIDT wlan0mon; exec bash'
+	xterm -e bash -c 'aireplay-ng -1 0 -a $BSSIDT $WLANNM; exec bash'
 	clear
 	exec bash "$0"
 elif [ "$YN" = "0" ]
 then
 	exit
 fi
-echo -e "Choose again?(y/n)(Enter=yes): "
+echo -e "Choose again?(\e[1;33my\e[0m/\e[1;33mn\e[0m)(\e[1;33mEnter\e[0m=yes): "
 read -e BB
 if [ -z "$BB" ]
 then

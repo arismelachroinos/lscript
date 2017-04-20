@@ -1,11 +1,11 @@
-Welcome to the LAZY script   VERSION 0.1
+Welcome to the LAZY script   VERSION 1.1
 
-For feature-recomendation , add it on the "Issues" tab. NOW!
-
+For feature-recommendation , add it on the "Issues" tab. NOW!
 
 I AM NOT RESPONSIBLE HOW YOU USE THIS TOOL.BE LEGAL AND NOT STUPID.
 
 This script will make your life easier, and of course faster.
+Its not only for noobs.Its for whoever wants to type less and do actually more.
 
 Are you trying to memorize all the commands to capture a handshake? hahahaha
 
@@ -36,10 +36,11 @@ Features:
 		Kichthemout			by Nikolaos Kamarinakis & David Schütz
 		BeeLogger			by Alisson Moretto - 4w4k3
 		Torghost			by SusmithHCK
-		Anonsurf			by Und3rf10w
+		Ghost-Phisher			by Savio-code
 	Wifi password scripts
 		Handshake       (WPA-WPA2) (WORKING PERFECTLY-NO COMMANDS)
-		Find WPS pin    (WPA-WPA2) (NOT TESTED)
+		Find WPS pin    (WPA-WPA2) (NOT TESTED-maybe works)
+		WEP hacking     (WEP)      (NOT TESTED-maybe works)
 ---------------------Installation----------------------
 (make sure you are a root user)
 Be carefull.If you download it as a .zip file, it will not run.Make sure to follow these simple instructions.
@@ -59,7 +60,7 @@ cd /root/lscript
 ./uninstall.sh
 rmdir -r /root/lscript
 ---------------------How to update---------------------
-Check if there is new version
+Check if there is new version on https://github.com/arismelachroinos/lscript
 Run the script
 Type "update"
 Report if it works

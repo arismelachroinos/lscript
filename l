@@ -1,20 +1,17 @@
 #! /bin/bash
-#echo -n "Load the list? (y/n): "
-#read -e YORNA
-#if [ "$YORNA" = "y" ]
-#then
+VERSION=1.1
 function interface_selection
 {
-echo -e " 1) Wlan0"
-echo -e " 2) Wlan0mon"
+echo -e " 1) $WLANN"
+echo -e " 2) $WLANNM"
 echo -e " 3) Eth0"
 read -e MYINT
 if [ "$MYINT" = "2" ]
 then
-	MYINT="wlan0mon"
+	MYINT="$WLANNM"
 elif [ "$MYINT" = "1" ]
 then
-	MYINT="wlan0"
+	MYINT="$WLANN"
 elif [ "$MYINT" = "3" ]
 then
 	MYINT="eth0"
@@ -28,66 +25,125 @@ exec bash "$0"
 fi
 export MYINT
 }
-#su
+function set_interface_number
+{
+echo -e "Enter the number of your wireless card(etc type \e[1;33m0\e[0m if wlan0): " 
+read INUMB
+echo -e "So your wireless interfaces are wlan$INUMB and wlan"$INUMB"mon?(\e[1;33my\e[0m/\e[1;33mn\e[0m)(\e[1;33mEnter\e[0m=yes): "
+read INTCONFNUMB
+if [ "$INTCONFNUMB" = "n" ]
+then
+	clear
+	echo -e "Then why did you type that? lol"
+	sleep 3
+	exec bash "$0"
+else
+	echo wlan$INUMB > /root/lscript/wlan.txt
+	echo wlan"$INUMB"mon > /root/lscript/wlanmon.txt
+	echo -e "Done "
+	sleep 1
+	clear
+	echo -e "If you want to change it, type \e[1;33minterface\e[0m any time"
+	sleep 1
+	echo -e "Press \e[1;33many key\e[0m to continue..."
+	read	
+fi
+}
 if [ -f "/root/lscript/IAGREE.txt" ]
 then
+
+	if [ ! -f "/root/lscript/wlan.txt" ]
+	then
+		set_interface_number
+	fi
+	
 clear
-echo -e "   ////////////////////////////////////////////////////////////////"
-echo -e "  //                    The LAZY script v0.1                    //"
-echo -e " //                   by ARIS MELACHROINOS                     //"
-echo -e "////////////////////////////////////////////////////////////////"
-echo -e "if) Ifconfig"
-echo -e " 1) Enable wlan0                      d1) Disable wlan0"
-echo -e " 2) Enable wlan0mon                   d2) Disable wlan0mon"
-echo -e " 3) Change MAC                        d3) Restore original MAC "
-echo -e " 4) Enable torghost                   d4) Disable torghost"
-echo -e " 5) Enable anonym8                    d5) Disable anonym8"
-echo -e " 6) Status of anonym8                 r6) Restart anonym8"
-echo -e " 7) View your Public IP"
-echo -e " 8) View your MAC"
-echo -e " 9) TOOLS"
-echo -e "10) Handshake       (WPA-WPA2)"
-echo -e "11) Find WPS pin    (WPA-WPA2)"
-#~ echo -e "12) WEP hacking     (WEP)"
-echo -e "start) 1 2 3"
-echo -e "stop) d2 d3"
-echo -e "update"
-echo -e "0) EXIT"
+WLANNM=$(cat /root/lscript/wlanmon.txt)
+WLANN=$(cat /root/lscript/wlan.txt)
+export WLANNM
+export WLANN
+echo -e "   ////////////////////////////////////////////////////////////////\e[1;31m/\e[0m\e[1;31m/\e[0m"
+echo -e "  //                   The \e[1;33mLAZY\e[0m script v$VERSION                     //\e[1;31m/\e[0m\e[1;31m/\e[0m"
+echo -e " //                   by \e[1;31mARIS MELACHROINOS\e[0m                     //\e[1;31m/\e[0m\e[1;31m/\e[0m"
+echo -e "////////////////////////////////////////////////////////////////\e[1;31m/\e[0m\e[1;31m/\e[0m"
+echo -e "\e[1;33mif\e[0m) Ifconfig"
+echo -e "\e[1;33m 1\e[0m) Enable $WLANN                      \e[1;33md1\e[0m) Disable $WLANN"
+echo -e "\e[1;33m 2\e[0m) Enable $WLANNM                   \e[1;33md2\e[0m) Disable $WLANNM"
+echo -e "\e[1;33m 3\e[0m) Change MAC                        \e[1;33md3\e[0m) Restore original MAC"
+echo -e "\e[1;33m 4\e[0m) Enable torghost(BROKEN TOOL)      \e[1;33md4\e[0m) Disable torghost"
+echo -e "\e[1;33m 5\e[0m) Enable anonym8                    \e[1;33md5\e[0m) Disable anonym8"
+echo -e "\e[1;33m 6\e[0m) Status of anonym8                 \e[1;33md6\e[0m) Restart anonym8"
+echo -e "\e[1;33m 7\e[0m) View your Public IP"
+echo -e "\e[1;33m 8\e[0m) View your MAC"
+echo -e "\e[1;33m 9\e[0m) TOOLS"
+echo -e "\e[1;33m10\e[0m) Handshake       (WPA-WPA2)"
+echo -e "\e[1;33m11\e[0m) Find WPS pin    (WPA-WPA2)"
+echo -e "\e[1;33m12\e[0m) WEP hacking     (WEP)"
+echo -e "\e[1;33mstart\e[0m) 1 2 3"
+echo -e "\e[1;33mstop\e[0m) d2 d3"
+echo -e "\e[1;33mupdate\e[0m)"
+echo -e "\e[1;33m 0\e[0m) EXIT"
 echo "Choose: "
 read -e YORNAA
 clear
 	if [ "$YORNAA" = "0" ]
 	then
 		exit
+	elif [ "$YORNAA" = "interface" ]
+	then
+		clear
+		WLANN=$(cat /root/lscript/wlan.txt)
+		WLANNM=$(cat /root/lscript/wlanmon.txt)
+		echo -e "Your current wireless interface names are $WLANN and $WLANNM"
+		sleep 2
+		echo -e "Do you want to change you interface number?(\e[1;33my\e[0m/\e[1;33mn\e[0m)(\e[1;33mEnter\e[0m=yes): "
+		read INAG
+		if [ "$INAG" = "n" ]
+		then
+			clear
+			echo -e "Then why did you come here? lol"
+			sleep 2
+			exec bash "$0"
+		else
+			clear
+			rm /root/lscript/wlan.txt
+			rm /root/lscript/wlanmon.txt
+			set_interface_number
+		fi
 	elif [ "$YORNAA" = "9" ]
 	then
-		echo -e "------------------------------TOOLS------------------------------"
-		echo -e " 1) Wifi tools"
-		echo -e " 2) Keeloggers-Remote access"
-		echo -e " 00) Main menu"
-		echo -e " 0) EXIT"
+		echo -e "------------------------------\e[1;31mTOOLS\e[0m------------------------------"
+		echo -e "\e[1;33m 1\e[0m) Wifi tools"
+		echo -e "\e[1;33m 2\e[0m) Keeloggers-Remote access"
+		echo -e "\e[1;33m00\e[0m) Main menu"
+		echo -e "\e[1;33m 0\e[0m) EXIT"
 		echo "Choose: "
 		read -e CATEG
 			if [ "$CATEG" = "1" ]
 			then
 				clear
-				echo -e "---------------------------WIFI TOOLS----------------------------"
-				echo -e " 1) Fluxion            Multitool-Fake AP with pass confirmation"
-				echo -e " 2) Wifite             Multitool"
-				echo -e " 3) Wifiphisher        Multitool-Fake AP etc.."
-				echo -e " 4) Zatacker           MITM-NMAP-Mail Spammer..(Install it manually)"
-				echo -e " 5) Morpheus           ------------ULTIMATE MITM SUIT------------"
-				echo -e " 6) Osrfconsole        Checks usernames-phones to platforms etc.."
-				echo -e " 7) Hakku              Multitool-mail bomb-sniffs-cracks etc.."
-				echo -e " 8) Trity              Multitool-locate ip-email bombs-brutforse etc.."
-				echo -e " 9) Cupp               Make specific worldlists"
-				echo -e "10) Dracnmap           Many scan options"
-				echo -e "11) Fern               Wifi cracker GUI"
-				echo -e "12) Netdiscover        IPs and MACs on your net"
-				echo -e "13) KickThemOut        Kick clients out of your network"
-				echo -e "00) Main menu"
-				echo -e " 0) EXIT"
-				echo "Choose: "
+				echo -e "---------------------------\e[1;31mWIFI TOOLS\e[0m----------------------------"
+				echo -e "\e[1;33m 1\e[0m) Fluxion            Multitool-Fake AP with pass confirmation"
+				echo -e "\e[1;33m 2\e[0m) Wifite             Multitool"
+				echo -e "\e[1;33m 3\e[0m) Wifiphisher        Multitool-Fake AP etc.."
+				echo -e "\e[1;33m 4\e[0m) Zatacker           MITM-NMAP-Mail Spammer..(Install it manually)"
+				echo -e "\e[1;33m 5\e[0m) Morpheus           ------------ULTIMATE MITM SUIT------------"
+				echo -e "\e[1;33m 6\e[0m) Osrfconsole        Checks usernames-phones to platforms etc.."
+				echo -e "\e[1;33m 7\e[0m) Hakku              Multitool-mail bomb-sniffs-cracks etc.."
+				echo -e "\e[1;33m 8\e[0m) Trity              Multitool-locate ip-email bombs-brutforse etc.."
+				echo -e "\e[1;33m 9\e[0m) Cupp               Make specific worldlists"
+				echo -e "\e[1;33m10\e[0m) Dracnmap           Many scan options"
+				echo -e "\e[1;33m11\e[0m) Fern               Wifi cracker GUI"
+				echo -e "\e[1;33m12\e[0m) Netdiscover        IPs and MACs on your net"
+				echo -e "\e[1;33m13\e[0m) KickThemOut        Kick clients out of your network"
+				echo -e "\e[1;33m14\e[0m) Ghost-Phisher      Fake AP,MITM,Session hijacking etc..."
+				echo -e "\e[1;33m15\e[0m) The Eye            Detects ARP poisoning DNS spoofing etc..."
+				echo -e "\e[1;33m16\e[0m) ShARP              Detects who is spoofing on your network"
+				echo -e "\e[1;33m17\e[0m) Mdk3-master        Tries to lock / reboot AP and more..."
+				echo -e "\e[1;33m18\e[0m) Mdk3-master        Tries to reboot the AP and unlock the WPS lock"
+				echo -e "\e[1;33m00\e[0m) Main menu"
+				echo -e "\e[1;33m 0\e[0m) EXIT"
+				echo -e "Choose: "
 				read -e APPP
 				if [ "$APPP" = "1" ]
 				then
@@ -159,17 +215,68 @@ clear
 					cd /root/kickthemout
 					python kickthemout.py
 					cd
+				elif [ "$APPP" = "14" ]
+				then
+					clear	
+					cd /root/ghost-phisher/Ghost-Phisher
+					python ghost.py
+					cd
+				elif [ "$APPP" = "15" ]
+				then
+					clear	
+					cd /root/The-Eye
+					./TheEye
+					cd
+				elif [ "$APPP" = "16" ]
+				then
+					echo -e "Enter the name of the interface you want to defend with: "
+					read -e NAMEINT
+					clear	
+					cd /root/shARP
+					./shARP.sh -d $NAMEINT
+					cd
+				elif [ "$APPP" = "17" ]
+				then
+					clear	
+					echo -e "Press \e[1;33many key\e[0m to start scanning."
+					echo -e "Press \e[1;33mCTRL C\e[0m when you find your target AP"
+					read
+					airodump-ng $WLANNM
+					echo -e "Enter your target's BSSID: "
+					read -e MDBSSID
+					echo -e "Enter your target's channel: "
+					read -e MDCHANN
+					echo -e "Enter frames per second(etc 50): "
+					read -e FPS
+					clear
+					xterm -e 'mdk3 $WLANNM t $MDCHANN $MDBSSID $FPS'		
+				elif [ "$APPP" = "18" ]
+				then
+					clear	
+					echo -e "Press \e[1;33many key\e[0m to start scanning with wash."
+					read
+					gnome-terminal -e 'wash -i $WLANNM'
+					echo -e "Enter your target's BSSID: "
+					read -e MDBSSID
+					echo -e "Enter your target's ESSID: "
+					read -e MDESSID
+					#~ echo -e "Enter your target's channel: "
+					#~ read -e MDCHANN
+					echo -e "Enter frames per second(etc 50): "
+					read -e FPS
+					clear
+					xterm -e 'mdk3 $WLANNM x 0 -t $MDBSSID -n $MDESSID -s $FPS'		
 				elif [ "$APPP" = "6" ]
 				then
 					clear	
-					echo -e " 1) usufy"
-					echo -e " 2) mailfy"
-					echo -e " 3) searchfy"
-					echo -e " 4) domainfy"
-					echo -e " 5) phonefy"
-					echo -e " 6) entify"
-					echo -e "00) Main menu"
-					echo -e " 0) EXIT"
+					echo -e "\e[1;33m 1\e[0m) usufy"
+					echo -e "\e[1;33m 2\e[0m) mailfy"
+					echo -e "\e[1;33m 3\e[0m) searchfy"
+					echo -e "\e[1;33m 4\e[0m) domainfy"
+					echo -e "\e[1;33m 5\e[0m) phonefy"
+					echo -e "\e[1;33m 6\e[0m) entify"
+					echo -e "\e[1;33m00\e[0m) Main menu"
+					echo -e "\e[1;33m 0\e[0m) EXIT"
 					echo -e "Choose: "
 					read -e OSFR
 						if [ "$OSFR" = "1" ]
@@ -211,7 +318,7 @@ clear
 						elif [ "$OSFR" = "00" ]
 						then
 							clear
-						exec bash "$0"
+							exec bash "$0"
 						else 
 							echo -e "I can't do that bro..."
 							sleep 2
@@ -232,10 +339,10 @@ clear
 			elif [ "$CATEG" = "2" ]
 			then
 				clear
-				echo -e "--------------------Keyloggers-Remote access---------------------"
-				echo -e " 1) BeeLogger		Generate keylogger to send to email"
-				echo -e "00) Main menu"
-				echo -e " 0) EXIT"
+				echo -e "--------------------\e[1;31mKeyloggers-Remote access\e[0m---------------------"
+				echo -e "\e[1;33m 1\e[0m) BeeLogger		Generate keylogger to send to email"
+				echo -e "\e[1;33m00\e[0m) Main menu"
+				echo -e "\e[1;33m 0\e[0m) EXIT"
 				echo -e "Choose: "
 				read -e KEYLOG
 				if [ "$KEYLOG" = "1" ]
@@ -272,42 +379,42 @@ clear
 		geany /bin/lscript/l
 	elif [ "$YORNAA" = "1" ]
 	then
-		echo -e "Enabling wlan0..."
+		echo -e "Enabling $WLANN..."
 		rfkill unblock wifi; rfkill unblock all
-		ifconfig wlan0 up
+		ifconfig $WLANN up
 		echo -e "Done."
 	elif [ "$YORNAA" = "d1" ]
 	then
-		echo -e "Disabling wlan0..."
+		echo -e "Disabling $WLANN..."
 		rfkill unblock wifi; rfkill unblock all
-		ifconfig wlan0 down
+		ifconfig $WLANN down
 		echo -e "Done."
 	elif [ "$YORNAA" = "2" ]
 	then
-		echo -e "Enabling wlan0mon..."
+		echo -e "Enabling $WLANNM..."
 		echo -e "Killing services..."
 		airmon-ng check kill
 		echo -e "Done."
 		echo -e "Starting monitor mode..."
-		airmon-ng start wlan0
+		airmon-ng start $WLANN
 		echo -e "Done."
 	elif [ "$YORNAA" = "d2" ]
 	then
-		echo -e "Disabling wlan0mon..."
+		echo -e "Disabling $WLANNM..."
 		echo -e "Stopping monitor mode..."
-		airmon-ng stop wlan0mon
+		airmon-ng stop $WLANNM
 		echo -e "ok..."
 		echo -e "Starting network-manager service..."
 		service network-manager start
 		echo -e "ok..."
-		echo -e "Wlan0 is probably up.Bring it down? (y/n)(Enter=no): "
+		echo -e "$WLANN is probably up.Bring it down?(\e[1;33my\e[0m/\e[1;33mn\e[0m)(\e[1;33mEnter\e[0m=no): "
 		read -e YORN
 		if [ "$YORN" = "y" ] 
 		then
 			#rfkill unblock wifi
 			#rfkill unblock all
-			ifconfig wlan0 down
-			echo -e "Wlan0 is now down."
+			ifconfig $WLANN down
+			echo -e "$WLANN is now down."
 		fi
 	elif [ "$YORNAA" = "3" ]
 	then
@@ -330,8 +437,13 @@ clear
 	elif [ "$YORNAA" = "4" ]
 	then
 		echo -e "Enabling torghost..."
-		torghost start
-		echo -e "Done."
+		sleep 1
+		echo -e ""
+		echo -e "Torghost is problematic for now.Choose anonym8 instead."
+		sleep 5
+		exec bash "$0"
+		#~ torghost start
+		#~ echo -e "Done."
 	elif [ "$YORNAA" = "d4" ]
 	then
 		echo -e "Disabling torghost..."
@@ -360,8 +472,6 @@ clear
 	elif [ "$YORNAA" = "7" ]
 	then
 		echo "Your public IP is: "
-		#curl ifconfg.me
-		#curl ipinfo.io/ip
 		curl -s checkip.dyndns.org | sed -e 's/.*Current IP Address: //' -e 's/<.*$//'
 	elif [ "$YORNAA" = "8" ]
 	then
@@ -374,13 +484,9 @@ clear
 		clear
 		echo -e "Moving into new terminal..."
 		sleep 1
-		#gnome-terminal "bash -c \"cd /root/lscript && sh ./lh.sh; exec bash\""
-		#xterm -hold -e './root/lscript/lh.sh' & 
 		FJC=0
 		export FJC
 		gnome-terminal -e lh1
-		#konsole -e --noclose ./lh.sh   
-		#exit
 		sleep 1
 		exec bash "$0"
 	elif [ "$YORNAA" = "11" ]
@@ -391,19 +497,33 @@ clear
 		gnome-terminal -e lh3
 		sleep 1
 		exec bash "$0"
-	elif [ "$YORNAA" = "update" ]
+	elif [ "$YORNAA" = "12" ]
 	then
 		clear
-		echo -e "Okay, listen..."
+		echo -e "Moving into new terminal..."
 		sleep 1
-		echo -e "First , make sure that there is an update.This is version 0.1 ...Go to https://github.com/arismelachroinos/lscript an see on the description if the version is newer."
-		echo -e "Press any key to continue..."
+		gnome-terminal -e lh4
+		sleep 1
+		exec bash "$0"
+	elif [ "$YORNAA" = "update" ]
+	then
+		#----------update-check-----------
+		clear
+		echo -e "Checking for updates..."
+		VER=$(timeout -s SIGTERM 20 curl "https://raw.githubusercontent.com/arismelachroinos/lscript/master/version.txt" 2>/dev/null)
+		if [ "$VERSION" != "$VER" ]
+		then
+		clear
+		echo -e "There is an update available."
+		echo -e "Current version: $VERSION"
+		echo -e "Updated version: $VER"
+		echo -e "Press \e[1;33many key\e[0m to continue..."
 		read
 		clear
-		echo -e "I dont know if this works.So if it doesn't, to update the script just delete the /root/lscript folder from your system and then go again to https://github.com/arismelachroinos/lscript and reinstall it to get the newest one."
+		#~ echo -e "I dont know if this works.So if it doesn't, to update the script just delete the /root/lscript folder from your system and then go again to https://github.com/arismelachroinos/lscript and reinstall it to get the newest one."
 		sleep 5		
-		echo -e ""
-		echo -e "Do you still want to try to update automatically?(y/n): "
+		echo -e "I am not sure if it works."
+		echo -e "Do you still want to try to update automatically?(\e[1;33my\e[0m/\e[1;33mn\e[0m): "
 		read UPDATEYN
 		if [ "$UPDATEYN" = "y" ]
 		then
@@ -427,7 +547,7 @@ clear
 			echo -e "A new terminal will open, and then the new install.sh will run to update the lscript.I will close."
 			echo -e ""
 			sleep 3
-			echo -e "Press any key to continue..."
+			echo -e "Press \e[1;33many key\e[0m to continue..."
 			read
 			cd /root/lscript
 			gnome-terminal -e ./install.sh
@@ -444,17 +564,29 @@ clear
 			sleep 3
 			exec bash "$0"
 		fi
+		else
+		echo -e "There is no update available"
+		sleep 1
+		echo -e "Installed version: $VERSION"
+		sleep 1
+		echo -e "Github version:    $VER"
+		sleep 1
+		echo -e "Press \e[1;33many key\e[0m to go back..."
+		read		
+		exec bash "$0"
+		fi
 	elif [ "$YORNAA" = "if" ]
 	then
 		ifconfig
 	elif [ "$YORNAA" = "errors" ]
 	then
 		#---------------------------------------------------------------------------------------------------------------------------
-		echo -e "-----------------------------ERRORS------------------------------"
-		echo -e " 1) Fix no audio issue"
+		echo -e "-----------------------------\e[1;33mERRORS\e[0m------------------------------"
+		echo -e "\e[1;33m 1\e[0m) Fix no audio issue"
+		echo -e "\e[1;33m 2\e[0m) No output in wash"
 		#~ echo -e " 2) "
-		echo -e " 00) Main menu"
-		echo -e " 0) EXIT"
+		echo -e "\e[1;33m00\e[0m) Main menu"
+		echo -e "\e[1;33m 0\e[0m) EXIT"
 		echo -e " Choose: "
 		read ERRS
 		if [ "$ERRS" = "1" ]
@@ -463,7 +595,7 @@ clear
 			echo -e "Trying to get you some audio..."
 			sleep 2
 			clear
-			echo -e "Press y if/when prompted"
+			echo -e "Press \e[1;33my\e[0m if/when prompted"
 			sleep 3
 			clear
 			echo -e "Installing pulseaudio......."
@@ -483,6 +615,18 @@ clear
 			sleep 2
 			echo -e " "
 			echo -e "If it wasn't fix , then try rebooting"
+		elif [ "$ERRS" = "2" ]
+		then
+			clear
+			echo -e "Ok...Lets try to fix this..."
+			sleep 1
+			mkdir /etc/reaver
+			echo -e "It seems to be fixed."
+			echo -e "Enter you interface"
+			read INTWASH
+			echo -e "Press \e[1;33many key\e[0m to test wash"
+			echo -e "Also try "wash -i wlan0mon -a" to display all networks"
+			wash -i $INTWASH
 		elif [ "$ERRS" = "0" ]
 		then
 			clear
@@ -502,50 +646,50 @@ clear
 		#---------------------------------------------------------------------------------------------------------------------------
 	elif [ "$YORNAA" = "start" ]
 	then
-		echo -e "Enabling wlan0..."
+		echo -e "Enabling $WLANN..."
 		rfkill unblock wifi; rfkill unblock all
-		ifconfig wlan0 up
-		echo -e "wlan0 enabled"
-		echo -e "Enabling wlan0mon..."
+		ifconfig $WLANN up
+		echo -e "$WLANN enabled"
+		echo -e "Enabling $WLANNM..."
 		echo -e "Killing services..."
 		airmon-ng check kill
 		echo -e "Done."
 		echo -e "Starting monitor mode..."
-		airmon-ng start wlan0
+		airmon-ng start $WLANN
 		echo -e "Done."
-		echo -e "Changing mac address of wlan0mon to a random one..."
-		ifconfig wlan0mon down
-		macchanger -r wlan0mon
-		ifconfig wlan0mon up
+		echo -e "Changing mac address of $WLANNM to a random one..."
+		ifconfig $WLANNM down
+		macchanger -r $WLANNM
+		ifconfig $WLANNM up
 		echo -e "Done."
 		echo -e "SUCCESS!"
 #----------
 		elif [ "$YORNAA" = "stop" ]
 		then
-		echo -e "Changing mac address of wlan0mon to the original one..."
-		ifconfig wlan0mon down
-		macchanger -p wlan0mon
-		ifconfig wlan0mon up
-		echo -e "Disabling wlan0mon..."
+		echo -e "Changing mac address of $WLANNM to the original one..."
+		ifconfig $WLANNM down
+		macchanger -p $WLANNM
+		ifconfig $WLANNM up
+		echo -e "Disabling $WLANNM..."
 		echo -e "Stopping monitor mode..."
-		airmon-ng stop wlan0mon
+		airmon-ng stop $WLANNM
 		echo -e "ok..."
 		echo -e "Starting network-manager service..."
 		service network-manager start
 		echo -e "ok..."
-		echo -e "Wlan0 is probably down.Bring it up? (y/n)(Enter=no): "
+		echo -e "$WLANN is probably down.Bring it up?(\e[1;33my\e[0m/\e[1;33mn\e[0m)(\e[1;33mEnter\e[0m=no): "
 		read -e YORN
 		if [ "$YORN" = "y" ]  
 		then
 			#rfkill unblock wifi
 			#rfkill unblock all
-			ifconfig wlan0 up
-			echo -e "Wlan0 is now up."
+			ifconfig $WLANN up
+			echo -e "$WLANN is now up."
 		fi
-		echo -e "Changing mac address of wlan0 to the original one..."
-		ifconfig wlan0 down
-		macchanger -p wlan0
-		ifconfig wlan0 up
+		echo -e "Changing mac address of $WLANN to the original one..."
+		ifconfig $WLANN down
+		macchanger -p $WLANN
+		ifconfig $WLANN up
 		echo -e "Changing mac address of eth0 to the original one..."
 		ifconfig eth0 down
 		macchanger -p eth0
@@ -560,7 +704,7 @@ clear
 		sleep 1
 		exec bash "$0"
 	fi
-echo -e "Choose again? (y/n)(Enter=yes): "
+echo -e "Choose again?(\e[1;33my\e[0m/\e[1;33mn\e[0m)(\e[1;33mEnter\e[0m=yes): "
 read -e YORNLAST
 if [ -z "$YORNLAST" ]
 then
@@ -577,16 +721,16 @@ fi
 else
 echo -e "You need to accept the terms."
 sleep 1
-echo -e "Press enter to continue..."
+echo -e "Press \e[1;33menter\e[0m to continue..."
 read
 clear
 echo -e "This tool is only for educational purposes only."
-sleep 1
+sleep 2
 echo -e "Use this tool only on yourown network and never without permission."
-sleep 1
+sleep 2
 echo -e "I am not responsible for anything you do with this tool."
-sleep 1
-echo -e "Will you use this tool only on yourown network and only with yourown responsibility?(YES/NO): "
+sleep 2
+echo -e "Will you use this tool only on yourown network and only with yourown responsibility?(\e[1;33mYES\e[0m/\e[1;33mNO\e[0m): "
 read YESORNO
 if [ "$YESORNO" = "YES" ]
 then 

@@ -1,4 +1,6 @@
 #! /bin/bash
+WLANNM=$(cat /root/lscript/wlanmon.txt)
+export WLANNM
 if [ "$GLV" = "2" ]
 then
 	echo -e "Please note that you need a very good signal for this to work."
@@ -6,13 +8,13 @@ then
 	echo -e "Starting..."
 	sleep 1
 	clear
-	reaver -i wlan0mon -b $BSSIDT -d $DELT -S -N -c $CHANT -vv 
-	echo -e "Press any key to continue..." 
+	reaver -i $WLANNM -b $BSSIDT -d $DELT -S -N -c $CHANT -vv 
+	echo -e "Press \e[1;33many key\e[0m to continue..." 
 	read
 elif [ "$GLV" = "3" ]
 then
-	reaver -i wlan0mon -b $BSSIDT -p $WPST -vv
-	echo -e "Press any key to continue..."
+	reaver -i $WLANNM -b $BSSIDT -p $WPST -vv
+	echo -e "Press \e[1;33many key\e[0m to continue..."
 	read
 
 fi

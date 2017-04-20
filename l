@@ -28,7 +28,6 @@ export MYINT
 if [ -f "/root/lscript/IAGREE.txt" ]
 then
 clear
-<<<<<<< HEAD
 echo -e "   ////////////////////////////////////////////////////////////////\e[1;31m/\e[0m\e[1;31m/\e[0m"
 echo -e "  //                   The \e[1;33mLAZY\e[0m script v$VERSION                     //\e[1;31m/\e[0m\e[1;31m/\e[0m"
 echo -e " //                   by \e[1;31mARIS MELACHROINOS\e[0m                     //\e[1;31m/\e[0m\e[1;31m/\e[0m"
@@ -50,29 +49,6 @@ echo -e "\e[1;33mstart\e[0m) 1 2 3"
 echo -e "\e[1;33mstop\e[0m) d2 d3"
 echo -e "\e[1;33mupdate\e[0m)"
 echo -e "\e[1;33m 0\e[0m) EXIT"
-=======
-echo -e "   ////////////////////////////////////////////////////////////////"
-echo -e "  //                    The LAZY script v0.3                    //"
-echo -e " //                   by ARIS MELACHROINOS                     //"
-echo -e "////////////////////////////////////////////////////////////////"
-echo -e "if) Ifconfig"
-echo -e " 1) Enable wlan0                      d1) Disable wlan0"
-echo -e " 2) Enable wlan0mon                   d2) Disable wlan0mon"
-echo -e " 3) Change MAC                        d3) Restore original MAC "
-echo -e " 4) Enable torghost(BROKEN TOOL)      d4) Disable torghost"
-echo -e " 5) Enable anonym8                    d5) Disable anonym8"
-echo -e " 6) Status of anonym8                 r6) Restart anonym8"
-echo -e " 7) View your Public IP"
-echo -e " 8) View your MAC"
-echo -e " 9) TOOLS"
-echo -e "10) Handshake       (WPA-WPA2)"
-echo -e "11) Find WPS pin    (WPA-WPA2)"
-echo -e "12) WEP hacking     (WEP)"
-echo -e "start) 1 2 3"
-echo -e "stop) d2 d3"
-echo -e "update"
-echo -e "0) EXIT"
->>>>>>> origin/master
 echo "Choose: "
 read -e YORNAA
 clear

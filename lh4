@@ -76,7 +76,7 @@ else
 	sleep 1
 	exec bash "$0"
 fi
-echo -e "Choose again?(\e[1;33my\e[0m/\e[1;33mn\e[0m)(Enter=\e[1;33myes\e[0m): "
+echo -e "Choose again?(\e[1;33my\e[0m/\e[1;33mn\e[0m)(\e[1;33mEnter\e[0m=yes): "
 read -e CAG
 if [ "$CAG" = "n" ]
 then

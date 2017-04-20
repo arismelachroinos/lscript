@@ -2,7 +2,7 @@
 echo -e "Installing all the tools needed for LAZY script..."
 echo -e "(You should be a root user)"
 sleep 2
-echo -e "Did you run 'apt-get install' recently?(\e[1;33my\e[0m/\e[1;33mn\e[0m)(Enter=\e[1;33myes\e[0m): "
+echo -e "Did you run 'apt-get install' recently?(\e[1;33my\e[0m/\e[1;33mn\e[0m)(\e[1;33mEnter\e[0m=yes): "
 read -e APTG
 if [ "$APTG" = "n" ]
 then

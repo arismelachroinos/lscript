@@ -29,7 +29,7 @@ exec bash "$0"
 function aircrack_handshakejust
 {
 	clear
-	echo -e "Do you want to use the file you just captured?(y/n)(Enter=yes): "
+	echo -e "Do you want to use the file you just captured?(\e[1;33my\e[0m/\e[1;33mn\e[0m)(\e[1;33mEnter\e[0m=yes): "
 	read -e YORN
 	clear
 	if [ "$YORN" = "n" ] 
@@ -174,7 +174,7 @@ else
 fi
 if [ "$CH" = "1" ]
 then
-	echo -e "Do you want to capture a handshake now?(\e[1;33my\e[0m/\e[1;33mn\e[0m)(Enter=\e[1;33myes\e[0m): "
+	echo -e "Do you want to capture a handshake now?(\e[1;33my\e[0m/\e[1;33mn\e[0m)(\e[1;33mEnter\e[0m=yes): "
 	read CHCH
 	if [ "$CHCH" = "n" ]
 	then
@@ -186,7 +186,7 @@ then
 		capture_handshake
 	fi
 fi
-echo -e "Choose again?(\e[1;33my\e[0m/\e[1;33mn\e[0m)(Enter=\e[1;33myes\e[0m): "
+echo -e "Choose again?(\e[1;33my\e[0m/\e[1;33mn\e[0m)(\e[1;33mEnter\e[0m=yes): "
 read -e BB
 if [ -z "$BB" ]
 then

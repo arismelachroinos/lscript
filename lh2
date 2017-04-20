@@ -9,7 +9,7 @@ then
 	xterm -e bash -c 'aireplay-ng $LASTOPTIONS && exit; exec bash'
 	#aireplay-ng $LASTOPTIONS
 else
-	echo -e "Do you want to deauth a specific client?(y/n)(Enter=no): "	
+	echo -e "Do you want to deauth a specific client?(\e[1;33my\e[0m/\e[1;33mn\e[0m)(\e[1;33mEnter\e[0m=no): "	
 	read -e OPTION
 	if [ "$OPTION" = "y" ]
 	then
@@ -45,11 +45,11 @@ else
 	fi
 fi
 #----------------------------------------------------------------------------------------------------------------------------------
-echo -e "Re-deauth with the same exact settings?(y/n)(Enter=yes)(0=Exit): "
+echo -e "Re-deauth with the same exact settings?(\e[1;33my\e[0m/\e[1;33mn\e[0m)(\e[1;33mEnter\e[0m=yes)(0=Exit): "
 read -e REDEAUTH
 if [ "$REDEAUTH" = "n" ]
 then
-	echo -e "Exit completely?(y/n)(Enter=no): "
+	echo -e "Exit completely?(\e[1;33my\e[0m/\e[1;33mn\e[0m)(\e[1;33mEnter\e[0m=no): "
 	read -e EXIT
 	if [ "$EXIT" = "y" ]
 	then
@@ -67,7 +67,7 @@ else
 	#aireplay-ng $LASTOPTIONS
 fi
 done
-echo -e "Sure? (y/n)(Enter=no): "
+echo -e "Sure?(\e[1;33my\e[0m/\e[1;33mn\e[0m)(\e[1;33mEnter\e[0m=no): "
 read -e BB
 if [ "$BB" = "y" ]
 then

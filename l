@@ -352,7 +352,7 @@ clear
 		echo -e "Starting network-manager service..."
 		service network-manager start
 		echo -e "ok..."
-		echo -e "Wlan0 is probably up.Bring it down?(\e[1;33my\e[0m/\e[1;33mn\e[0m)(Enter=\e[1;33mno\e[0m): "
+		echo -e "Wlan0 is probably up.Bring it down?(\e[1;33my\e[0m/\e[1;33mn\e[0m)(\e[1;33mEnter\e[0m=no): "
 		read -e YORN
 		if [ "$YORN" = "y" ] 
 		then
@@ -622,7 +622,7 @@ clear
 		echo -e "Starting network-manager service..."
 		service network-manager start
 		echo -e "ok..."
-		echo -e "Wlan0 is probably down.Bring it up?(\e[1;33my\e[0m/\e[1;33mn\e[0m)(Enter=\e[1;33mno\e[0m): "
+		echo -e "Wlan0 is probably down.Bring it up?(\e[1;33my\e[0m/\e[1;33mn\e[0m)(\e[1;33mEnter\e[0m=no): "
 		read -e YORN
 		if [ "$YORN" = "y" ]  
 		then
@@ -649,7 +649,7 @@ clear
 		sleep 1
 		exec bash "$0"
 	fi
-echo -e "Choose again?(\e[1;33my\e[0m/\e[1;33mn\e[0m)(Enter=\e[1;33myes\e[0m): "
+echo -e "Choose again?(\e[1;33my\e[0m/\e[1;33mn\e[0m)(\e[1;33mEnter\e[0m=yes): "
 read -e YORNLAST
 if [ -z "$YORNLAST" ]
 then

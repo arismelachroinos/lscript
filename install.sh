@@ -218,10 +218,17 @@ cp lh41 /bin/lscript
 cp lh42 /bin/lscript
 cp lh43 /bin/lscript
 clear
-echo -e "Adding lscript to PATH so you can access it from anywhere"
-export PATH=/bin/lscript:$PATH
-echo "export PATH=/bin/lscript:$PATH" >> ~/.bashrc
-clear
+echo -e "Are you updating or installing the script?(u/i): "
+read UORI
+if [ "$UORI" = "u" ]
+then 
+	clear
+else
+	echo -e "Adding lscript to PATH so you can access it from anywhere"
+	export PATH=/bin/lscript:$PATH
+	echo "export PATH=/bin/lscript:$PATH" >> ~/.bashrc
+	clear
+fi
 echo -e "DONEEEE"
 sleep 1
 echo -e "Just open a terminal and type "l""

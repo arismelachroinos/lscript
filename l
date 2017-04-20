@@ -1,5 +1,9 @@
 #! /bin/bash
+<<<<<<< HEAD
 VERSION=1.1
+=======
+VERSION=1.0
+>>>>>>> origin/master
 function interface_selection
 {
 echo -e " 1) $WLANN"
@@ -25,6 +29,7 @@ exec bash "$0"
 fi
 export MYINT
 }
+<<<<<<< HEAD
 function set_interface_number
 {
 echo -e "Enter the number of your wireless card(etc type \e[1;33m0\e[0m if wlan0): " 
@@ -49,6 +54,8 @@ else
 	read	
 fi
 }
+=======
+>>>>>>> origin/master
 if [ -f "/root/lscript/IAGREE.txt" ]
 then
 
@@ -58,17 +65,25 @@ then
 	fi
 	
 clear
+<<<<<<< HEAD
 WLANNM=$(cat /root/lscript/wlanmon.txt)
 WLANN=$(cat /root/lscript/wlan.txt)
 export WLANNM
 export WLANN
+=======
+>>>>>>> origin/master
 echo -e "   ////////////////////////////////////////////////////////////////\e[1;31m/\e[0m\e[1;31m/\e[0m"
 echo -e "  //                   The \e[1;33mLAZY\e[0m script v$VERSION                     //\e[1;31m/\e[0m\e[1;31m/\e[0m"
 echo -e " //                   by \e[1;31mARIS MELACHROINOS\e[0m                     //\e[1;31m/\e[0m\e[1;31m/\e[0m"
 echo -e "////////////////////////////////////////////////////////////////\e[1;31m/\e[0m\e[1;31m/\e[0m"
 echo -e "\e[1;33mif\e[0m) Ifconfig"
+<<<<<<< HEAD
 echo -e "\e[1;33m 1\e[0m) Enable $WLANN                      \e[1;33md1\e[0m) Disable $WLANN"
 echo -e "\e[1;33m 2\e[0m) Enable $WLANNM                   \e[1;33md2\e[0m) Disable $WLANNM"
+=======
+echo -e "\e[1;33m 1\e[0m) Enable wlan0                      \e[1;33md1\e[0m) Disable wlan0"
+echo -e "\e[1;33m 2\e[0m) Enable wlan0mon                   \e[1;33md2\e[0m) Disable wlan0mon"
+>>>>>>> origin/master
 echo -e "\e[1;33m 3\e[0m) Change MAC                        \e[1;33md3\e[0m) Restore original MAC"
 echo -e "\e[1;33m 4\e[0m) Enable torghost(BROKEN TOOL)      \e[1;33md4\e[0m) Disable torghost"
 echo -e "\e[1;33m 5\e[0m) Enable anonym8                    \e[1;33md5\e[0m) Disable anonym8"
@@ -241,7 +256,11 @@ clear
 					echo -e "Press \e[1;33many key\e[0m to start scanning."
 					echo -e "Press \e[1;33mCTRL C\e[0m when you find your target AP"
 					read
+<<<<<<< HEAD
 					airodump-ng $WLANNM
+=======
+					airodump-ng wlan0mon
+>>>>>>> origin/master
 					echo -e "Enter your target's BSSID: "
 					read -e MDBSSID
 					echo -e "Enter your target's channel: "
@@ -249,13 +268,21 @@ clear
 					echo -e "Enter frames per second(etc 50): "
 					read -e FPS
 					clear
+<<<<<<< HEAD
 					xterm -e 'mdk3 $WLANNM t $MDCHANN $MDBSSID $FPS'		
+=======
+					xterm -e 'mdk3 wlan0mon t $MDCHANN $MDBSSID $FPS'		
+>>>>>>> origin/master
 				elif [ "$APPP" = "18" ]
 				then
 					clear	
 					echo -e "Press \e[1;33many key\e[0m to start scanning with wash."
 					read
+<<<<<<< HEAD
 					gnome-terminal -e 'wash -i $WLANNM'
+=======
+					gnome-terminal -e 'wash -i wlan0mon'
+>>>>>>> origin/master
 					echo -e "Enter your target's BSSID: "
 					read -e MDBSSID
 					echo -e "Enter your target's ESSID: "
@@ -265,7 +292,11 @@ clear
 					echo -e "Enter frames per second(etc 50): "
 					read -e FPS
 					clear
+<<<<<<< HEAD
 					xterm -e 'mdk3 $WLANNM x 0 -t $MDBSSID -n $MDESSID -s $FPS'		
+=======
+					xterm -e 'mdk3 wlan0mon x 0 -t $MDBSSID -n $MDESSID -s $FPS'		
+>>>>>>> origin/master
 				elif [ "$APPP" = "6" ]
 				then
 					clear	
@@ -407,7 +438,11 @@ clear
 		echo -e "Starting network-manager service..."
 		service network-manager start
 		echo -e "ok..."
+<<<<<<< HEAD
 		echo -e "$WLANN is probably up.Bring it down?(\e[1;33my\e[0m/\e[1;33mn\e[0m)(\e[1;33mEnter\e[0m=no): "
+=======
+		echo -e "Wlan0 is probably up.Bring it down?(\e[1;33my\e[0m/\e[1;33mn\e[0m)(\e[1;33mEnter\e[0m=no): "
+>>>>>>> origin/master
 		read -e YORN
 		if [ "$YORN" = "y" ] 
 		then
@@ -501,9 +536,15 @@ clear
 	then
 		clear
 		echo -e "Moving into new terminal..."
+<<<<<<< HEAD
 		sleep 1
 		gnome-terminal -e lh4
 		sleep 1
+=======
+		sleep 1
+		gnome-terminal -e lh4
+		sleep 1
+>>>>>>> origin/master
 		exec bash "$0"
 	elif [ "$YORNAA" = "update" ]
 	then
@@ -677,7 +718,11 @@ clear
 		echo -e "Starting network-manager service..."
 		service network-manager start
 		echo -e "ok..."
+<<<<<<< HEAD
 		echo -e "$WLANN is probably down.Bring it up?(\e[1;33my\e[0m/\e[1;33mn\e[0m)(\e[1;33mEnter\e[0m=no): "
+=======
+		echo -e "Wlan0 is probably down.Bring it up?(\e[1;33my\e[0m/\e[1;33mn\e[0m)(\e[1;33mEnter\e[0m=no): "
+>>>>>>> origin/master
 		read -e YORN
 		if [ "$YORN" = "y" ]  
 		then

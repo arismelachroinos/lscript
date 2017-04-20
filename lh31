@@ -8,12 +8,20 @@ then
 	echo -e "Starting..."
 	sleep 1
 	clear
+<<<<<<< HEAD
 	reaver -i $WLANNM -b $BSSIDT -d $DELT -S -N -c $CHANT -vv 
+=======
+	reaver -i wlan0mon -b $BSSIDT -d $DELT -S -N -c $CHANT -vv 
+>>>>>>> origin/master
 	echo -e "Press \e[1;33many key\e[0m to continue..." 
 	read
 elif [ "$GLV" = "3" ]
 then
+<<<<<<< HEAD
 	reaver -i $WLANNM -b $BSSIDT -p $WPST -vv
+=======
+	reaver -i wlan0mon -b $BSSIDT -p $WPST -vv
+>>>>>>> origin/master
 	echo -e "Press \e[1;33many key\e[0m to continue..."
 	read
 

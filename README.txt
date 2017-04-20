@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 Welcome to the LAZY script   VERSION 1.1
+=======
+Welcome to the LAZY script   VERSION 1.0
+>>>>>>> origin/master
 
 For feature-recommendation , add it on the "Issues" tab. NOW!
 

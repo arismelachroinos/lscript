@@ -138,7 +138,7 @@ clear
 				echo -e "\e[1;33m13\e[0m) KickThemOut        Kick clients out of your network"
 				echo -e "\e[1;33m14\e[0m) Ghost-Phisher      Fake AP,MITM,Session hijacking etc..."
 				echo -e "\e[1;33m15\e[0m) The Eye            Detects ARP poisoning DNS spoofing etc..."
-				echo -e "\e[1;33m16\e[0m) ShARP              Detects who is spoofing on your network"
+				echo -e "\e[1;33m16\e[0m) ShARP(problematic) Detects who is spoofing on your network"
 				echo -e "\e[1;33m17\e[0m) Mdk3-master        Tries to lock / reboot AP and more..."
 				echo -e "\e[1;33m18\e[0m) Mdk3-master        Tries to reboot the AP and unlock the WPS lock"
 				echo -e "\e[1;33m00\e[0m) Main menu"
@@ -229,6 +229,7 @@ clear
 					cd
 				elif [ "$APPP" = "16" ]
 				then
+					clear
 					echo -e "Enter the name of the interface you want to defend with: "
 					read -e NAMEINT
 					clear	

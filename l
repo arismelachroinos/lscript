@@ -454,7 +454,7 @@ clear
 		clear
 		echo -e "Okay, listen..."
 		sleep 1
-		echo -e "First , make sure that there is an update.This is version 0.2 ...Go to https://github.com/arismelachroinos/lscript an see on the description if the version is newer."
+		echo -e "First , make sure that there is an update.This is version 0.3 ...Go to https://github.com/arismelachroinos/lscript an see on the description if the version is newer."
 		echo -e "Press any key to continue..."
 		read
 		clear

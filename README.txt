@@ -1,4 +1,4 @@
-Welcome to the LAZY script   VERSION 0.3
+Welcome to the LAZY script   VERSION 1.0
 
 For feature-recommendation , add it on the "Issues" tab. NOW!
 

@@ -28,7 +28,7 @@ if [ -f "/root/lscript/IAGREE.txt" ]
 then
 clear
 echo -e "   ////////////////////////////////////////////////////////////////"
-echo -e "  //                    The LAZY script v0.2                    //"
+echo -e "  //                    The LAZY script v0.3                    //"
 echo -e " //                   by ARIS MELACHROINOS                     //"
 echo -e "////////////////////////////////////////////////////////////////"
 echo -e "if) Ifconfig"

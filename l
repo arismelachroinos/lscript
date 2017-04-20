@@ -1,9 +1,5 @@
 #! /bin/bash
-<<<<<<< HEAD
 VERSION=1.1
-=======
-VERSION=1.0
->>>>>>> origin/master
 function interface_selection
 {
 echo -e " 1) $WLANN"
@@ -438,11 +434,7 @@ clear
 		echo -e "Starting network-manager service..."
 		service network-manager start
 		echo -e "ok..."
-<<<<<<< HEAD
 		echo -e "$WLANN is probably up.Bring it down?(\e[1;33my\e[0m/\e[1;33mn\e[0m)(\e[1;33mEnter\e[0m=no): "
-=======
-		echo -e "Wlan0 is probably up.Bring it down?(\e[1;33my\e[0m/\e[1;33mn\e[0m)(\e[1;33mEnter\e[0m=no): "
->>>>>>> origin/master
 		read -e YORN
 		if [ "$YORN" = "y" ] 
 		then

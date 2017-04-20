@@ -7,12 +7,12 @@ then
 	sleep 1
 	clear
 	reaver -i wlan0mon -b $BSSIDT -d $DELT -S -N -c $CHANT -vv 
-	echo -e "Press any key to continue..." 
+	echo -e "Press \e[1;33many key\e[0m to continue..." 
 	read
 elif [ "$GLV" = "3" ]
 then
 	reaver -i wlan0mon -b $BSSIDT -p $WPST -vv
-	echo -e "Press any key to continue..."
+	echo -e "Press \e[1;33many key\e[0m to continue..."
 	read
 
 fi

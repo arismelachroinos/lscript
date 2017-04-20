@@ -5,7 +5,7 @@ echo -e "Press \e[1;33many key\e[0m to start fake authentication..."
 read
 while true
 do
-	echo -e "--------------------\e[1;33mFake authentication\e[0m----------------------"
+	echo -e "--------------------\e[1;31mFake authentication\e[0m----------------------"
 	if [ "$FIRST" = "1" ]
 	then
 		aireplay-ng -1 0 -a $WEPB -h $MYMAC $WLANNM

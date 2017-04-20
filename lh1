@@ -135,7 +135,7 @@ function aircrack_handshake
 }
 
 #-------------------------------------------
-echo -e "----------------------------\e[1;33mHANDSHAKE\e[0m----------------------------"
+echo -e "----------------------------\e[1;31mHANDSHAKE\e[0m----------------------------"
 echo -e "\e[1;33m 1\e[0m) Scan networks nearby"
 echo -e "\e[1;33m 2\e[0m) Capture handshake"
 echo -e "\e[1;33m 3\e[0m) Aircrack the handshake"

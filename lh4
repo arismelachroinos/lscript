@@ -1,7 +1,7 @@
 #! /bin/bash
 WLANNM=$(cat /root/lscript/wlanmon.txt)
 export WLANNM
-echo -e "---------------------------\e[1;33mWEP hacking\e[0m---------------------------"
+echo -e "---------------------------\e[1;31mWEP hacking\e[0m---------------------------"
 if [ ! -z ${WEPB+x} ]
 then
 	echo -e "BSSID: $WEPB"

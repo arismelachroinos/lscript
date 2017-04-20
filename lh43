@@ -3,7 +3,7 @@ WLANNM=$(cat /root/lscript/wlanmon.txt)
 export WLANNM
 while true
 do
-	echo -e "----------------------\e[1;33mPacket injection\e[0m-----------------------"
+	echo -e "----------------------\e[1;31mPacket injection\e[0m-----------------------"
 	echo -e "You need to do the Fake-authentication first!(on the other terminal)"
 	if [ "$FIRSTT" = "1" ]
 	then

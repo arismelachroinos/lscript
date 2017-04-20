@@ -19,6 +19,19 @@ echo -e "Press enter to start..."
 read ENT
 if [ -z $ENT ]
 then
+	echo -e "Installing mdk3-master"
+	echo -e "Tool by Musket Developer"
+	cd
+	git clone https://github.com/wi-fi-analyzer/mdk3-master.git
+	cd /root/mdk3-master
+	make
+	make install
+	echo -e "Installing shARP"
+	echo -e "Tool by europa502"
+	cd
+	git clone https://github.com/europa502/shARP.git
+	cd /root/shARP
+	chmod +x shARP.sh
 	clear
 	cd
 	echo -e "Installing anonym8"

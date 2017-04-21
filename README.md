@@ -1,4 +1,4 @@
-## Welcome to the LAZY script  ### VERSION 1.1
+## Welcome to the LAZY script  VERSION 1.1
 <p align="center">
 <img src="http://i.imgur.com/0IcRkD0.png"/>
 </p>
@@ -16,6 +16,7 @@ This is a script that automates many procedures about wifi penetration and hacki
 I actually made it for fun for me just to save some time, but i don't mind publicing it.(my code is a mess,sorry)
 
 ### Features
+
 	Enabling-Disabling interfaces faster
 	Changing Mac faster
 	Anonymizing yourself faster
@@ -46,7 +47,8 @@ I actually made it for fun for me just to save some time, but i don't mind publi
 		Handshake       (WPA-WPA2) (WORKING PERFECTLY-NO COMMANDS)
 		Find WPS pin    (WPA-WPA2) (NOT TESTED-maybe works)
 		WEP hacking     (WEP)      (NOT TESTED-maybe works)
-## How to install
+		
+# How to install
 (make sure you are a root user)
 **Be carefull.If you download it as a .zip file, it will not run.Make sure to follow these simple instructions.**
 ```cd

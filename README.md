@@ -50,6 +50,7 @@ I actually made it for fun for me just to save some time, but i don't mind publi
 		
 # How to install
 (make sure you are a root user)
+
 **Be carefull.If you download it as a .zip file, it will not run.Make sure to follow these simple instructions.**
 ```cd
 git clone https://github.com/arismelachroinos/lscript.git
@@ -59,6 +60,7 @@ chmod +x install.sh
 ```
 ### How to run it
 (make sure you are a root user)
+
 open terminal
 type  "l"
 press enter

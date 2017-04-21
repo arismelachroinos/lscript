@@ -52,7 +52,8 @@ I actually made it for fun for me just to save some time, but i don't mind publi
 (make sure you are a root user)
 
 **Be carefull.If you download it as a .zip file, it will not run.Make sure to follow these simple instructions.**
-```cd
+```
+cd
 git clone https://github.com/arismelachroinos/lscript.git
 cd lscript
 chmod +x install.sh

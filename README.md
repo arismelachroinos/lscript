@@ -22,7 +22,7 @@ I actually made it for fun for me just to save some time, but i don't mind publi
 	Anonymizing yourself faster
 	View your public IP faster
 	View your MAC faster
-	**TOOLS**
+	###TOOLS
 		(The installer installs every tool you need automatically! (except Zatacker))
 		Fluxion				by Deltaxflux
 		WifiTe				by derv82

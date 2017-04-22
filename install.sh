@@ -19,6 +19,30 @@ echo -e "Press \e[1;33menter\e[0m to start..."
 read ENT
 if [ -z $ENT ]
 then
+	clear
+	echo -e "Installing Airgeddon"
+	echo -e "Tool by v1s1t0r1sh3r3"
+	cd
+	git clone https://github.com/v1s1t0r1sh3r3/airgeddon.git
+	cd airgeddon
+	chmod +x airgeddon.sh
+	cd
+	clear
+	echo -e "Installing Katana framework"
+	echo -e "Tool by PowerScript"
+	cd
+	git clone https://github.com/PowerScript/KatanaFramework.git
+	cd KatanaFramework
+	sh dependencies
+	python install
+	cd
+	clear
+	echo -e "Installing Ezsploit"
+	echo -e "Tool by rand0m1ze"
+	git clone https://github.com/rand0m1ze/ezsploit.git
+	cd ezsploit/
+	chmod +x ezsploit.sh
+	clear
 	echo -e "Installing mdk3-master"
 	echo -e "Tool by Musket Developer"
 	cd
@@ -26,14 +50,21 @@ then
 	cd /root/mdk3-master
 	make
 	make install
-	echo -e "Installing shARP"
-	echo -e "Tool by europa502"
+	#~ echo -e "Installing shARP"
+	#~ echo -e "Tool by europa502"
+	#~ cd
+	#~ git clone https://github.com/europa502/shARP.git
+	#~ cd /root/shARP
+	#~ chmod +x shARP.sh
+	#~ clear
+	echo -e "Installing Xerxes"
+	echo -e "Tool by zanyarjamal"
 	cd
-	git clone https://github.com/europa502/shARP.git
-	cd /root/shARP
-	chmod +x shARP.sh
+	git clone https://github.com/zanyarjamal/xerxes
+	cd xerxes
+	gcc xerxes.c -o xerxes
+	cd
 	clear
-	cd
 	echo -e "Installing anonym8"
 	echo -e "Tool by HiroshiManRise"
 	git clone https://github.com/HiroshiManRise/anonym8.git

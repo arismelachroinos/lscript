@@ -1,10 +1,12 @@
 #! /bin/bash
-VERSION=1.2
+VERSION=1.3
 function interface_selection
 {
-echo -e " 1) $WLANN"
-echo -e " 2) $WLANNM"
-echo -e " 3) Eth0"
+echo -e "\e[1;33m 1\e[0m) $WLANN"
+echo -e "\e[1;33m 2\e[0m) $WLANNM"
+echo -e "\e[1;33m 3\e[0m) Eth0"
+echo -e "\e[1;33m00\e[0m) Main menu"
+echo -e "\e[1;33m 0\e[0m) EXIT"
 read -e MYINT
 if [ "$MYINT" = "2" ]
 then
@@ -12,6 +14,13 @@ then
 elif [ "$MYINT" = "1" ]
 then
 	MYINT="$WLANN"
+elif [ "$MYINT" = "0" ]
+then
+	clear
+	exit
+elif [ "$MYINT" = "00" ]
+then
+	exec bash "$0"
 elif [ "$MYINT" = "3" ]
 then
 	MYINT="eth0"
@@ -69,11 +78,6 @@ echo -e "\e[1;31m         ██║     ███████║  ███╔�
 echo -e "\e[1;31m         ██║     ██╔══██║ ███╔╝    ╚██╔╝  \e[0m"
 echo -e "\e[1;31m    The  ███████╗██║  ██║███████╗   ██║  script\e[0m"
 echo -e "\e[1;31m         ╚══════╝╚═╝  ╚═╝╚══════╝   ╚═╝   \e[0m"
-#~ echo -e "           by \e[1;31mARIS MELACHROINOS\e[0m"
-#~ echo -e "   ////////////////////////////////////////////////////////////////\e[1;31m/\e[0m\e[1;31m/\e[0m"
-#~ echo -e "  //                   The \e[1;33mLAZY\e[0m script v$VERSION                     //\e[1;31m/\e[0m\e[1;31m/\e[0m"
-#~ echo -e " //                   by \e[1;31mARIS MELACHROINOS\e[0m                     //\e[1;31m/\e[0m\e[1;31m/\e[0m"
-#~ echo -e "////////////////////////////////////////////////////////////////\e[1;31m/\e[0m\e[1;31m/\e[0m"
 echo -e "\e[1;33mif\e[0m) Ifconfig"
 echo -e "\e[1;33m 1\e[0m) Enable $WLANN                      \e[1;33md1\e[0m) Disable $WLANN"
 echo -e "\e[1;33m 2\e[0m) Enable $WLANNM                   \e[1;33md2\e[0m) Disable $WLANNM"
@@ -87,9 +91,6 @@ echo -e "\e[1;33m 9\e[0m) TOOLS"
 echo -e "\e[1;33m10\e[0m) Handshake       (WPA-WPA2)        \e[1;33mstart\e[0m) 1 2 3"
 echo -e "\e[1;33m11\e[0m) Find WPS pin    (WPA-WPA2)         \e[1;33mstop\e[0m) d2 d3"
 echo -e "\e[1;33m12\e[0m) WEP hacking     (WEP)            \e[1;33mupdate\e[0m) Check for updates"
-#~ echo -e "\e[1;33mstart\e[0m) 1 2 3"
-#~ echo -e "\e[1;33mstop\e[0m) d2 d3"
-#~ echo -e "\e[1;33mupdate\e[0m)"
 echo -e "\e[1;33m 0\e[0m) EXIT                             \e[1;33merrors\e[0m) Fix some errors"
 echo "Choose: "
 read -e YORNAA
@@ -325,7 +326,7 @@ clear
 				elif [ "$APPP" = "20" ]
 				then
 					clear	
-					cd airgeddon
+					cd /root/airgeddon
 					./airgeddon.sh
 					cd
 				elif [ "$APPP" = "6" ]
@@ -726,10 +727,18 @@ clear
 		#---------------------------------------------------------------------------------------------------------------------------
 	elif [ "$YORNAA" = "start" ]
 	then
+		echo -e "Changing MAC of eth0 to 00:11:22:33:44:55..."
+		ifconfig eth0 down
+		macchanger -m 00:11:22:33:44:55 eth0 | grep "New MAC:"
+		ifconfig eth0 up
 		echo -e "Enabling $WLANN..."
 		rfkill unblock wifi; rfkill unblock all
 		ifconfig $WLANN up
 		echo -e "$WLANN enabled"
+		echo -e "Changing MAC of $WLANN to 00:11:22:33:44:55..."
+		ifconfig $WLANN down
+		macchanger -m 00:11:22:33:44:55 $WLANN | grep "New MAC:"
+		ifconfig $WLANN up
 		echo -e "Enabling $WLANNM..."
 		echo -e "Killing services..."
 		airmon-ng check kill
@@ -737,9 +746,9 @@ clear
 		echo -e "Starting monitor mode..."
 		airmon-ng start $WLANN
 		echo -e "Done."
-		echo -e "Changing mac address of $WLANNM to a random one..."
+		echo -e "Changing mac address of $WLANNM to 00:11:22:33:44:55..."
 		ifconfig $WLANNM down
-		macchanger -r $WLANNM
+		macchanger -m 00:11:22:33:44:55 $WLANNM | grep "New MAC:"
 		ifconfig $WLANNM up
 		echo -e "Done."
 		echo -e "SUCCESS!"
@@ -757,15 +766,15 @@ clear
 		echo -e "Starting network-manager service..."
 		service network-manager start
 		echo -e "ok..."
-		echo -e "$WLANN is probably down.Bring it up?(\e[1;33my\e[0m/\e[1;33mn\e[0m)(\e[1;33mEnter\e[0m=no): "
-		read -e YORN
-		if [ "$YORN" = "y" ]  
-		then
-			#rfkill unblock wifi
-			#rfkill unblock all
-			ifconfig $WLANN up
-			echo -e "$WLANN is now up."
-		fi
+		#~ echo -e "$WLANN is probably down.Bring it up?(\e[1;33my\e[0m/\e[1;33mn\e[0m)(\e[1;33mEnter\e[0m=no): "
+		#~ read -e YORN
+		#~ if [ "$YORN" = "y" ]  
+		#~ then
+			#~ #rfkill unblock wifi
+			#~ #rfkill unblock all
+			#~ ifconfig $WLANN up
+			#~ echo -e "$WLANN is now up."
+		#~ fi
 		echo -e "Changing mac address of $WLANN to the original one..."
 		ifconfig $WLANN down
 		macchanger -p $WLANN

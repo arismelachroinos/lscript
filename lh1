@@ -16,17 +16,40 @@ echo -e "Enter your target's channel: "
 read -e TARGC
 echo -e "Enter the name of the handshake file(no extension): "
 echo -e "(don't use the same name twice)"
+echo -e "Type "0" for no file"
 read -e HANDF
 HANDFFP="/root/handshakes/$HANDF-01.cap"
 export HANDFFP
-#HANDLC="$HANDF"
 export TARGB
 clear
-gnome-terminal -e lh2
-airodump-ng --bssid $TARGB -c $TARGC -w /root/handshakes/$HANDF $WLANNM
-clear
-FJC=1
-exec bash "$0"	
+if [ "$HANDF" != "0" ]
+then
+	gnome-terminal -e lh2
+	airodump-ng --bssid $TARGB -c $TARGC -w /root/handshakes/$HANDF $WLANNM
+	clear
+	FJC=1
+	exec bash "$0"
+else
+	airodump-ng --bssid $TARGB -c $TARGC $WLANNM
+	echo -e "Start capturing on a file?(\e[1;33my\e[0m/\e[1;33mn\e[0m)(\e[1;33mEnter\e[0m=yes)"
+	read SCF
+	if [ "$SCF" = "n" ]
+	then	
+		clear
+		exec bash "$0"
+	else 
+		echo -e "Enter the name of the handshake file(no extension): "
+		echo -e "(don't use the same name twice)"
+		read -e HANDF
+		HANDFFP="/root/handshakes/$HANDF-01.cap"
+		export HANDFFP
+		gnome-terminal -e lh2
+		airodump-ng --bssid $TARGB -c $TARGC -w /root/handshakes/$HANDF $WLANNM
+		clear
+		FJC=1
+		exec bash "$0"
+	fi
+fi
 }
 function aircrack_handshakejust
 {
@@ -152,6 +175,8 @@ then
 elif [ "$AA" = "2" ]
 then
 	capture_handshake
+	rm /root/handshakes/*.csv
+	rm /root/handshakes/*.netxml
 	#gnome-terminal -e lh2	
 elif [ "$AA" = "3" ]
 then

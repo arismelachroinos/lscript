@@ -254,10 +254,14 @@ read UORI
 if [ "$UORI" = "u" ]
 then 
 	clear
-else
+elif [ "$UORI" = "i" ]
+then
+	clear
 	echo -e "Adding lscript to PATH so you can access it from anywhere"
+	sleep 3
 	export PATH=/bin/lscript:$PATH
 	echo "export PATH=/bin/lscript:$PATH" >> ~/.bashrc
+	sleep 2
 	clear
 fi
 echo -e "DONEEEE"

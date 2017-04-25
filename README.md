@@ -39,16 +39,16 @@ I actually made it for fun for me just to save some time, but i don't mind publi
 		BeeLogger			by Alisson Moretto - 4w4k3
 		Torghost			by SusmithHCK
 		Ghost-Phisher			by Savio-code
-		Mdk3-master         by Musket Developer
-		Anonym8             by HiroshiManRise
-		The Eye             by EgeBalci
-		Airgeddon           by v1s1t0r1sh3r3
-		Xerxes              by zanyarjamal
-		Ezsploit            by rand0m1ze
-		Katana framework    by PowerScript
+		Mdk3-master                     by Musket Developer
+		Anonym8                         by HiroshiManRise
+		The Eye                         by EgeBalci
+		Airgeddon                       by v1s1t0r1sh3r3
+		Xerxes                          by zanyarjamal
+		Ezsploit                        by rand0m1ze
+		Katana framework                by PowerScript
 	**Wifi password scripts**
 		Handshake       (WPA-WPA2) (WORKING PERFECTLY-NO COMMANDS)
-		Find WPS pin    (WPA-WPA2) (NOT TESTED-maybe works)
+		Find WPS pin    (WPA-WPA2) (WORKING PERFECTLY-NO COMMANDS)
 		WEP hacking     (WEP)      (NOT TESTED-maybe works)
 		
 # How to install

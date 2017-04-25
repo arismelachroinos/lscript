@@ -808,21 +808,31 @@ else
 	exit
 fi
 else
-echo -e "You need to accept the terms."
-sleep 1
-echo -e "Press \e[1;33menter\e[0m to continue..."
-read
-clear
-echo -e "This tool is only for educational purposes only."
-sleep 2
-echo -e "Use this tool only on yourown network and never without permission."
-sleep 2
-echo -e "I am not responsible for anything you do with this tool."
-sleep 2
-echo -e "Will you use this tool only on yourown network and only with yourown responsibility?(\e[1;33mYES\e[0m/\e[1;33mNO\e[0m): "
-read YESORNO
-if [ "$YESORNO" = "YES" ]
-then 
-	echo "You have agreed the terms and you use this tool with yourown responsibility." > /root/lscript/IAGREE.txt
-fi
+	echo -e "You need to accept the terms."
+	sleep 1
+	echo -e "Press \e[1;33menter\e[0m to continue..."
+	read
+	clear
+	echo -e "This tool is only for educational purposes only."
+	sleep 2
+	echo -e "Use this tool only on yourown network and never without permission."
+	sleep 2
+	echo -e "I am not responsible for anything you do with this tool."
+	sleep 2
+	echo -e "Will you use this tool only on yourown network and only with yourown responsibility?(\e[1;33mYES\e[0m/\e[1;33mNO\e[0m): "
+	read YESORNO
+	if [ "$YESORNO" = "YES" ]
+	then 
+		echo "You have agreed the terms and you use this tool with yourown responsibility." > /root/lscript/IAGREE.txt
+		sleep 1
+		clear
+		echo -e "Adding lscript to PATH so you can access it from anywhere"
+		sleep 2
+		export PATH=/bin/lscript:$PATH
+		sleep 3
+		echo "export PATH=/bin/lscript:$PATH" >> ~/.bashrc
+		sleep 2
+		clear
+	fi
+	exec bash "$0"
 fi

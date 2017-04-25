@@ -79,15 +79,15 @@ then
 	./INSTALL
 	sleep 1
 	clear
-	cd
-	echo -e "Installing Torghost"
-	echo -e "Tool by SusmithHCK"
-	git clone https://github.com/susmithHCK/torghost.git
-	cd torghost
-	chmod +x install.sh
-	./install
-	sleep 1
-	clear
+	#cd
+	#echo -e "Installing Torghost"
+	#echo -e "Tool by SusmithHCK"
+	#git clone https://github.com/susmithHCK/torghost.git
+	#cd torghost
+	#chmod +x install.sh
+	#./install
+	#sleep 1
+	#clear
 	# cd
 	# echo -e "Installing Anonsurf"
 	# echo -e "Tool by Und3rf10w"

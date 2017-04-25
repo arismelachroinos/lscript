@@ -258,8 +258,9 @@ elif [ "$UORI" = "i" ]
 then
 	clear
 	echo -e "Adding lscript to PATH so you can access it from anywhere"
-	sleep 3
+	sleep 2
 	export PATH=/bin/lscript:$PATH
+	sleep 3
 	echo "export PATH=/bin/lscript:$PATH" >> ~/.bashrc
 	sleep 2
 	clear

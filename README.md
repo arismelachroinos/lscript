@@ -53,30 +53,41 @@ I actually made it for fun for me just to save some time, but i don't mind publi
 		
 # How to install
 (make sure you are a root user)
+
 **Be carefull.If you download it as a .zip file, it will not run.Make sure to follow these simple instructions.**
-``` cd
+
+```
+cd
 git clone https://github.com/arismelachroinos/lscript.git
 cd lscript
 chmod +x install.sh
-./install.sh ```
+./install.sh
+```
 
 ### How to run it
-(make sure you are a root user)
-``` open terminal
-type  "l"
-press enter ```
 
+(make sure you are a root user)
+
+```
+open terminal
+type  "l"
+press enter
+```
 **(Not even "lazy"!! Just "l"! The less you type , the better!)**
 
 ### How to uninstall
-``` cd /root/lscript
+``` 
+cd /root/lscript
 ./uninstall.sh
-rmdir -r /root/lscript ```
+rmdir -r /root/lscript 
+```
 
 ### How to update
-``` Run the script
+``` 
+Run the script
 Type "update"
-Report if it works ```
+Report if it works 
+```
 
 ### Things to keep in mind
 1)you should be a root user to run the script 

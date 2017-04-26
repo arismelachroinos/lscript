@@ -826,13 +826,13 @@ else
 		echo "You have agreed the terms and you use this tool with yourown responsibility." > /root/lscript/IAGREE.txt
 		sleep 1
 		clear
-		echo -e "Adding lscript to PATH so you can access it from anywhere"
-		sleep 2
-		export PATH=/bin/lscript:$PATH
-		sleep 3
-		echo "export PATH=/bin/lscript:$PATH" >> ~/.bashrc
-		sleep 2
-		clear
+		#echo -e "Adding lscript to PATH so you can access it from anywhere"
+		#sleep 2
+		#export PATH=/bin/lscript:$PATH
+		#sleep 3
+		#echo "export PATH=/bin/lscript:$PATH" >> ~/.bashrc
+		#sleep 2
+		#clear
 	fi
 	exec bash "$0"
 fi

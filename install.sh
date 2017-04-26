@@ -273,6 +273,10 @@ then
 fi
 echo -e "DONEEEE"
 sleep 1
-echo -e "Just open a terminal and type "l""
+echo -e "Just open a NEW terminal and type 'l'"
+echo -e ""
+sleep 1
+echo -e "It will NOT work on this terminal.Open a new one."
 sleep 3
-l
+read
+exit

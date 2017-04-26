@@ -1,5 +1,5 @@
 #! /bin/bash
-VERSION=1.3
+VERSION=1.4
 function interface_selection
 {
 echo -e "\e[1;33m 1\e[0m) $WLANN"
@@ -567,7 +567,7 @@ clear
 		sleep 1
 		FJC=0
 		export FJC
-		gnome-terminal -e lh1
+		gnome-terminal --geometry 80x25+9999+0 -e lh1
 		sleep 1
 		exec bash "$0"
 	elif [ "$YORNAA" = "11" ]
@@ -575,7 +575,7 @@ clear
 		clear
 		echo -e "Moving into new terminal..."
 		sleep 1
-		gnome-terminal -e lh3
+		gnome-terminal --geometry 80x25+9999+0 -e lh3
 		sleep 1
 		exec bash "$0"
 	elif [ "$YORNAA" = "12" ]
@@ -583,7 +583,7 @@ clear
 		clear
 		echo -e "Moving into new terminal..."
 		sleep 1
-		gnome-terminal -e lh4
+		gnome-terminal --geometry 80x25+9999+0 -e lh4
 		sleep 1
 		exec bash "$0"
 	elif [ "$YORNAA" = "update" ]
@@ -591,70 +591,82 @@ clear
 		#----------update-check-----------
 		clear
 		echo -e "Checking for updates..."
-		VER=$(timeout -s SIGTERM 20 curl "https://raw.githubusercontent.com/arismelachroinos/lscript/master/version.txt" 2>/dev/null)
-		if [ "$VERSION" != "$VER" ]
+		TESTINTERNETCONNECTION=$(curl -s checkip.dyndns.org | sed -e 's/.*Current IP Address: //' -e 's/<.*$//')
+		if [ "$TESTINTERNETCONNECTION" != "" ]
 		then
-		clear
-		echo -e "There is an update available."
-		echo -e "Current version: $VERSION"
-		echo -e "Updated version: $VER"
-		echo -e "Press \e[1;33many key\e[0m to continue..."
-		read
-		clear
-		#~ echo -e "I dont know if this works.So if it doesn't, to update the script just delete the /root/lscript folder from your system and then go again to https://github.com/arismelachroinos/lscript and reinstall it to get the newest one."
-		sleep 5		
-		echo -e "I am not sure if it works."
-		echo -e "Do you still want to try to update automatically?(\e[1;33my\e[0m/\e[1;33mn\e[0m): "
-		read UPDATEYN
-		if [ "$UPDATEYN" = "y" ]
-		then
+			VER=$(timeout -s SIGTERM 20 curl "https://raw.githubusercontent.com/arismelachroinos/lscript/master/version.txt" 2>/dev/null)
+			if [ "$VERSION" != "$VER" ]
+			then
 			clear
-			echo -e "Making new directory for the old lscript (will pass it to /root/lscriptold)"
-			sleep 2
-			mkdir /root/lscriptold
-			echo -e ""
-			echo -e "Moving lscript to lscriptold"
-			sleep 2
-			mv /root/lscript /root/lscriptold
-			echo -e "Cloning the latest github version to new /root/lscript"
-			sleep 2
-			cd
-			git clone https://github.com/arismelachroinos/lscript.git
-			cd /root/lscript
-			chmod +x install.sh
-			clear
-			echo -e "Ok , everything seems to be fine by now."
-			sleep 1
-			echo -e "A new terminal will open, and then the new install.sh will run to update the lscript.I will close."
-			echo -e ""
-			sleep 3
+			echo -e "There is an update available."
+			echo -e "Current version: $VERSION"
+			echo -e "Updated version: $VER"
 			echo -e "Press \e[1;33many key\e[0m to continue..."
 			read
-			cd /root/lscript
-			gnome-terminal -e ./install.sh
-			clear 
-			echo -e "If it doesn't work , please contact me"
-			sleep 4
-			echo -e ""
-			echo -e "Removing old lscript"
-			rmdir -r /root/lscriptold
-			exit
-		else 
 			clear
-			echo -e "You didnt select "y" so you go back..."
-			sleep 3
+			#~ echo -e "I dont know if this works.So if it doesn't, to update the script just delete the /root/lscript folder from your system and then go again to https://github.com/arismelachroinos/lscript and reinstall it to get the newest one."
+			sleep 5		
+			echo -e "I am not sure if it works."
+			echo -e "Do you still want to try to update automatically?(\e[1;33my\e[0m/\e[1;33mn\e[0m): "
+			read UPDATEYN
+			if [ "$UPDATEYN" = "y" ]
+			then
+				clear
+				echo -e "Making new directory for the old lscript (will pass it to /root/lscriptold)"
+				sleep 2
+				mkdir /root/lscriptold
+				echo -e ""
+				echo -e "Moving lscript to lscriptold"
+				sleep 2
+				mv /root/lscript /root/lscriptold
+				echo -e "Cloning the latest github version to new /root/lscript"
+				sleep 2
+				cd
+				git clone https://github.com/arismelachroinos/lscript.git
+				cd /root/lscript
+				chmod +x install.sh
+				clear
+				echo -e "Ok , everything seems to be fine by now."
+				sleep 1
+				echo -e "A new terminal will open, and then the new install.sh will run to update the lscript.I will close."
+				echo -e ""
+				sleep 3
+				echo -e "Press \e[1;33many key\e[0m to continue..."
+				read
+				cd /root/lscript
+				gnome-terminal -e ./install.sh
+				clear 
+				echo -e "If it doesn't work , please contact me"
+				sleep 4
+				echo -e ""
+				echo -e "Removing old lscript"
+				rmdir -r /root/lscriptold
+				exit
+			else 
+				clear
+				echo -e "You didnt select "y" so you go back..."
+				sleep 3
+				exec bash "$0"
+			fi
+			else
+			echo -e "There is no update available"
+			sleep 1
+			echo -e "Installed version: $VERSION"
+			sleep 1
+			echo -e "Github version:    $VER"
+			sleep 1
+			echo -e "Press \e[1;33many key\e[0m to go back..."
+			read		
 			exec bash "$0"
-		fi
+			fi
 		else
-		echo -e "There is no update available"
-		sleep 1
-		echo -e "Installed version: $VERSION"
-		sleep 1
-		echo -e "Github version:    $VER"
-		sleep 1
-		echo -e "Press \e[1;33many key\e[0m to go back..."
-		read		
-		exec bash "$0"
+			clear
+			echo -e "There is no connection."
+			sleep 1
+			echo -e "Maybe you should type 'stop' in the main manu to gain internet access again"
+			echo -e ""
+			echo -e "Press \e[1;33many key\e[0m to go back..."
+			read
 		fi
 	elif [ "$YORNAA" = "if" ]
 	then
@@ -808,21 +820,24 @@ else
 	exit
 fi
 else
-echo -e "You need to accept the terms."
-sleep 1
-echo -e "Press \e[1;33menter\e[0m to continue..."
-read
-clear
-echo -e "This tool is only for educational purposes only."
-sleep 2
-echo -e "Use this tool only on yourown network and never without permission."
-sleep 2
-echo -e "I am not responsible for anything you do with this tool."
-sleep 2
-echo -e "Will you use this tool only on yourown network and only with yourown responsibility?(\e[1;33mYES\e[0m/\e[1;33mNO\e[0m): "
-read YESORNO
-if [ "$YESORNO" = "YES" ]
-then 
-	echo "You have agreed the terms and you use this tool with yourown responsibility." > /root/lscript/IAGREE.txt
-fi
+	echo -e "You need to accept the terms."
+	sleep 1
+	echo -e "Press \e[1;33menter\e[0m to continue..."
+	read
+	clear
+	echo -e "This tool is only for educational purposes only."
+	sleep 2
+	echo -e "Use this tool only on your own network and never without permission."
+	sleep 2
+	echo -e "I am not responsible for anything you do with this tool."
+	sleep 2
+	echo -e "Will you use this tool only on your own network and only with your own responsibility?(\e[1;33mYES\e[0m/\e[1;33mNO\e[0m): "
+	read YESORNO
+	if [ "$YESORNO" = "YES" ]
+	then 
+		echo "You have agreed the terms and you use this tool with your own responsibility." > /root/lscript/IAGREE.txt
+		sleep 1
+		clear
+	fi
+	exec bash "$0"
 fi

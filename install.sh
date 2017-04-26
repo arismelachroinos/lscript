@@ -20,6 +20,12 @@ read ENT
 if [ -z $ENT ]
 then
 	clear
+	echo -e "Installing pip"
+	cd
+	apt-get install python-pip
+	pip install --upgrade pip
+	sleep 1
+	clear
 	echo -e "Installing Airgeddon"
 	echo -e "Tool by v1s1t0r1sh3r3"
 	cd
@@ -56,7 +62,7 @@ then
 	#~ git clone https://github.com/europa502/shARP.git
 	#~ cd /root/shARP
 	#~ chmod +x shARP.sh
-	#~ clear
+	clear
 	echo -e "Installing Xerxes"
 	echo -e "Tool by zanyarjamal"
 	cd
@@ -73,15 +79,15 @@ then
 	./INSTALL
 	sleep 1
 	clear
-	cd
-	echo -e "Installing Torghost"
-	echo -e "Tool by SusmithHCK"
-	git clone https://github.com/susmithHCK/torghost.git
-	cd torghost
-	chmod +x install.sh
-	./install
-	sleep 1
-	clear
+	#cd
+	#echo -e "Installing Torghost"
+	#echo -e "Tool by SusmithHCK"
+	#git clone https://github.com/susmithHCK/torghost.git
+	#cd torghost
+	#chmod +x install.sh
+	#./install
+	#sleep 1
+	#clear
 	# cd
 	# echo -e "Installing Anonsurf"
 	# echo -e "Tool by Und3rf10w"
@@ -153,10 +159,12 @@ then
 	cd morpheus
 	chmod +x morpheus.sh
 	cd
+	clear
 	echo -e "Installing Osrframework"
 	echo -e "Tool by i3visio"
 	sleep 1
 	pip install osrframework
+	clear
 	echo -e "Installing Hakku"
 	echo -e "Tool by 4shadoww"
 	sleep 1
@@ -166,6 +174,7 @@ then
 	chmod +x hakku
 	chmod +x install
 	cd
+	clear
 	echo -e "Installing Trity"
 	echo -e "Tool by Toxic-ig"
 	sleep 1
@@ -173,6 +182,7 @@ then
 	cd Trity
 	sudo python install.py
 	cd
+	clear
 	echo -e "Installing Cupp"
 	echo -e "Tool by Muris Kurgas"
 	sleep 1
@@ -182,6 +192,7 @@ then
 	chmod +x cupp.py
 	#~ python cupp.py
 	cd
+	clear
 	echo -e "Installing Dracnmap"
 	echo -e "Tool by Edo -maland-"
 	cd
@@ -189,6 +200,7 @@ then
 	cd Dracnmap
 	chmod +x Dracnmap.sh
 	cd
+	clear
 	echo -e "Installing Fern"
 	echo -e "Tool by Savio-code"
 	sleep 1
@@ -197,7 +209,7 @@ then
 	cd Fern-Wifi-Cracker
 	chmod +x execute.py
 	cd
-
+	clear
 	echo -e "Installing Kichthemout"
 	echo -e "Tool by Nikolaos Kamarinakis & David Schütz"
 	sleep 2
@@ -206,6 +218,7 @@ then
 	cd kickthemout/
 	sudo python -m pip install -r requirements.txt
 	cd
+	clear
 	echo -e "Installing BeeLogger"
 	echo -e "Tool by Alisson Moretto - 4w4k3"
 	cd
@@ -254,14 +267,27 @@ read UORI
 if [ "$UORI" = "u" ]
 then 
 	clear
-else
+elif [ "$UORI" = "i" ]
+then
+	clear
 	echo -e "Adding lscript to PATH so you can access it from anywhere"
+	sleep 1
 	export PATH=/bin/lscript:$PATH
+	sleep 1
 	echo "export PATH=/bin/lscript:$PATH" >> ~/.bashrc
+	sleep 1
 	clear
 fi
+mkdir /tmp/tmplcript
 echo -e "DONEEEE"
 sleep 1
-echo -e "Just open a terminal and type "l""
+clear
+echo -e "Just open a NEW terminal and type 'l'"
+echo -e ""
+sleep 2
+echo -e "Ok, ok..."
+sleep 1
+echo -e "I know you are lazy. I will do it for you..."
 sleep 3
-l
+gnome-terminal -e l
+kill -9 $PPID

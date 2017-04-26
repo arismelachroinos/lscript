@@ -24,7 +24,7 @@ export TARGB
 clear
 if [ "$HANDF" != "0" ]
 then
-	gnome-terminal -e lh2
+	gnome-terminal --geometry 70x10+0+0 -e lh2
 	airodump-ng --bssid $TARGB -c $TARGC -w /root/handshakes/$HANDF $WLANNM
 	clear
 	FJC=1

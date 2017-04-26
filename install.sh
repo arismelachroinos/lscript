@@ -62,7 +62,7 @@ then
 	#~ git clone https://github.com/europa502/shARP.git
 	#~ cd /root/shARP
 	#~ chmod +x shARP.sh
-	#~ clear
+	clear
 	echo -e "Installing Xerxes"
 	echo -e "Tool by zanyarjamal"
 	cd
@@ -159,10 +159,12 @@ then
 	cd morpheus
 	chmod +x morpheus.sh
 	cd
+	clear
 	echo -e "Installing Osrframework"
 	echo -e "Tool by i3visio"
 	sleep 1
 	pip install osrframework
+	clear
 	echo -e "Installing Hakku"
 	echo -e "Tool by 4shadoww"
 	sleep 1
@@ -172,6 +174,7 @@ then
 	chmod +x hakku
 	chmod +x install
 	cd
+	clear
 	echo -e "Installing Trity"
 	echo -e "Tool by Toxic-ig"
 	sleep 1
@@ -179,6 +182,7 @@ then
 	cd Trity
 	sudo python install.py
 	cd
+	clear
 	echo -e "Installing Cupp"
 	echo -e "Tool by Muris Kurgas"
 	sleep 1
@@ -188,6 +192,7 @@ then
 	chmod +x cupp.py
 	#~ python cupp.py
 	cd
+	clear
 	echo -e "Installing Dracnmap"
 	echo -e "Tool by Edo -maland-"
 	cd
@@ -195,6 +200,7 @@ then
 	cd Dracnmap
 	chmod +x Dracnmap.sh
 	cd
+	clear
 	echo -e "Installing Fern"
 	echo -e "Tool by Savio-code"
 	sleep 1
@@ -203,7 +209,7 @@ then
 	cd Fern-Wifi-Cracker
 	chmod +x execute.py
 	cd
-
+	clear
 	echo -e "Installing Kichthemout"
 	echo -e "Tool by Nikolaos Kamarinakis & David Schütz"
 	sleep 2
@@ -212,6 +218,7 @@ then
 	cd kickthemout/
 	sudo python -m pip install -r requirements.txt
 	cd
+	clear
 	echo -e "Installing BeeLogger"
 	echo -e "Tool by Alisson Moretto - 4w4k3"
 	cd
@@ -264,19 +271,22 @@ elif [ "$UORI" = "i" ]
 then
 	clear
 	echo -e "Adding lscript to PATH so you can access it from anywhere"
-	sleep 2
+	sleep 1
 	export PATH=/bin/lscript:$PATH
-	sleep 3
+	sleep 1
 	echo "export PATH=/bin/lscript:$PATH" >> ~/.bashrc
-	sleep 2
+	sleep 1
 	clear
 fi
 echo -e "DONEEEE"
 sleep 1
+clear
 echo -e "Just open a NEW terminal and type 'l'"
 echo -e ""
 sleep 1
-echo -e "It will NOT work on this terminal.Open a new one."
+echo -e "Ok, ok..."
+sleep 1
+echo -e "I know you are lazy. I will do it for you..."
 sleep 3
-read
-exit
+gnome-terminal -e l
+kill -9 $PPID

@@ -304,4 +304,5 @@ sleep 1
 echo -e "I know you are lazy. I will do it for you..."
 sleep 3
 gnome-terminal -e l
+sleep 2
 kill -9 $PPID

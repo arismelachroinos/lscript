@@ -1,5 +1,5 @@
 #! /bin/bash
-VERSION=1.4
+VERSION=1.4.1
 function interface_selection
 {
 echo -e "\e[1;33m 1\e[0m) $WLANN"
@@ -604,10 +604,7 @@ clear
 			echo -e "Press \e[1;33many key\e[0m to continue..."
 			read
 			clear
-			#~ echo -e "I dont know if this works.So if it doesn't, to update the script just delete the /root/lscript folder from your system and then go again to https://github.com/arismelachroinos/lscript and reinstall it to get the newest one."
-			sleep 5		
-			echo -e "I am not sure if it works."
-			echo -e "Do you still want to try to update automatically?(\e[1;33my\e[0m/\e[1;33mn\e[0m): "
+			echo -e "Do you want to update?(\e[1;33my\e[0m/\e[1;33mn\e[0m): "
 			read UPDATEYN
 			if [ "$UPDATEYN" = "y" ]
 			then
@@ -630,17 +627,18 @@ clear
 				sleep 1
 				echo -e "A new terminal will open, and then the new install.sh will run to update the lscript.I will close."
 				echo -e ""
-				sleep 3
+				sleep 4
 				echo -e "Press \e[1;33many key\e[0m to continue..."
 				read
 				cd /root/lscript
 				gnome-terminal -e ./install.sh
 				clear 
-				echo -e "If it doesn't work , please contact me"
-				sleep 4
+				sleep 1
 				echo -e ""
 				echo -e "Removing old lscript"
 				rm -rf /root/lscriptold
+				echo -e "Exiting..."
+				sleep 1
 				exit
 			else 
 				clear

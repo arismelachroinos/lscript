@@ -640,7 +640,7 @@ clear
 				sleep 4
 				echo -e ""
 				echo -e "Removing old lscript"
-				rmdir -r /root/lscriptold
+				rm -rf /root/lscriptold
 				exit
 			else 
 				clear

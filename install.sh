@@ -262,6 +262,20 @@ cp lh41 /bin/lscript
 cp lh42 /bin/lscript
 cp lh43 /bin/lscript
 clear
+if [ ! -d /root/handshakes ]
+then
+	mkdir /root/handshakes
+	echo -e "Made /root/handshake directory"
+else
+	echo -e "/root/handshakes directory detected.Good."
+fi
+if [ ! -d /root/wordlists ]
+then
+	mkdir /root/wordlists
+	echo -e "Made /root/wordlists directory"
+else
+	echo -e "/root/wordlists directory detected.Good."
+fi
 echo -e "Are you updating or installing the script?(\e[1;33mu\e[0m/\e[1;33mi\e[0m): "
 read UORI
 if [ "$UORI" = "u" ]
@@ -278,7 +292,7 @@ then
 	sleep 1
 	clear
 fi
-mkdir /tmp/tmplcript
+#~ mkdir /tmp/tmplcript
 echo -e "DONEEEE"
 sleep 1
 clear

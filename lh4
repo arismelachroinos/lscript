@@ -1,7 +1,22 @@
 #! /bin/bash
+#############DEFAULTS###############
+#setting yellow-start 
+YS="\e[1;33m"
+#setting color-end
+CE="\e[0m"
+#setting red-start
+RS="\e[1;31m"
+#setting frequent stings
+YNYES="("$YS"y"$CE"/"$YS"n"$CE")("$YS"Enter"$CE"=yes)"
+YNNO="("$YS"y"$CE"/"$YS"n"$CE")("$YS"Enter"$CE"=no)"
+YNONLY="("$YS"y"$CE"/"$YS"n"$CE")"
+PAKTC="Press "$YS"any key$CE to continue..."
+PAKTGB="Press "$YS"any key$CE to go back..."
+
+####################################
 WLANNM=$(cat /root/lscript/wlanmon.txt)
 export WLANNM
-echo -e "---------------------------\e[1;31mWEP hacking\e[0m---------------------------"
+echo -e "---------------------------"$RS"WEP hacking"$CE"---------------------------"
 if [ ! -z ${WEPB+x} ]
 then
 	echo -e "BSSID: $WEPB"
@@ -14,15 +29,15 @@ then
 else
 	echo -e "Target's channel not set"
 fi
-echo -e "\e[1;33mw\e[0m) WifiTe                           All attacks"
-echo -e "\e[1;33m1\e[0m) Scan for nearby networks"
-echo -e "\e[1;33m2\e[0m) Start capturing ivs"
-echo -e "\e[1;33m3\e[0m) Fakeauth-arpreplay               If no clients connected"
-echo -e "\e[1;33m4\e[0m) Fakeauth-fragmentation           soon"
-echo -e "\e[1;33m5\e[0m) Chop-chop                        soon"
-echo -e "\e[1;33m6\e[0m) Aircrack the ivs"
-echo -e "\e[1;33m00\e[0m) Main menu"
-echo -e "\e[1;33m 0\e[0m) EXIT"
+echo -e ""$YS"w"$CE") WifiTe                           All attacks"
+echo -e ""$YS"1"$CE") Scan for nearby networks"
+echo -e ""$YS"2"$CE") Start capturing ivs"
+echo -e ""$YS"3"$CE") Fakeauth-arpreplay               If no clients connected"
+echo -e ""$YS"4"$CE") Fakeauth-fragmentation           not yet"
+echo -e ""$YS"5"$CE") Chop-chop                        not yet"
+echo -e ""$YS"6"$CE") Aircrack the ivs"
+#~ echo -e ""$YS"00"$CE") Main menu"
+echo -e ""$YS" 0"$CE") EXIT"
 echo -e "Choose: "
 read WEP
 if [ "$WEP" = "1" ]
@@ -66,10 +81,10 @@ elif [ "$WEP" = "0" ]
 then
 	clear
 	exit
-elif [ "$WEP" = "00" ]
-then
-	clear
-	exec bash "$0"
+#~ elif [ "$WEP" = "00" ]
+#~ then
+	#~ clear
+	#~ exec bash "$0"
 else 
 	echo -e "I can't do that bro..."
 	sleep 2
@@ -78,7 +93,7 @@ else
 	sleep 1
 	exec bash "$0"
 fi
-echo -e "Choose again?(\e[1;33my\e[0m/\e[1;33mn\e[0m)(\e[1;33mEnter\e[0m=yes): "
+echo -e "Choose again?"$YNYES": "
 read -e CAG
 if [ "$CAG" = "n" ]
 then

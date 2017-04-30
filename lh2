@@ -1,23 +1,39 @@
 #! /bin/bash
+#############DEFAULTS###############
+#setting yellow-start 
+YS="\e[1;33m"
+#setting color-end
+CE="\e[0m"
+#setting red-start
+RS="\e[1;31m"
+#setting frequent stings
+YNYES="("$YS"y"$CE"/"$YS"n"$CE")("$YS"Enter"$CE"=yes)"
+YNNO="("$YS"y"$CE"/"$YS"n"$CE")("$YS"Enter"$CE"=no)"
+YNONLY="("$YS"y"$CE"/"$YS"n"$CE")"
+PAKTC="Press "$YS"any key$CE to continue..."
+PAKTGB="Press "$YS"any key$CE to go back..."
+
+####################################
 k=1
 REDEAUTH="n"
 WLANNM=$(cat /root/lscript/wlanmon.txt)
 export WLANNM
 while (( $k != 0 ))
 do
+echo -e "------------------------------"$RS"DEAUTH"$CE"------------------------------"
 if [ "$REDEAUTH" = "y" ]
 then
 	export LASTOPTIONS
 	xterm -geometry 90x15+9999+999999 -e bash -c 'aireplay-ng $LASTOPTIONS && exit; exec bash'
 	#aireplay-ng $LASTOPTIONS
 else
-	echo -e "Do you want to deauth a specific client?(\e[1;33my\e[0m/\e[1;33mn\e[0m)(\e[1;33mEnter\e[0m=no): "	
+	echo -e "Do you want to deauth a specific client?"$YNNO": "	
 	read -e OPTION
 	if [ "$OPTION" = "y" ]
 	then
 		echo -e "Enter client's MAC: "
 		read -e TCC
-		echo -e "Type number of deauths to send(0=inf)(Enter=0): "
+		echo -e "Type number of deauths to send("$YS"0"$CE"=inf)("$YS"Enter"$CE"=0): "
 		read -e DEAUTHS
 		clear
 		if [ -z $DEAUTHS ]
@@ -32,7 +48,7 @@ else
 		#aireplay-ng -0 $DEAUTHS -a $TARGB -c $TCC wlan0mon
 		#sleep 1h
 	else
-		echo -e "Type the number of deauths to send(0=inf)(Enter=0): "
+		echo -e "Type the number of deauths to send("$YS"0"$CE"=inf)("$YS"Enter"$CE"=0): "
 		read -e DEAUTHS
 		if [ -z $DEAUTHS ]
 		then
@@ -48,11 +64,11 @@ else
 fi
 clear
 #----------------------------------------------------------------------------------------------------------------------------------
-echo -e "Re-deauth with the same exact settings?(\e[1;33my\e[0m/\e[1;33mn\e[0m)(\e[1;33mEnter\e[0m=yes)(0=Exit): "
+echo -e "Re-deauth with the same exact settings?"$YNYES"("$YS"0"$CE"=Exit): "
 read -e REDEAUTH
 if [ "$REDEAUTH" = "n" ]
 then
-	echo -e "Exit completely?(\e[1;33my\e[0m/\e[1;33mn\e[0m)(\e[1;33mEnter\e[0m=no): "
+	echo -e "Exit completely?"$YNNO": "
 	read -e EXIT
 	if [ "$EXIT" = "y" ]
 	then
@@ -70,7 +86,7 @@ else
 	#aireplay-ng $LASTOPTIONS
 fi
 done
-echo -e "Sure?(\e[1;33my\e[0m/\e[1;33mn\e[0m)(\e[1;33mEnter\e[0m=no): "
+echo -e "Sure?"$YNNO": "
 read -e BB
 if [ "$BB" = "y" ]
 then

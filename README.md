@@ -37,15 +37,17 @@ I actually made it for fun for me just to save some time, but i don't mind publi
 		Fern Wifi Cracker		by Savio-code
 		Kichthemout			by Nikolaos Kamarinakis & David Schütz
 		BeeLogger			by Alisson Moretto - 4w4k3
-		Torghost			by SusmithHCK
 		Ghost-Phisher			by Savio-code
 		Mdk3-master                     by Musket Developer
-		Anonym8                         by HiroshiManRise
+		Anonsurf                        by Und3rf10w
 		The Eye                         by EgeBalci
 		Airgeddon                       by v1s1t0r1sh3r3
 		Xerxes                          by zanyarjamal
 		Ezsploit                        by rand0m1ze
 		Katana framework                by PowerScript
+		4nonimizer                      by Hackplayers
+		Sslstrip2                       by LeonardoNve
+		Dns2proxy                       by LeonardoNve
 	**Wifi password scripts**
 		Handshake       (WPA-WPA2) (WORKING PERFECTLY-NO COMMANDS)
 		Find WPS pin    (WPA-WPA2) (WORKING PERFECTLY-NO COMMANDS)

@@ -108,14 +108,14 @@ then
 	#sleep 1
 	#clear
 	# cd
-	# echo -e "Installing Anonsurf"
-	# echo -e "Tool by Und3rf10w"
-	# git clone https://github.com/Und3rf10w/kali-anonsurf.git
-	# cd kali-anonsurf
-	# chmod +x install.sh
-	# ./install
-	# sleep 1
-	# clear
+	echo -e "Installing Anonsurf"
+	echo -e "Tool by Und3rf10w"
+	git clone https://github.com/Und3rf10w/kali-anonsurf.git
+	cd kali-anonsurf
+	chmod +x install.sh
+	./install
+	sleep 1
+	clear
 	cd
 	echo -e "Installing Fluxion"
 	echo -e "Tool by Deltaxflux"

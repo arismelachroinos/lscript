@@ -173,6 +173,11 @@ function aircrack_handshake
 }
 
 #-------------------------------------------
+if [ -f "/root/handshakes/*.csv" ]
+then
+	rm /root/handshakes/*.csv
+	rm /root/handshakes/*.netxml
+fi
 echo -e "----------------------------"$RS"HANDSHAKE"$CE"----------------------------"
 echo -e ""$YS" 1"$CE") Scan networks nearby"
 echo -e ""$YS" 2"$CE") Capture handshake"
@@ -190,9 +195,6 @@ then
 elif [ "$AA" = "2" ]
 then
 	capture_handshake
-	rm /root/handshakes/*.csv
-	rm /root/handshakes/*.netxml
-	#gnome-terminal -e lh2	
 elif [ "$AA" = "3" ]
 then
 	if [ "$FJC" = "1" ]

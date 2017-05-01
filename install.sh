@@ -20,6 +20,25 @@ read ENT
 if [ -z $ENT ]
 then
 	clear
+	echo -e "Installing 4nonimizer"
+	echo -e "Tool by Hackplayers"
+	cd
+	git clone https://github.com/Hackplayers/4nonimizer.git
+	cd 4nonimizer
+	chmod +x 4nonimizer
+	./4nonimizer install
+	clear
+	echo -e "Installing sslstrip2"
+	echo -e "Tool by LeonardoNve"
+	cd
+	git clone https://github.com/byt3bl33d3r/sslstrip2
+	cd sslstrip2
+	python setup.py install
+	clear
+	cd
+	echo -e "Installing dns2proxy"
+	git clone https://github.com/LeonardoNve/dns2proxy
+	clear
 	echo -e "Installing pip"
 	cd
 	apt-get install python-pip
@@ -223,7 +242,7 @@ then
 	echo -e "Tool by Alisson Moretto - 4w4k3"
 	cd
 	git clone https://github.com/4w4k3/BeeLogger.git
-	cd cd BeeLogger
+	cd BeeLogger
 	chmod +x install.sh
 	./install.sh
 	cd
@@ -246,6 +265,9 @@ chmod +x /root/lscript/lh4
 chmod +x /root/lscript/lh41
 chmod +x /root/lscript/lh42
 chmod +x /root/lscript/lh43
+chmod +x /root/lscript/ls/l131.sh
+chmod +x /root/lscript/ls/l132.sh
+chmod +x /root/lscript/ls/l133.sh
 chmod +x /root/lscript/uninstall.sh
 clear
 echo -e "Copying script to /bin/lscript"

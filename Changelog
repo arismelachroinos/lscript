@@ -1,0 +1,65 @@
+1.7
+Added mdk3 deauth method
+Removed mac changing of eth0 when typing "start"
+Added deauth option even for no file capture
+Fluxion updated!
+Added websploit wifi tool
+Added new fix in "errors"
+Added Pupy to remote access
+
+1.6
+Fixed BeeLogger install error
+Added sslstrip2
+Added dns2proxy
+Added MITM password sniffing automation
+Replaced anonym8 with anonsurf
+Replaced torghost with 4nonimizer
+
+
+1.5
+organised some code
+fixed random bugs
+fixed mistake when selecting xerxes dos tool
+checking if monitor mode enabled on options 10 11 12
+checking if monitor mode disabled on option 7
+
+
+
+1.4
+Fixed typos
+Updated installer 
+Added xterm bottom right position when deauthing on handshake capture
+Added pixie dust WPS pin cracking
+Changed WPS pin cracking code
+Improved position of new gnome-terminals on handshake and WPS pin finding features
+Improved update feature , testing connection before updating
+
+
+1.3
+Fixed colors on interface selection
+Added "Main menu" and "Exit" on interface selection
+Added option to not create a file on handshake capture
+Added .csv and .netxml file cleanup on handshake capture
+Fixed typo on install.sh
+
+1.2
+removed shARP as it has problems
+added Xerxes DoS tool
+added ezsploit tool on remote access
+added ezsploit to installer
+added Katana framework on wifi tools
+added Katana framework on installer
+added wifiphisher compatibility if you only have one wlan inteface
+added airgeddon to wifi tools
+added airgeddon to installer
+
+0.3
+added wifite to WEP hacking
+added shARP network defender on Tools
+added shARP installation to install.sh
+added mdk3-master to Tools
+added mdk3-master to install.sh
+added wash error on error-fixing (type "errors")
+
+0.2
+Added ghost phisher tool

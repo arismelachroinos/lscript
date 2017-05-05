@@ -6,9 +6,9 @@ echo -e "Did you run 'apt-get update' recently?(\e[1;33my\e[0m/\e[1;33mn\e[0m)(\
 read -e APTG
 if [ "$APTG" = "n" ]
 then
-	echo -e "It's better to run it yourself.Come back when you do."
-	sleep 3
-	exit
+	clear 
+	apt-get update
+	apt-get upgrade
 else
 	echo -e "Awesome! Let's start..."
 	sleep 2
@@ -27,6 +27,12 @@ then
 	cd 4nonimizer
 	chmod +x 4nonimizer
 	./4nonimizer install
+	clear
+	cd
+	apt-get install python-pip
+	apt-get install php-curl
+	gem install pcaprub
+	gem install packetfu
 	clear
 	echo -e "Installing sslstrip2"
 	echo -e "Tool by LeonardoNve"
@@ -117,25 +123,47 @@ then
 	sleep 1
 	clear
 	cd
-	echo -e "Installing Fluxion"
-	echo -e "Tool by Deltaxflux"
-	sleep 1
-	echo -e "Deltaxflux deleted the project.Do you want to download it from user disquette38 by yourown responsibility?(\e[1;33my\e[0m/\e[1;33mn\e[0m): "
-	read -e FLUX
-	if [ "$FLUX" = "y" ]
+	echo -e "Install the latest Fluxion and delete the old , if any?(\e[1;33my\e[0m/\e[1;33mn\e[0m)(\e[1;33mEnter\e[0m=yes): "
+	read FLUPD
+	if [ "$FLUPD" = "n" ]
 	then
-		git clone https://github.com/disquette38/fluxion.git
-		cd fluxion/install
+		echo -e "Skipping fluxion installation..."
+		sleep 2
+	else
+		mv /root/fluxion /root/fluxionold
+		echo -e "Installing fluxion"
+		echo -e "Tool by Deltaxflux"
+		sleep 1
+		cd
+		wget https://fluxion.tk/fluxion-unstable.zip
+		apt-get install unzip
+		clear
+		unzip /root/fluxion*.zip -d /root
+		cd /root/fluxion/install
 		chmod +x install.sh
 		./install.sh
-		sleep 1
-		clear
-		cd
-	else
-		echo -e "Skipping Fluxion then..."
-		sleep 1
-		clear
 	fi
+	#~ echo -e "Deltaxflux deleted the project.Do you want to download it from user disquette38 by yourown responsibility?(\e[1;33my\e[0m/\e[1;33mn\e[0m): "
+	#~ read -e FLUX
+	#~ if [ "$FLUX" = "y" ]
+	#~ then
+		#~ git clone https://github.com/disquette38/fluxion.git
+		#~ cd fluxion/install
+		#~ chmod +x install.sh
+		#~ ./install.sh
+		#~ sleep 1
+		#~ clear
+		#~ cd
+	#~ else
+		#~ echo -e "Skipping Fluxion then..."
+		#~ sleep 1
+		#~ clear
+	#~ fi
+	clear
+	echo -e "Installing websploit"
+	echo -e "Tool by 0x0ptim0us (Fardin Allahverdinazhand)"
+	apt-get install websploit
+	clear
 	echo -e "Installing The Eye"
 	echo -e "Tool by EgeBalci"
 	sleep 1
@@ -246,6 +274,30 @@ then
 	chmod +x install.sh
 	./install.sh
 	cd
+	apt-get install python-pip
+	apt-get install php-curl
+	gem install pcaprub
+	gem install packetfu
+	clear
+	echo -e "Installing Pupy"
+	echo -e "Tool by n1nj4sec"
+	cd
+	git clone https://github.com/n1nj4sec/pupy.git
+	cd pupy
+	git submodule init
+	git submodule update
+	pip install -r pupy/requirements.txt
+	cd
+	clear
+	#~ echo -e "Installing Spoofa"
+	#~ echo -e "Tool by SilverFoxx"
+	#~ cd
+	#~ git clone https://github.com/SilverFoxx/Spoofa.git
+	#~ clear
+	#~ echo -e "Installing Yamas"
+	#~ ehco -e "Tool by SilverFoxx"
+	#~ cd
+	#~ git clone https://github.com/SilverFoxx/Yamas.git
 	echo -e "Downloading is finished."
 	sleep 2
 else

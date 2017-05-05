@@ -36,6 +36,7 @@ read -e HANDF
 HANDFFP="/root/handshakes/$HANDF-01.cap"
 export HANDFFP
 export TARGB
+export TARGC
 clear
 if [ "$HANDF" != "0" ]
 then
@@ -43,8 +44,11 @@ then
 	airodump-ng --bssid $TARGB -c $TARGC -w /root/handshakes/$HANDF $WLANNM
 	clear
 	FJC=1
+	rm /root/handshakes/*.csv
+	rm /root/handshakes/*.netxml
 	exec bash "$0"
 else
+	gnome-terminal --geometry 70x10+0+0 -e lh2
 	airodump-ng --bssid $TARGB -c $TARGC $WLANNM
 	echo -e "Start capturing on a file?"$YNYES""
 	read SCF

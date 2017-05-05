@@ -43,7 +43,7 @@ if [ "$YN" = "1" ]
 then
 	echo -e "Scaning in new terminal..."
 	sleep 1
-	gnome-terminal --geometry 70x15+9999+9999 -e "wash -i $WLANNM && read "
+	gnome-terminal --geometry 90x15+9999+9999 -e "wash -i $WLANNM && read "
 	clear
 	exec bash "$0"
 elif [ "$YN" = "2" ]

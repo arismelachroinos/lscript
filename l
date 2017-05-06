@@ -410,11 +410,10 @@ clear
 							clear
 							exec bash "$0"
 						else 
-							echo -e "I can't do that bro..."
-							sleep 2
 							clear
-							echo -e "Let's try again..."
-							sleep 1
+							echo -e "Wrong choice"
+							sleep 0.3
+							clear
 							exec bash "$0"
 						fi
 				elif [ "$APPP" = "0" ]
@@ -1078,11 +1077,10 @@ clear
 		echo -e "Done."
 		echo -e "SUCCESS!"
 	else
-		echo -e "I can't do that bro..."
-		sleep 1
 		clear
-		echo -e "Let's try again..."
-		sleep 1
+		echo -e "Wrong choice"
+		sleep 0.3
+		clear
 		exec bash "$0"
 	fi
 echo -e "Choose again?"$YNYES": "

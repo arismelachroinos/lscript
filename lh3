@@ -57,6 +57,7 @@ then
 	export BSSIDT
 	export CHANT
 	export DELT
+	clear
 	echo -e "Starting reaver in a new terminal"
 	sleep 1
 	GLV="2"
@@ -77,6 +78,7 @@ then
 	sleep 1
 	GLV="3"
 	export GLV
+	clear
 	gnome-terminal -e lh31
 	clear
 	exec bash "$0"
@@ -88,6 +90,7 @@ then
 	read -e CHANT
 	export CHANT
 	export BSSIDT
+	clear
 	reaver -i $WLANNM -b $BSSIDT -vvv -K 1 -c $CHANT -w
 	echo -e "$PAKTC"
 	read

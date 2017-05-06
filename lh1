@@ -44,8 +44,6 @@ then
 	airodump-ng --bssid $TARGB -c $TARGC -w /root/handshakes/$HANDF $WLANNM
 	clear
 	FJC=1
-	rm /root/handshakes/*.csv
-	rm /root/handshakes/*.netxml
 	exec bash "$0"
 else
 	gnome-terminal --geometry 70x10+0+0 -e lh2
@@ -186,6 +184,7 @@ echo -e "----------------------------"$RS"HANDSHAKE"$CE"------------------------
 echo -e ""$YS" 1"$CE") Scan networks nearby"
 echo -e ""$YS" 2"$CE") Capture handshake"
 echo -e ""$YS" 3"$CE") Aircrack the handshake"
+echo -e ""$YS" 4"$CE") Remove .csv and .netxml files"
 echo -e ""$YS" 0"$CE") EXIT"
 echo -e " Choose: "
 sleep 1
@@ -209,15 +208,18 @@ then
 	AAGAIN=2
 	aircrack_handshake
 	fi
+elif [ "$AA" = "4" ]
+then
+	rm /root/handshakes/*.csv
+	rm /root/handshakes/*.netxml
 elif [ "$AA" = "0" ]
 then
 	exit
 else
-	echo -e "I can't do that bro..."
-	sleep 2
 	clear
-	echo -e "Let's try again..."
-	sleep 1
+	echo -e "Wrong choice"
+	sleep 0.3
+	clear
 	exec bash "$0"
 fi
 if [ "$CH" = "1" ]

@@ -1,4 +1,4 @@
-## Welcome to the LAZY script  v1.7
+## Welcome to the LAZY script  v1.8
 <p align="center">
 <img src="http://i.imgur.com/GlXG9k3.png"/>
 </p>
@@ -49,6 +49,7 @@ I actually made it for fun for me just to save some time, but i don't mind publi
 		Sslstrip2                       by LeonardoNve
 		Dns2proxy                       by LeonardoNve
 		Pupy                            by n1nj4sec
+		Zirikatu                        by pasahitz
 	**Wifi password scripts**
 		Handshake       (WPA-WPA2) (WORKING PERFECTLY-NO COMMANDS)
 		Find WPS pin    (WPA-WPA2) (WORKING PERFECTLY-NO COMMANDS)

@@ -94,5 +94,7 @@ Type "update"
 
 ### Things to keep in mind
 1)you should be a root user to run the script 
+
 2)you should contact me if something doesnt work (Write it on the "issues" tab at the top)
+
 3)you should contact me if you want a feature to be added (Write it on the "issues" tab at the top)

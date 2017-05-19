@@ -90,7 +90,6 @@ rmdir -r /root/lscript
 ``` 
 Run the script
 Type "update"
-Report if it works 
 ```
 
 ### Things to keep in mind

@@ -1,6 +1,6 @@
 ## Welcome to the LAZY script  v1.8
 <p align="center">
-<img src="http://i.imgur.com/2sgLY0M.png/>
+<img src="http://i.imgur.com/2sgLY0M.png>
 </p>
 
 **For feature-recommendation , add it on the "Issues" tab. NOW!**

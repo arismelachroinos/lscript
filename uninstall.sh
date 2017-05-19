@@ -1,4 +1,15 @@
 #! /bin/bash
+function nounistall
+{
+	echo -e "I knew you are still lazy :D :D "
+	sleep 2
+	echo -e "If you want any feature to be added, contact me on FB"
+	sleep 2
+	echo -e " "
+	echo -e "Aris"
+	sleep 1
+	exit
+}
 echo -e "Do you really want to uninstall the Lazy script from your system?(y/n)(Enter=no): "
 read CHUN
 if [ "$CHUN" = "y" ]
@@ -19,22 +30,8 @@ then
 		read
 		exit
 	else
-		echo -e "I knew you are still lazy :D :D "
-		sleep 2
-		echo -e "If you want any feature to be added, contact me on FB"
-		sleep 2
-		echo -e " "
-		echo -e "Aris"
-		sleep 1
-	exit
+		nounistall
 	fi
 else
-	echo -e "I knew you are still lazy :D :D "
-	sleep 2
-	echo -e "If you want any feature to be added, contact me on FB"
-	sleep 2
-	echo -e " "
-	echo -e "Aris"
-	sleep 1
-	exit
+	nounistall
 fi

@@ -1,3 +1,20 @@
+1.8
+Massive update to installer(updates now are installed x100 faster)
+"7) View your Public IP" option now loads a lot faster
+Added "back" option to menus for easier navigation
+Added custom keyboard shortcuts option
+Added handshake validation
+Added site clonning + dnsspoofing in MITM scripts
+Added bully wps tool
+Added WiFi autopwner toolT
+Added Zirikatu payload generator
+Added view changelog option
+Added metasploit payload creation automation
+Latest fluxion added
+Improved code in menus(added while loops)
+Improved code, many functions added
+Improved code, more default variables for easy and fast changes
+
 1.7
 Added mdk3 deauth method
 Removed mac changing of eth0 when typing "start"

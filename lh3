@@ -10,6 +10,7 @@ RS="\e[1;31m"
 YNYES="("$YS"y"$CE"/"$YS"n"$CE")("$YS"Enter"$CE"=yes)"
 YNNO="("$YS"y"$CE"/"$YS"n"$CE")("$YS"Enter"$CE"=no)"
 YNONLY="("$YS"y"$CE"/"$YS"n"$CE")"
+PAKT="Press "$YS"any key$CE to"
 PAKTC="Press "$YS"any key$CE to continue..."
 PAKTGB="Press "$YS"any key$CE to go back..."
 
@@ -37,6 +38,8 @@ echo -e ""$YS" 1"$CE") Scan with wash"
 echo -e ""$YS" 2"$CE") Reaver (slow)"
 echo -e ""$YS" 3"$CE") Reaver (if you already have the WPS pin)"
 echo -e ""$YS" 4"$CE") Pixie Dust (fast)"
+echo -e ""$YS" 5"$CE") Bully - automated tool"
+echo -e ""$YS" 6"$CE") WiFi autopwner - automated tool"
 echo -e ""$YS" 0"$CE") EXIT"
 read -e YN
 if [ "$YN" = "1" ]
@@ -96,6 +99,16 @@ then
 	read
 	clear
 	exec bash "$0"
+elif [ "$YN" = "5" ]
+then
+	cd /root/bully/src
+	./bully.py
+	cd
+elif [ "$YN" = "6" ]
+then
+	cd /root/WiFi-autopwner
+	./wifi-autopwner.sh
+	cd
 elif [ "$YN" = "0" ]
 then
 	exit

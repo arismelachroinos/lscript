@@ -12,6 +12,7 @@ RS="\e[1;31m"
 YNYES="("$YS"y"$CE"/"$YS"n"$CE")("$YS"Enter"$CE"=yes)"
 YNNO="("$YS"y"$CE"/"$YS"n"$CE")("$YS"Enter"$CE"=no)"
 YNONLY="("$YS"y"$CE"/"$YS"n"$CE")"
+PAKT="Press "$YS"any key$CE to"
 PAKTC="Press "$YS"any key$CE to continue..."
 PAKTGB="Press "$YS"any key$CE to go back..."
 
@@ -21,6 +22,20 @@ function scan_networks
 {
 FJC=0
 airodump-ng $WLANNM
+}
+function validhandshake
+{
+echo -e "Did you capture the handshake?"$YNYES""
+read HANDVALID
+if [ "$HANDVALID" = "n"]
+then
+	echo -e "Removing the file..."
+	rm $HANDFFP
+	FJC=0
+else
+	FJC=1
+fi
+clear
 }
 function capture_handshake
 {
@@ -42,8 +57,7 @@ if [ "$HANDF" != "0" ]
 then
 	gnome-terminal --geometry 70x10+0+0 -e lh2
 	airodump-ng --bssid $TARGB -c $TARGC -w /root/handshakes/$HANDF $WLANNM
-	clear
-	FJC=1
+	validhandshake
 	exec bash "$0"
 else
 	gnome-terminal --geometry 70x10+0+0 -e lh2
@@ -62,8 +76,7 @@ else
 		export HANDFFP
 		gnome-terminal -e lh2
 		airodump-ng --bssid $TARGB -c $TARGC -w /root/handshakes/$HANDF $WLANNM
-		clear
-		FJC=1
+		validhandshake
 		exec bash "$0"
 	fi
 fi
@@ -138,7 +151,7 @@ function aircrack_handshake
 	cd /root/handshakes
 	ls | sort
 	cd
-	echo -e "Enter handshake name(include ectension)(on folder /root/handshakes/): "
+	echo -e "Enter handshake name(include extension)(on folder /root/handshakes/): "
 	read -e HANDFT
 	HANDFFT="/root/handshakes/$HANDFT"
 	if [ -f "$HANDFFT" ];
@@ -212,6 +225,9 @@ elif [ "$AA" = "4" ]
 then
 	rm /root/handshakes/*.csv
 	rm /root/handshakes/*.netxml
+	sleep 0.2
+	clear
+	exec bash "$0"
 elif [ "$AA" = "0" ]
 then
 	exit

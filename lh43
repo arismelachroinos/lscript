@@ -10,6 +10,7 @@ RS="\e[1;31m"
 YNYES="("$YS"y"$CE"/"$YS"n"$CE")("$YS"Enter"$CE"=yes)"
 YNNO="("$YS"y"$CE"/"$YS"n"$CE")("$YS"Enter"$CE"=no)"
 YNONLY="("$YS"y"$CE"/"$YS"n"$CE")"
+PAKT="Press "$YS"any key$CE to"
 PAKTC="Press "$YS"any key$CE to continue..."
 PAKTGB="Press "$YS"any key$CE to go back..."
 
@@ -24,7 +25,7 @@ do
 	then
 		aireplay-ng -3 -b $WEPB -h $MYMAC $WLANNM
 	else
-		echo -e "Press \e[1;33many key\e[0m to start fake authentication..."
+		echo -e "$PAKT start fake authentication..."
 		read
 		echo -e "Getting you MAC...."
 		sleep 1

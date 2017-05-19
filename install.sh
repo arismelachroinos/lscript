@@ -20,30 +20,54 @@ read ENT
 if [ -z $ENT ]
 then
 	clear
-	echo -e "Installing 4nonimizer"
-	echo -e "Tool by Hackplayers"
-	cd
-	git clone https://github.com/Hackplayers/4nonimizer.git
-	cd 4nonimizer
-	chmod +x 4nonimizer
-	./4nonimizer install
+	if [ ! -d "/root/4nonimizer" ]
+	then
+		echo -e "Installing 4nonimizer"
+		echo -e "Tool by Hackplayers"
+		cd
+		git clone https://github.com/Hackplayers/4nonimizer.git
+		cd 4nonimizer
+		chmod +x 4nonimizer
+		./4nonimizer install
+		clear
+		cd
+		apt-get install python-pip
+		apt-get install php-curl
+		gem install pcaprub
+		gem install packetfu
+	else 
+		echo -e "4nonimizer is already installed..."
+		sleep 1 
+		echo -e ""
+		echo -e "Skipping..."
+	fi
 	clear
-	cd
-	apt-get install python-pip
-	apt-get install php-curl
-	gem install pcaprub
-	gem install packetfu
+	if [ ! -d "/root/sslstrip2" ]
+	then
+		echo -e "Installing sslstrip2"
+		echo -e "Tool by LeonardoNve"
+		cd
+		git clone https://github.com/byt3bl33d3r/sslstrip2
+		cd sslstrip2
+		python setup.py install
+	else 
+		echo -e "Sslstrip2 is already installed..."
+		sleep 1 
+		echo -e ""
+		echo -e "Skipping..."
+	fi
 	clear
-	echo -e "Installing sslstrip2"
-	echo -e "Tool by LeonardoNve"
-	cd
-	git clone https://github.com/byt3bl33d3r/sslstrip2
-	cd sslstrip2
-	python setup.py install
-	clear
-	cd
-	echo -e "Installing dns2proxy"
-	git clone https://github.com/LeonardoNve/dns2proxy
+	if [ ! -d "/root/dns2proxy" ]
+	then
+		cd
+		echo -e "Installing dns2proxy"
+		git clone https://github.com/LeonardoNve/dns2proxy
+	else 
+		echo -e "Dns2proxy is already installed..."
+		sleep 1 
+		echo -e ""
+		echo -e "Skipping..."
+	fi
 	clear
 	echo -e "Installing pip"
 	cd
@@ -51,36 +75,68 @@ then
 	pip install --upgrade pip
 	sleep 1
 	clear
-	echo -e "Installing Airgeddon"
-	echo -e "Tool by v1s1t0r1sh3r3"
-	cd
-	git clone https://github.com/v1s1t0r1sh3r3/airgeddon.git
-	cd airgeddon
-	chmod +x airgeddon.sh
+	if [ ! -d "/root/airgeddon" ]
+	then
+		echo -e "Installing Airgeddon"
+		echo -e "Tool by v1s1t0r1sh3r3"
+		cd
+		git clone https://github.com/v1s1t0r1sh3r3/airgeddon.git
+		cd airgeddon
+		chmod +x airgeddon.sh
+	else 
+		echo -e "airgeddon is already installed..."
+		sleep 1 
+		echo -e ""
+		echo -e "Skipping..."
+	fi
 	cd
 	clear
-	echo -e "Installing Katana framework"
-	echo -e "Tool by PowerScript"
-	cd
-	git clone https://github.com/PowerScript/KatanaFramework.git
-	cd KatanaFramework
-	sh dependencies
-	python install
+	if [ ! -d "/root/KatanaFramework" ]
+	then
+		echo -e "Installing Katana framework"
+		echo -e "Tool by PowerScript"
+		cd
+		git clone https://github.com/PowerScript/KatanaFramework.git
+		cd KatanaFramework
+		sh dependencies
+		python install
+	else 
+		echo -e "Katana Framework is already installed..."
+		sleep 1 
+		echo -e ""
+		echo -e "Skipping..."
+	fi
 	cd
 	clear
-	echo -e "Installing Ezsploit"
-	echo -e "Tool by rand0m1ze"
-	git clone https://github.com/rand0m1ze/ezsploit.git
-	cd ezsploit/
-	chmod +x ezsploit.sh
+	if [ ! -d "/root/ezsploit" ]
+	then
+		echo -e "Installing Ezsploit"
+		echo -e "Tool by rand0m1ze"
+		git clone https://github.com/rand0m1ze/ezsploit.git
+		cd ezsploit/
+		chmod +x ezsploit.sh
+	else 
+		echo -e "Ezsploit is already installed..."
+		sleep 1 
+		echo -e ""
+		echo -e "Skipping..."
+	fi
 	clear
-	echo -e "Installing mdk3-master"
-	echo -e "Tool by Musket Developer"
-	cd
-	git clone https://github.com/wi-fi-analyzer/mdk3-master.git
-	cd /root/mdk3-master
-	make
-	make install
+	if [ ! -d "/root/mdk3-master" ]
+	then
+		echo -e "Installing Mdk3-master"
+		echo -e "Tool by Musket Developer"
+		cd
+		git clone https://github.com/wi-fi-analyzer/mdk3-master.git
+		cd /root/mdk3-master
+		make
+		make install
+	else 
+		echo -e "Mdk3-master is already installed..."
+		sleep 1 
+		echo -e ""
+		echo -e "Skipping..."
+	fi
 	#~ echo -e "Installing shARP"
 	#~ echo -e "Tool by europa502"
 	#~ cd
@@ -88,21 +144,37 @@ then
 	#~ cd /root/shARP
 	#~ chmod +x shARP.sh
 	clear
-	echo -e "Installing Xerxes"
-	echo -e "Tool by zanyarjamal"
-	cd
-	git clone https://github.com/zanyarjamal/xerxes
-	cd xerxes
-	gcc xerxes.c -o xerxes
+	if [ ! -d "/root/xerxes" ]
+	then
+		echo -e "Installing Xerxes"
+		echo -e "Tool by zanyarjamal"
+		cd
+		git clone https://github.com/zanyarjamal/xerxes
+		cd xerxes
+		gcc xerxes.c -o xerxes
+	else 
+		echo -e "Xerxes is already installed..."
+		sleep 1 
+		echo -e ""
+		echo -e "Skipping..."
+	fi
 	cd
 	clear
-	echo -e "Installing anonym8"
-	echo -e "Tool by HiroshiManRise"
-	git clone https://github.com/HiroshiManRise/anonym8.git
-	cd anonym8
-	chmod +x INSTALL.sh
-	./INSTALL
-	sleep 1
+	if [ ! -d "/root/anonym8" ]
+	then
+		echo -e "Installing Anonym8"
+		echo -e "Tool by HiroshiManRise"
+		git clone https://github.com/HiroshiManRise/anonym8.git
+		cd anonym8
+		chmod +x INSTALL.sh
+		./INSTALL
+		sleep 1
+	else 
+		echo -e "Anonym8 is already installed..."
+		sleep 1 
+		echo -e ""
+		echo -e "Skipping..."
+	fi
 	clear
 	#cd
 	#echo -e "Installing Torghost"
@@ -114,23 +186,34 @@ then
 	#sleep 1
 	#clear
 	# cd
-	echo -e "Installing Anonsurf"
-	echo -e "Tool by Und3rf10w"
-	git clone https://github.com/Und3rf10w/kali-anonsurf.git
-	cd kali-anonsurf
-	chmod +x install.sh
-	./install
-	sleep 1
+	if [ ! -d "/root/anonsurf" ]
+	then
+		cd
+		echo -e "Installing Anonsurf"
+		echo -e "Tool by Und3rf10w"
+		git clone https://github.com/Und3rf10w/kali-anonsurf.git
+		cd kali-anonsurf
+		chmod +x install.sh
+		./install
+		sleep 1
+	else 
+		echo -e "Anonsurf is already installed..."
+		sleep 1 
+		echo -e ""
+		echo -e "Skipping..."
+	fi
 	clear
 	cd
-	echo -e "Install the latest Fluxion and delete the old , if any?(\e[1;33my\e[0m/\e[1;33mn\e[0m)(\e[1;33mEnter\e[0m=yes): "
-	read FLUPD
-	if [ "$FLUPD" = "n" ]
+	if [ ! -d "/root/fluxion" ]
 	then
-		echo -e "Skipping fluxion installation..."
-		sleep 2
-	else
-		mv /root/fluxion /root/fluxionold
+	#~ echo -e "Install the latest Fluxion and delete the old , if any?(\e[1;33my\e[0m/\e[1;33mn\e[0m)(\e[1;33mEnter\e[0m=yes): "
+	#~ read FLUPD
+	#~ if [ "$FLUPD" = "n" ]
+	#~ then
+		#~ echo -e "Skipping fluxion installation..."
+		#~ sleep 2
+	#~ else
+		#~ mv /root/fluxion /root/fluxionold
 		echo -e "Installing fluxion"
 		echo -e "Tool by Deltaxflux"
 		sleep 1
@@ -142,6 +225,11 @@ then
 		cd /root/fluxion/install
 		chmod +x install.sh
 		./install.sh
+	else
+		echo -e "Fluxion is already installed..."
+		sleep 1 
+		echo -e ""
+		echo -e "Skipping..."
 	fi
 	#~ echo -e "Deltaxflux deleted the project.Do you want to download it from user disquette38 by yourown responsibility?(\e[1;33my\e[0m/\e[1;33mn\e[0m): "
 	#~ read -e FLUX
@@ -164,22 +252,38 @@ then
 	echo -e "Tool by 0x0ptim0us (Fardin Allahverdinazhand)"
 	apt-get install websploit
 	clear
-	echo -e "Installing The Eye"
-	echo -e "Tool by EgeBalci"
-	sleep 1
-	cd
-	git clone https://github.com/EgeBalci/The-Eye.git
-	cd The-Eye
-	chmod +x TheEye
+	if [ ! -d "/root/The-Eye" ]
+	then
+		echo -e "Installing The Eye"
+		echo -e "Tool by EgeBalci"
+		sleep 1
+		cd
+		git clone https://github.com/EgeBalci/The-Eye.git
+		cd The-Eye
+		chmod +x TheEye
+	else 
+		echo -e "The Eye is already installed..."
+		sleep 1 
+		echo -e ""
+		echo -e "Skipping..."
+	fi
 	clear
 	cd
-	echo -e "Installing Ghost-Phisher"
-	echo -e "Tool by Savio-code"
-	sleep 1
-	cd
-	git clone https://github.com/savio-code/ghost-phisher.git
-	sleep 1
-	chmod +x /root/ghost-phisher/Ghost-Phisher/ghost.py
+	if [ ! -d "/root/ghost-phisher" ]
+	then
+		echo -e "Installing Ghost-Phisher"
+		echo -e "Tool by Savio-code"
+		sleep 1
+		cd
+		git clone https://github.com/savio-code/ghost-phisher.git
+		sleep 1
+		chmod +x /root/ghost-phisher/Ghost-Phisher/ghost.py
+	else 
+		echo -e "Ghost Phisher is already installed..."
+		sleep 1 
+		echo -e ""
+		echo -e "Skipping..."
+	fi
 	clear
 	cd
 	echo -e "Installing WifiTe"
@@ -189,22 +293,38 @@ then
 	sleep 1
 	clear
 	cd
-	echo -e "Installing Wifiphisher"
-	echo -e "Tool idea by Dan McInerney"
-	sleep 1
-	git clone https://github.com/wifiphisher/wifiphisher.git
-	cd wifiphisher
-	sudo python setup.py install
-	sleep 1
+	if [ ! -d "/root/wifiphisher" ]
+	then
+		echo -e "Installing Wifiphisher"
+		echo -e "Tool idea by Dan McInerney"
+		sleep 1
+		git clone https://github.com/wifiphisher/wifiphisher.git
+		cd wifiphisher
+		sudo python setup.py install
+		sleep 1
+	else 
+		echo -e "Wifiphisher is already installed..."
+		sleep 1 
+		echo -e ""
+		echo -e "Skipping..."
+	fi
 	clear
 	cd
-	echo -e "Installing Morpheus"
-	echo -e "Tool by Pedro ubuntu  [ r00t-3xp10it ]"
-	sleep 1
-	cd
-	git clone https://github.com/r00t-3xp10it/morpheus.git
-	cd morpheus
-	chmod +x morpheus.sh
+	if [ ! -d "/root/morpheus" ]
+	then
+		echo -e "Installing Morpheus"
+		echo -e "Tool by Pedro ubuntu  [ r00t-3xp10it ]"
+		sleep 1
+		cd
+		git clone https://github.com/r00t-3xp10it/morpheus.git
+		cd morpheus
+		chmod +x morpheus.sh
+	else 
+		echo -e "Morpheus is already installed..."
+		sleep 1 
+		echo -e ""
+		echo -e "Skipping..."
+	fi
 	cd
 	clear
 	echo -e "Installing Osrframework"
@@ -212,81 +332,145 @@ then
 	sleep 1
 	pip install osrframework
 	clear
-	echo -e "Installing Hakku"
-	echo -e "Tool by 4shadoww"
-	sleep 1
-	cd
-	git clone https://github.com/4shadoww/hakkuframework.git
-	cd hakkuframework
-	chmod +x hakku
-	chmod +x install
+	if [ ! -d "/root/hakkuframework" ]
+	then
+		echo -e "Installing Hakku"
+		echo -e "Tool by 4shadoww"
+		sleep 1
+		cd
+		git clone https://github.com/4shadoww/hakkuframework.git
+		cd hakkuframework
+		chmod +x hakku
+		chmod +x install
+	else 
+		echo -e "Hakku Framework is already installed..."
+		sleep 1 
+		echo -e ""
+		echo -e "Skipping..."
+	fi
 	cd
 	clear
-	echo -e "Installing Trity"
-	echo -e "Tool by Toxic-ig"
-	sleep 1
-	git clone https://github.com/toxic-ig/Trity.git
-	cd Trity
-	sudo python install.py
+	if [ ! -d "/root/Trity" ]
+	then
+		echo -e "Installing Trity"
+		echo -e "Tool by Toxic-ig"
+		sleep 1
+		git clone https://github.com/toxic-ig/Trity.git
+		cd Trity
+		sudo python install.py
+	else 
+		echo -e "Trity is already installed..."
+		sleep 1 
+		echo -e ""
+		echo -e "Skipping..."
+	fi
 	cd
 	clear
-	echo -e "Installing Cupp"
-	echo -e "Tool by Muris Kurgas"
-	sleep 1
-	cd
-	git clone https://github.com/Mebus/cupp.git
-	cd cupp
-	chmod +x cupp.py
+	if [ ! -d "/root/cupp" ]
+	then
+		echo -e "Installing Cupp"
+		echo -e "Tool by Muris Kurgas"
+		sleep 1
+		cd
+		git clone https://github.com/Mebus/cupp.git
+		cd cupp
+		chmod +x cupp.py
+	else 
+		echo -e "Cupp is already installed..."
+		sleep 1 
+		echo -e ""
+		echo -e "Skipping..."
+	fi
 	#~ python cupp.py
 	cd
 	clear
-	echo -e "Installing Dracnmap"
-	echo -e "Tool by Edo -maland-"
-	cd
-	git clone https://github.com/Screetsec/Dracnmap.git
-	cd Dracnmap
-	chmod +x Dracnmap.sh
-	cd
-	clear
-	echo -e "Installing Fern"
-	echo -e "Tool by Savio-code"
-	sleep 1
-	cd 
-	svn checkout http://github.com/savio-code/fern-wifi-cracker/trunk/Fern-Wifi-Cracker/
-	cd Fern-Wifi-Cracker
-	chmod +x execute.py
-	cd
-	clear
-	echo -e "Installing Kichthemout"
-	echo -e "Tool by Nikolaos Kamarinakis & David Schütz"
-	sleep 2
-	apt-get install nmap
-	git clone https://github.com/k4m4/kickthemout.git
-	cd kickthemout/
-	sudo python -m pip install -r requirements.txt
+	if [ ! -d "/root/Dracnmap" ]
+	then
+		echo -e "Installing Dracnmap"
+		echo -e "Tool by Edo -maland-"
+		cd
+		git clone https://github.com/Screetsec/Dracnmap.git
+		cd Dracnmap
+		chmod +x Dracnmap.sh
+	else 
+		echo -e "Dracnmap is already installed..."
+		sleep 1 
+		echo -e ""
+		echo -e "Skipping..."
+	fi
 	cd
 	clear
-	echo -e "Installing BeeLogger"
-	echo -e "Tool by Alisson Moretto - 4w4k3"
+	if [ ! -d "/root/Fern-Wifi-Cracker" ]
+	then
+		echo -e "Installing Fern"
+		echo -e "Tool by Savio-code"
+		sleep 1
+		cd 
+		svn checkout http://github.com/savio-code/fern-wifi-cracker/trunk/Fern-Wifi-Cracker/
+		cd Fern-Wifi-Cracker
+		chmod +x execute.py
+	else 
+		echo -e "Fern is already installed..."
+		sleep 1 
+		echo -e ""
+		echo -e "Skipping..."
+	fi
 	cd
-	git clone https://github.com/4w4k3/BeeLogger.git
-	cd BeeLogger
-	chmod +x install.sh
-	./install.sh
+	clear
+	if [ ! -d "/root/kickthemout" ]
+	then
+		echo -e "Installing Kichthemout"
+		echo -e "Tool by Nikolaos Kamarinakis & David Schütz"
+		sleep 2
+		apt-get install nmap
+		git clone https://github.com/k4m4/kickthemout.git
+		cd kickthemout/
+		sudo python -m pip install -r requirements.txt
+	else 
+		echo -e "Kickthemout is already installed..."
+		sleep 1 
+		echo -e ""
+		echo -e "Skipping..."
+	fi
+	cd
+	clear
+	if [ ! -d "/root/BeeLogger" ]
+	then
+		echo -e "Installing BeeLogger"
+		echo -e "Tool by Alisson Moretto - 4w4k3"
+		cd
+		git clone https://github.com/4w4k3/BeeLogger.git
+		cd BeeLogger
+		chmod +x install.sh
+		./install.sh
+	else 
+		echo -e "BeeLogger is already installed..."
+		sleep 1 
+		echo -e ""
+		echo -e "Skipping..."
+	fi
 	cd
 	apt-get install python-pip
 	apt-get install php-curl
 	gem install pcaprub
 	gem install packetfu
 	clear
-	echo -e "Installing Pupy"
-	echo -e "Tool by n1nj4sec"
-	cd
-	git clone https://github.com/n1nj4sec/pupy.git
-	cd pupy
-	git submodule init
-	git submodule update
-	pip install -r pupy/requirements.txt
+	if [ ! -d "/root/pupy" ]
+	then
+		echo -e "Installing Pupy"
+		echo -e "Tool by n1nj4sec"
+		cd
+		git clone https://github.com/n1nj4sec/pupy.git
+		cd pupy
+		git submodule init
+		git submodule update
+		pip install -r pupy/requirements.txt
+	else 
+		echo -e "Pupy is already installed..."
+		sleep 1 
+		echo -e ""
+		echo -e "Skipping..."
+	fi
 	cd
 	clear
 	#~ echo -e "Installing Spoofa"
@@ -298,6 +482,54 @@ then
 	#~ ehco -e "Tool by SilverFoxx"
 	#~ cd
 	#~ git clone https://github.com/SilverFoxx/Yamas.git
+	if [ ! -d "/root/WiFi-autopwner" ]
+	then
+		echo -e "Installing WiFi-autopwner"
+		echo -e "Tool by Mi-Al"
+		cd
+		git clone https://github.com/Mi-Al/WiFi-autopwner
+	else 
+		echo -e "WiFi-autopwner is already installed..."
+		sleep 1 
+		echo -e ""
+		echo -e "Skipping..."
+	fi
+	clear
+	if [ ! -d "/root/bully" ]
+	then
+		echo -e "Installing Bully"
+		echo -e "Tool by Aanarchyy"
+		cd
+		git clone https://github.com/aanarchyy/bully
+		cd bully
+		cd src
+		make
+		sudo make install
+	else 
+		echo -e "Bully is already installed..."
+		sleep 1 
+		echo -e ""
+		echo -e "Skipping..."
+	fi
+	cd
+	clear
+	apt-get install	mono-complete
+	if [ ! -d "/root/zirikatu" ]
+	then
+		echo -e "Installing Zirikatu"
+		echo -e "Tool by pasahitz"
+		cd
+		git clone https://github.com/pasahitz/zirikatu
+		cd zirikatu
+		chmod +x zirikatu.sh
+	else 
+		echo -e "Zirikatu is already installed..."
+		sleep 1 
+		echo -e ""
+		echo -e "Skipping..."
+	fi
+	cd
+	clear
 	echo -e "Downloading is finished."
 	sleep 2
 else
@@ -355,6 +587,8 @@ read UORI
 if [ "$UORI" = "u" ]
 then 
 	clear
+	echo -e "Type 'changelog' to see what's new on this version"
+	sleep 3
 elif [ "$UORI" = "i" ]
 then
 	clear

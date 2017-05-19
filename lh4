@@ -10,6 +10,7 @@ RS="\e[1;31m"
 YNYES="("$YS"y"$CE"/"$YS"n"$CE")("$YS"Enter"$CE"=yes)"
 YNNO="("$YS"y"$CE"/"$YS"n"$CE")("$YS"Enter"$CE"=no)"
 YNONLY="("$YS"y"$CE"/"$YS"n"$CE")"
+PAKT="Press "$YS"any key$CE to"
 PAKTC="Press "$YS"any key$CE to continue..."
 PAKTGB="Press "$YS"any key$CE to go back..."
 
@@ -29,13 +30,14 @@ then
 else
 	echo -e "Target's channel not set"
 fi
-echo -e ""$YS"w"$CE") WifiTe                           All attacks"
-echo -e ""$YS"1"$CE") Scan for nearby networks"
-echo -e ""$YS"2"$CE") Start capturing ivs"
-echo -e ""$YS"3"$CE") Fakeauth-arpreplay               If no clients connected"
-echo -e ""$YS"4"$CE") Fakeauth-fragmentation           not yet"
-echo -e ""$YS"5"$CE") Chop-chop                        not yet"
-echo -e ""$YS"6"$CE") Aircrack the ivs"
+echo -e ""$YS" w"$CE") WifiTe                           All attacks"
+echo -e ""$YS" 1"$CE") Scan for nearby networks"
+echo -e ""$YS" 2"$CE") Start capturing ivs"
+echo -e ""$YS" 3"$CE") Fakeauth-arpreplay               If no clients connected"
+echo -e ""$YS" 4"$CE") Fakeauth-fragmentation           not yet"
+echo -e ""$YS" 5"$CE") Chop-chop                        not yet"
+echo -e ""$YS" 6"$CE") Aircrack the ivs"
+echo -e ""$YS" 7"$CE") WiFi autopwner - automated tool"
 #~ echo -e ""$YS"00"$CE") Main menu"
 echo -e ""$YS" 0"$CE") EXIT"
 echo -e "Choose: "
@@ -77,6 +79,11 @@ then
 elif [ "$WEP" = "6" ]
 then
 	aircrack-ng $WEPFF
+elif [ "$WEP" = "7" ]
+then
+	cd /root/WiFi-autopwner
+	./wifi-autopwner.sh
+	cd
 elif [ "$WEP" = "0" ]
 then
 	clear

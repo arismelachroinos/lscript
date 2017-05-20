@@ -17,6 +17,10 @@ PAKTGB="Press "$YS"any key$CE to go back..."
 #path for lscript
 LPATH="/root/lscript"
 KSPATH=""$LPATH"/ks"
+if [ ! -d /root/lscript/ks ]
+then
+	mkdir /root/lscript/ks
+fi
 ####################################
 function banner
 {

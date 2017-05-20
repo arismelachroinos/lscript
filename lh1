@@ -188,6 +188,7 @@ function aircrack_handshake
 }
 
 #-------------------------------------------
+printf '\033]2;HANDSHAKE\a'
 if [ -f "/root/handshakes/*.csv" ]
 then
 	rm /root/handshakes/*.csv

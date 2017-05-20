@@ -18,6 +18,7 @@ PAKTGB="Press "$YS"any key$CE to go back..."
 WLANNM=$(cat /root/lscript/wlanmon.txt)
 export WLANNM
 echo -e "---------------------------"$RS"WEP hacking"$CE"---------------------------"
+printf '\033]2;WEP MENU\a'
 if [ ! -z ${WEPB+x} ]
 then
 	echo -e "BSSID: $WEPB"

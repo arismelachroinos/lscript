@@ -15,6 +15,7 @@ PAKTC="Press "$YS"any key$CE to continue..."
 PAKTGB="Press "$YS"any key$CE to go back..."
 
 ####################################
+printf '\033]2;FAKEAUTH\a'
 WLANNM=$(cat /root/lscript/wlanmon.txt)
 export WLANNM
 echo -e "Press \e[1;33many key\e[0m to start fake authentication..."

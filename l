@@ -23,7 +23,7 @@ KSPATH=""$LPATH"/ks"
 #making sure the kspath is set
 if [ ! -d "$KSPATH" ]
 then
-	mdir "$KSPATH"
+	mkdir "$KSPATH"
 fi
 ##############FUNCTIONS#############
 function banner

@@ -195,7 +195,7 @@ then
 		git clone https://github.com/Und3rf10w/kali-anonsurf.git
 		cd kali-anonsurf
 		chmod +x installer.sh
-		./installer. sh
+		./installer.sh
 		sleep 1
 	else 
 		echo -e "Anonsurf is already installed..."

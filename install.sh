@@ -1,8 +1,79 @@
 #! /bin/bash
 printf '\033]2;INSTALLER\a'
-echo -e "Installing all the tools needed for LAZY script..."
-echo -e "(You should be a root user)"
+#echo -e "Installing all the tools needed for LAZY script..."
+#echo -e "(You should be a root user)"
+#sleep 2
+echo -e "Installing lscript..."
+sleep 1
+echo -e "Fixing permissions"
 sleep 2
+chmod +x /root/lscript/lh1
+chmod +x /root/lscript/lh2
+chmod +x /root/lscript/lh3
+chmod +x /root/lscript/lh31
+chmod +x /root/lscript/l
+chmod +x /root/lscript/lh4
+chmod +x /root/lscript/lh41
+chmod +x /root/lscript/lh42
+chmod +x /root/lscript/lh43
+chmod +x /root/lscript/ls/l131.sh
+chmod +x /root/lscript/ls/l132.sh
+chmod +x /root/lscript/ls/l133.sh
+chmod +x /root/lscript/uninstall.sh
+clear
+echo -e "Copying script to /bin/lscript"
+sleep 1
+mkdir /bin/lscript
+cd /root/lscript
+cp l /bin/lscript
+cp lh1 /bin/lscript
+cp lh2 /bin/lscript
+cp lh3 /bin/lscript
+cp lh31 /bin/lscript
+cp lh4 /bin/lscript
+cp lh41 /bin/lscript
+cp lh42 /bin/lscript
+cp lh43 /bin/lscript
+clear
+if [ ! -d /root/handshakes ]
+then
+	mkdir /root/handshakes
+	echo -e "Made /root/handshake directory"
+else
+	echo -e "/root/handshakes directory detected.Good."
+fi
+if [ ! -d /root/wordlists ]
+then
+	mkdir /root/wordlists
+	echo -e "Made /root/wordlists directory"
+else
+	echo -e "/root/wordlists directory detected.Good."
+fi
+while true
+do
+clear
+echo -e "Are you \e[1;33mu\e[0mpdating or \e[1;33mi\e[0mnstalling the script?(\e[1;33mu\e[0m/\e[1;33mi\e[0m): "
+read UORI
+if [ "$UORI" = "u" ]
+then 
+	clear
+	echo -e "Type 'changelog' to see what's new on this version"
+	sleep 3
+	break
+elif [ "$UORI" = "i" ]
+then
+	clear
+	echo -e "Adding lscript to PATH so you can access it from anywhere"
+	sleep 1
+	export PATH=/bin/lscript:$PATH
+	sleep 1
+	echo "export PATH=/bin/lscript:$PATH" >> ~/.bashrc
+	sleep 1
+	clear
+	break
+fi
+done
+#------------------
 echo -e "Did you run 'apt-get update' recently?(\e[1;33my\e[0m/\e[1;33mn\e[0m)(\e[1;33mEnter\e[0m=yes): "
 read -e APTG
 if [ "$APTG" = "n" ]
@@ -15,11 +86,21 @@ else
 	sleep 2
 fi
 clear
+echo -e "Lscript is installed.You can open a new terminal and type   l"
+sleep 2
+echo -e "Lscript requires many tools to be installed"
+sleep 2
+echo -e "This usually takes about 15 minutes, but you will be fully loaded with many awesome tools that you can launch from Lscript."
+sleep 3
 echo -e "All scripts will be installed on /root/ directory(needed for the script)"
-echo -e "Press \e[1;33menter\e[0m to start..."
-read ENT
-if [ -z $ENT ]
+sleep 2
+echo -e "Install all tools now or later in lscript menu?(\e[1;33mn\e[0m/\e[1;33ml\e[0m)"
+read NORL
+if [ "$NORL" = "n" ]
 then
+clear
+echo -e "Press \e[1;33many key\e[0m to start..."
+read -e -n 1 -r
 	clear
 	if [ ! -d "/root/4nonimizer" ]
 	then
@@ -38,6 +119,21 @@ then
 		gem install packetfu
 	else 
 		echo -e "4nonimizer is already installed..."
+		sleep 1 
+		echo -e ""
+		echo -e "Skipping..."
+	fi
+	clear
+	if [ ! -d "/root/TheFatRat" ]
+	then
+		echo -e "Installing TheFatRat"
+		echo -e "Tool by Screetsec"
+		cd
+		git clone https://github.com/Screetsec/TheFatRat.git
+		cd TheFatRat
+		chmod +x setup.sh && ./setup.sh	
+	else 
+		echo -e "TheFatRat is already installed..."
 		sleep 1 
 		echo -e ""
 		echo -e "Skipping..."
@@ -533,75 +629,8 @@ then
 	clear
 	echo -e "Downloading is finished."
 	sleep 2
-else
-	echo -e "Ok, bye..."
-	sleep 1
-	exit
 fi
 clear
-echo -e "Fixing permissions"
-sleep 2
-chmod +x /root/lscript/lh1
-chmod +x /root/lscript/lh2
-chmod +x /root/lscript/lh3
-chmod +x /root/lscript/lh31
-chmod +x /root/lscript/l
-chmod +x /root/lscript/lh4
-chmod +x /root/lscript/lh41
-chmod +x /root/lscript/lh42
-chmod +x /root/lscript/lh43
-chmod +x /root/lscript/ls/l131.sh
-chmod +x /root/lscript/ls/l132.sh
-chmod +x /root/lscript/ls/l133.sh
-chmod +x /root/lscript/uninstall.sh
-clear
-echo -e "Copying script to /bin/lscript"
-sleep 1
-mkdir /bin/lscript
-cd /root/lscript
-cp l /bin/lscript
-cp lh1 /bin/lscript
-cp lh2 /bin/lscript
-cp lh3 /bin/lscript
-cp lh31 /bin/lscript
-cp lh4 /bin/lscript
-cp lh41 /bin/lscript
-cp lh42 /bin/lscript
-cp lh43 /bin/lscript
-clear
-if [ ! -d /root/handshakes ]
-then
-	mkdir /root/handshakes
-	echo -e "Made /root/handshake directory"
-else
-	echo -e "/root/handshakes directory detected.Good."
-fi
-if [ ! -d /root/wordlists ]
-then
-	mkdir /root/wordlists
-	echo -e "Made /root/wordlists directory"
-else
-	echo -e "/root/wordlists directory detected.Good."
-fi
-echo -e "Are you updating or installing the script?(\e[1;33mu\e[0m/\e[1;33mi\e[0m): "
-read UORI
-if [ "$UORI" = "u" ]
-then 
-	clear
-	echo -e "Type 'changelog' to see what's new on this version"
-	sleep 3
-elif [ "$UORI" = "i" ]
-then
-	clear
-	echo -e "Adding lscript to PATH so you can access it from anywhere"
-	sleep 1
-	export PATH=/bin/lscript:$PATH
-	sleep 1
-	echo "export PATH=/bin/lscript:$PATH" >> ~/.bashrc
-	sleep 1
-	clear
-fi
-#~ mkdir /tmp/tmplcript
 echo -e "DONEEEE"
 sleep 1
 clear

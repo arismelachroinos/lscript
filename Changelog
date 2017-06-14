@@ -1,3 +1,9 @@
+1.9
+Added option to install/reinstall a tool within lscript
+Huge code change on the installer, now lscript installs first, then the tools,only if you want
+Added openvas to Tools, NOT installed by default
+Added TheFatRat to Remote access
+
 1.8
 Massive update to installer(updates now are installed x100 faster)
 "7) View your Public IP" option now loads a lot faster

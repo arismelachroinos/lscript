@@ -39,9 +39,20 @@ function banner
 	echo -e ""$YS" 1"$CE") Enable $WLANN                      "$YS"d1"$CE") Disable $WLANN"
 	echo -e ""$YS" 2"$CE") Enable $WLANNM                   "$YS"d2"$CE") Disable $WLANNM"
 	echo -e ""$YS" 3"$CE") Change MAC                        "$YS"d3"$CE") Restore original MAC"
+	if [ -d /opt/4nonimizer ]
+	then
 	echo -e ""$YS" 4"$CE") Enable 4nonimizer                 "$YS"d4"$CE") Disable 4nonimizer"
+	else
+	echo -e ""$RS" 4"$CE") Enable 4nonimizer                 "$RS"d4"$CE") Disable 4nonimizer"
+	fi
+	if [ -f /usr/bin/anonsurf ]
+	then
 	echo -e ""$YS" 5"$CE") Enable anonsurf                   "$YS"d5"$CE") Disable anonsurf"
 	echo -e ""$YS" 6"$CE") Status of anonsurf                "$YS"d6"$CE") Restart anonsurf"
+	else
+	echo -e ""$RS" 5"$CE") Enable anonsurf                   "$RS"d5"$CE") Disable anonsurf"
+	echo -e ""$RS" 6"$CE") Status of anonsurf                "$RS"d6"$CE") Restart anonsurf"	
+	fi
 	echo -e ""$YS" 7"$CE") View your Public IP"
 	echo -e ""$YS" 8"$CE") View your MAC"
 	echo -e ""$YS" 9"$CE") TOOLS"
@@ -504,6 +515,7 @@ var1=1
 		printf '\033]2;TOOLS\a'
 		echo -e ""$YS" 1"$CE") Wifi tools"
 		echo -e ""$YS" 2"$CE") Remote access"
+		echo -e ""$YS" 3"$CE") Install/reinstall a tool"
 		echo -e ""$YS"back"$CE") Go back"
 		echo -e ""$YS"00"$CE") Main menu"
 		echo -e ""$YS" 0"$CE") EXIT"
@@ -517,29 +529,139 @@ var1=1
 				printf '\033]2;WIFI TOOLS\a'
 				clear
 				echo -e "---------------------------"$RS"WIFI TOOLS"$CE"----------------------------"
-				echo -e ""$YS" 1"$CE") Fluxion            Multitool-Fake AP with pass confirmation"
-				echo -e ""$YS" 2"$CE") Wifite             Multitool"
-				echo -e ""$YS" 3"$CE") Wifiphisher        Multitool-Fake AP etc.."
-				echo -e ""$YS" 4"$CE") Zatacker           MITM-NMAP-Mail Spammer..(Install it manually)"
-				echo -e ""$YS" 5"$CE") Morpheus           ------------ULTIMATE MITM SUIT------------"
-				echo -e ""$YS" 6"$CE") Osrfconsole        Checks usernames-phones to platforms etc.."
-				echo -e ""$YS" 7"$CE") Hakku              Multitool-mail bomb-sniffs-cracks etc.."
-				echo -e ""$YS" 8"$CE") Trity              Multitool-locate ip-email bombs-brutforse etc.."
-				echo -e ""$YS" 9"$CE") Cupp               Make specific worldlists"
-				echo -e ""$YS"10"$CE") Dracnmap           Many scan options"
-				echo -e ""$YS"11"$CE") Fern               Wifi cracker GUI"
-				echo -e ""$YS"12"$CE") Netdiscover        IPs and MACs on your net"
-				echo -e ""$YS"13"$CE") KickThemOut        Kick clients out of your network"
-				echo -e ""$YS"14"$CE") Ghost-Phisher      Fake AP,MITM,Session hijacking etc..."
-				echo -e ""$YS"15"$CE") The Eye            Detects ARP poisoning DNS spoofing etc..."
-				echo -e ""$YS"16"$CE") Xerxes             The most powerful DoS tool(CAUTION)"
+				if [ -d /root/fluxion ]
+				then
+					echo -e ""$YS" 1"$CE") Fluxion            Multitool-Fake AP with pass confirmation"
+				else
+					echo -e ""$RS" 1"$CE") "$RS"Fluxion"$CE"            Multitool-Fake AP with pass confirmation"
+				fi
+				if [ -f /usr/bin/wifite ]
+				then
+					echo -e ""$YS" 2"$CE") Wifite             Multitool"
+				else
+					echo -e ""$RS" 2"$CE") "$RS"Wifite"$CE"             Multitool"
+				fi
+				if [ -d /root/wifiphisher ]
+				then
+					echo -e ""$YS" 3"$CE") Wifiphisher        Multitool-Fake AP etc.."
+				else
+					echo -e ""$RS" 3"$CE") "$RS"Wifiphisher"$CE"        Multitool-Fake AP etc.."
+				fi
+				if [ -d /root/Zatacker ]
+				then
+					echo -e ""$YS" 4"$CE") Zatacker           MITM-NMAP-Mail Spammer..(Install it manually)"
+				else
+					echo -e ""$RS" 4"$CE") "$RS"Zatacker"$CE"           MITM-NMAP-Mail Spammer..(Install it manually)"
+				fi
+				if [ -d /root/morpheus ]
+				then
+					echo -e ""$YS" 5"$CE") Morpheus           ------------ULTIMATE MITM SUIT------------"
+				else
+					echo -e ""$RS" 5"$CE") "$RS"Morpheus"$CE"           ------------ULTIMATE MITM SUIT------------"
+				fi
+				if [ -d /root/osrframework ]
+				then
+					echo -e ""$YS" 6"$CE") Osrfconsole        Checks usernames-phones to platforms etc.."
+				else
+					echo -e ""$RS" 6"$CE") "$RS"Osrfconsole"$CE"        Checks usernames-phones to platforms etc.."
+				fi
+				if [ -d /root/hakkuframework ]
+				then
+					echo -e ""$YS" 7"$CE") Hakku              Multitool-mail bomb-sniffs-cracks etc.."
+				else
+					echo -e ""$RS" 7"$CE") "$RS"Hakku"$CE"              Multitool-mail bomb-sniffs-cracks etc.."
+				fi
+				if [ -d /root/Trity ]
+				then
+					echo -e ""$YS" 8"$CE") Trity              Multitool-locate ip-email bombs-brutforse etc.."
+				else
+					echo -e ""$RS" 8"$CE") "$RS"Trity"$CE"              Multitool-locate ip-email bombs-brutforse etc.."
+				fi
+				if [ -d /root/cupp ]
+				then
+					echo -e ""$YS" 9"$CE") Cupp               Make specific worldlists"
+				else
+					echo -e ""$RS" 9"$CE") "$RS"Cupp"$CE"               Make specific worldlists"
+				fi
+				if [ -d /root/Dracnmap ]
+				then				
+					echo -e ""$YS"10"$CE") Dracnmap           Many scan options"
+				else
+					echo -e ""$RS"10"$CE") "$RS"Dracnmap"$CE"           Many scan options"
+				fi
+				if [ -d /root/Fern-Wifi-Cracker ]
+				then	
+					echo -e ""$YS"11"$CE") Fern               Wifi cracker GUI"
+				else
+					echo -e ""$RS"11"$CE") "$RS"Fern"$CE"               Wifi cracker GUI"
+				fi
+				if [ -f /usr/sbin/netdiscover ]
+				then	
+					echo -e ""$YS"12"$CE") Netdiscover        IPs and MACs on your net"
+				else
+					echo -e ""$RS"12"$CE") "$RS"Netdiscover"$CE"        IPs and MACs on your net"
+				fi
+				if [ -d /root/kickthemout ]
+				then	
+					echo -e ""$YS"13"$CE") KickThemOut        Kick clients out of your network"
+				else
+					echo -e ""$RS"13"$CE") "$RS"KickThemOut"$CE"        Kick clients out of your network"
+				fi
+				if [ -d /root/ghost-phisher ]
+				then	
+					echo -e ""$YS"14"$CE") Ghost-Phisher      Fake AP,MITM,Session hijacking etc..."
+				else
+					echo -e ""$RS"14"$CE") "$RS"Ghost-Phisher"$CE"      Fake AP,MITM,Session hijacking etc..."
+				fi
+				if [ -d /root/The-Eye ]
+				then	
+					echo -e ""$YS"15"$CE") The Eye            Detects ARP poisoning DNS spoofing etc..."
+				else
+					echo -e ""$RS"15"$CE") "$RS"The Eye"$CE"            Detects ARP poisoning DNS spoofing etc..."
+				fi
+				if [ -d /root/xerxes ]
+				then	
+					echo -e ""$YS"16"$CE") Xerxes             The most powerful DoS tool(CAUTION)"
+				else
+					echo -e ""$RS"16"$CE") "$RS"Xerxes"$CE"             The most powerful DoS tool(CAUTION)"
+				fi
 				#~ echo -e ""$YS"16"$CE") ShARP(problematic) Detects who is spoofing on your network"
-				echo -e ""$YS"17"$CE") Mdk3-master        Tries to lock / reboot AP and more..."
-				echo -e ""$YS"18"$CE") Mdk3-master        Tries to reboot the AP and unlock the WPS lock"
-				echo -e ""$YS"19"$CE") Katana Framework   Many penetration testing features"
-				echo -e ""$YS"20"$CE") Airgeddon          Evil twin-WPA WPA2-WEP-WPS and more"
-				echo -e ""$YS"21"$CE") Websploit          Wireless attack-multitool"
-				echo -e ""$YS"22"$CE") Openvas            Vulnerability scanner LAN"
+				if [ -d /root/mdk3-master ]
+				then
+					echo -e ""$YS"17"$CE") Mdk3-master        Tries to lock / reboot AP and more..."
+				else
+					echo -e ""$RS"17"$CE") "$RS"Mdk3-master"$CE"        Tries to lock / reboot AP and more..."
+				fi
+				if [ -d /root/mdk3-master ]
+				then
+					echo -e ""$YS"18"$CE") Mdk3-master        Tries to reboot the AP and unlock the WPS lock"
+				else
+					echo -e ""$RS"18"$CE") "$RS"Mdk3-master"$CE"        Tries to reboot the AP and unlock the WPS lock"
+				fi
+				if [ -d /root/KatanaFramework ]
+				then
+					echo -e ""$YS"19"$CE") Katana Framework   Many penetration testing features"
+				else
+					echo -e ""$RS"19"$CE") "$RS"Katana Framework"$CE"   Many penetration testing features"
+				fi
+				if [ -d /root/airgeddon ]
+				then
+					echo -e ""$YS"20"$CE") Airgeddon          Evil twin-WPA WPA2-WEP-WPS and more"
+				else
+					echo -e ""$RS"20"$CE") "$RS"Airgeddon"$CE"          Evil twin-WPA WPA2-WEP-WPS and more"
+				fi
+				if [ -f /usr/bin/websploit ]
+				then
+					echo -e ""$YS"21"$CE") Websploit          Wireless attack-multitool"
+				else
+					echo -e ""$RS"21"$CE") "$RS"Websploit"$CE"          Wireless attack-multitool"
+				fi
+				if [ -d /etc/openvas ]
+				then
+					echo -e ""$YS"22"$CE") Openvas            Vulnerability scanner LAN"
+				else
+					echo -e ""$RS"22"$CE") "$RS"Openvas"$CE"            Vulnerability scanner LAN"
+				fi
 				echo -e ""$YS"back"$CE") Go back"
 				echo -e ""$YS"00"$CE") Main menu"
 				echo -e ""$YS" 0"$CE") EXIT"
@@ -802,10 +924,36 @@ var1=1
 				clear
 				echo -e "-------------------------"$RS"Remote access"$CE"---------------------------"
 				printf '\033]2;REMOTE ACCESS\a'
-				echo -e ""$YS" 1"$CE") BeeLogger    Generate keylogger"
-				echo -e ""$YS" 2"$CE") Ezsploit     Generate payloads for many platforms,listeners etc..."
-				echo -e ""$YS" 3"$CE") Pupy         Generate payloads for many platforms,listeners etc..."
-				echo -e ""$YS" 4"$CE") Zirikatu     Generate undetectable payloads"
+				if [ -d /root/BeeLogger ]
+				then
+					echo -e ""$YS" 1"$CE") BeeLogger    Generate keylogger"
+				else
+					echo -e ""$RS" 1"$CE") "$RS"BeeLogger"$CE"    Generate keylogger"
+				fi
+				if [ -d /root/ezsploit ]
+				then
+					echo -e ""$YS" 2"$CE") Ezsploit     Generate payloads for many platforms,listeners etc..."
+				else
+					echo -e ""$RS" 2"$CE") "$RS"Ezsploit"$CE"     Generate payloads for many platforms,listeners etc..."
+				fi
+				if [ -d /root/pupy ]
+				then
+					echo -e ""$YS" 3"$CE") Pupy         Generate payloads for many platforms,listeners etc..."
+				else
+					echo -e ""$RS" 3"$CE") "$RS"Pupy"$CE"         Generate payloads for many platforms,listeners etc..."
+				fi
+				if [ -d /root/zirikatu ]
+				then
+					echo -e ""$YS" 4"$CE") Zirikatu     Generate undetectable payloads"
+				else
+					echo -e ""$RS" 4"$CE") "$RS"Zirikatu"$CE"     Generate undetectable payloads"
+				fi
+				if [ -d /root/TheFatRat ]
+				then
+					echo -e ""$YS" 5"$CE") TheFatRat     Generate undetectable payloads"
+				else
+					echo -e ""$RS" 5"$CE") "$RS"TheFatRat"$CE"     Generate undetectable payloads"
+				fi
 				echo -e ""$YS"back"$CE") Go back"
 				echo -e ""$YS"00"$CE") Main menu"
 				echo -e ""$YS" 0"$CE") EXIT"
@@ -839,6 +987,7 @@ var1=1
 					while true
 					do
 					clear
+					echo -e"MORE FEATURES AND METASPLOIT AUTOMATION WILL BE ADDED SOON"
 					echo -e ""$YS" 1"$CE") Generate a payload"
 					echo -e ""$YS" 2"$CE") Start listener"
 					echo -e ""$YS"back"$CE") Go back"
@@ -907,6 +1056,10 @@ var1=1
 						cd /root/zirikatu
 						./zirikatu.sh
 					fi
+				elif [ "$KEYLOG" = "5" ]
+				then
+					clear
+					fatrat
 				elif [ "$KEYLOG" = "00" ]
 				then
 					clear
@@ -918,6 +1071,465 @@ var1=1
 				elif [ "$KEYLOG" = "back" ]
 				then
 					break
+				fi
+				done
+			elif [ "$CATEG" = "3" ]
+			then
+				while true
+				do
+				clear
+				echo -e "Select a tool to install/reinstall"
+				echo -e " "$YS"1"$CE") Fluxion"
+				echo -e ""$YS" 2"$CE") Wifite"
+				echo -e ""$YS" 3"$CE") Wifiphisher "
+				echo -e ""$YS" 4"$CE") Zatacker"
+				echo -e ""$YS" 5"$CE") Morpheus"
+				echo -e ""$YS" 6"$CE") Osrfconsole"
+				echo -e ""$YS" 7"$CE") Hakku"
+				echo -e ""$YS" 8"$CE") Trity"
+				echo -e ""$YS" 9"$CE") Cupp"
+				echo -e ""$YS"10"$CE") Dracnmap"
+				echo -e ""$YS"11"$CE") Fern"
+				echo -e ""$YS"12"$CE") Netdiscover"
+				echo -e ""$YS"13"$CE") KickThemOut"
+				echo -e ""$YS"14"$CE") Ghost-Phisher"
+				echo -e ""$YS"15"$CE") The Eye"
+				echo -e ""$YS"16"$CE") Xerxes"
+				echo -e ""$YS"17"$CE") Mdk3-master"
+				echo -e ""$YS"18"$CE") Katana Framework"
+				echo -e ""$YS"19"$CE") Airgeddon"				
+				echo -e ""$YS"20"$CE") Websploit"
+				echo -e ""$YS"21"$CE") 4nonimizer"
+				echo -e ""$YS"22"$CE") Openvas"
+				echo -e ""$YS"23"$CE") BeeLogger"
+				echo -e ""$YS"24"$CE") Ezsploit"
+				echo -e ""$YS"25"$CE") Pupy"
+				echo -e ""$YS"26"$CE") Zirikatu"
+				echo -e ""$YS"27"$CE") WiFi-autopwner"
+				echo -e ""$YS"28"$CE") Bully"
+				echo -e ""$YS"29"$CE") Anonsurf"
+				echo -e ""$YS"30"$CE") Anonym8"
+				echo -e ""$YS"31"$CE") TheFatRat"
+				echo -e ""$YS"back"$CE") Go back"
+				echo -e ""$YS" 0"$CE") Exit"
+				echo -e "Choose: "
+				read REIN
+				clear
+				if [ "$REIN" = "1" ]
+				then
+					if [ -d "/root/fluxion" ]
+					then
+						echo -e "Removing old..."
+						echo -e "$PAKTC"
+						rm -r /root/fluxion
+					fi
+		echo -e "Installing fluxion"
+		echo -e "Tool by Deltaxflux"
+		sleep 1
+		cd
+		wget https://fluxion.tk/fluxion-unstable.zip
+		apt-get install unzip
+		clear
+		unzip /root/fluxion*.zip -d /root
+		cd /root/fluxion/install
+		chmod +x install.sh
+		./install.sh					
+				elif [ "$REIN" = "2" ]
+				then
+		apt-get install wifite
+				elif [ "$REIN" = "3" ]
+				then
+					if [ -d "/root/wifiphisher" ]
+					then
+						echo -e "Removing old..."
+						echo -e "$PAKTC"
+						rm -r /root/wifiphisher
+					fi
+		echo -e "Installing Wifiphisher"
+		echo -e "Tool idea by Dan McInerney"
+		sleep 1
+		git clone https://github.com/wifiphisher/wifiphisher.git
+		cd wifiphisher
+		sudo python setup.py install
+		sleep 1
+				elif [ "$REIN" = "4" ]
+				then
+		echo -e "I cannot install Zatacker. Please google how to do that yourself."
+		echo -e "PAKTGB"
+		read
+				elif [ "$REIN" = "5" ]
+				then
+					if [ -d "/root/morpheus" ]
+					then
+						echo -e "Removing old..."
+						echo -e "$PAKTC"
+						rm -r /root/morpheus
+					fi				
+		echo -e "Installing Morpheus"
+		echo -e "Tool by Pedro ubuntu  [ r00t-3xp10it ]"
+		sleep 1
+		cd
+		git clone https://github.com/r00t-3xp10it/morpheus.git
+		cd morpheus
+		chmod +x morpheus.sh
+				elif [ "$REIN" = "6" ]
+				then
+	pip install osrframework			
+				elif [ "$REIN" = "7" ]
+				then
+					if [ -d "/root/hakkuframework" ]
+					then
+						echo -e "Removing old..."
+						echo -e "$PAKTC"
+						rm -r /root/hakkuframework
+					fi		
+		echo -e "Installing Hakku"
+		echo -e "Tool by 4shadoww"
+		sleep 1
+		cd
+		git clone https://github.com/4shadoww/hakkuframework.git
+		cd hakkuframework
+		chmod +x hakku
+		chmod +x install							
+				elif [ "$REIN" = "8" ]
+				then
+					if [ -d "/root/Trity" ]
+					then
+						echo -e "Removing old..."
+						echo -e "$PAKTC"
+						rm -r /root/Trity
+					fi		
+		echo -e "Installing Trity"
+		echo -e "Tool by Toxic-ig"
+		sleep 1
+		git clone https://github.com/toxic-ig/Trity.git
+		cd Trity
+		sudo python install.py							
+				elif [ "$REIN" = "9" ]
+				then
+					if [ -d "/root/cupp" ]
+					then
+						echo -e "Removing old..."
+						echo -e "$PAKTC"
+						rm -r /root/cupp
+					fi			
+		echo -e "Installing Cupp"
+		echo -e "Tool by Muris Kurgas"
+		sleep 1
+		cd
+		git clone https://github.com/Mebus/cupp.git
+		cd cupp
+		chmod +x cupp.py	
+				elif [ "$REIN" = "10" ]
+				then
+					if [ -d "/root/Dracnmap" ]
+					then
+						echo -e "Removing old..."
+						echo -e "$PAKTC"
+						rm -r /root/Dracnmap
+					fi			
+		echo -e "Installing Dracnmap"
+		echo -e "Tool by Edo -maland-"
+		cd
+		git clone https://github.com/Screetsec/Dracnmap.git
+		cd Dracnmap
+		chmod +x Dracnmap.sh	
+				elif [ "$REIN" = "11" ]
+				then
+					if [ -d "/root/Fern-Wifi-Cracker" ]
+					then
+						echo -e "Removing old..."
+						echo -e "$PAKTC"
+						rm -r /root/Fern-Wifi-Cracker
+					fi		
+		echo -e "Installing Fern"
+		echo -e "Tool by Savio-code"
+		sleep 1
+		cd 
+		svn checkout http://github.com/savio-code/fern-wifi-cracker/trunk/Fern-Wifi-Cracker/
+		cd Fern-Wifi-Cracker
+		chmod +x execute.py		
+				elif [ "$REIN" = "12" ]
+				then
+		apt-get install netdiscover			
+				elif [ "$REIN" = "13" ]
+				then
+					if [ -d "/root/kickthemout" ]
+					then
+						echo -e "Removing old..."
+						echo -e "$PAKTC"
+						rm -r /root/kickthemout
+					fi		
+		echo -e "Installing Kichthemout"
+		echo -e "Tool by Nikolaos Kamarinakis & David Schütz"
+		sleep 2
+		apt-get install nmap
+		git clone https://github.com/k4m4/kickthemout.git
+		cd kickthemout/
+		sudo python -m pip install -r requirements.txt
+				elif [ "$REIN" = "14" ]
+				then
+					if [ -d "/root/ghost-phisher" ]
+					then
+						echo -e "Removing old..."
+						echo -e "$PAKTC"
+						rm -r /root/ghost-phisher
+					fi			
+		echo -e "Installing Ghost-Phisher"
+		echo -e "Tool by Savio-code"
+		sleep 1
+		cd
+		git clone https://github.com/savio-code/ghost-phisher.git
+		sleep 1
+		chmod +x /root/ghost-phisher/Ghost-Phisher/ghost.py
+				elif [ "$REIN" = "15" ]
+				then
+					if [ -d "/root/The-Eye" ]
+					then
+						echo -e "Removing old..."
+						echo -e "$PAKTC"
+						rm -r /root/The-Eye
+					fi			
+		echo -e "Installing The Eye"
+		echo -e "Tool by EgeBalci"
+		sleep 1
+		cd
+		git clone https://github.com/EgeBalci/The-Eye.git
+		cd The-Eye
+		chmod +x TheEye	
+				elif [ "$REIN" = "16" ]
+				then
+					if [ -d "/root/xerxes" ]
+					then
+						echo -e "Removing old..."
+						echo -e "$PAKTC"
+						rm -r /root/xerxes
+					fi			
+		echo -e "Installing Xerxes"
+		echo -e "Tool by zanyarjamal"
+		cd
+		git clone https://github.com/zanyarjamal/xerxes
+		cd xerxes
+		gcc xerxes.c -o xerxes	
+				elif [ "$REIN" = "17" ]
+				then
+					if [ -d "/root/mdk3-master" ]
+					then
+						echo -e "Removing old..."
+						echo -e "$PAKTC"
+						rm -r /root/mdk3-master
+					fi				
+		echo -e "Installing Mdk3-master"
+		echo -e "Tool by Musket Developer"
+		cd
+		git clone https://github.com/wi-fi-analyzer/mdk3-master.git
+		cd /root/mdk3-master
+		make
+		make install
+				elif [ "$REIN" = "18" ]
+				then
+					if [ -d "/root/KatanaFramework" ]
+					then
+						echo -e "Removing old..."
+						echo -e "$PAKTC"
+						rm -r /root/KatanaFramework
+					fi				
+					echo -e "Installing Katana framework"
+					echo -e "Tool by PowerScript"
+					cd
+					git clone https://github.com/PowerScript/KatanaFramework.git
+					cd KatanaFramework
+					sh dependencies
+					python install					
+				elif [ "$REIN" = "19" ]
+				then
+					if [ -d "/root/airgeddon" ]
+					then
+						echo -e "Removing old..."
+						echo -e "$PAKTC"
+						rm -r /root/airgeddon
+					fi
+						echo -e "Installing..."
+						sleep 1
+						echo -e "Installing Airgeddon"
+						echo -e "Tool by v1s1t0r1sh3r3"
+						cd
+						git clone https://github.com/v1s1t0r1sh3r3/airgeddon.git
+						cd airgeddon
+						chmod +x airgeddon.sh
+				elif [ "$REIN" = "20" ]
+				then
+	apt-get install websploit			
+				elif [ "$REIN" = "21" ]
+				then
+					if [ -d "/root/4nonimizer" ]
+					then
+						echo -e "Removing old..."
+						echo -e "$PAKTC"
+						rm -r /root/4nonimizer
+					fi		
+		echo -e "Installing 4nonimizer"
+		echo -e "Tool by Hackplayers"
+		cd
+		git clone https://github.com/Hackplayers/4nonimizer.git
+		cd 4nonimizer
+		chmod +x 4nonimizer
+		./4nonimizer install
+		clear
+		cd
+		apt-get install python-pip
+		apt-get install php-curl
+		gem install pcaprub
+		gem install packetfu	
+				elif [ "$REIN" = "22" ]
+				then
+		apt-get install openvas
+		openvas-setup
+				elif [ "$REIN" = "23" ]
+				then
+					if [ -d "/root/BeeLogger" ]
+					then
+						echo -e "Removing old..."
+						echo -e "$PAKTC"
+						rm -r /root/BeeLogger
+					fi	
+		echo -e "Installing BeeLogger"
+		echo -e "Tool by Alisson Moretto - 4w4k3"
+		cd
+		git clone https://github.com/4w4k3/BeeLogger.git
+		cd BeeLogger
+		chmod +x install.sh
+		./install.sh
+		cd
+		apt-get install python-pip
+		apt-get install php-curl
+		gem install pcaprub
+		gem install packetfu
+		clear
+				elif [ "$REIN" = "24" ]
+				then
+					if [ -d "/root/ezsploit" ]
+					then
+						echo -e "Removing old..."
+						echo -e "$PAKTC"
+						rm -r /root/ezsploit
+					fi				
+		echo -e "Installing Ezsploit"
+		echo -e "Tool by rand0m1ze"
+		git clone https://github.com/rand0m1ze/ezsploit.git
+		cd ezsploit/
+		chmod +x ezsploit.sh
+				elif [ "$REIN" = "25" ]
+				then
+					if [ -d "/root/pupy" ]
+					then
+						echo -e "Removing old..."
+						echo -e "$PAKTC"
+						rm -r /root/pupy
+					fi			
+		echo -e "Installing Pupy"
+		echo -e "Tool by n1nj4sec"
+		cd
+		git clone https://github.com/n1nj4sec/pupy.git
+		cd pupy
+		git submodule init
+		git submodule update
+		pip install -r pupy/requirements.txt
+				elif [ "$REIN" = "26" ]
+				then
+					if [ -d "/root/zirikatu" ]
+					then
+						echo -e "Removing old..."
+						echo -e "$PAKTC"
+						rm -r /root/zirikatu
+					fi		
+		echo -e "Installing Zirikatu"
+		echo -e "Tool by pasahitz"
+		cd
+		git clone https://github.com/pasahitz/zirikatu.git
+		cd zirikatu
+		chmod +x zirikatu.sh
+				elif [ "$REIN" = "27" ]
+				then
+					if [ -d "/root/WiFi-autopwner" ]
+					then
+						echo -e "Removing old..."
+						echo -e "$PAKTC"
+						rm -r /root/WiFi-autopwner
+					fi		
+		echo -e "Installing WiFi-autopwner"
+		echo -e "Tool by Mi-Al"
+		cd
+		git clone https://github.com/Mi-Al/WiFi-autopwner.git
+				elif [ "$REIN" = "28" ]
+				then
+					if [ -d "/root/bully" ]
+					then
+						echo -e "Removing old..."
+						echo -e "$PAKTC"
+						rm -r /root/bully
+					fi				
+		echo -e "Installing Bully"
+		echo -e "Tool by Aanarchyy"
+		cd
+		git clone https://github.com/aanarchyy/bully.git
+		cd bully
+		cd src
+		make
+		sudo make install		
+				elif [ "$REIN" = "29" ]
+				then
+					if [ -d "/root/kali-anonsurf" ]
+					then
+						echo -e "Removing old..."
+						echo -e "$PAKTC"
+						rm -r /root/kali-anonsurf
+					fi		
+		cd
+		echo -e "Installing Anonsurf"
+		echo -e "Tool by Und3rf10w"
+		git clone https://github.com/Und3rf10w/kali-anonsurf.git
+		cd kali-anonsurf
+		chmod +x installer.sh
+		./installer.sh
+		sleep 1
+				elif [ "$REIN" = "30" ]
+				then
+					if [ -d "/root/anonym8" ]
+					then
+						echo -e "Removing old..."
+						echo -e "$PAKTC"
+						rm -r /root/anonym8
+					fi		
+		echo -e "Installing Anonym8"
+		echo -e "Tool by HiroshiManRise"
+		git clone https://github.com/HiroshiManRise/anonym8.git
+		cd anonym8
+		chmod +x INSTALL.sh
+		./INSTALL
+		sleep 1	
+				elif [ "$REIN" = "31" ]
+				then	
+					if [ -d "/root/TheFatRat" ]
+					then
+						echo -e "Removing old..."
+						echo -e "$PAKTC"
+						rm -r /root/TheFatRat
+					fi	
+		echo -e "Installing TheFatRat"
+		echo -e "Tool by Screetsec"
+		cd
+		git clone https://github.com/Screetsec/TheFatRat.git
+		cd TheFatRat
+		chmod +x setup.sh && ./setup.sh	
+				elif [ "$REIN" = "back" ]
+				then
+					clear
+					break
+				elif [ "$REIN" = "0" ]
+				then	
+					clear
+					exit
 				fi
 				done
 			elif [ "$CATEG" = "0" ]

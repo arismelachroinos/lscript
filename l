@@ -1,5 +1,5 @@
 #! /bin/bash
-VERSION=1.8
+VERSION=1.9
 #############DEFAULTS###############
 TITLEBAR="The LAZY script"
 #setting yellow-start 

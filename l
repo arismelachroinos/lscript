@@ -1,5 +1,6 @@
 #! /bin/bash
 VERSION=1.9
+HOWMANYTOOLS=21
 #############DEFAULTS###############
 TITLEBAR="The LAZY script"
 #setting yellow-start 
@@ -134,6 +135,7 @@ function checkifalready
 		then
 			GOOD="0"
 			echo -e "This shortcut is already in use by the script."
+			sleep 3
 		fi
 		num=$(( num+1 ))
 	done
@@ -143,6 +145,7 @@ function checkifalready
 		then
 			GOOD="0"
 			echo -e "This shortcut is already in use by the script."
+			sleep 3
 		fi
 	fi
 	if [ "$CHECKKS" = "delete" ]
@@ -154,7 +157,7 @@ function checkifalready
 		BACKUPTITLE="$TITLE"
 		BACKUPNN="$nn"
 		num=1
-		while [ $num -le 20 ]
+		while [ $num -le "$HOWMANYTOOLS" ]
 		do
 		nn="$num"
 		listshortcuts
@@ -223,7 +226,7 @@ then
 		echo -e "$PAKTGB"
 		$READAK
 		clear
-		break
+		#break
 	fi
 fi
 }
@@ -329,6 +332,11 @@ function listshortcuts
 		TITLE="Pupy"
 		NAMECD="cd /root/pupy/pupy"
 		KSSET="./pupysh.py"
+	elif [ "$nn" = "21" ]
+	then
+		TITLE="TheFatRat"
+		NAMECD="cd /root/TheFatRat"
+		KSSET="./fatrat"
 	fi
 }
 
@@ -346,7 +354,8 @@ then
 	nn=1
 	ff=1
 	HOWMANY=0
-	while [ "$nn" != 21 ]
+	HOWADD=$(( HOWMANYTOOLS + 1 )) 
+	while [ "$nn" != "$HOWADD" ]
 	do
 		listshortcuts
 		if [ -f ""$KSPATH"/"$TITLE"/"$TITLE"ks.txt" ]
@@ -416,7 +425,8 @@ var1=1
 			echo -e "Available shortcuts:                        "$YS"reset"$CE") Delete all shortcuts"
 			nn=1
 			#start sorting out all the available shortcuts
-			while [ "$nn" != 21 ]
+			HOWADD=$(( HOWMANYTOOLS + 1 )) 
+			while [ "$nn" != "$HOWADD" ]
 			do
 			listshortcuts
 			#adding a space where needed on the output,so it will be sorted correctly
@@ -452,8 +462,9 @@ var1=1
 			nn=$(( nn+1 ))
 			done
 			echo -e ""$YS"back"$CE") Go back"
-			echo -e ""$YS" 0"$CE") EXIT"
-			nn=""
+			#echo -e ""$YS" 0"$CE") EXIT"
+			echo -e "Choose: "
+			#nn=""
 			read nn
 			clear
 			listshortcuts
@@ -470,7 +481,7 @@ var1=1
 			elif [ "$nn" = "reset" ]
 			then
 				rm -r "$KSPATH"/*
-			elif [ "$nn" -le 20 ] 
+			elif [ "$nn" -le "$HOWMANYTOOLS" ] 
 			then
 				createshortcut
 			fi
@@ -664,7 +675,7 @@ var1=1
 				fi
 				echo -e ""$YS"back"$CE") Go back"
 				echo -e ""$YS"00"$CE") Main menu"
-				echo -e ""$YS" 0"$CE") EXIT"
+				#echo -e ""$YS" 0"$CE") EXIT"
 				echo -e "Choose: "
 				read -e APPP
 				clear
@@ -858,7 +869,7 @@ var1=1
 					echo -e ""$YS" 6"$CE") entify"
 					echo -e ""$YS"back"$CE") Go back"
 					echo -e ""$YS"00"$CE") Main menu"
-					echo -e ""$YS" 0"$CE") EXIT"
+				#	echo -e ""$YS" 0"$CE") EXIT"
 					echo -e "Choose: "
 					read -e OSFR
 					clear
@@ -956,7 +967,7 @@ var1=1
 				fi
 				echo -e ""$YS"back"$CE") Go back"
 				echo -e ""$YS"00"$CE") Main menu"
-				echo -e ""$YS" 0"$CE") EXIT"
+				#echo -e ""$YS" 0"$CE") EXIT"
 				echo -e "Choose: "
 				read -e KEYLOG
 				clear
@@ -971,14 +982,16 @@ var1=1
 					cd /root/ezsploit/
 					./ezsploit.sh
 					cd
-					echo -e "TUTORIAL AFTER GENERATION OF PAYLOAD"
-					echo -e "Open a new terminal and type:"
-					echo -e "msfconsole"
-					echo -e "use exploit/multi/handler"
-					echo -e "THIS DEPENDS ON THE PLAYLOAD TYPE. ETC FOR ANDROID IS: set payload android/meterpreter/reverse_tcp"
-					echo -e "set lhost <YOUR IP HERE>"
-					echo -e "set lport 4444"
-					echo -e "exploit"
+					#~ echo -e "TUTORIAL AFTER GENERATION OF PAYLOAD"
+					#~ echo -e "Open a new terminal and type:"
+					#~ echo -e "msfconsole"
+					#~ echo -e "use exploit/multi/handler"
+					#~ echo -e "THIS DEPENDS ON THE PLAYLOAD TYPE. ETC FOR ANDROID IS: set payload android/meterpreter/reverse_tcp"
+					#~ echo -e "set lhost <YOUR IP HERE>"
+					#~ echo -e "set lport 4444"
+					#~ echo -e "exploit"
+					echo -e "Go to metasploit menu to create a listener(Option "$YS"14"$CE")"
+					sleep 2
 					echo -e "Press "$YS"any key"$CE" to leave..."
 					$READAK
 					exec bash "$0"
@@ -2053,14 +2066,18 @@ var1=1
 		fi
 	elif [ "$YORNAA" = "14" ]
 	then
+		if [ ! -d /root/lscript/rc ]
+		then
+			mkdir /root/lscript/rc
+		fi
 		while true
 		do
 		clear
 		echo -e "---------------------------"$RS"METASPLOIT"$CE"----------------------------"
 		printf '\033]2;METASPLOIT\a'
 		echo -e ""$YS" 1"$CE") Create payload"
-		#~ echo -e ""$YS" 2"$CE") Create payload with zirikatu"
-		echo -e ""$YS" 2"$CE") Start msfconsole"
+		echo -e ""$YS" 2"$CE") Create listener"
+		echo -e ""$YS" 3"$CE") Saved listeners"
 		echo -e ""$YS"back"$CE") Go back"
 		echo -e ""$YS" 0"$CE") EXIT"
 		echo -e "Choose: "
@@ -2113,7 +2130,82 @@ var1=1
 		elif [ "$METASP" = "2" ]
 		then
 			clear
-			msfconsole
+			echo -e "LHOST: "
+			read LHOSTL
+			echo -e "LPORT: "
+			read LPORTL
+			echo -e "PAYLOAD (Default: "$YS"windows/meterpreter/reverse_tcp"$CE"): "
+			read PAYLOADL
+			if [ -z "$PAYLOADL" ]
+			then
+				echo -e "Setting PAYLOAD to windows/meterpreter/reverse_tcp"
+				sleep 2
+				PAYLOADL="windows/meterpreter/reverse_tcp"
+			fi
+			echo -e "Name of listener(etc: "$YS"john"$CE") : "
+			read NAMEL
+			echo "use exploit/multi/handler" > /root/lscript/rc/"$NAMEL".rc
+			echo "set PAYLOAD $PAYLOADL " >> /root/lscript/rc/"$NAMEL".rc
+			echo "set LHOST $LHOSTL " >> /root/lscript/rc/"$NAMEL".rc
+			echo "set LPORT $LPORTL " >> /root/lscript/rc/"$NAMEL".rc
+			echo "set ExitOnSession false" >> /root/lscript/rc/"$NAMEL".rc
+			echo "exploit -j" >> /root/lscript/rc/"$NAMEL".rc
+			clear
+			echo -e "Launch the listener now? "$YNONLY""
+			read LLN
+			if [ "$LLN" = "y" ]
+			then
+				echo -e "Launching msfconsole..."
+				sleep 2
+				clear
+				msfconsole -r /root/lscript/rc/"$NAMEL".rc
+			fi
+		elif [ "$METASP" = "3" ]
+		then
+			while true
+			do
+			clear
+			ls /root/lscript/rc
+			echo -e "Enter the name of the above listener(s) you want to select(etc: "$YS"john"$CE")"
+			echo -e ""$YS"back"$CE") Go back"
+			read NAMERC
+			clear
+			if [ "$NAMERC" = "back" ]
+			then
+				break
+			fi
+			if [ ! -f /root/lscript/rc/"$NAMERC" ]
+			then
+				NAMERC="$NAMERC".rc
+				if [ ! -f /root/lscript/rc/"$NAMERC" ]
+				then
+					echo -e "File not found. Try again.."
+					sleep 2
+					continue
+				fi
+			fi
+			while true
+			do
+			clear
+			echo -e ""$NAMERC" selected."
+			echo -e ""$YS" 1"$CE") Start listener"
+			echo -e ""$YS" 2"$CE") Delete listener"
+			echo -e ""$YS"back"$CE") Go back"
+			echo -e "Choose: "
+			read LISTL
+			if [ "$LISTL" = "1" ]
+			then
+				msfconsole -r /root/lscript/rc/"$NAMERC"
+			elif [ "$LISTL" = "2" ]
+			then
+				rm /root/lscript/rc/"$NAMERC"
+				break
+			elif [ "$LISTL" = "back" ]
+			then
+				break
+			fi
+			done
+			done
 		elif [ "$METASP" = "back" ]
 		then
 			clear

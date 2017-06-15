@@ -1,3 +1,10 @@
+1.9.1
+Improved code when going back on navigation manus
+Added support for all wireless interface names
+Added many functions and improved code
+Added hidden shortcuts menu
+
+
 1.9
 Added option to install/reinstall a tool within lscript
 Huge code change on the installer, now lscript installs first, then the tools,only if you want

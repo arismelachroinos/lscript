@@ -1,79 +1,8 @@
 #! /bin/bash
 printf '\033]2;INSTALLER\a'
-#echo -e "Installing all the tools needed for LAZY script..."
-#echo -e "(You should be a root user)"
-#sleep 2
-echo -e "Installing lscript..."
-sleep 1
-echo -e "Fixing permissions"
+echo -e "Installing all the tools needed for LAZY script..."
+echo -e "(You should be a root user)"
 sleep 2
-chmod +x /root/lscript/lh1
-chmod +x /root/lscript/lh2
-chmod +x /root/lscript/lh3
-chmod +x /root/lscript/lh31
-chmod +x /root/lscript/l
-chmod +x /root/lscript/lh4
-chmod +x /root/lscript/lh41
-chmod +x /root/lscript/lh42
-chmod +x /root/lscript/lh43
-chmod +x /root/lscript/ls/l131.sh
-chmod +x /root/lscript/ls/l132.sh
-chmod +x /root/lscript/ls/l133.sh
-chmod +x /root/lscript/uninstall.sh
-clear
-echo -e "Copying script to /bin/lscript"
-sleep 1
-mkdir /bin/lscript
-cd /root/lscript
-cp l /bin/lscript
-cp lh1 /bin/lscript
-cp lh2 /bin/lscript
-cp lh3 /bin/lscript
-cp lh31 /bin/lscript
-cp lh4 /bin/lscript
-cp lh41 /bin/lscript
-cp lh42 /bin/lscript
-cp lh43 /bin/lscript
-clear
-if [ ! -d /root/handshakes ]
-then
-	mkdir /root/handshakes
-	echo -e "Made /root/handshake directory"
-else
-	echo -e "/root/handshakes directory detected.Good."
-fi
-if [ ! -d /root/wordlists ]
-then
-	mkdir /root/wordlists
-	echo -e "Made /root/wordlists directory"
-else
-	echo -e "/root/wordlists directory detected.Good."
-fi
-while true
-do
-clear
-echo -e "Are you \e[1;33mu\e[0mpdating or \e[1;33mi\e[0mnstalling the script?(\e[1;33mu\e[0m/\e[1;33mi\e[0m): "
-read UORI
-if [ "$UORI" = "u" ]
-then 
-	clear
-	echo -e "Type 'changelog' to see what's new on this version"
-	sleep 3
-	break
-elif [ "$UORI" = "i" ]
-then
-	clear
-	echo -e "Adding lscript to PATH so you can access it from anywhere"
-	sleep 1
-	export PATH=/bin/lscript:$PATH
-	sleep 1
-	echo "export PATH=/bin/lscript:$PATH" >> ~/.bashrc
-	sleep 1
-	clear
-	break
-fi
-done
-#------------------
 echo -e "Did you run 'apt-get update' recently?(\e[1;33my\e[0m/\e[1;33mn\e[0m)(\e[1;33mEnter\e[0m=yes): "
 read -e APTG
 if [ "$APTG" = "n" ]
@@ -86,58 +15,33 @@ else
 	sleep 2
 fi
 clear
-echo -e "Lscript is installed.You can open a new terminal and type   l"
-sleep 2
-echo -e "Lscript requires many tools to be installed"
-sleep 2
-echo -e "This usually takes about 15 minutes, but you will be fully loaded with many awesome tools that you can launch from Lscript."
-sleep 3
 echo -e "All scripts will be installed on /root/ directory(needed for the script)"
-sleep 2
-echo -e "Install all tools now or later in lscript menu?(\e[1;33mn\e[0m/\e[1;33ml\e[0m)"
-read NORL
-if [ "$NORL" = "n" ]
+echo -e "Press \e[1;33menter\e[0m to start..."
+read ENT
+if [ -z $ENT ]
 then
-clear
-echo -e "Press \e[1;33many key\e[0m to start..."
-read -e -n 1 -r
 	clear
-	if [ ! -d "/root/4nonimizer" ]
-	then
-		echo -e "Installing 4nonimizer"
-		echo -e "Tool by Hackplayers"
-		cd
-		git clone https://github.com/Hackplayers/4nonimizer.git
-		cd 4nonimizer
-		chmod +x 4nonimizer
-		./4nonimizer install
-		clear
-		cd
-		apt-get install python-pip
-		apt-get install php-curl
-		gem install pcaprub
-		gem install packetfu
-	else 
-		echo -e "4nonimizer is already installed..."
-		sleep 1 
-		echo -e ""
-		echo -e "Skipping..."
-	fi
-	clear
-	if [ ! -d "/root/TheFatRat" ]
-	then
-		echo -e "Installing TheFatRat"
-		echo -e "Tool by Screetsec"
-		cd
-		git clone https://github.com/Screetsec/TheFatRat.git
-		cd TheFatRat
-		chmod +x setup.sh && ./setup.sh	
-	else 
-		echo -e "TheFatRat is already installed..."
-		sleep 1 
-		echo -e ""
-		echo -e "Skipping..."
-	fi
+	#~ if [ ! -d "/root/4nonimizer" ]
+	#~ then
+		#~ echo -e "Installing 4nonimizer"
+		#~ echo -e "Tool by Hackplayers"
+		#~ cd
+		#~ git clone https://github.com/Hackplayers/4nonimizer.git
+		#~ cd 4nonimizer
+		#~ chmod +x 4nonimizer
+		#~ ./4nonimizer install
+		#~ clear
+		#~ cd
+		#~ apt-get install python-pip
+		#~ apt-get install php-curl
+		#~ gem install pcaprub
+		#~ gem install packetfu
+	#~ else 
+		#~ echo -e "4nonimizer is already installed..."
+		#~ sleep 1 
+		#~ echo -e ""
+		#~ echo -e "Skipping..."
+	#~ fi
 	clear
 	if [ ! -d "/root/sslstrip2" ]
 	then
@@ -264,7 +168,7 @@ read -e -n 1 -r
 		git clone https://github.com/HiroshiManRise/anonym8.git
 		cd anonym8
 		chmod +x INSTALL.sh
-		./INSTALL
+		./INSTALL.sh
 		sleep 1
 	else 
 		echo -e "Anonym8 is already installed..."
@@ -283,6 +187,22 @@ read -e -n 1 -r
 	#sleep 1
 	#clear
 	# cd
+	cd
+	echo -e "Installing Angry IP Scanner"
+	echo -e "Tool by Anton Keks"
+	if [ -f "/root/ipscan_*" ]
+	then
+		echo -e "Removing old file"
+		sleep 2
+		rm /root/ipscan_*
+	fi
+	echo -e "Downloading angryipscanner"
+	sleep 2
+	wget https://github.com/angryip/ipscan/releases/download/3.5.1/ipscan_3.5.1_amd64.deb
+	echo -e "Installing..."
+	dpkg -i ipscan_*
+	echo -e "Done"
+	sleep 1
 	if [ ! -d "/root/anonsurf" ]
 	then
 		cd
@@ -290,8 +210,8 @@ read -e -n 1 -r
 		echo -e "Tool by Und3rf10w"
 		git clone https://github.com/Und3rf10w/kali-anonsurf.git
 		cd kali-anonsurf
-		chmod +x installer.sh
-		./installer.sh
+		chmod +x install.sh
+		./install
 		sleep 1
 	else 
 		echo -e "Anonsurf is already installed..."
@@ -328,22 +248,6 @@ read -e -n 1 -r
 		echo -e ""
 		echo -e "Skipping..."
 	fi
-	#~ echo -e "Deltaxflux deleted the project.Do you want to download it from user disquette38 by yourown responsibility?(\e[1;33my\e[0m/\e[1;33mn\e[0m): "
-	#~ read -e FLUX
-	#~ if [ "$FLUX" = "y" ]
-	#~ then
-		#~ git clone https://github.com/disquette38/fluxion.git
-		#~ cd fluxion/install
-		#~ chmod +x install.sh
-		#~ ./install.sh
-		#~ sleep 1
-		#~ clear
-		#~ cd
-	#~ else
-		#~ echo -e "Skipping Fluxion then..."
-		#~ sleep 1
-		#~ clear
-	#~ fi
 	clear
 	echo -e "Installing websploit"
 	echo -e "Tool by 0x0ptim0us (Fardin Allahverdinazhand)"
@@ -570,15 +474,6 @@ read -e -n 1 -r
 	fi
 	cd
 	clear
-	#~ echo -e "Installing Spoofa"
-	#~ echo -e "Tool by SilverFoxx"
-	#~ cd
-	#~ git clone https://github.com/SilverFoxx/Spoofa.git
-	#~ clear
-	#~ echo -e "Installing Yamas"
-	#~ ehco -e "Tool by SilverFoxx"
-	#~ cd
-	#~ git clone https://github.com/SilverFoxx/Yamas.git
 	if [ ! -d "/root/WiFi-autopwner" ]
 	then
 		echo -e "Installing WiFi-autopwner"
@@ -629,8 +524,75 @@ read -e -n 1 -r
 	clear
 	echo -e "Downloading is finished."
 	sleep 2
+else
+	echo -e "Ok, bye..."
+	sleep 1
+	exit
 fi
 clear
+echo -e "Fixing permissions"
+sleep 2
+chmod +x /root/lscript/lh1
+chmod +x /root/lscript/lh2
+chmod +x /root/lscript/lh3
+chmod +x /root/lscript/lh31
+chmod +x /root/lscript/l
+chmod +x /root/lscript/lh4
+chmod +x /root/lscript/lh41
+chmod +x /root/lscript/lh42
+chmod +x /root/lscript/lh43
+chmod +x /root/lscript/ls/l131.sh
+chmod +x /root/lscript/ls/l132.sh
+chmod +x /root/lscript/ls/l133.sh
+chmod +x /root/lscript/uninstall.sh
+clear
+echo -e "Copying script to /bin/lscript"
+sleep 1
+mkdir /bin/lscript
+cd /root/lscript
+cp l /bin/lscript
+cp lh1 /bin/lscript
+cp lh2 /bin/lscript
+cp lh3 /bin/lscript
+cp lh31 /bin/lscript
+cp lh4 /bin/lscript
+cp lh41 /bin/lscript
+cp lh42 /bin/lscript
+cp lh43 /bin/lscript
+clear
+if [ ! -d /root/handshakes ]
+then
+	mkdir /root/handshakes
+	echo -e "Made /root/handshake directory"
+else
+	echo -e "/root/handshakes directory detected.Good."
+fi
+if [ ! -d /root/wordlists ]
+then
+	mkdir /root/wordlists
+	echo -e "Made /root/wordlists directory"
+else
+	echo -e "/root/wordlists directory detected.Good."
+fi
+echo -e "Are you updating or installing the script?(\e[1;33mu\e[0m/\e[1;33mi\e[0m): "
+read UORI
+if [ "$UORI" = "u" ]
+then 
+	clear
+	echo -e "Type 'changelog' to see what's new on this version"
+	sleep 3
+elif [ "$UORI" = "i" ]
+then
+	clear
+	echo -e "Adding lscript to PATH so you can access it from anywhere"
+	sleep 1
+	export PATH=/bin/lscript:$PATH
+	sleep 1
+	echo "export PATH=/bin/lscript:$PATH" >> ~/.bashrc
+	sleep 1
+	clear
+fi
+#~ mkdir /tmp/tmplcript
 echo -e "DONEEEE"
 sleep 1
 clear

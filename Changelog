@@ -1,3 +1,17 @@
+
+1.9.2
+Added more functions to code.Easier to read.
+Replaced 4nonimizer with anonym8
+Added option to create a listener when creating a payload
+Added encoder to metasploit payload creation
+Added msfconsole launcher and msfupdate to metasploit menu
+Added hidden shortcuts feature
+Added eternalblue exploit automation in hidden features
+Added Angry IP Scanner to wifi tools
+Option to autostart monitor mode when not already and needed
+Scan for networks on specific channel option
+
+
 1.9.1
 Improved code when going back on navigation manus
 Added support for all wireless interface names

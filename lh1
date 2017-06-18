@@ -20,8 +20,23 @@ PAKTGB="Press "$YS"any key$CE to go back..."
 #-----------------FUNCTIONS-----------------
 function scan_networks
 {
-FJC=0
-airodump-ng $WLANNM
+echo -e "Select what to scan: "
+echo -e ""$YS"ENTER"$CE") All channels"
+echo -e " "$YS"1"$CE"-"$YS"13"$CE") Specific channel"
+echo -e ""$YS" back"$CE") Go back"
+read CHANNELSL
+if [ "$CHANNELSL" = "" ]
+then
+	FJC=0
+	airodump-ng $WLANNM
+elif [ "$CHANNELSL" = "back" ]
+then
+	clear
+	CH="0"
+else
+	FJC=0
+	airodump-ng -c $CHANNELSL $WLANNM
+fi
 }
 function validhandshake
 {
@@ -188,6 +203,8 @@ function aircrack_handshake
 }
 
 #-------------------------------------------
+while true
+do
 printf '\033]2;HANDSHAKE\a'
 if [ -f "/root/handshakes/*.csv" ]
 then
@@ -253,27 +270,28 @@ then
 		capture_handshake
 	fi
 fi
-echo -e "Choose again?"$YNYES": "
-read -e BB
-if [ -z "$BB" ]
-then
-	if [ "$AA" = "1" ]
-		then
-		exec bash "$0"
-	else
-		clear
-		exec bash "$0"
-	fi
-elif [ "$BB" = "y" ]
-then
-	if [ "$AA" = "1" ]
-		then
-		exec bash "$0"
-	else
-		clear
-		exec bash "$0"
-	fi
-else
-	clear
-	exit
-fi
+done
+#~ echo -e "Choose again?"$YNYES": "
+#~ read -e BB
+#~ if [ -z "$BB" ]
+#~ then
+	#~ if [ "$AA" = "1" ]
+		#~ then
+		#~ exec bash "$0"
+	#~ else
+		#~ clear
+		#~ exec bash "$0"
+	#~ fi
+#~ elif [ "$BB" = "y" ]
+#~ then
+	#~ if [ "$AA" = "1" ]
+		#~ then
+		#~ exec bash "$0"
+	#~ else
+		#~ clear
+		#~ exec bash "$0"
+	#~ fi
+#~ else
+	#~ clear
+	#~ exit
+#~ fi

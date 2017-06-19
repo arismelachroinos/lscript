@@ -1,5 +1,5 @@
 #! /bin/bash
-VERSION=1.9.2
+VERSION=1.9.3
 HOWMANYTOOLS=22
 BACKL="0"
 #############DEFAULTS###############

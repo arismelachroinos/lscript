@@ -1,8 +1,6 @@
 #! /bin/bash
+clear
 printf '\033]2;INSTALLER\a'
-#echo -e "Installing all the tools needed for LAZY script..."
-#echo -e "(You should be a root user)"
-#sleep 2
 echo -e "Installing lscript..."
 sleep 1
 echo -e "Fixing permissions"
@@ -74,6 +72,18 @@ then
 fi
 done
 #------------------
+clear
+echo -e "Lscript is installed.You can open a new terminal and type   l"
+sleep 2
+echo -e "Lscript requires many tools to be installed"
+sleep 2
+echo -e "This usually takes about 15 minutes, but you will be fully loaded with many awesome tools that you can launch from Lscript."
+sleep 3
+echo -e "Install all tools now or later in lscript menu?(\e[1;33mn\e[0m/\e[1;33ml\e[0m)"
+read NORL
+if [ "$NORL" = "n" ]
+then
+clear
 echo -e "Did you run 'apt-get update' recently?(\e[1;33my\e[0m/\e[1;33mn\e[0m)(\e[1;33mEnter\e[0m=yes): "
 read -e APTG
 if [ "$APTG" = "n" ]
@@ -85,19 +95,6 @@ else
 	echo -e "Awesome! Let's start..."
 	sleep 2
 fi
-clear
-echo -e "Lscript is installed.You can open a new terminal and type   l"
-sleep 2
-echo -e "Lscript requires many tools to be installed"
-sleep 2
-echo -e "This usually takes about 15 minutes, but you will be fully loaded with many awesome tools that you can launch from Lscript."
-sleep 3
-echo -e "All scripts will be installed on /root/ directory(needed for the script)"
-sleep 2
-echo -e "Install all tools now or later in lscript menu?(\e[1;33mn\e[0m/\e[1;33ml\e[0m)"
-read NORL
-if [ "$NORL" = "n" ]
-then
 clear
 echo -e "Press \e[1;33many key\e[0m to start..."
 read -e -n 1 -r

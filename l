@@ -1,5 +1,5 @@
 #! /bin/bash
-VERSION=1.9.3.1
+VERSION=1.9.3.2
 HOWMANYTOOLS=22
 BACKL="0"
 #############DEFAULTS###############
@@ -2241,6 +2241,7 @@ function hidden_shortcuts
 	echo -e ""$YS"  interface"$CE") Change your interface"
 	echo -e ""$YS"     wififb"$CE") Create open wifi access point and get fb passwords with wifiphisher"
 	echo -e ""$YS"eternalblue"$CE") Launch msfconsole with eternalblue exploit on target"
+	echo -e ""$YS"  changelog"$CE") View the changelog of the lscript versions"
 	echo -e "$PAKTGB"
 	$READAK
 	clear
@@ -2442,38 +2443,49 @@ do
 		mkdir /bin/lscript/smtp
 	fi
 	echo -e ""$RS"YOU SHOULD FIRST SIGN UP ON https://www.smtp2go.com AND VERIFY YOUR EMAIL."$CE""
+	echo -e ""$RS"THEN GO TO https://app.smtp2go.com/settings/users AND MAKE A USERNAME AND PASS."$CE""
+	echo -e ""$RS"      ########ALWAYS HAVE PERMISSION OF THE EMAILS YOU SPOOF########"$CE""
+	echo -e ""$RS"      ########DONT SEND VIRUSES , PHISHING OR ILLEGAL THINGS########"$CE""
 	if [ ! -f /bin/lscript/smtp/smtpemail.txt ]
 	then
-		echo -e ""$YS" 1"$CE") Set your SMTP email and pass     "$RS"NOT SET"$CE""
+		echo -e ""$YS" 1"$CE") Set your SMTP username and pass     "$RS"NOT SET"$CE""
 	else
 		read smtpemail < /bin/lscript/smtp/smtpemail.txt
-		echo -e ""$YS" 1"$CE") Set your SMTP email and pass     Current: "$YS""$smtpemail""$CE""
+		echo -e ""$YS" 1"$CE") Set your SMTP username and pass     Current: "$YS""$smtpemail""$CE""
 	fi
 	echo -e ""$YS" 2"$CE") Send a spoofed email"
-	echo -e ""$YS" 3"$CE") Clear your SMTP email and pass from lscript"
+	echo -e ""$YS" 3"$CE") Clear your SMTP username and pass from lscript"
+	echo -e ""$YS" 4"$CE") Fix email failed"
 	echo -e ""$YS"back"$CE") Go back"
 	echo -e ""$YS" 0"$CE") EXIT"
 	read SMTP
 	if [ "$SMTP" = "1" ]
 	then
 		clear
-		echo -e "Enter your EMAIL with which you signed up on smtp2go.com: "
+		echo -e "Enter your smtp username(find it here: https://app.smtp2go.com/settings/users ): "
 		read SMTPEMAIL
-		echo -e "Enter your smtp2g password(find it here: https://app.smtp2go.com/settings/users ): "
+		echo -e "Enter your smtp password(find it here: https://app.smtp2go.com/settings/users ): "
 		read SMTPPASS
 		clear
 		echo "$SMTPEMAIL" > /bin/lscript/smtp/smtpemail.txt
 		echo "$SMTPPASS" > /bin/lscript/smtp/smtppass.txt 
 		echo -e "Credentials saved on /bin/lscript/smtp"
 		sleep 3
+	elif [ "$SMTP" = "4" ]
+	then
+		clear	
+		echo -e "If you email fails, the reason is because on option 1 you didnt set the correct username and password. Find those at https://app.smtp2go.com/settings/users."
+		sleep 2
+		echo -e "$PAKTGB"
+		read -e -n 1 -r
 	elif [ "$SMTP" = "3" ]
 	then
 		if [ -f /bin/lscript/smtp/smtpemail.txt ]
 		then
 			rm /bin/lscript/smtp/smtpemail.txt
-			echo -e "Email removed"
+			echo -e "Username removed"
 		else
-			echo -e "Not email found"
+			echo -e "Not username found"
 		fi
 		if [ -f /bin/lscript/smtp/smtppass.txt ]
 		then
@@ -2499,7 +2511,7 @@ do
 		clear
 		if [ ! -f /bin/lscript/smtp/smtpemail.txt ]
 		then
-			echo -e "No smtp email found."
+			echo -e "No smtp username found."
 			sm=1
 		fi
 		if [ ! -f /bin/lscript/smtp/smtppass.txt ]
@@ -2514,7 +2526,7 @@ do
 		read smtppass < /bin/lscript/smtp/smtppass.txt
 		read smtpemail < /bin/lscript/smtp/smtpemail.txt
 		clear
-		echo -e "Your email is "$RS""$smtpemail""$CE""
+		echo -e "Your username is "$RS""$smtpemail""$CE""
 		echo -e ""
 		echo -e "Enter the target's email: "
 		read TARGETSEMAIL

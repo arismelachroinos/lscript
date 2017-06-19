@@ -43,7 +43,7 @@ then
 		#~ echo -e "Skipping..."
 	#~ fi
 	clear
-	if [ ! -d "/root/sslstrip2" ]
+	if [ ! -d "/usr/share/sslstrip" ]
 	then
 		echo -e "Installing sslstrip2"
 		echo -e "Tool by LeonardoNve"
@@ -92,7 +92,7 @@ then
 	fi
 	cd
 	clear
-	if [ ! -d "/root/KatanaFramework" ]
+	if [ ! -d "/usr/share/KatanaFramework" ]
 	then
 		echo -e "Installing Katana framework"
 		echo -e "Tool by PowerScript"
@@ -123,7 +123,7 @@ then
 		echo -e "Skipping..."
 	fi
 	clear
-	if [ ! -d "/root/mdk3-master" ]
+	if [ ! -d "/usr/share/doc/mdk3" ]
 	then
 		echo -e "Installing Mdk3-master"
 		echo -e "Tool by Musket Developer"
@@ -161,7 +161,7 @@ then
 	fi
 	cd
 	clear
-	if [ ! -d "/root/anonym8" ]
+	if [ ! -d "/etc/init.d/anonym8" ]
 	then
 		echo -e "Installing Anonym8"
 		echo -e "Tool by HiroshiManRise"
@@ -190,7 +190,7 @@ then
 	cd
 	echo -e "Installing Angry IP Scanner"
 	echo -e "Tool by Anton Keks"
-	if [ -f "/root/ipscan_*" ]
+	if [ -d "/usr/lib/ipscan" ]
 	then
 		echo -e "Removing old file"
 		sleep 2
@@ -203,7 +203,7 @@ then
 	dpkg -i ipscan_*
 	echo -e "Done"
 	sleep 1
-	if [ ! -d "/root/anonsurf" ]
+	if [ ! -f "/usr/bin/anonsurf" ]
 	then
 		cd
 		echo -e "Installing Anonsurf"
@@ -223,14 +223,6 @@ then
 	cd
 	if [ ! -d "/root/fluxion" ]
 	then
-	#~ echo -e "Install the latest Fluxion and delete the old , if any?(\e[1;33my\e[0m/\e[1;33mn\e[0m)(\e[1;33mEnter\e[0m=yes): "
-	#~ read FLUPD
-	#~ if [ "$FLUPD" = "n" ]
-	#~ then
-		#~ echo -e "Skipping fluxion installation..."
-		#~ sleep 2
-	#~ else
-		#~ mv /root/fluxion /root/fluxionold
 		echo -e "Installing fluxion"
 		echo -e "Tool by Deltaxflux"
 		sleep 1
@@ -270,7 +262,7 @@ then
 	fi
 	clear
 	cd
-	if [ ! -d "/root/ghost-phisher" ]
+	if [ ! -d "/usr/share/ghost-phisher" ]
 	then
 		echo -e "Installing Ghost-Phisher"
 		echo -e "Tool by Savio-code"
@@ -401,7 +393,7 @@ then
 	fi
 	cd
 	clear
-	if [ ! -d "/root/Fern-Wifi-Cracker" ]
+	if [ ! -d "/usr/share/fern-wifi-cracker" ]
 	then
 		echo -e "Installing Fern"
 		echo -e "Tool by Savio-code"

@@ -1,3 +1,10 @@
+1.9.3
+Changed script's layout
+Added better locating on installer when a tools is already installed
+Added Spoof EMAIL feature
+Added more functions to code.Easier to read. 32 functions
+More changes to code 
+
 
 1.9.2
 Added more functions to code.Easier to read.
@@ -9,7 +16,7 @@ Added hidden shortcuts feature
 Added eternalblue exploit automation in hidden features
 Added Angry IP Scanner to wifi tools
 Option to autostart monitor mode when not already and needed
-Scan for networks on specific channel option
+Scan for networks on spesific channel option
 
 
 1.9.1

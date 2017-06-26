@@ -8,6 +8,7 @@ sleep 2
 chmod +x /root/lscript/lh1
 chmod +x /root/lscript/lh2
 chmod +x /root/lscript/lh3
+#chmod +x /root/lscript/lh21
 chmod +x /root/lscript/lh31
 chmod +x /root/lscript/l
 chmod +x /root/lscript/lh4
@@ -26,6 +27,7 @@ cd /root/lscript
 cp l /bin/lscript
 cp lh1 /bin/lscript
 cp lh2 /bin/lscript
+#cp lh21 /bin/lscript
 cp lh3 /bin/lscript
 cp lh31 /bin/lscript
 cp lh4 /bin/lscript

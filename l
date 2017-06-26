@@ -1,5 +1,5 @@
 #! /bin/bash
-VERSION=1.9.5
+VERSION=1.9.6
 HOWMANYTOOLS=22
 BACKL="0"
 #############DEFAULTS###############
@@ -2594,6 +2594,7 @@ function new_terminal
 			echo -e ""
 			echo -e "Do you want to enable monitor mode? "$YNYES": "
 			read MONITOREN
+			clear
 			if [ "$MONITOREN" = "n" ]
 			then
 			#~ echo -e "Select 'start' or '2' to enable it"

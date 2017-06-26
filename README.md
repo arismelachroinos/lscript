@@ -1,4 +1,4 @@
-## Welcome to the LAZY script  v1.9.5
+## Welcome to the LAZY script  v1.9.6
 <p align="center">
 <img src="https://i.imgur.com/AOyfVxd.png"/>
 </p>
@@ -52,9 +52,9 @@ I actually made it for fun for me just to save some time, but i don't mind publi
 		Zirikatu                        by pasahitz
 		TheFatRat                       by Sceetsec
 	**Wifi password scripts**
-		Handshake       (WPA-WPA2) (WORKING PERFECTLY-NO COMMANDS)
-		Find WPS pin    (WPA-WPA2) (WORKING PERFECTLY-NO COMMANDS)
-		WEP hacking     (WEP)      (NOT TESTED-maybe works)
+		Handshake       (WPA-WPA2)
+		Find WPS pin    (WPA-WPA2)
+		WEP hacking     (WEP)      
 		
 # How to install
 (make sure you are a root user)

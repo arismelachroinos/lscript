@@ -1,6 +1,26 @@
 #! /bin/bash
 clear
 printf '\033]2;INSTALLER\a'
+echo -e "Press \e[1;33many key\e[0m to install the script..."
+read -e -n 1 -r
+clear
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+if [[ $DIR != "/root/lscript" ]]
+then
+	echo -e "You didn't follow the github's simple install instructions.I will try to do it for you..."
+	sleep 4
+	if [ -d /root/lscript ]
+	then
+		rm -r /root/lscript
+	fi
+	mkdir /root/lscript
+	cp -r "$DIR"/* /root/lscript
+	chmod +x /root/lscript/install.sh
+	gnome-terminal -e "bash /root/lscript/install.sh"
+	sleep 2
+	kill -9 $PPID
+	exit
+fi
 echo -e "Installing lscript..."
 sleep 1
 echo -e "Fixing permissions"
@@ -24,16 +44,16 @@ echo -e "Copying script to /bin/lscript"
 sleep 1
 mkdir /bin/lscript
 cd /root/lscript
-cp l /bin/lscript
-cp lh1 /bin/lscript
-cp lh2 /bin/lscript
-#cp lh21 /bin/lscript
-cp lh3 /bin/lscript
-cp lh31 /bin/lscript
-cp lh4 /bin/lscript
-cp lh41 /bin/lscript
-cp lh42 /bin/lscript
-cp lh43 /bin/lscript
+cp /root/lscript/l /bin/lscript
+cp /root/lscript/lh1 /bin/lscript
+cp /root/lscript/lh2 /bin/lscript
+#cp /root/lscript/lh21 /bin/lscript
+cp /root/lscript/lh3 /bin/lscript
+cp /root/lscript/lh31 /bin/lscript
+cp /root/lscript/lh4 /bin/lscript
+cp /root/lscript/lh41 /bin/lscript
+cp /root/lscript/lh42 /bin/lscript
+cp /root/lscript/lh43 /bin/lscript
 clear
 if [ ! -d /root/handshakes ]
 then

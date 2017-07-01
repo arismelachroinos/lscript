@@ -1,5 +1,5 @@
 #! /bin/bash
-VERSION=1.9.6
+VERSION=1.9.7
 HOWMANYTOOLS=22
 BACKL="0"
 #############DEFAULTS###############
@@ -7,6 +7,8 @@ function defaults_l
 {
 #setting yellow-start 
 	YS="\e[1;33m"
+#setting blue-start 
+	BS="\e[0;34m"
 #setting color-end
 	CE="\e[0m"
 #setting red-start
@@ -20,6 +22,8 @@ function defaults_l
 	PAKTGB="Press "$YS"any key$CE to go back..."
 #code to read from keyboard without return
 	READAK="read -n 1 -r"
+#
+	READAKTGB="read -p "Press "$YS"any key"$CE" to go back" -n 1 -r"
 #path for lscript
 	LPATH="/root/lscript"
 	export LPATH
@@ -1458,7 +1462,7 @@ function wifi_tools
 	else
 		echo -e ""$RS"10"$CE") "$RS"Dracnmap"$CE"           Many scan options"
 	fi
-	if [ -d /root/Fern-Wifi-Cracker ]
+	if [ -d "/usr/share/fern-wifi-cracker" ]
 	then	
 		echo -e ""$YS"11"$CE") Fern               Wifi cracker GUI"
 	else
@@ -1476,7 +1480,7 @@ function wifi_tools
 	else
 		echo -e ""$RS"13"$CE") "$RS"KickThemOut"$CE"        Kick clients out of your network"
 	fi
-	if [ -d /root/ghost-phisher ]
+	if [ -d "/usr/share/ghost-phisher" ]
 	then	
 		echo -e ""$YS"14"$CE") Ghost-Phisher      Fake AP,MITM,Session hijacking etc..."
 	else
@@ -1545,244 +1549,412 @@ function wifi_tools
 	clear
 	if [ "$APPP" = "1" ]
 	then
-		cd /root/fluxion
-		./fluxion
-		cd
+		if [ -d /root/fluxion ]
+		then
+			cd /root/fluxion
+			./fluxion
+			cd
+		else
+			echo -e ""$RS"Tool is not installed. To install, go back on TOOLS menu,and select 3) Install / reinstall a tool"$CE""
+			echo -e "$PAKTGB"
+			$READAK
+		fi
 	elif [ "$APPP" = "2" ]
 	then
-		wifite
+		if [ -f /usr/bin/wifite ]
+		then
+			wifite
+		else
+			echo -e ""$RS"Tool is not installed. To install, go back on TOOLS menu,and select 3) Install / reinstall a tool"$CE""
+			echo -e "$PAKTGB"
+			$READAK
+		fi
 	elif [ "$APPP" = "3" ]
 	then
-		echo -e "Do you have 1 or 2 wireless interfaces?: "
-		read ONEORTWO
-		if [ "$ONEORTWO" = "1" ]
+		if [ -d /root/wifiphisher ]
 		then
-			clear
-			echo -e "Note that with only 1 wireless interface, wifiphisher doesn't deauthenticate the AP."
-			sleep 1
-			echo -e ""
-			echo -e "$PAKTC"
-			$READAK
-			clear
-			wifiphisher -nJ
+			echo -e "Do you have 1 or 2 wireless interfaces?: "
+			read ONEORTWO
+			if [ "$ONEORTWO" = "1" ]
+			then
+				clear
+				echo -e "Note that with only 1 wireless interface, wifiphisher doesn't deauthenticate the AP."
+				sleep 1
+				echo -e ""
+				echo -e "$PAKTC"
+				$READAK
+				clear
+				wifiphisher -nJ
+			else
+				clear
+				wifiphisher
+			fi
 		else
-			clear
-			wifiphisher
+			echo -e ""$RS"Tool is not installed. To install, go back on TOOLS menu,and select 3) Install / reinstall a tool"$CE""
+			echo -e "$PAKTGB"
+			$READAK
 		fi
 	elif [ "$APPP" = "d3" ]
 	then
-		clear
-		echo -e "Enter the name of the access point you want to create: "
-		read -e ESSIDAP
-		wifiphisher --nojamming --essid "$ESSIDAP" -p oauth-login
+		if [ -d /root/wifiphisher ]
+		then
+			clear
+			echo -e "Enter the name of the access point you want to create: "
+			read -e ESSIDAP
+			wifiphisher --nojamming --essid "$ESSIDAP" -p oauth-login
+		else
+			echo -e ""$RS"Tool is not installed. To install, go back on TOOLS menu,and select 3) Install / reinstall a tool"$CE""
+			echo -e "$PAKTGB"
+			$READAK
+		fi
 	elif [ "$APPP" = "4" ]
 	then
-		if [ -d "/root/Zatacker" ]
-		then	
-			cd /root/Zatacker
-			./ZT.sh
-			cd
+		if [ -d /root/Zatacker ]
+		then
+			if [ -d "/root/Zatacker" ]
+			then	
+				cd /root/Zatacker
+				./ZT.sh
+				cd
+			else
+				echo -e "You have to install it manually since its not on github.Sorry."
+				sleep 4
+				exec bash "$0"
+			fi
 		else
-			echo -e "You have to install it manually since its not on github.Sorry."
-			sleep 4
-			exec bash "$0"
+			echo -e ""$RS"Tool is not installed. To install, go back on TOOLS menu,and select 3) Install / reinstall a tool"$CE""
+			echo -e "$PAKTGB"
+			$READAK
 		fi
 	elif [ "$APPP" = "5" ]
 	then
-		cd /root/morpheus
-		./morpheus.sh
-		cd
+		if [ -d /root/morpheus ]
+		then
+			cd /root/morpheus
+			./morpheus.sh
+			cd
+		else
+			echo -e ""$RS"Tool is not installed. To install, go back on TOOLS menu,and select 3) Install / reinstall a tool"$CE""
+			echo -e "$PAKTGB"
+			$READAK
+		fi
 	elif [ "$APPP" = "7" ] 
 	then
-		echo -e "type: 'show modules' to start"
-		sleep 2
-		clear
-		cd /root/hakkuframework
-		./hakku
-		cd
+		if [ -d /root/hakkuframework ]
+		then
+			echo -e "type: 'show modules' to start"
+			sleep 2
+			clear
+			cd /root/hakkuframework
+			./hakku
+			cd
+		else
+			echo -e ""$RS"Tool is not installed. To install, go back on TOOLS menu,and select 3) Install / reinstall a tool"$CE""
+			echo -e "$PAKTGB"
+			$READAK
+		fi
 	elif [ "$APPP" = "8" ]
 	then
-		echo -e "type: 'help' to start"
-		sleep 2
-		clear
-		trity			
+		if [ -d /root/Trity ]
+		then
+			echo -e "type: 'help' to start"
+			sleep 2
+			clear
+			trity			
+		else
+			echo -e ""$RS"Tool is not installed. To install, go back on TOOLS menu,and select 3) Install / reinstall a tool"$CE""
+			echo -e "$PAKTGB"
+			$READAK
+		fi
 	elif [ "$APPP" = "9" ]
 	then
-		cd /root/cupp
-		python cupp.py -i
-		cd			
+		if [ -d "/root/cupp" ]
+		then
+				cd /root/cupp
+			python cupp.py -i
+			cd			
+		else
+			echo -e ""$RS"Tool is not installed. To install, go back on TOOLS menu,and select 3) Install / reinstall a tool"$CE""
+			echo -e "$PAKTGB"
+			$READAK
+		fi
 	elif [ "$APPP" = "10" ]
 	then
-		cd /root/Dracnmap/
-		./dracnmap-v*.sh	
-		cd		
+		if [ -d "/root/Dracnmap" ]
+		then
+			cd /root/Dracnmap/
+			./dracnmap-v*.sh	
+			cd		
+		else
+			echo -e ""$RS"Tool is not installed. To install, go back on TOOLS menu,and select 3) Install / reinstall a tool"$CE""
+			echo -e "$PAKTGB"
+			$READAK
+		fi
 	elif [ "$APPP" = "11" ]
 	then
-		cd /root/Fern-Wifi-Cracker
-		python execute.py
-		cd
+		if [ -d "/usr/share/fern-wifi-cracker" ]
+		then
+			cd /root/Fern-Wifi-Cracker
+			python execute.py
+			cd
+		else
+			echo -e ""$RS"Tool is not installed. To install, go back on TOOLS menu,and select 3) Install / reinstall a tool"$CE""
+			echo -e "$PAKTGB"
+			$READAK
+		fi
 	elif [ "$APPP" = "12" ]
 	then
-		netdiscover
+		if [ -f /usr/sbin/netdiscover ]
+		then
+			netdiscover
+		else
+			echo -e ""$RS"Tool is not installed. To install, go back on TOOLS menu,and select 3) Install / reinstall a tool"$CE""
+			echo -e "$PAKTGB"
+			$READAK
+		fi
 	elif [ "$APPP" = "13" ]
 	then
-		cd /root/kickthemout
-		python kickthemout.py
-		cd
+		if [ -d "/root/kickthemout" ]
+		then
+			cd /root/kickthemout
+			python kickthemout.py
+			cd
+		else
+			echo -e ""$RS"Tool is not installed. To install, go back on TOOLS menu,and select 3) Install / reinstall a tool"$CE""
+			echo -e "$PAKTGB"
+			$READAK
+		fi
 	elif [ "$APPP" = "14" ]
 	then
-		cd /root/ghost-phisher/Ghost-Phisher
-		python ghost.py
-		cd
+		if [ -d "/usr/share/ghost-phisher" ]
+		then	
+			cd /root/ghost-phisher/Ghost-Phisher
+			python ghost.py
+			cd
+		else
+			echo -e ""$RS"Tool is not installed. To install, go back on TOOLS menu,and select 3) Install / reinstall a tool"$CE""
+			echo -e "$PAKTGB"
+			$READAK
+		fi
 	elif [ "$APPP" = "15" ]
 	then
-		cd /root/The-Eye
-		./TheEye
-		cd
+		if [ -d "/root/The-Eye" ]
+		then
+			cd /root/The-Eye
+			./TheEye
+			cd
+		else
+			echo -e ""$RS"Tool is not installed. To install, go back on TOOLS menu,and select 3) Install / reinstall a tool"$CE""
+			echo -e "$PAKTGB"
+			$READAK
+		fi
 	elif [ "$APPP" = "16" ]
 	then
-		echo -e "Do you own the site you want to DoS?"$YNONLY""
-		read DOSTERM
-		if [ "$DOSTERM" = "y" ]
+		if [ -d "/root/xerxes" ]
 		then
+			echo -e "Do you own the site you want to DoS?"$YNONLY""
+			read DOSTERM
+			if [ "$DOSTERM" = "y" ]
+			then
 
-			clear
-			echo -e "Enter your site(e.g: iownthissite.com): "
-			echo -e "(without www)"
-			read -e SITEDOS
-			clear
-			echo -e "Launching www.isitdownrightnow.com for $SITEDOS"
-			sleep 4
-			xdg-open http://www.isitdownrightnow.com/"$SITEDOS".html
-			clear	
-			cd /root/xerxes
-			SITEDOSX=www.$SITEDOS
-			echo -e "Press "$YS"any key"$CE" to start DoS on $SITEDOSX"
-			$READAK
-			./xerxes $SITEDOSX 80
+				clear
+				echo -e "Enter your site(e.g: iownthissite.com): "
+				echo -e "(without www)"
+				read -e SITEDOS
+				clear
+				echo -e "Launching www.isitdownrightnow.com for $SITEDOS"
+				sleep 4
+				xdg-open http://www.isitdownrightnow.com/"$SITEDOS".html
+				clear	
+				cd /root/xerxes
+				SITEDOSX=www.$SITEDOS
+				echo -e "Press "$YS"any key"$CE" to start DoS on $SITEDOSX"
+				$READAK
+				./xerxes $SITEDOSX 80
+			else
+				clear
+				echo -e "Then never try this."
+				sleep 3
+				exec bash "$0"
+			fi
 		else
-			clear
-			echo -e "Then never try this."
-			sleep 3
-			exec bash "$0"
+			echo -e ""$RS"Tool is not installed. To install, go back on TOOLS menu,and select 3) Install / reinstall a tool"$CE""
+			echo -e "$PAKTGB"
+			$READAK
 		fi
 	elif [ "$APPP" = "17" ]
 	then
-		echo -e "Press "$YS"CTRL C"$CE" when you find your target AP"
-		echo -e "Press "$YS"any key"$CE" to start scanning."
-		$READAK
-		airodump-ng $WLANNM
-		echo -e "Enter your target's BSSID: "
-		read -e MDBSSID
-		echo -e "Enter your target's channel: "
-		read -e MDCHANN
-		echo -e "Enter frames per second(e.g: 50): "
-		read -e FPS
-		clear
-		xterm -e 'mdk3 $WLANNM t $MDCHANN $MDBSSID $FPS'		
+		if [ -d /root/mdk3-master ]
+		then
+			echo -e "Press "$YS"CTRL C"$CE" when you find your target AP"
+			echo -e "Press "$YS"any key"$CE" to start scanning."
+			$READAK
+			airodump-ng $WLANNM
+			echo -e "Enter your target's BSSID: "
+			read -e MDBSSID
+			echo -e "Enter your target's channel: "
+			read -e MDCHANN
+			echo -e "Enter frames per second(e.g: 50): "
+			read -e FPS
+			clear
+			xterm -e 'mdk3 $WLANNM t $MDCHANN $MDBSSID $FPS'	
+		else
+			echo -e ""$RS"Tool is not installed. To install, go back on TOOLS menu,and select 3) Install / reinstall a tool"$CE""
+			echo -e "$PAKTGB"
+			$READAK
+		fi	
 	elif [ "$APPP" = "18" ]
 	then	
-		echo -e "Press "$YS"any key"$CE" to start scanning with wash."
-		$READAK
-		gnome-terminal -e 'wash -i $WLANNM'
-		echo -e "Enter your target's BSSID: "
-		read -e MDBSSID
-		echo -e "Enter your target's ESSID: "
-		read -e MDESSID
-		#~ echo -e "Enter your target's channel: "
-		#~ read -e MDCHANN
-		echo -e "Enter frames per second(e.g: 50): "
-		read -e FPS
-		clear
-		xterm -e 'mdk3 $WLANNM x 0 -t $MDBSSID -n $MDESSID -s $FPS'		
+		if [ -d /root/mdk3-master ]
+		then
+			echo -e "Press "$YS"any key"$CE" to start scanning with wash."
+			$READAK
+			gnome-terminal -e 'wash -i $WLANNM'
+			echo -e "Enter your target's BSSID: "
+			read -e MDBSSID
+			echo -e "Enter your target's ESSID: "
+			read -e MDESSID
+			#~ echo -e "Enter your target's channel: "
+			#~ read -e MDCHANN
+			echo -e "Enter frames per second(e.g: 50): "
+			read -e FPS
+			clear
+			xterm -e 'mdk3 $WLANNM x 0 -t $MDBSSID -n $MDESSID -s $FPS'		
+		else
+			echo -e ""$RS"Tool is not installed. To install, go back on TOOLS menu,and select 3) Install / reinstall a tool"$CE""
+			echo -e "$PAKTGB"
+			$READAK
+		fi
 	elif [ "$APPP" = "19" ]
 	then
-		ktf.console
+		if [ -d "/usr/share/KatanaFramework" ]
+		then
+			ktf.console
+		else
+			echo -e ""$RS"Tool is not installed. To install, go back on TOOLS menu,and select 3) Install / reinstall a tool"$CE""
+			echo -e "$PAKTGB"
+			$READAK
+		fi
 	elif [ "$APPP" = "20" ]
 	then
-		cd /root/airgeddon
-		./airgeddon.sh
-		cd
+		if [ -d "/root/airgeddon" ]
+		then
+			cd /root/airgeddon
+			./airgeddon.sh
+			cd
+		else
+			echo -e ""$RS"Tool is not installed. To install, go back on TOOLS menu,and select 3) Install / reinstall a tool"$CE""
+			echo -e "$PAKTGB"
+			$READAK
+		fi
 	elif [ "$APPP" = "21" ]
 	then
-		websploit
+		if [ -d "/usr/share/websploit" ]
+		then
+			websploit
+		else
+			echo -e ""$RS"Tool is not installed. To install, go back on TOOLS menu,and select 3) Install / reinstall a tool"$CE""
+			echo -e "$PAKTGB"
+			$READAK
+		fi
 	elif [ "$APPP" = "22" ]
 	then
-		echo -e "Start or stop?("$YS"start"$CE"/"$YS"stop"$CE")"
-		read -e SORS
-		if [ "$SORS" == "start" ]
+		if [ -d /etc/openvas ]
 		then
-			netstat -nltp
-			openvas-start
-			echo -e "Launching firefox..."
-			sleep 1
-			firefox https://127.0.0.1:9392
+			echo -e "Start or stop?("$YS"start"$CE"/"$YS"stop"$CE")"
+			read -e SORS
+			if [ "$SORS" == "start" ]
+			then
+				netstat -nltp
+				openvas-start
+				echo -e "Launching firefox..."
+				sleep 1
+				firefox https://127.0.0.1:9392
+			else
+				openvas-stop
+			fi
 		else
-			openvas-stop
+			echo -e ""$RS"Tool is not installed. To install, go back on TOOLS menu,and select 3) Install / reinstall a tool"$CE""
+			echo -e "$PAKTGB"
+			$READAK
 		fi
 	elif [ "$APPP" = "23" ]
 	then
-		bash /usr/bin/ipscan & disown
+		if [ -d "/usr/lib/ipscan" ]
+		then
+			bash /usr/bin/ipscan & disown
+		else
+			echo -e ""$RS"Tool is not installed. To install, go back on TOOLS menu,and select 3) Install / reinstall a tool"$CE""
+			echo -e "$PAKTGB"
+			$READAK
+		fi
 	elif [ "$APPP" = "6" ]
 	then
-		while true
-		do
-		printf '\033]2;OSRFCONSOLE\a'
-		clear
-		echo -e ""$YS" 1"$CE") usufy"
-		echo -e ""$YS" 2"$CE") mailfy"
-		echo -e ""$YS" 3"$CE") searchfy"
-		echo -e ""$YS" 4"$CE") domainfy"
-		echo -e ""$YS" 5"$CE") phonefy"
-		echo -e ""$YS" 6"$CE") entify"
-		echo -e ""$YS"back"$CE") Go back"
-		echo -e ""$YS"00"$CE") Main menu"
-	#	echo -e ""$YS" 0"$CE") EXIT"
-		echo -e "Choose: "
-		read -e OSFR
-		clear
-			if [ "$OSFR" = "1" ]
-			then
-				echo -e "Use: usufy.py -n name1 name2 -p twitter facebook"
-				usufy.py
-				exit
-			elif [ "$OSFR" = "2" ]
-			then
-				echo -e "Use: mailfy.py -n name1"
-				mailfy.py
-				exit
-			elif [ "$OSFR" = "3" ]
-			then
-				searchfy.py
-				exit
-			elif [ "$OSFR" = "4" ]
-			then
-				domainfy.py
-				exit
-			elif [ "$OSFR" = "5" ]
-			then
-				phonefy.py
-				exit
-			elif [ "$OSFR" = "6" ]
-			then
-			entify.py
-				exit
-			elif [ "$OSFR" = "0" ]
-			then
-				exit
-			elif [ "$OSFR" = "00" ]
-			then
-				exec bash "$0"
-			elif [ "$OSFR" = "back" ]
-			then
-				break
-			else 
-				echo -e "Wrong choice"
-				sleep 0.3
-				clear
-				exec bash "$0"
-			fi
-		done
+		if [ -d "/root/hakkuframework" ]
+		then
+			while true
+			do
+			printf '\033]2;OSRFCONSOLE\a'
+			clear
+			echo -e ""$YS" 1"$CE") usufy"
+			echo -e ""$YS" 2"$CE") mailfy"
+			echo -e ""$YS" 3"$CE") searchfy"
+			echo -e ""$YS" 4"$CE") domainfy"
+			echo -e ""$YS" 5"$CE") phonefy"
+			echo -e ""$YS" 6"$CE") entify"
+			echo -e ""$YS"back"$CE") Go back"
+			echo -e ""$YS"00"$CE") Main menu"
+		#	echo -e ""$YS" 0"$CE") EXIT"
+			echo -e "Choose: "
+			read -e OSFR
+			clear
+				if [ "$OSFR" = "1" ]
+				then
+					echo -e "Use: usufy.py -n name1 name2 -p twitter facebook"
+					usufy.py
+					exit
+				elif [ "$OSFR" = "2" ]
+				then
+					echo -e "Use: mailfy.py -n name1"
+					mailfy.py
+					exit
+				elif [ "$OSFR" = "3" ]
+				then
+					searchfy.py
+					exit
+				elif [ "$OSFR" = "4" ]
+				then
+					domainfy.py
+					exit
+				elif [ "$OSFR" = "5" ]
+				then
+					phonefy.py
+					exit
+				elif [ "$OSFR" = "6" ]
+				then
+				entify.py
+					exit
+				elif [ "$OSFR" = "0" ]
+				then
+					exit
+				elif [ "$OSFR" = "00" ]
+				then
+					exec bash "$0"
+				elif [ "$OSFR" = "back" ]
+				then
+					break
+				else 
+					echo -e "Wrong choice"
+					sleep 0.3
+					clear
+					exec bash "$0"
+				fi
+			done
+		else
+			echo -e ""$RS"Tool is not installed. To install, go back on TOOLS menu,and select 3) Install / reinstall a tool"$CE""
+			echo -e "$PAKTGB"
+			$READAK
+		fi
 	elif [ "$APPP" = "0" ]
 	then
 		clear
@@ -1972,6 +2144,7 @@ function metasploit_menu
 	echo -e ""$YS" 3"$CE") Saved listeners"
 	echo -e ""$YS" 4"$CE") Start msfconsole"
 	echo -e ""$YS" 5"$CE") Update msfconsole"
+	echo -e ""$YS" 6"$CE") Armitage"
 	echo -e ""$YS"back"$CE") Go back"
 	echo -e ""$YS" 0"$CE") EXIT"
 	echo -e "Choose: "
@@ -2136,6 +2309,11 @@ function metasploit_menu
 	elif [ "$METASP" = "5" ]
 	then
 		msfupdate
+	elif [ "$METASP" = "6" ]
+	then
+		service postgresql start
+		armitage
+		clear
 	elif [ "$METASP" = "back" ]
 	then
 		BACKL="1"

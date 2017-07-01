@@ -99,7 +99,7 @@ echo -e "Lscript is installed.You can open a new terminal and type   l"
 sleep 2
 echo -e "Lscript requires many tools to be installed"
 sleep 2
-echo -e "This usually takes about 15 minutes, but you will be fully loaded with many awesome tools that you can launch from Lscript."
+echo -e "This usually takes about 20-30 minutes, but you will be fully loaded with many awesome tools that you can launch from Lscript."
 sleep 3
 echo -e "Install all tools now or later in lscript menu?(\e[1;33mn\e[0m/\e[1;33ml\e[0m)"
 read NORL
@@ -328,8 +328,15 @@ read -e -n 1 -r
 	clear
 	echo -e "Installing websploit"
 	echo -e "Tool by 0x0ptim0us (Fardin Allahverdinazhand)"
-	apt-get install websploit
-	clear
+	if [ ! -d "/usr/share/websploit" ]
+	then
+		apt-get install websploit
+	else
+		echo -e "Websploit is already installed..."
+		sleep 1
+		echo -e "Skipping..."
+	fi
+		clear
 	if [ ! -d "/root/The-Eye" ]
 	then
 		echo -e "Installing The Eye"

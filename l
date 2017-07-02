@@ -1,5 +1,5 @@
 #! /bin/bash
-VERSION=1.9.7
+VERSION=1.9.7.1
 HOWMANYTOOLS=22
 BACKL="0"
 #############DEFAULTS###############
@@ -21,9 +21,7 @@ function defaults_l
 	PAKTC="Press "$YS"any key$CE to continue..."
 	PAKTGB="Press "$YS"any key$CE to go back..."
 #code to read from keyboard without return
-	READAK="read -n 1 -r"
-#
-	READAKTGB="read -p "Press "$YS"any key"$CE" to go back" -n 1 -r"
+	READAK="read -n 1"
 #path for lscript
 	LPATH="/root/lscript"
 	export LPATH
@@ -2540,7 +2538,8 @@ function public_ip
 function terms_of_use
 {
 	printf '\033]2;TERMS OF USE\a'
-	echo -e "You need to accept the terms."
+	clear
+	echo -e ""$RS"You need to accept the terms."$CE""
 	sleep 1
 	echo -e "$PAKTC"
 	$READAK
@@ -2558,6 +2557,9 @@ function terms_of_use
 		echo "You have agreed the terms and you use this tool with your own responsibility." > "$LPATH"/IAGREE.txt
 		sleep 1
 		clear
+	else
+		echo -e "You didn't type 'YES' , so you cannot continue"
+		sleep 4
 	fi
 	exec bash "$0"
 }

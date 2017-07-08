@@ -18,7 +18,7 @@ YNONLY="("$YS"y"$CE"/"$YS"n"$CE")"
 PAKT="Press "$YS"any key"$CE" to"
 PAKTC="Press "$YS"any key"$CE" to continue..."
 PAKTGB="Press "$YS"any key"$CE" to go back..."
-
+READAK="read -n 1"
 ####################################
 #-----------------FUNCTIONS-----------------
 function start_capture
@@ -30,7 +30,6 @@ then
 		rm $HANDCAP
 	fi
 	gnome-terminal --geometry 70x10+0+0 -e lh2
-	#gnome-terminal --geometry 70x10+0+9999 -e lh21
 	airodump-ng --bssid $TARGB -c $TARGC -w /root/handshakes/$HANDF $WLANNM # | tee /root/lscript/temphandshake
 	validhandshake
 	exec bash "$0"
@@ -253,42 +252,52 @@ do
 		FJC=0
 		airodump-ng -c $CHANNELSL $WLANNM -w /root/lscript/tempairodump
 	fi
-	clear
-	autoapselect
-	read APCHOOSE
-	clear
-	if [ $APCHOOSE = "back" ]
-	then
+	while true
+	do
 		clear
-		break
-	elif [ $APCHOOSE = "r" ]
-	then
+		autoapselect
+		read APCHOOSE
 		clear
-		continue
-	else
-		if [[ ${zopen[$APCHOOSE]} = 1 ]]
+		if [ $APCHOOSE = "back" ]
 		then
-			echo -e ""$RS"You selected an open network.Please select a password protected network."$CE""
-			echo -e "Press "$YS"enter"$CE" to go back"
-			read
+			clear
+			break
+		elif [ $APCHOOSE = "r" ]
+		then
+			clear
+			break
+		else
+			if [[ ${zopen[$APCHOOSE]} = 1 ]]
+			then
+				echo -e ""$RS"You selected an open network.Please select a password protected network."$CE""
+				echo -e "Press "$YS"enter"$CE" to go back"
+				read
+				break
+			fi
+			TARGB="${zmac[$APCHOOSE]}"
+			TARGC="${zchannel[$APCHOOSE]}"
+			TARGE="${zessid[$APCHOOSE]}"
+			echo -e "Enter the name of the handshake file(no extention)(e.g: "$YS"hand1"$CE")"
+			echo -e "Type "$YS""0""$CE" for no file"
+			read -e HANDF
+			HANDFFP="/root/handshakes/"$HANDF"-01.cap"
+			HANDCAP="/root/handshakes/"$HANDF"-01.cap"
+			export HANDCAP
+			export HANDFFP
+			export TARGB
+			export TARGC
+			export TARGE
+			#echo $TARGB $TARGC $TARGE
+			clear
+			start_capture
 			break
 		fi
-		TARGB="${zmac[$APCHOOSE]}"
-		TARGC="${zchannel[$APCHOOSE]}"
-		TARGE="${zessid[$APCHOOSE]}"
-		echo -e "Enter the name of the handshake file(no extention)(e.g: "$YS"hand1"$CE")"
-		echo -e "Type "$YS""0""$CE" for no file"
-		read -e HANDF
-		HANDFFP="/root/handshakes/"$HANDF"-01.cap"
-		HANDCAP="/root/handshakes/"$HANDF"-01.cap"
-		export HANDCAP
-		export HANDFFP
-		export TARGB
-		export TARGC
-		export TARGE
-		#echo $TARGB $TARGC $TARGE
-		clear
-		start_capture
+	done
+	if [ $APCHOOSE = "r" ]
+	then
+		continue
+	elif [ $APCHOOSE = "back" ]
+	then
 		break
 	fi
 done
@@ -363,6 +372,7 @@ then
 	echo -e "Removing the file..."
 	sleep 2
 	rm $HANDFFP
+	remove_temps
 	FJC=0
 else
 	FJC=1
@@ -379,6 +389,11 @@ else
 			clear
 			capture_again
 		fi
+	else
+		clear
+		echo -e "Your handshake file is saved in: /root/handshakes/"$HANDF"-01.cap"
+		echo -e "$PAKTC"
+		$READAK
 	fi
 			
 fi

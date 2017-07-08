@@ -1,5 +1,5 @@
 #! /bin/bash
-VERSION=1.9.7.1
+VERSION=1.9.8
 HOWMANYTOOLS=22
 BACKL="0"
 #############DEFAULTS###############
@@ -35,6 +35,30 @@ function defaults_l
 	fi
 }
 ##############FUNCTIONS#############
+function managed_spaces
+{
+	size=${#WLANN}
+	calc=$(( 11-size ))
+	numcalc=1
+	SPACESN=" "
+	while [ $numcalc != $calc ]
+	do
+		SPACESN=""${SPACESN}" "
+		numcalc=$(( numcalc+1 ))
+	done
+}
+function monitor_spaces
+{
+	size=${#WLANNM}
+	calc=$(( 11-size ))
+	numcalc=1
+	SPACESM=" "
+	while [ $numcalc != $calc ]
+	do
+		SPACESM=""${SPACESM}" "
+		numcalc=$(( numcalc+1 ))
+	done
+}
 function banner
 {
 	echo -e ""
@@ -45,8 +69,8 @@ function banner
 	echo -e "$RS    The  ███████╗██║  ██║███████╗   ██║  script$CE"
 	echo -e "$RS         ╚══════╝╚═╝  ╚═╝╚══════╝   ╚═╝   $CE"
 	echo -e ""$YS"if"$CE") Ifconfig"
-	echo -e ""$YS" 1"$CE") Enable $WLANN      "$YS"d1"$CE") Disable $WLANN        "$RS"|"$CE" "$YS"start"$CE") 1 2 3"
-	echo -e ""$YS" 2"$CE") Enable $WLANNM   "$YS"d2"$CE") Disable $WLANNM     "$RS"|"$CE"  "$YS"stop"$CE") d1 d2 d3"
+	echo -e ""$YS" 1"$CE") Enable $WLANN${SPACESN}"$YS"d1"$CE") Disable $WLANN${SPACESN}  "$RS"|"$CE" "$YS"start"$CE") 1 2 3"
+	echo -e ""$YS" 2"$CE") Enable $WLANNM${SPACESM}"$YS"d2"$CE") Disable $WLANNM${SPACESM}  "$RS"|"$CE"  "$YS"stop"$CE") d1 d2 d3"
 	echo -e ""$YS" 3"$CE") Change MAC        "$YS"d3"$CE") Restore original MAC "$RS"|"$CE""$YS"update"$CE") Check for updates"
 	if [ -f /usr/bin/anonym8 ]
 	then
@@ -905,6 +929,7 @@ printf '\033]2;ERRORS\a'
 echo -e ""$YS" 1"$CE") Fix no audio issue"
 echo -e ""$YS" 2"$CE") No output in wash"
 echo -e ""$YS" 3"$CE") No full screen"
+echo -e ""$YS" 4"$CE") Error constructing proxy for org.gnome.Terminal"
 echo -e ""$YS"back"$CE") Go back"
 echo -e ""$YS" 0"$CE") EXIT"
 echo -e " Choose: "
@@ -954,6 +979,13 @@ then
 	sleep 2
 	echo -e "$PAKTGB"
 	$READAK
+elif [ "$ERRS" = "4" ]
+then
+	locale-gen
+	localectl set-locale LANG="en_US.UTF-8"
+	sleep 2
+	echo -e "Reboot your system now"
+	sleep 3
 elif [ "$ERRS" = "back" ]
 then
 	BACKL="1"
@@ -2425,7 +2457,7 @@ function hidden_shortcuts
 	echo -e ""$YS"  interface"$CE") Change your interface"
 	echo -e ""$YS"     wififb"$CE") Create open wifi access point and get fb passwords with wifiphisher"
 	echo -e ""$YS"eternalblue"$CE") Launch msfconsole with eternalblue exploit on target"
-	echo -e ""$YS"etercheck"$CE") Check if a target is vulnerable to eternalblue exploit"
+	echo -e ""$YS"  etercheck"$CE") Check if a target is vulnerable to eternalblue exploit"
 	echo -e ""$YS"  changelog"$CE") View the changelog of the lscript versions"
 	echo -e "$PAKTGB"
 	$READAK
@@ -2913,39 +2945,74 @@ function main_options
 		echo -e "Done."
 	elif [ "$YORNAA" = "4" ]
 	then
-		echo -e "Enabling anonym8..."
-		anonym8 start
-		echo -e "Done."
+		if [ ! -d "/etc/init.d/anonym8" ]
+		then
+			echo -e "Anonym8 is not installed. Go to TOOLS -> Install/reinstall a tool     to install it."
+		else
+			echo -e "Enabling anonym8..."
+			anonym8 start
+			echo -e "Done."
+		fi
 	elif [ "$YORNAA" = "d4" ]
 	then
-		echo -e "Disabling anonym8..."
-		anonym8 stop
-		echo -e "Done."
+		if [ ! -d "/etc/init.d/anonym8" ]
+		then
+			echo -e "Anonym8 is not installed. Go to TOOLS -> Install/reinstall a tool     to install it."
+		else
+			echo -e "Disabling anonym8..."
+			anonym8 stop
+			echo -e "Done."
+		fi
 	elif [ "$YORNAA" = "5" ]
 	then
-		echo -e "Enabling anonsurf..."
-		anonsurf start
-		echo -e "Done."
+		if [ ! -f "/usr/bin/anonsurf" ]
+		then
+			echo -e "Anonsurf is not installed. Go to TOOLS -> Install/reinstall a tool     to install it."
+		else
+			echo -e "Enabling anonsurf..."
+			anonsurf start
+			echo -e "Done."
+		fi
 	elif [ "$YORNAA" = "d5" ]
 	then
-		echo -e "Disabling anonsurf..."
-		anonsurf stop
-		echo -e "Done."
+		if [ ! -f "/usr/bin/anonsurf" ]
+		then
+			echo -e "Anonsurf is not installed. Go to TOOLS -> Install/reinstall a tool     to install it."
+		else
+			echo -e "Disabling anonsurf..."
+			anonsurf stop
+			echo -e "Done."
+		fi
 	elif [ "$YORNAA" = "6" ]
 	then
-		echo -e "Status of anonsurf..."
-		anonsurf status
-		echo -e "Done."
+		if [ ! -f "/usr/bin/anonsurf" ]
+		then
+			echo -e "Anonsurf is not installed. Go to TOOLS -> Install/reinstall a tool     to install it."
+		else
+			echo -e "Status of anonsurf..."
+			anonsurf status
+			echo -e "Done."
+		fi
 	elif [ "$YORNAA" = "d6" ]
 	then
-		echo -e "Restarting anonsurf..."
-		anonsurf change
-		echo -e "Done."
+		if [ ! -f "/usr/bin/anonsurf" ]
+		then
+			echo -e "Anonsurf is not installed. Go to TOOLS -> Install/reinstall a tool     to install it."
+		else
+			echo -e "Restarting anonsurf..."
+			anonsurf change
+			echo -e "Done."
+		fi
 	elif [ "$YORNAA" = "r6" ]
 	then
-		echo -e "Restarting anonsurf..."
-		anonym8 change
-		echo -e "Done."
+		if [ ! -f "/usr/bin/anonsurf" ]
+		then
+			echo -e "Anonsurf is not installed. Go to TOOLS -> Install/reinstall a tool     to install it."
+		else
+			echo -e "Restarting anonsurf..."
+			anonym8 change
+			echo -e "Done."
+		fi
 	elif [ "$YORNAA" = "7" ]
 	then
 		public_ip
@@ -3036,6 +3103,8 @@ then
 	WLANN=$(cat "$LPATH"/wlan.txt)
 	export WLANNM
 	export WLANN
+	managed_spaces
+	monitor_spaces
 	banner
 	main_options
 	if [ "$BACKL" = "1" ]

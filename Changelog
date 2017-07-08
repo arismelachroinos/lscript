@@ -1,3 +1,11 @@
+1.9.8
+Improved handshake feature
+Added echoing the handshake directory
+Added an error fix in errors menu
+Improved code in main menu
+Fixed layout in main manu when interface names are different
+
+
 1.9.7.1
 Fixed tiny error when launching script
 

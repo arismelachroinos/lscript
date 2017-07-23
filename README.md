@@ -17,7 +17,9 @@ This is a script that automates many procedures about wifi penetration and hacki
 I actually made it for fun for me just to save some time, but i don't mind publicing it.(my code is a mess,sorry)
 
 ### Features
-	NEW FEATURE: Custom keyboard shortcuts!! launch any tool within lscript , with your own shortcuts!!!
+
+   ###NEW FEATURE: Custom keyboard shortcuts!! launch any tool within lscript , with your own shortcuts!!!
+	
 	Enabling-Disabling interfaces faster
 	Changing Mac faster
 	Anonymizing yourself faster

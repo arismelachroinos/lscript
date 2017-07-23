@@ -58,6 +58,7 @@ I actually made it for fun for me just to save some time, but i don't mind publi
 		RED HAWK                        by Tuhinshubhra
 		Routersploit                    by Reverse shell
 		CHAOS                           by Tiagorlampert
+		Winpayloads                     by Ncc group
 	**Wifi password scripts**
 		Handshake       (WPA-WPA2)
 		Find WPS pin    (WPA-WPA2)

@@ -1047,7 +1047,7 @@ do
 			rm -r /root/CHAOS
 		fi
 		git clone https://github.com/tiagorlampert/CHAOS.git
-	elif [ "$REIN" = "38" ]
+	elif [ "$REIN" = "39" ]
 	then
 		if [ -d /root/routersploit ]
 		then

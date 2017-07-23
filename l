@@ -1903,7 +1903,13 @@ function wifi_tools
 	then
 		if [ -f /usr/sbin/netdiscover ]
 		then
-			netdiscover
+			echo -e "Range ("$YS"Enter"$CE"=192.168.1.0/24):"
+			read NRANGE
+			if [[ -z $NRANGE ]]
+			then
+				NRANGE="192.168.1.0/24"
+			fi
+			netdiscover -r $NRANGE
 		else
 			echo -e "$TNI"
 			echo -e "$PAKTGB"

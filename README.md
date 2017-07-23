@@ -72,9 +72,11 @@ View your MAC faster
 	
 **Others**
 
-	Email spoofing
-	Metasploit automation (create payloads,listeners,save listeners for later etc...)
-	Auto eternalblue exploiting (check on ks) -> hidden shortcuts
+	<ol>
+	<li>Email spoofing</li>
+	<li>Metasploit automation (create payloads,listeners,save listeners for later etc...)</li>
+	<li>Auto eternalblue exploiting (check on ks) -> hidden shortcuts</li>
+	</ol>
 		
 # How to install
 (make sure you are a root user)

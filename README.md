@@ -28,7 +28,7 @@ I actually made it for fun for me just to save some time, but i don't mind publi
 		Fluxion				by Deltaxflux
 		WifiTe				by derv82
 		Wifiphisher			by Dan McInerney
-		Zatacker			by ???
+		Zatacker			by LawrenceThePentester
 		Morpheus			by Pedro ubuntu  [ r00t-3xp10it ]
 		Osrframework			by i3visio
 		Hakku				by 4shadoww
@@ -56,10 +56,16 @@ I actually made it for fun for me just to save some time, but i don't mind publi
 		Sniper                          by 1N3
 		ReconDog                        by UltimateHackers
 		RED HAWK                        by Tuhinshubhra
+		Routersploit                    by Reverse shell
+		CHAOS                           by Tiagorlampert
 	**Wifi password scripts**
 		Handshake       (WPA-WPA2)
 		Find WPS pin    (WPA-WPA2)
-		WEP hacking     (WEP)      
+		WEP hacking     (WEP)    
+	**Others**
+		Email spoofing
+		Metasploit automation (create payloads,listeners,save listeners for later etc...)
+		Auto eternalblue exploiting (check on ks) -> hidden shortcuts
 		
 # How to install
 (make sure you are a root user)

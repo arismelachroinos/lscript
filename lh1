@@ -23,6 +23,7 @@ READAK="read -n 1"
 #-----------------FUNCTIONS-----------------
 function start_capture
 {
+export HANDF
 if [ "$HANDF" != "0" ]
 then
 	if [ -f "$HANDCAP" ]
@@ -30,10 +31,13 @@ then
 		rm $HANDCAP
 	fi
 	gnome-terminal --geometry 70x10+0+0 -e lh2
+	HANDFORDEAUTH="/root/handshakes/$HANDF-01.csv"
+	export HANDFORDEAUTH
 	airodump-ng --bssid $TARGB -c $TARGC -w /root/handshakes/$HANDF $WLANNM # | tee /root/lscript/temphandshake
 	validhandshake
 	exec bash "$0"
 else
+	HANDFORDEAUTH=""
 	gnome-terminal --geometry 70x10+0+0 -e lh2
 	airodump-ng --bssid $TARGB -c $TARGC $WLANNM
 	echo -e "Start capturing on a file?"$YNYES""
@@ -229,78 +233,99 @@ function capture_again
 				exec bash "$0"
 			fi
 }
-function scan_networks
+function ap_sort_and_choose
 {
 while true
 do
-	remove_temps
-	echo -e "Select what to scan: "
-	echo -e ""$YS"ENTER"$CE") All channels"
-	echo -e " "$YS"1"$CE"-"$YS"13"$CE") Specific channel"
-	echo -e ""$YS" back"$CE") Go back"
-	read CHANNELSL
-	if [ "$CHANNELSL" = "" ]
-	then
-		FJC=0
-		airodump-ng $WLANNM -w /root/lscript/tempairodump
-	elif [ "$CHANNELSL" = "back" ]
+	clear
+	autoapselect
+	read APCHOOSE
+	clear
+	if [ $APCHOOSE = "back" ]
 	then
 		clear
-		CH="0"
+		break
+	elif [ $APCHOOSE = "r" ]
+	then
+		clear
 		break
 	else
-		FJC=0
-		airodump-ng -c $CHANNELSL $WLANNM -w /root/lscript/tempairodump
-	fi
-	while true
-	do
-		clear
-		autoapselect
-		read APCHOOSE
-		clear
-		if [ $APCHOOSE = "back" ]
+		if [[ ${zopen[$APCHOOSE]} = 1 ]]
 		then
-			clear
-			break
-		elif [ $APCHOOSE = "r" ]
-		then
-			clear
-			break
-		else
-			if [[ ${zopen[$APCHOOSE]} = 1 ]]
-			then
-				echo -e ""$RS"You selected an open network.Please select a password protected network."$CE""
-				echo -e "Press "$YS"enter"$CE" to go back"
-				read
-				break
-			fi
-			TARGB="${zmac[$APCHOOSE]}"
-			TARGC="${zchannel[$APCHOOSE]}"
-			TARGE="${zessid[$APCHOOSE]}"
-			echo -e "Enter the name of the handshake file(no extention)(e.g: "$YS"hand1"$CE")"
-			echo -e "Type "$YS""0""$CE" for no file"
-			read -e HANDF
-			HANDFFP="/root/handshakes/"$HANDF"-01.cap"
-			HANDCAP="/root/handshakes/"$HANDF"-01.cap"
-			export HANDCAP
-			export HANDFFP
-			export TARGB
-			export TARGC
-			export TARGE
-			#echo $TARGB $TARGC $TARGE
-			clear
-			start_capture
+			echo -e ""$RS"You selected an open network.Please select a password protected network."$CE""
+			echo -e "Press "$YS"enter"$CE" to go back"
+			read
 			break
 		fi
-	done
-	if [ $APCHOOSE = "r" ]
-	then
-		continue
-	elif [ $APCHOOSE = "back" ]
-	then
+		TARGB="${zmac[$APCHOOSE]}"
+		TARGC="${zchannel[$APCHOOSE]}"
+		TARGE="${zessid[$APCHOOSE]}"
+		echo -e "Enter the name of the handshake file(no extention)(e.g: "$YS"hand1"$CE")"
+		echo -e "Type "$YS""0""$CE" for no file"
+		read -e HANDF
+		HANDFFP="/root/handshakes/"$HANDF"-01.cap"
+		HANDCAP="/root/handshakes/"$HANDF"-01.cap"
+		export HANDCAP
+		export HANDFFP
+		export TARGB
+		export TARGC
+		export TARGE
+		#echo $TARGB $TARGC $TARGE
+		clear
+		start_capture
 		break
 	fi
 done
+}
+function pre_scan
+{
+while true
+	do
+		remove_temps
+		echo -e "Select what to scan: "
+		echo -e ""$YS"ENTER"$CE") All channels"
+		echo -e " "$YS"1"$CE"-"$YS"13"$CE") Specific channel"
+		echo -e ""$YS" back"$CE") Go back"
+		read CHANNELSL
+		if [ "$CHANNELSL" = "" ]
+		then
+			FJC=0
+			airodump-ng $WLANNM -w /root/lscript/tempairodump
+		elif [ "$CHANNELSL" = "back" ]
+		then
+			clear
+			CH="0"
+			break
+		else
+			FJC=0
+			airodump-ng -c $CHANNELSL $WLANNM -w /root/lscript/tempairodump
+		fi
+		ap_sort_and_choose
+		if [ $APCHOOSE = "r" ]
+		then
+			continue
+		elif [ $APCHOOSE = "back" ]
+		then
+			break
+		fi	
+	done
+}
+function scan_networks
+{
+if [[ $TARGB = "" ]]
+then
+	pre_scan
+else
+	ap_sort_and_choose
+	if [ $APCHOOSE = "r" ]
+	then
+		TARGB=""
+		pre_scan
+	elif [ $APCHOOSE = "back" ]
+	then
+		break
+	fi	
+fi
 }
 function validate_with_pyrit
 {

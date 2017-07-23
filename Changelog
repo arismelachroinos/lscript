@@ -1,3 +1,17 @@
+2.0.0
+Winpayloads added to Remote access tools - Generate undetectable payloads.
+Added ability to choose another AP without having to scan again in handshake menu.
+Improved deauth feature in handshake menu.
+Added new deauth option,when capturing on a file.Deauth every client seperately.
+Added shellter tool in remote access menu.
+Added 1 more fix in errors menu.
+Fixed error in metasploit - payload name.
+Added support for all payloads in msfvenom automation.
+Improved listeners feature in metasploit menu.
+Added CHAOS to keyboard shortcuts.
+Added routersploit to wifi tools and to keyboard shortcuts.
+
+
 1.9.9
 Added information gathering menu in tools.
 Improved code
@@ -8,6 +22,7 @@ Fixed anonym8 not installed error
 Fixed error in code on install/reinstall tools manu
 Added ReconDog to shortcuts
 Added RED HAWK to shortcuts
+Removed auto installation of all tools in installed
 
 1.9.8
 Improved handshake feature

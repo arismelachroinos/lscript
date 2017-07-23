@@ -25,8 +25,10 @@ Changing Mac faster
 Anonymizing yourself faster
 View your public IP faster
 View your MAC faster
+
 **TOOLS**
-	(The installer installs every tool you need automatically! (except Zatacker))
+
+You can install whichever tool(s) you want from within lscript! 
 	Fluxion				by Deltaxflux
 	WifiTe				by derv82
 	Wifiphisher			by Dan McInerney
@@ -61,11 +63,15 @@ View your MAC faster
 	Routersploit                    by Reverse shell
 	CHAOS                           by Tiagorlampert
 	Winpayloads                     by Ncc group
+	
 **Wifi password scripts**
+
 	Handshake       (WPA-WPA2)
 	Find WPS pin    (WPA-WPA2)
 	WEP hacking     (WEP)    
+	
 **Others**
+
 	Email spoofing
 	Metasploit automation (create payloads,listeners,save listeners for later etc...)
 	Auto eternalblue exploiting (check on ks) -> hidden shortcuts

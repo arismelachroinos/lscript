@@ -20,55 +20,55 @@ I actually made it for fun for me just to save some time, but i don't mind publi
 
    ### NEW FEATURE: Custom keyboard shortcuts!! Launch any tool within lscript , with your own shortcuts!!! (type ks to set your shortcuts)
 	
-	Enabling-Disabling interfaces faster
-	Changing Mac faster
-	Anonymizing yourself faster
-	View your public IP faster
-	View your MAC faster
-	**TOOLS**
-		(The installer installs every tool you need automatically! (except Zatacker))
-		Fluxion				by Deltaxflux
-		WifiTe				by derv82
-		Wifiphisher			by Dan McInerney
-		Zatacker			by LawrenceThePentester
-		Morpheus			by Pedro ubuntu  [ r00t-3xp10it ]
-		Osrframework			by i3visio
-		Hakku				by 4shadoww
-		Trity				by Toxic-ig
-		Cupp				by Muris Kurgas
-		Dracnmap			by Edo -maland-
-		Fern Wifi Cracker		by Savio-code
-		Kichthemout			by Nikolaos Kamarinakis & David Schütz
-		BeeLogger			by Alisson Moretto - 4w4k3
-		Ghost-Phisher			by Savio-code
-		Mdk3-master                     by Musket Developer
-		Anonsurf                        by Und3rf10w
-		The Eye                         by EgeBalci
-		Airgeddon                       by v1s1t0r1sh3r3
-		Xerxes                          by zanyarjamal
-		Ezsploit                        by rand0m1ze
-		Katana framework                by PowerScript
-		4nonimizer                      by Hackplayers
-		Sslstrip2                       by LeonardoNve
-		Dns2proxy                       by LeonardoNve
-		Pupy                            by n1nj4sec
-		Zirikatu                        by pasahitz
-		TheFatRat                       by Sceetsec
-		Angry IP Scanner                by Anton Keks
-		Sniper                          by 1N3
-		ReconDog                        by UltimateHackers
-		RED HAWK                        by Tuhinshubhra
-		Routersploit                    by Reverse shell
-		CHAOS                           by Tiagorlampert
-		Winpayloads                     by Ncc group
-	**Wifi password scripts**
-		Handshake       (WPA-WPA2)
-		Find WPS pin    (WPA-WPA2)
-		WEP hacking     (WEP)    
-	**Others**
-		Email spoofing
-		Metasploit automation (create payloads,listeners,save listeners for later etc...)
-		Auto eternalblue exploiting (check on ks) -> hidden shortcuts
+Enabling-Disabling interfaces faster
+Changing Mac faster
+Anonymizing yourself faster
+View your public IP faster
+View your MAC faster
+**TOOLS**
+	(The installer installs every tool you need automatically! (except Zatacker))
+	Fluxion				by Deltaxflux
+	WifiTe				by derv82
+	Wifiphisher			by Dan McInerney
+	Zatacker			by LawrenceThePentester
+	Morpheus			by Pedro ubuntu  [ r00t-3xp10it ]
+	Osrframework			by i3visio
+	Hakku				by 4shadoww
+	Trity				by Toxic-ig
+	Cupp				by Muris Kurgas
+	Dracnmap			by Edo -maland-
+	Fern Wifi Cracker		by Savio-code
+	Kichthemout			by Nikolaos Kamarinakis & David Schütz
+	BeeLogger			by Alisson Moretto - 4w4k3
+	Ghost-Phisher			by Savio-code
+	Mdk3-master                     by Musket Developer
+	Anonsurf                        by Und3rf10w
+	The Eye                         by EgeBalci
+	Airgeddon                       by v1s1t0r1sh3r3
+	Xerxes                          by zanyarjamal
+	Ezsploit                        by rand0m1ze
+	Katana framework                by PowerScript
+	4nonimizer                      by Hackplayers
+	Sslstrip2                       by LeonardoNve
+	Dns2proxy                       by LeonardoNve
+	Pupy                            by n1nj4sec
+	Zirikatu                        by pasahitz
+	TheFatRat                       by Sceetsec
+	Angry IP Scanner                by Anton Keks
+	Sniper                          by 1N3
+	ReconDog                        by UltimateHackers
+	RED HAWK                        by Tuhinshubhra
+	Routersploit                    by Reverse shell
+	CHAOS                           by Tiagorlampert
+	Winpayloads                     by Ncc group
+**Wifi password scripts**
+	Handshake       (WPA-WPA2)
+	Find WPS pin    (WPA-WPA2)
+	WEP hacking     (WEP)    
+**Others**
+	Email spoofing
+	Metasploit automation (create payloads,listeners,save listeners for later etc...)
+	Auto eternalblue exploiting (check on ks) -> hidden shortcuts
 		
 # How to install
 (make sure you are a root user)

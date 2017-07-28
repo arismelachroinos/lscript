@@ -67,6 +67,10 @@ View your MAC faster
 	Routersploit                    by Reverse shell
 	CHAOS                           by Tiagorlampert
 	Winpayloads                     by Ncc group 
+	Infoga                          by m4ll0k
+	nWatch                          by Suraj
+	Eternal scanner                 by Peterpt
+	MORE ARE BEING ADDED ON EVERY UPDATE
 	
 **Wifi password scripts**
 

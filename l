@@ -1,6 +1,6 @@
 #! /bin/bash
-VERSION=2.0.0
-HOWMANYTOOLS=27
+VERSION=2.0.1
+HOWMANYTOOLS=29
 BACKL="0"
 #############DEFAULTS###############
 function defaults_l
@@ -472,6 +472,16 @@ function listshortcuts
 		TITLE="Routersploit"
 		NAMECD="cd /root/routersploit"
 		KSSET="./rsf.py"
+	elif [ "$nn" = "28" ]
+	then
+		TITLE="nWatch"
+		NAMECD="cd /root/nWatch"
+		KSSET="python nwatch.py"
+	elif [ "$nn" = "29" ]
+	then
+		TITLE="Eternal_scanner"
+		NAMECD="cd /root/eternal_scanner"
+		KSSET="./escan"
 	fi
 }
 function reinstall_tools
@@ -480,45 +490,26 @@ while true
 do
 	clear
 	echo -e "Select a tool to install/reinstall"
-	echo -e " "$YS"1"$CE") Fluxion"
-	echo -e ""$YS" 2"$CE") Wifite"
-	echo -e ""$YS" 3"$CE") Wifiphisher "
-	echo -e ""$YS" 4"$CE") Zatacker"
-	echo -e ""$YS" 5"$CE") Morpheus"
-	echo -e ""$YS" 6"$CE") Osrfconsole"
-	echo -e ""$YS" 7"$CE") Hakku"
-	echo -e ""$YS" 8"$CE") Trity"
-	echo -e ""$YS" 9"$CE") Cupp"
-	echo -e ""$YS"10"$CE") Dracnmap"
-	echo -e ""$YS"11"$CE") Fern"
-	echo -e ""$YS"12"$CE") Netdiscover"
-	echo -e ""$YS"13"$CE") KickThemOut"
-	echo -e ""$YS"14"$CE") Ghost-Phisher"
-	echo -e ""$YS"15"$CE") The Eye"
-	echo -e ""$YS"16"$CE") Xerxes"
-	echo -e ""$YS"17"$CE") Mdk3-master"
-	echo -e ""$YS"18"$CE") Katana Framework"
-	echo -e ""$YS"19"$CE") Airgeddon"				
-	echo -e ""$YS"20"$CE") Websploit"
-	echo -e ""$YS"21"$CE") 4nonimizer       (not in TOOLS anymore)"
-	echo -e ""$YS"22"$CE") Openvas"
-	echo -e ""$YS"23"$CE") BeeLogger"
-	echo -e ""$YS"24"$CE") Ezsploit"
-	echo -e ""$YS"25"$CE") Pupy"
-	echo -e ""$YS"26"$CE") Zirikatu"
-	echo -e ""$YS"27"$CE") WiFi-autopwner"
-	echo -e ""$YS"28"$CE") Bully"
-	echo -e ""$YS"29"$CE") Anonsurf"
-	echo -e ""$YS"30"$CE") Anonym8"
-	echo -e ""$YS"31"$CE") TheFatRat"
-	echo -e ""$YS"32"$CE") Angry IP Scanner"
-	echo -e ""$YS"33"$CE") Sniper"
-	echo -e ""$YS"34"$CE") ReconDog"
-	echo -e ""$YS"35"$CE") RED HAWK"
-	echo -e ""$YS"36"$CE") WinPayloads"
-	echo -e ""$YS"37"$CE") Shellter"
-	echo -e ""$YS"38"$CE") CHAOS"
-	echo -e ""$YS"39"$CE") Routersploit"
+	echo -e " "$YS"1"$CE") Fluxion          "$YS"21"$CE") 4nonimizer       "$YS"41"$CE") Infoga"
+	echo -e ""$YS" 2"$CE") Wifite           "$YS"22"$CE") Openvas          "$YS"42"$CE") nWatch"
+	echo -e ""$YS" 3"$CE") Wifiphisher      "$YS"23"$CE") BeeLogger        "$YS"43"$CE") Eternal scanner"
+	echo -e ""$YS" 4"$CE") Zatacker         "$YS"24"$CE") Ezsploit"
+	echo -e ""$YS" 5"$CE") Morpheus         "$YS"25"$CE") Pupy"
+	echo -e ""$YS" 6"$CE") Osrfconsole      "$YS"26"$CE") Zirikatu"
+	echo -e ""$YS" 7"$CE") Hakku            "$YS"27"$CE") WiFi-autopwner"
+	echo -e ""$YS" 8"$CE") Trity            "$YS"28"$CE") Bully"
+	echo -e ""$YS" 9"$CE") Cupp             "$YS"29"$CE") Anonsurf"
+	echo -e ""$YS"10"$CE") Dracnmap         "$YS"30"$CE") Anonym8"
+	echo -e ""$YS"11"$CE") Fern             "$YS"31"$CE") TheFatRat"
+	echo -e ""$YS"12"$CE") Netdiscover      "$YS"32"$CE") Angry IP Scanner"
+	echo -e ""$YS"13"$CE") KickThemOut      "$YS"33"$CE") Sniper"
+	echo -e ""$YS"14"$CE") Ghost-Phisher    "$YS"34"$CE") ReconDog"
+	echo -e ""$YS"15"$CE") The Eye          "$YS"35"$CE") RED HAWK"
+	echo -e ""$YS"16"$CE") Xerxes           "$YS"36"$CE") WinPayloads"
+	echo -e ""$YS"17"$CE") Mdk3-master      "$YS"37"$CE") Shellter"
+	echo -e ""$YS"18"$CE") Katana Framework "$YS"38"$CE") CHAOS"
+	echo -e ""$YS"19"$CE") Airgeddon        "$YS"39"$CE") Routersploit"
+	echo -e ""$YS"20"$CE") Websploit        "$YS"40"$CE") Geany"
 	echo -e ""$YS"back"$CE") Go back"
 	echo -e ""$YS" 0"$CE") Exit"
 	echo -e "Choose: "
@@ -963,7 +954,7 @@ do
 		then
 			echo -e "Removing old file"
 			sleep 2
-			rm /root/ipscan_*
+			rm -f /root/ipscan_*
 		fi
 		echo -e "Downloading angryipscanner"
 		sleep 2
@@ -1063,6 +1054,49 @@ do
 		cd /root/routersploit
 		pip install -r requirements.txt
 		cd
+	elif [ "$REIN" = "40" ]
+	then
+		apt-get install geany
+	elif [ "$REIN" = "41" ]
+	then
+		if [ -d /root/Infoga ]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/Infoga
+		fi
+		git clone https://github.com/m4ll0k/Infoga.git
+		cd /root/Infoga
+		pip install -r requirements.txt
+		cd
+	elif [ "$REIN" = "42" ]
+	then
+		if [ -d /root/nWatch ]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/nWatch
+		fi
+		cd
+		echo -e "Installing nWatch"
+		echo -e "Tool by Suraj"
+		git clone https://github.com/suraj-root/nWatch.git
+	elif [ "$REIN" = "43" ]
+	then
+		if [ -d /root/eternal_scanner ]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/eternal_scanner
+		fi
+		cd
+		echo -e "Installing eternal_scanner"
+		echo -e "Tool by Peterpt"
+		git clone https://github.com/peterpt/eternal_scanner.git
+		apt-get install masscan metasploit-framework
 	elif [ "$REIN" = "back" ]
 	then
 		clear
@@ -1738,6 +1772,18 @@ function wifi_tools
 	else
 		echo -e ""$RS"24"$CE") "$RS"Routersploit"$CE"       Find/exploit router vulnerabilities"
 	fi
+	if [ -d /root/nWatch ]
+	then
+		echo -e ""$YS"25"$CE") nWatch             IP scanner/OS detection"
+	else
+		echo -e ""$RS"25"$CE") "$RS"nWatch"$CE"             IP scanner/OS detection"
+	fi
+	if [ -d /root/eternal_scanner ]
+	then
+		echo -e ""$YS"26"$CE") Eternal scanner    Scans hosts for eternalblue vulnerabilities"
+	else
+		echo -e ""$RS"26"$CE") "$RS"Eternal scanner"$CE"    Scans hosts for eternalblue vulnerabilities"
+	fi
 	echo -e ""$YS"back"$CE") Go back"
 	echo -e ""$YS"00"$CE") Main menu"
 	#echo -e ""$YS" 0"$CE") EXIT"
@@ -2103,6 +2149,30 @@ function wifi_tools
 			echo -e "$PAKTGB"
 			$READAK
 		fi
+	elif [ "$APPP" = "25" ]
+	then
+		if [ -d "/root/nWatch" ]
+		then
+			cd /root/nWatch
+			python nwatch.py
+			cd
+		else
+			echo -e "$TNI"
+			echo -e "$PAKTGB"
+			$READAK
+		fi
+	elif [ "$APPP" = "26" ]
+	then
+		if [ -d "/root/eternal-scanner" ]
+		then
+			cd /root/eternal_scanner
+			./escan
+			cd
+		else
+			echo -e "$TNI"
+			echo -e "$PAKTGB"
+			$READAK
+		fi
 	elif [ "$APPP" = "6" ]
 	then
 		if [ -d "/root/hakkuframework" ]
@@ -2453,6 +2523,12 @@ function information_gathering
 		else
 			echo -e ""$RS" 3"$CE") "$RS"RED HAWK"$CE""
 		fi
+		if [ -d /root/Infoga ]
+		then
+			echo -e ""$YS" 4"$CE") Infoga"
+		else
+			echo -e ""$RS" 4"$CE") "$RS"Infoga"$CE""
+		fi
 		echo -e ""$YS"back"$CE") Go back"
 		echo -e ""$YS"00"$CE") Main menu"
 		echo -e "Choose: "
@@ -2495,6 +2571,25 @@ function information_gathering
 				echo -e "$PAKTGB"
 				$READAK
 			fi
+		elif [ $INFOG = 4 ]
+		then
+			if [ -d /root/Infoga ]
+			then
+				echo -e "Domain to search:"
+				read INFOTARG
+				echo -e "Data source(e.g. "$YS"all"$CE","$YS"google"$CE","$YS"bing"$CE","$YS"yahoo"$CE","$YS"pgp"$CE"): "
+				read INFOSOUR
+				clear
+				cd /root/Infoga
+				python infoga.py -t $INFOTARG -s $INFOSOUR 
+				echo -e "$PAKTGB"
+				$READAK
+				cd
+			else
+				echo -e "$TNI"
+				echo -e "$PAKTGB"
+				$READAK
+			fi
 		elif [ $INFOG = 0 ]
 		then
 			exit
@@ -2506,6 +2601,47 @@ function information_gathering
 			break
 		fi
 	done
+}
+function other_tools
+{
+while true
+do
+	printf '\033]2;OTHER TOOLS\a'
+	clear
+	if [ -f /usr/bin/geany ]
+	then
+		echo -e ""$YS" 1"$CE") Geany            Best notepad for linux"
+	else
+		echo -e ""$RS" 1"$CE") "$RS"Geany"$CE"            Best notepad for linux"
+	fi
+	echo -e ""$YS"back"$CE") Go back"
+	echo -e ""$YS" 0"$CE") EXIT"
+	echo -e "Choose: "
+	read -e OTHERT
+	clear
+	if [ $OTHERT = 1 ]
+	then
+		if [ -f /usr/bin/geany ]
+		then
+			geany
+		else
+			echo -e "$TNI"
+			echo -e "$PAKTGB"
+			$READAK
+		fi
+	elif [ $OTHERT = 00 ]
+	then
+		clear
+		exec bash $0
+	elif [ $OTHERT = "back" ]
+	then
+		break
+	elif [ $OTHERT = 0 ]
+	then
+		clear
+		exit
+	fi
+done
 }
 function metasploit_menu
 {
@@ -2883,7 +3019,8 @@ function tools_menu
 	echo -e ""$YS" 1"$CE") Wifi tools"
 	echo -e ""$YS" 2"$CE") Remote access"
 	echo -e ""$YS" 3"$CE") Information gathering"
-	echo -e ""$YS" 4"$CE") Install/reinstall a tool"
+	echo -e ""$YS" 4"$CE") Others"
+	echo -e ""$YS" 5"$CE") Install/reinstall a tool"
 	echo -e ""$YS"back"$CE") Go back"
 	echo -e ""$YS"00"$CE") Main menu"
 	echo -e ""$YS" 0"$CE") EXIT"
@@ -2900,6 +3037,9 @@ function tools_menu
 		then
 			information_gathering
 		elif [ "$CATEG" = "4" ]
+		then
+			other_tools
+		elif [ "$CATEG" = "5" ]
 		then
 			reinstall_tools
 		elif [ "$CATEG" = "0" ]
@@ -2924,6 +3064,10 @@ function public_ip
 	if [ "$CHECKMON" = "" ]
 	then
 		PUBLICIP=$(curl -s ipinfo.io/ip)
+		if [[ $PUBLICIP = "" ]]
+		then
+			PUBLICIP="Connection error.Check internet connection."
+		fi
 		echo "Your public IP is: "$PUBLICIP""
 		#~ curl ipinfo.io/ip
 		#~ curl -s checkip.dyndns.org | sed -e 's/.*Current IP Address: //' -e 's/<.*$//'
@@ -3329,7 +3473,7 @@ function main_options
 		fi
 	elif [ "$YORNAA" = "d4" ]
 	then
-		if [ ! -d "/etc/init.d/anonym8" ]
+		if [ ! -f "/etc/init.d/anonym8.sh" ]
 		then
 			echo -e "Anonym8 is not installed. Go to TOOLS -> Install/reinstall a tool     to install it."
 		else

@@ -1,3 +1,14 @@
+2.0.1
+Improved layout of install/reinstall tool menu.
+Added Infoga to information gathering tools.
+Public ip error report added.
+Fixed anonym8 disabling error.
+Fixed last options error in deauth menu.
+Added nWatch to wifi tools and to keyboard shortcuts.
+Added LICENSE file.
+Added Eternal scanner to wifi tools and to keyboard shortcuts.
+
+
 2.0.0
 Winpayloads added to Remote access tools - Generate undetectable payloads.
 Added ability to choose another AP without having to scan again in handshake menu.

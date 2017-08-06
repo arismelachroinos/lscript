@@ -537,7 +537,7 @@ do
 	echo -e ""$YS" 2"$CE") Wifite           "$YS"22"$CE") Openvas          "$YS"42"$CE") nWatch"
 	echo -e ""$YS" 3"$CE") Wifiphisher      "$YS"23"$CE") BeeLogger        "$YS"43"$CE") Eternal scanner"
 	echo -e ""$YS" 4"$CE") Zatacker         "$YS"24"$CE") Ezsploit         "$YS"44"$CE") Eaphammer"
-	echo -e ""$YS" 5"$CE") Morpheus         "$YS"25"$CE") Pupy             "$YS"45"$CE") Dagon"
+	echo -e ""$YS" 5"$CE") Morpheus         "$YS"25"$CE") Pupy"
 	echo -e ""$YS" 6"$CE") Osrfconsole      "$YS"26"$CE") Zirikatu"
 	echo -e ""$YS" 7"$CE") Hakku            "$YS"27"$CE") WiFi-autopwner"
 	echo -e ""$YS" 8"$CE") Trity            "$YS"28"$CE") Bully"

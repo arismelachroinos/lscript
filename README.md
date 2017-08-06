@@ -70,6 +70,7 @@ View your MAC faster
 	Infoga                          by m4ll0k
 	nWatch                          by Suraj
 	Eternal scanner                 by Peterpt
+	Eaphammer                       by S0lst1c3
 	MORE ARE BEING ADDED ON EVERY UPDATE
 	
 **Wifi password scripts**

@@ -19,7 +19,6 @@ PAKT="Press "$YS"any key"$CE" to"
 PAKTC="Press "$YS"any key"$CE" to continue..."
 PAKTGB="Press "$YS"any key"$CE" to go back..."
 READAK="read -n 1"
-####################################
 #-----------------FUNCTIONS-----------------
 function start_capture
 {
@@ -145,7 +144,7 @@ do
 	zmac[$n3]=${amac[$lowestn]}
 	zchannel[$n3]=${achannel[$lowestn]}
 	apowerfixed[$lowestn]=101
-	n3=$((n3+1))
+	n3=$((n3+1)) 
 done
 n3=1
 echo -e ""$BS"  BLUE"$CE"=OPEN NETWORK"

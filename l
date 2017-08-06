@@ -1,5 +1,5 @@
 #! /bin/bash
-VERSION=2.0.1
+VERSION=2.0.2
 HOWMANYTOOLS=29
 BACKL="0"
 #############DEFAULTS###############
@@ -60,8 +60,18 @@ function monitor_spaces
 		numcalc=$(( numcalc+1 ))
 	done
 }
+function check_wlans
+{
+	CC=$WLANN
+	WLANCHECKING=$(ifconfig | grep "$WLANN" )
+	#~ WLANCHECKING=$(ifconfig | awk -v c1="$CC" '$0 ~ c1 {print}')
+	CC=$WLANNM
+	WLANMCHECKING=$(ifconfig | grep "$WLANNM" )
+	#~ WLANMCHECKING=$(ifconfig | awk -v c1="$CC" '$0 ~ c1 {print}')
+}
 function banner
 {
+	check_wlans
 	echo -e ""
 	echo -e "$RS         ██╗      █████╗ ███████╗██╗   ██╗$CE v$VERSION"
 	echo -e "$RS         ██║     ██╔══██╗╚══███╔╝╚██╗ ██╔╝$CE"
@@ -70,8 +80,14 @@ function banner
 	echo -e "$RS    The  ███████╗██║  ██║███████╗   ██║  script$CE"
 	echo -e "$RS         ╚══════╝╚═╝  ╚═╝╚══════╝   ╚═╝   $CE"
 	echo -e ""$YS"if"$CE") Ifconfig"
-	echo -e ""$YS" 1"$CE") Enable $WLANN${SPACESN}"$YS"d1"$CE") Disable $WLANN${SPACESN}  "$RS"|"$CE" "$YS"start"$CE") 1 2 3"
-	echo -e ""$YS" 2"$CE") Enable $WLANNM${SPACESM}"$YS"d2"$CE") Disable $WLANNM${SPACESM}  "$RS"|"$CE"  "$YS"stop"$CE") d1 d2 d3"
+	if [[ $WLANCHECKING = "" ]]
+	then
+		echo -e ""$RS" 1"$CE") Enable "$RS"$WLANN"$CE"${SPACESN}"$RS"d1"$CE") Disable "$RS"$WLANN"$CE"${SPACESN}  "$RS"|"$CE" "$YS"start"$CE") 1 2 3"
+		echo -e ""$RS" 2"$CE") Enable "$RS"$WLANNM"$CE"${SPACESM}"$RS"d2"$CE") Disable "$RS"$WLANNM"$CE"${SPACESM}  "$RS"|"$CE"  "$YS"stop"$CE") d1 d2 d3"
+	else
+		echo -e ""$YS" 1"$CE") Enable $WLANN${SPACESN}"$YS"d1"$CE") Disable $WLANN${SPACESN}  "$RS"|"$CE" "$YS"start"$CE") 1 2 3"
+		echo -e ""$YS" 2"$CE") Enable $WLANNM${SPACESM}"$YS"d2"$CE") Disable $WLANNM${SPACESM}  "$RS"|"$CE"  "$YS"stop"$CE") d1 d2 d3"
+	fi
 	echo -e ""$YS" 3"$CE") Change MAC        "$YS"d3"$CE") Restore original MAC "$RS"|"$CE""$YS"update"$CE") Check for updates"
 	if [ -f /usr/bin/anonym8 ]
 	then
@@ -124,18 +140,39 @@ function stop_monitor
 }
 function interface_selection
 {
-echo -e "$YS 1$CE) $WLANN"
-echo -e "$YS 2$CE) $WLANNM"
+if [[ $WLANCHECKING = "" ]]
+then
+	echo -e "$RS 1$CE) $WLANN"
+else
+	echo -e "$YS 1$CE) $WLANN"
+fi
+if [[ $WLANMCHECKING = "" ]]
+then
+	echo -e "$RS 2$CE) $WLANNM"
+else
+	echo -e "$YS 2$CE) $WLANNM"
+fi
 echo -e "$YS 3$CE) Eth0"
 echo -e ""$YS"00$CE) Main menu"
 echo -e "$YS 0$CE) EXIT"
+echo -e "Choose: "
 read -e MYINT
 if [ "$MYINT" = "2" ]
 then
-	MYINT="$WLANNM"
+	if [[ $WLANMCHECKING = "" ]]
+	then
+		MYINT="OFF"
+	else
+		MYINT="$WLANNM"
+	fi
 elif [ "$MYINT" = "1" ]
 then
-	MYINT="$WLANN"
+	if [[ $WLANCHECKING = "" ]]
+	then
+		MYINT="OFF"
+	else
+		MYINT="$WLANN"
+	fi
 elif [ "$MYINT" = "0" ]
 then
 	clear
@@ -160,24 +197,30 @@ function change_mac
 {
 	interface_selection
 	clear
-	echo -e "Change it to a random or specific?("$YS"r"$CE"/"$YS"s"$CE")("$YS"Enter"$CE"=r): "
-	read -e RORS
-	clear
-	if [ "$RORS" != "s" ]
+	if [[ $MYINT = "OFF" ]]
 	then
-		echo -e "Changing mac address of $MYINT to a random one..."
-		ifconfig $MYINT down
-		macchanger -r $MYINT
-		ifconfig $MYINT up
-		echo -e "Done."
+		echo -e "Interface not available"
+		sleep 2
 	else
-		echo -e "Enter the MAC you want:"
-		read -e SMAC
-		echo -e "Changing mac address of $MYINT to $SMAC..."
-		ifconfig $MYINT down
-		macchanger -m $SMAC $MYINT
-		ifconfig $MYINT up
-		echo -e "Done."
+		echo -e "Change it to a random or specific?("$YS"r"$CE"/"$YS"s"$CE")("$YS"Enter"$CE"=r): "
+		read -e RORS
+		clear
+		if [ "$RORS" != "s" ]
+		then
+			echo -e "Changing mac address of $MYINT to a random one..."
+			ifconfig $MYINT down
+			macchanger -r $MYINT
+			ifconfig $MYINT up
+			echo -e "Done."
+		else
+			echo -e "Enter the MAC you want:"
+			read -e SMAC
+			echo -e "Changing mac address of $MYINT to $SMAC..."
+			ifconfig $MYINT down
+			macchanger -m $SMAC $MYINT
+			ifconfig $MYINT up
+			echo -e "Done."
+		fi
 	fi
 }
 function set_interface_number
@@ -493,8 +536,8 @@ do
 	echo -e " "$YS"1"$CE") Fluxion          "$YS"21"$CE") 4nonimizer       "$YS"41"$CE") Infoga"
 	echo -e ""$YS" 2"$CE") Wifite           "$YS"22"$CE") Openvas          "$YS"42"$CE") nWatch"
 	echo -e ""$YS" 3"$CE") Wifiphisher      "$YS"23"$CE") BeeLogger        "$YS"43"$CE") Eternal scanner"
-	echo -e ""$YS" 4"$CE") Zatacker         "$YS"24"$CE") Ezsploit"
-	echo -e ""$YS" 5"$CE") Morpheus         "$YS"25"$CE") Pupy"
+	echo -e ""$YS" 4"$CE") Zatacker         "$YS"24"$CE") Ezsploit         "$YS"44"$CE") Eaphammer"
+	echo -e ""$YS" 5"$CE") Morpheus         "$YS"25"$CE") Pupy             "$YS"45"$CE") Dagon"
 	echo -e ""$YS" 6"$CE") Osrfconsole      "$YS"26"$CE") Zirikatu"
 	echo -e ""$YS" 7"$CE") Hakku            "$YS"27"$CE") WiFi-autopwner"
 	echo -e ""$YS" 8"$CE") Trity            "$YS"28"$CE") Bully"
@@ -550,6 +593,7 @@ do
 		echo -e "Installing Wifiphisher"
 		echo -e "Tool idea by Dan McInerney"
 		sleep 1
+		cd
 		git clone https://github.com/wifiphisher/wifiphisher.git
 		cd wifiphisher
 		sudo python setup.py install
@@ -1097,6 +1141,42 @@ do
 		echo -e "Tool by Peterpt"
 		git clone https://github.com/peterpt/eternal_scanner.git
 		apt-get install masscan metasploit-framework
+	elif [ "$REIN" = "44" ]
+	then
+		if [ -d /root/eaphammer ]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/eaphammer
+		fi
+		cd
+		echo -e "Installing eaphammer"
+		echo -e "Tool by s0lst1c3"
+		git clone https://github.com/s0lst1c3/eaphammer
+		cd eaphammer
+		chmod +x kali-setup
+		./kali-setup
+		cd
+		clear
+		apt-get install python-tqdm
+	#~ elif [ "$REIN" = "45" ]
+	#~ then
+		#~ if [ -d /root/dagon ]
+		#~ then
+			#~ echo -e "Removing old..."
+			#~ echo -e "$PAKTC"
+			#~ $READAK
+			#~ rm -r /root/dagon
+		#~ fi
+		#~ cd
+		#~ echo -e "Installing Dagon"
+		#~ echo -e "Tool by Ekultek"
+		#~ git clone https://github.com/ekultek/dagon.git
+		#~ cd dagon
+		#~ pip install -r requirements.txt
+		#~ apt-get install bcrypt
+		#~ cd
 	elif [ "$REIN" = "back" ]
 	then
 		clear
@@ -1120,6 +1200,7 @@ echo -e ""$YS" 2"$CE") No output in wash"
 echo -e ""$YS" 3"$CE") No full screen"
 echo -e ""$YS" 4"$CE") Error constructing proxy for org.gnome.Terminal"
 echo -e ""$YS" 5"$CE") Error starting apache2 service"
+echo -e ""$YS" 6"$CE") Errors when  apt-get update"
 echo -e ""$YS"back"$CE") Go back"
 echo -e ""$YS" 0"$CE") EXIT"
 echo -e " Choose: "
@@ -1181,6 +1262,12 @@ then
 	service nginx stop
 	echo -e "I think i fixed it. Try again: service apache2 start "
 	sleep 5
+elif [ "$ERRS" = "6" ]
+then
+	echo "deb http://http.kali.org/kali kali-rolling main non-free contrib" > /etc/apt/sources.list
+	rm -r -f /etc/apt/sources.list.d/*
+	echo -e "Try   apt-get update    again. That's all i can do."
+	sleep 3
 elif [ "$ERRS" = "back" ]
 then
 	BACKL="1"
@@ -1620,6 +1707,328 @@ then
 	exit
 fi
 }
+function eaphammer_automation
+{
+			printf '\033]2;Eaphammer\a'
+			while true
+			do
+				clear
+				if [[ $EAPHIFACE = "" ]]
+				then
+					EAPHIFACE="$WLANN"
+				fi
+				if [[ $EAPHESSID = "" ]]
+				then
+					EAPHESSID=""$RS"NONE"$CE""
+					OK1=0
+				elif [[ $EAPHESSID != "\e[1;31mNONE\e[0m" ]]
+				then
+					OK1=1
+				fi
+				if [[ $EAPHBSSID = "" ]]
+				then
+					EAPHBSSID=""$RS"NONE"$CE""
+					OK1=0
+				fi
+				if [[ $EAPHCHANNEL = "" ]]
+				then
+					EAPHCHANNEL=""$RS"NONE"$CE""
+					OK1=0
+				fi
+				if [[ $EAPHWPA = "" ]]
+				then
+					EAPHWPA="2"
+				fi
+				if [[ $EAPHAUTH = "" ]]
+				then
+					EAPHAUTH=""$RS"NONE"$CE""
+					OK1=0
+				fi
+				if [[ $EAPHCREDS = "" ]]
+				then
+					EAPHCREDS="OFF"
+				fi
+				if [[ $EAPHHOSTILE = "" ]]
+				then
+					EAPHHOSTILE="OFF"
+				fi
+				if [[ $EAPHCAPTIVE = "" ]]
+				then
+					EAPHCAPTIVE="OFF"
+				fi
+				if [[ $EAPHPIVOT = "" ]]
+				then
+					EAPHPIVOT="OFF"
+				fi
+				if [[ $EAPHKARMA = "" ]]
+				then
+					EAPHKARMA="OFF"
+				fi
+				if [[ $EAPHAIRCRACK = "" ]]
+				then
+					EAPHAIRCRACK="OFF"
+				fi
+				if [[ $EAPHINTAUTO = "" ]]
+				then
+					EAPHINTAUTO="OFF"
+				fi
+				if [[ $EAPHAIRCRACK = "OFF" && $EAPHINTAUTO = "OFF" && $EAPHWORD = "" ]]
+				then
+					EAPHWORD="OFF"
+				fi
+				if [[ $EAPHAIRCRACK = "OFF" && $EAPHINTAUTO = "OFF" && $EAPHWORD = "OFF" ]]
+				then
+					EAPHWORD="OFF"
+				fi
+				OK2=1
+				if [[ $EAPHAIRCRACK != "OFF" ]]
+				then
+					if [[ $EAPHWORD = "OFF" || $EAPHWORD = "\e[1;31mNONE\e[0m" ]]
+					then
+						EAPHWORD="\e[1;31mNONE\e[0m"
+						OK2=0
+					fi
+				fi
+				if [[ $EAPHINTAUTO = "ON" || $EAPHWORD = "\e[1;31mNONE\e[0m" ]]
+				then
+					if [[ $EAPHWORD = "OFF" ]]
+					then
+						EAPHWORD="\e[1;31mNONE\e[0m"
+						OK2=0
+					fi
+				fi
+				if [[ $EAPHINTAUTO = "OFF" && $EAPHAIRCRACK = "OFF" ]]
+				then
+					if [[ $EAPHWORD = "\e[1;31mNONE\e[0m" ]]
+					then
+						EAPHWORD="OFF"
+					fi
+				fi
+				echo -e ""$YS" 1"$CE") Create a new RADIUS cert for your AP"
+				echo -e ""$YS" 2"$CE") Set your interface for the AP               CURRENT: $EAPHIFACE"
+				echo -e ""$YS" 3"$CE") Specify access point ESSID                  CURRENT: $EAPHESSID"
+				echo -e ""$YS" 4"$CE") Specify access point BSSID                  CURRENT: $EAPHBSSID"
+				echo -e ""$YS" 5"$CE") Specify access point channel                CURRENT: $EAPHCHANNEL"
+				echo -e ""$YS" 6"$CE") Specify WPA type                            CURRENT: $EAPHWPA"
+				echo -e ""$YS" 7"$CE") Specify auth type                           CURRENT: $EAPHAUTH"
+				echo -e ""$YS" 8"$CE") Harvest EAP creds                           CURRENT: $EAPHCREDS"
+				echo -e ""$YS" 9"$CE") Force clients to connect to hostile portal  CURRENT: $EAPHHOSTILE"
+				echo -e ""$YS"10"$CE") Force clients to connect to captive portal  CURRENT: $EAPHCAPTIVE"
+				echo -e ""$YS"11"$CE") Perform an indirect wireless pivot          CURRENT: $EAPHPIVOT"
+				echo -e ""$YS"12"$CE") Enable karma                                CURRENT: $EAPHKARMA"
+				echo -e ""$YS"13"$CE") Use autocrack/add with remote cracking rig  CURRENT: $EAPHAIRCRACK"
+				echo -e ""$YS"14"$CE") Use internal autocrack                      CURRENT: $EAPHINTAUTO"
+				echo -e ""$YS"15"$CE") Specify wordlist for autocrack              CURRENT: $EAPHWORD"
+				echo -e ""$YS"start"$CE") Start "
+				echo -e ""$YS"00"$CE") Main menu"
+				echo -e ""$YS" back"$CE") Go back"
+				echo -e "Choose: "
+				read EAPH
+				clear
+				if [ $EAPH = 1 ]
+				then
+					cd /root/eaphammer
+					./eaphammer --cert-wizard
+				elif [ $EAPH = 2 ]
+				then
+					echo -e "Type the interface you want to use: "
+					read EAPHIFACE
+				elif [ $EAPH = 3 ]
+				then
+					echo -e "Type the ESSID: "
+					read EAPHESSID
+				elif [ $EAPH = 4 ]
+				then
+					echo -e "Type the BSSID: "
+					read EAPHBSSID
+				elif [ $EAPH = 5 ]
+				then
+					echo -e "Type the channel: "
+					read EAPHCHANNEL
+				elif [ $EAPH = 6 ]
+				then
+					if [[ $EAPHWPA = 1 ]]
+					then
+						EAPHWPA=2
+					else
+						EAPHWPA=1
+					fi
+				elif [ $EAPH = 7 ]
+				then
+					echo -e ""$YS" 1"$CE") Open"
+					echo -e ""$YS" 2"$CE") ttls"
+					echo -e ""$YS" 3"$CE") peap"
+					echo -e "Choose: "
+					read PAUTH
+					if [ $PAUTH = 1 ]
+					then
+						EAPHAUTH="open"
+					elif [ $PAUTH = 2 ]
+					then
+						EAPHAUTH="ttls"
+					elif [ $PAUTH = 3 ]
+					then
+						EAPHAUTH="peap"
+					fi
+				elif [ $EAPH = 8 ]
+				then
+					if [[ $EAPHCREDS = "OFF" ]]
+					then
+						EAPHCREDS="ON"
+					else
+						EAPHCREDS="OFF"
+					fi
+				elif [ $EAPH = 9 ]
+				then
+					if [[ $EAPHHOSTILE = "OFF" ]]
+					then
+						EAPHHOSTILE="ON"
+					else
+						EAPHHOSTILE="OFF"
+					fi
+				elif [ $EAPH = 10 ]
+				then
+					if [[ $EAPHCAPTIVE = "OFF" ]]
+					then
+						EAPHCAPTIVE="ON"
+					else
+						EAPHCAPTIVE="OFF"
+					fi
+				elif [ $EAPH = 11 ]
+				then
+					if [[ $EAPHPIVOT = "OFF" ]]
+					then
+						EAPHPIVOT="ON"
+					else
+						EAPHPIVOT="OFF"
+					fi
+				elif [ $EAPH = 12 ]
+				then
+					if [[ $EAPHKARMA = "OFF" ]]
+					then
+						EAPHKARMA="ON"
+					else
+						EAPHKARMA="OFF"
+					fi
+				elif [ $EAPH = 13 ]
+				then
+					if [[ $EAPHAIRCRACK = "OFF" ]]
+					then
+						clear
+						echo -e "Hostname: "
+						read HOSTN
+						echo -e "Port: "
+						read PORT
+						clear
+						EAPHAIRCRACK=""$HOSTN":"$PORT""
+					else
+						EAPHAIRCRACK="OFF"
+					fi
+				elif [ $EAPH = 14 ]
+				then
+					if [[ $EAPHINTAUTO = "OFF" ]]
+					then
+						EAPHINTAUTO="ON"
+					else
+						EAPHINTAUTO="OFF"
+					fi
+				elif [ $EAPH = 15 ]
+				then
+					if [[ $EAPHWORD != "OFF" && $EAPHWORD != "\e[1;31mNONE\e[0m" ]]
+					then
+						EAPHWORD="OFF"
+					else
+						clear
+						echo -e "Type the full wordlist path: "
+						read EAPHWORD
+					fi
+				elif [ $EAPH = "back" ]
+				then
+					clear
+					break
+				elif [ $EAPH = "00" ]
+				then
+					clear
+					exec bash $0
+				elif [ $EAPH = "0" ]
+				then
+					clear
+					exit
+				elif [ $EAPH = "start" ]
+				then
+					clear
+					if [ $OK1 != 1 ]
+					then
+						echo -e "You haven't specified the important requirements"
+						sleep 4
+						continue
+					fi
+					if [ $OK2 != 1 ]
+					then
+						echo -e "You haven't specified a wordlist for the autocrack"
+						sleep 4
+						continue
+					fi
+				if [[ $EAPHCREDS = "ON" ]]
+				then
+					CREDS="--creds"
+				else
+					CREDS=""
+				fi
+				if [[ $EAPHHOSTILE = "ON" ]]
+				then
+					HOSTILE="--hostile-portal"
+				else
+					HOSTILE=""
+				fi
+				if [[ $EAPHCAPTIVE = "ON" ]]
+				then
+					CAPTIVE="--captive-portal"
+				else
+					CAPTIVE=""
+				fi
+				if [[ $EAPHPIVOT = "ON" ]]
+				then
+					PIVOT="--pivot"
+				else
+					PIVOT=""
+				fi
+				if [[ $EAPHKARMA = "ON" ]]
+				then
+					KARMA="--karma"
+				else
+					KARMA=""
+				fi
+				if [[ $EAPHINTAUTO = "ON" ]]
+				then
+					INTAUTO="--local-autocrack"
+				else
+					INTAUTO=""
+				fi
+				if [[ $EAPHAIRCRACK != "OFF" ]]
+				then
+					AIRCRACK="--remote-autocrack $EAPHAIRCRACK"
+				else
+					AIRCRACK=""
+				fi
+				if [[ $EAPHAIRCRACK != "OFF" || $EAPHINTAUTO != "OFF" ]]
+				then
+					WORD="--wordlist $EAPHWORD"
+				else
+					WORD=""
+				fi
+				IFACE="-i $EAPHIFACE"
+				CHANNEL="-c $EAPHCHANNEL"
+				ESSID="-e $EAPHESSID"
+				BSSID="-b $EAPHBSSID"
+				WPA="--wpa $EAPHWPA"
+				AUTH="--auth $EAPHAUTH"
+					cd /root/eaphammer
+					./eaphammer $IFACE $CHANNEL $BSSID $ESSID $WPA $AUTH $PIVOT $KARMA $INTAUTO $CAPTIVE $HOSTILE $CREDS $AIRCRACK $WORD
+					
+				fi
+			done
+}
 function wifi_tools
 {
 	while true
@@ -1783,6 +2192,12 @@ function wifi_tools
 		echo -e ""$YS"26"$CE") Eternal scanner    Scans hosts for eternalblue vulnerabilities"
 	else
 		echo -e ""$RS"26"$CE") "$RS"Eternal scanner"$CE"    Scans hosts for eternalblue vulnerabilities"
+	fi
+	if [ -d /root/eaphammer ]
+	then
+		echo -e ""$YS"27"$CE") Eaphammer          Evil twin attacks against WPA2-Enterprise networks. "
+	else
+		echo -e ""$RS"27"$CE") "$RS"Eaphammer"$CE"          Evil twin attacks against WPA2-Enterprise networks. "
 	fi
 	echo -e ""$YS"back"$CE") Go back"
 	echo -e ""$YS"00"$CE") Main menu"
@@ -2173,6 +2588,17 @@ function wifi_tools
 			echo -e "$PAKTGB"
 			$READAK
 		fi
+	elif [ "$APPP" = "27" ]
+	then
+		if [ -d "/root/eaphammer" ]
+		then
+			eaphammer_automation
+		else
+			echo -e "$TNI"
+			echo -e "$PAKTGB"
+			$READAK
+		fi
+		cd
 	elif [ "$APPP" = "6" ]
 	then
 		if [ -d "/root/hakkuframework" ]
@@ -2960,6 +3386,12 @@ function hidden_shortcuts
 	echo -e ""$YS"eternalblue"$CE") Launch msfconsole with eternalblue exploit on target"
 	echo -e ""$YS"  etercheck"$CE") Check if a target is vulnerable to eternalblue exploit"
 	echo -e ""$YS"  changelog"$CE") View the changelog of the lscript versions"
+	echo -e ""$YS"     pstart"$CE") service postgresql start"
+	echo -e ""$YS"      pstop"$CE") service postgresql stop"
+	echo -e ""$YS"     nstart"$CE") service network-manager start"
+	echo -e ""$YS"      nstop"$CE") service network-manager stop"
+	echo -e ""$YS"     astart"$CE") service apache2 start"
+	echo -e ""$YS"      astop"$CE") service apache2 stop"
 	echo -e "$PAKTGB"
 	$READAK
 	clear
@@ -3066,10 +3498,13 @@ function public_ip
 		PUBLICIP=$(curl -s ipinfo.io/ip)
 		if [[ $PUBLICIP = "" ]]
 		then
-			PUBLICIP="Connection error.Check internet connection."
+			PUBLICIP=$(curl -s checkip.dyndns.org | sed -e 's/.*Current IP Address: //' -e 's/<.*$//')
+			if [[ $PUBLICIP = "" ]]
+			then
+				PUBLICIP="Connection error."
+			fi
 		fi
 		echo "Your public IP is: "$PUBLICIP""
-		#~ curl ipinfo.io/ip
 		#~ curl -s checkip.dyndns.org | sed -e 's/.*Current IP Address: //' -e 's/<.*$//'
 	else
 		echo -e "When monitor mode is enabled, you don't have internet access."
@@ -3397,6 +3832,24 @@ function main_options
 	if [ "$YORNAA" = "0" ]
 	then
 		exit
+	elif [ "$YORNAA" = "pstart" ]
+	then
+		service postgresql start
+	elif [ "$YORNAA" = "pstop" ]
+	then
+		service postgresql stop
+	elif [ "$YORNAA" = "nstart" ]
+	then
+		service network-manager start
+	elif [ "$YORNAA" = "nstop" ]
+	then
+		service network-manager stop
+	elif [ "$YORNAA" = "astart" ]
+	then
+		service apache2 start
+	elif [ "$YORNAA" = "astop" ]
+	then
+		service apache2 stop
 	elif [ "$YORNAA" = "15" ]
 	then
 		BACKL="1"
@@ -3551,6 +4004,7 @@ function main_options
 		metasploit_menu
 	elif [ "$YORNAA" = "exit" ]
 	then
+		kill -9 $PPID
 		exit
 	elif [ "$YORNAA" = "update" ]
 	then
@@ -3563,6 +4017,7 @@ function main_options
 	elif [ "$YORNAA" = "changelog" ]
 	then
 		clear
+		BACKL=1
 		cat "$LPATH"/Changelog
 		echo -e "$PAKTC"
 		$READAK

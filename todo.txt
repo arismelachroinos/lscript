@@ -1,2 +1,2 @@
 add inverse install ( all except : x)
-add tools like Sn1per and others
+add tools 

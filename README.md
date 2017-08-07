@@ -1,4 +1,4 @@
-## Welcome to the LAZY script  v2.0.1
+## Welcome to the LAZY script  v2.0.2
 <p align="center">
 <img src="https://i.imgur.com/yppDJcY.png"/>
 <img src="https://i.imgur.com/jAbzXMU.png"/>
@@ -33,20 +33,20 @@ View your MAC faster
 **TOOLS**
 
 	You can install whichever tool(s) you want from within lscript! 
-	Fluxion				by Deltaxflux
-	WifiTe				by derv82
-	Wifiphisher			by Dan McInerney
-	Zatacker			by LawrenceThePentester
-	Morpheus			by Pedro ubuntu  [ r00t-3xp10it ]
-	Osrframework			by i3visio
-	Hakku				by 4shadoww
-	Trity				by Toxic-ig
-	Cupp				by Muris Kurgas
-	Dracnmap			by Edo -maland-
-	Fern Wifi Cracker		by Savio-code
-	Kichthemout			by Nikolaos Kamarinakis & David Schütz
-	BeeLogger			by Alisson Moretto - 4w4k3
-	Ghost-Phisher			by Savio-code
+	Fluxion                         by Deltaxflux
+	WifiTe                          by derv82
+	Wifiphisher                     by Dan McInerney
+	Zatacker                        by LawrenceThePentester
+	Morpheus                        by Pedro ubuntu  [ r00t-3xp10it ]
+	Osrframework                    by i3visio
+	Hakku                           by 4shadoww
+	Trity                           by Toxic-ig
+	Cupp                            by Muris Kurgas
+	Dracnmap                        by Edo -maland-
+	Fern Wifi Cracker               by Savio-code
+	Kichthemout                     by Nikolaos Kamarinakis & David Schütz
+	BeeLogger                       by Alisson Moretto - 4w4k3
+	Ghost-Phisher                   by Savio-code
 	Mdk3-master                     by Musket Developer
 	Anonsurf                        by Und3rf10w
 	The Eye                         by EgeBalci
@@ -70,6 +70,7 @@ View your MAC faster
 	Infoga                          by m4ll0k
 	nWatch                          by Suraj
 	Eternal scanner                 by Peterpt
+	Eaphammer                       by S0lst1c3
 	MORE ARE BEING ADDED ON EVERY UPDATE
 	
 **Wifi password scripts**

@@ -1,3 +1,16 @@
+2.0.2
+Improved change mac feature.
+Added red color to wirelessinterface if not available.
+Added warning to installing u/i.
+Added Eaphammer tool to install/reinstall.
+Added new fix in errors.
+Added Eaphammer automation script.
+Added services toggle shortcuts in ks) 2).
+Fixed wifiphisher installation.
+Added a backup way to seatch for public ip if one fails.
+Added close terminal when typing exit.
+
+
 2.0.1
 Improved layout of install/reinstall tool menu.
 Added Infoga to information gathering tools.

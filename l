@@ -1,5 +1,5 @@
 #! /bin/bash
-VERSION=2.0.2
+VERSION=2.0.3
 HOWMANYTOOLS=29
 BACKL="0"
 #############DEFAULTS###############
@@ -533,6 +533,8 @@ while true
 do
 	clear
 	echo -e "Select a tool to install/reinstall"
+	echo -e "For a mass install/reinstall type !, if you want to skip some tool provide !followed by a number"
+	echo -e "i.e.: '!5 !6 !15' "
 	echo -e " "$YS"1"$CE") Fluxion          "$YS"21"$CE") 4nonimizer       "$YS"41"$CE") Infoga"
 	echo -e ""$YS" 2"$CE") Wifite           "$YS"22"$CE") Openvas          "$YS"42"$CE") nWatch"
 	echo -e ""$YS" 3"$CE") Wifiphisher      "$YS"23"$CE") BeeLogger        "$YS"43"$CE") Eternal scanner"
@@ -558,7 +560,8 @@ do
 	echo -e "Choose: "
 	read REIN
 	clear
-	if [ "$REIN" = "1" ]
+	if [ "$REIN" = "1" ] || [[ "$REIN" != *"!1"* && "$REIN" == *"!"* ]]
+
 	then
 		if [ -d "/root/fluxion" ]
 		then
@@ -578,10 +581,10 @@ do
 		cd /root/fluxion/install
 		chmod +x install.sh
 		./install.sh					
-	elif [ "$REIN" = "2" ]
+	elif [ "$REIN" = "2" ] || [[ "$REIN" != *"!2"* && "$REIN" == *"!"* ]]
 	then
 		apt-get install wifite
-	elif [ "$REIN" = "3" ]
+	elif [ "$REIN" = "3" ] || [[ "$REIN" != *"!3"* && "$REIN" == *"!"* ]]
 	then
 		if [ -d "/root/wifiphisher" ]
 		then
@@ -598,12 +601,12 @@ do
 		cd wifiphisher
 		sudo python setup.py install
 		sleep 1
-	elif [ "$REIN" = "4" ]
+	elif [ "$REIN" = "4" ] || [[ "$REIN" != *"!4"* && "$REIN" == *"!"* ]]
 	then
 		echo -e "I cannot install Zatacker. Please google how to do that yourself."
 		echo -e "PAKTGB"
 		read
-	elif [ "$REIN" = "5" ]
+	elif [ "$REIN" = "5" ] || [[ "$REIN" != *"!5"* && "$REIN" == *"!"* ]]
 	then
 		if [ -d "/root/morpheus" ]
 		then
@@ -619,10 +622,10 @@ do
 		git clone https://github.com/r00t-3xp10it/morpheus.git
 		cd morpheus
 		chmod +x morpheus.sh
-	elif [ "$REIN" = "6" ]
+	elif [ "$REIN" = "6" ] || [[ "$REIN" != *"!6"* && "$REIN" == *"!"* ]]
 	then
 		pip install osrframework			
-	elif [ "$REIN" = "7" ]
+	elif [ "$REIN" = "7" ] || [[ "$REIN" != *"!7"* && "$REIN" == *"!"* ]]
 	then
 		if [ -d "/root/hakkuframework" ]
 		then
@@ -639,7 +642,7 @@ do
 		cd hakkuframework
 		chmod +x hakku
 		chmod +x install							
-	elif [ "$REIN" = "8" ]
+	elif [ "$REIN" = "8" ] || [[ "$REIN" != *"!8"* && "$REIN" == *"!"* ]]
 	then
 		if [ -d "/root/Trity" ]
 		then
@@ -654,7 +657,7 @@ do
 		git clone https://github.com/toxic-ig/Trity.git
 		cd Trity
 		sudo python install.py							
-	elif [ "$REIN" = "9" ]
+	elif [ "$REIN" = "9" ] || [[ "$REIN" != *"!9"* && "$REIN" == *"!"* ]]
 	then
 		if [ -d "/root/cupp" ]
 		then
@@ -670,7 +673,7 @@ do
 		git clone https://github.com/Mebus/cupp.git
 		cd cupp
 		chmod +x cupp.py	
-	elif [ "$REIN" = "10" ]
+	elif [ "$REIN" = "10" ] || [[ "$REIN" != *"!10"* && "$REIN" == *"!"* ]]
 	then
 		if [ -d "/root/Dracnmap" ]
 		then
@@ -685,7 +688,7 @@ do
 		git clone https://github.com/Screetsec/Dracnmap.git
 		cd Dracnmap
 		chmod +x Dracnmap.sh	
-	elif [ "$REIN" = "11" ]
+	elif [ "$REIN" = "11" ] || [[ "$REIN" != *"!11"* && "$REIN" == *"!"* ]]
 	then
 		if [ -d "/root/Fern-Wifi-Cracker" ]
 		then
@@ -701,10 +704,10 @@ do
 		svn checkout http://github.com/savio-code/fern-wifi-cracker/trunk/Fern-Wifi-Cracker/
 		cd Fern-Wifi-Cracker
 		chmod +x execute.py		
-	elif [ "$REIN" = "12" ]
+	elif [ "$REIN" = "12" ] || [[ "$REIN" != *"!12"* && "$REIN" == *"!"* ]]
 	then
 		apt-get install netdiscover			
-	elif [ "$REIN" = "13" ]
+	elif [ "$REIN" = "13" ] || [[ "$REIN" != *"!13"* && "$REIN" == *"!"* ]]
 	then
 		if [ -d "/root/kickthemout" ]
 		then
@@ -720,7 +723,7 @@ do
 		git clone https://github.com/k4m4/kickthemout.git
 		cd kickthemout/
 		sudo python -m pip install -r requirements.txt
-	elif [ "$REIN" = "14" ]
+	elif [ "$REIN" = "14" ] || [[ "$REIN" != *"!14"* && "$REIN" == *"!"* ]]
 	then
 		if [ -d "/root/ghost-phisher" ]
 		then
@@ -736,7 +739,7 @@ do
 		git clone https://github.com/savio-code/ghost-phisher.git
 		sleep 1
 		chmod +x /root/ghost-phisher/Ghost-Phisher/ghost.py
-	elif [ "$REIN" = "15" ]
+	elif [ "$REIN" = "15" ] || [[ "$REIN" != *"!15"* && "$REIN" == *"!"* ]]
 	then
 		if [ -d "/root/The-Eye" ]
 		then
@@ -752,7 +755,7 @@ do
 		git clone https://github.com/EgeBalci/The-Eye.git
 		cd The-Eye
 		chmod +x TheEye	
-	elif [ "$REIN" = "16" ]
+	elif [ "$REIN" = "16" ] || [[ "$REIN" != *"!16"* && "$REIN" == *"!"* ]]
 	then
 		if [ -d "/root/xerxes" ]
 		then
@@ -767,7 +770,7 @@ do
 		git clone https://github.com/zanyarjamal/xerxes
 		cd xerxes
 		gcc xerxes.c -o xerxes	
-	elif [ "$REIN" = "17" ]
+	elif [ "$REIN" = "17" ] || [[ "$REIN" != *"!17"* && "$REIN" == *"!"* ]]
 	then
 		if [ -d "/root/mdk3-master" ]
 		then
@@ -783,7 +786,7 @@ do
 		cd /root/mdk3-master
 		make
 		make install
-	elif [ "$REIN" = "18" ]
+	elif [ "$REIN" = "18" ] || [[ "$REIN" != *"!18"* && "$REIN" == *"!"* ]]
 	then
 		if [ -d "/root/KatanaFramework" ]
 		then
@@ -799,7 +802,7 @@ do
 		cd KatanaFramework
 		sh dependencies
 		python install					
-	elif [ "$REIN" = "19" ]
+	elif [ "$REIN" = "19" ] || [[ "$REIN" != *"!19"* && "$REIN" == *"!"* ]]
 	then
 		if [ -d "/root/airgeddon" ]
 		then
@@ -816,10 +819,10 @@ do
 			git clone https://github.com/v1s1t0r1sh3r3/airgeddon.git
 			cd airgeddon
 			chmod +x airgeddon.sh
-	elif [ "$REIN" = "20" ]
+	elif [ "$REIN" = "20" ] || [[ "$REIN" != *"!20"* && "$REIN" == *"!"* ]]
 	then
 		apt-get install websploit			
-	elif [ "$REIN" = "21" ]
+	elif [ "$REIN" = "21" ] || [[ "$REIN" != *"!21"* && "$REIN" == *"!"* ]]
 	then
 		if [ -d "/root/4nonimizer" ]
 		then
@@ -845,7 +848,7 @@ do
 				then
 		apt-get install openvas
 		openvas-setup
-	elif [ "$REIN" = "23" ]
+	elif [ "$REIN" = "23" ] || [[ "$REIN" != *"!23"* && "$REIN" == *"!"* ]]
 	then
 		if [ -d "/root/BeeLogger" ]
 		then
@@ -867,7 +870,7 @@ do
 		gem install pcaprub
 		gem install packetfu
 		clear
-	elif [ "$REIN" = "24" ]
+	elif [ "$REIN" = "24" ] || [[ "$REIN" != *"!24"* && "$REIN" == *"!"* ]]
 	then
 		if [ -d "/root/ezsploit" ]
 		then
@@ -881,7 +884,7 @@ do
 		git clone https://github.com/rand0m1ze/ezsploit.git
 		cd ezsploit/
 		chmod +x ezsploit.sh
-	elif [ "$REIN" = "25" ]
+	elif [ "$REIN" = "25" ] || [[ "$REIN" != *"!25"* && "$REIN" == *"!"* ]]
 	then
 		if [ -d "/root/pupy" ]
 		then
@@ -898,7 +901,7 @@ do
 		git submodule init
 		git submodule update
 		pip install -r pupy/requirements.txt
-	elif [ "$REIN" = "26" ]
+	elif [ "$REIN" = "26" ] || [[ "$REIN" != *"!26"* && "$REIN" == *"!"* ]]
 	then
 		if [ -d "/root/zirikatu" ]
 		then
@@ -913,7 +916,7 @@ do
 		git clone https://github.com/pasahitz/zirikatu.git
 		cd zirikatu
 		chmod +x zirikatu.sh
-	elif [ "$REIN" = "27" ]
+	elif [ "$REIN" = "27" ] || [[ "$REIN" != *"!27"* && "$REIN" == *"!"* ]]
 	then
 		if [ -d "/root/WiFi-autopwner" ]
 		then
@@ -926,7 +929,7 @@ do
 		echo -e "Tool by Mi-Al"
 		cd
 		git clone https://github.com/Mi-Al/WiFi-autopwner.git
-	elif [ "$REIN" = "28" ]
+	elif [ "$REIN" = "28" ] || [[ "$REIN" != *"!28"* && "$REIN" == *"!"* ]]
 	then
 		if [ -d "/root/bully" ]
 		then
@@ -943,7 +946,7 @@ do
 		cd src
 		make
 		sudo make install		
-	elif [ "$REIN" = "29" ]
+	elif [ "$REIN" = "29" ] || [[ "$REIN" != *"!29"* && "$REIN" == *"!"* ]]
 	then
 		if [ -d "/root/kali-anonsurf" ]
 		then
@@ -960,7 +963,7 @@ do
 		chmod +x installer.sh
 		./installer.sh
 		sleep 1
-	elif [ "$REIN" = "30" ]
+	elif [ "$REIN" = "30" ] || [[ "$REIN" != *"!30"* && "$REIN" == *"!"* ]]
 	then
 		if [ -d "/root/anonym8" ]
 		then
@@ -976,7 +979,7 @@ do
 		chmod +x INSTALL.sh
 		./INSTALL.sh
 		sleep 1	
-	elif [ "$REIN" = "31" ]
+	elif [ "$REIN" = "31" ] || [[ "$REIN" != *"!31"* && "$REIN" == *"!"* ]]
 	then	
 		if [ -d "/root/TheFatRat" ]
 		then
@@ -991,7 +994,7 @@ do
 		git clone https://github.com/Screetsec/TheFatRat.git
 		cd TheFatRat
 		chmod +x setup.sh && ./setup.sh	
-	elif [ "$REIN" = "32" ]
+	elif [ "$REIN" = "32" ] || [[ "$REIN" != *"!32"* && "$REIN" == *"!"* ]]
 	then
 		cd
 		if [ -f "/root/ipscan_*" ]
@@ -1007,7 +1010,7 @@ do
 		dpkg -i ipscan_*
 		echo -e "Done"
 		sleep 1
-	elif [ "$REIN" = "33" ]
+	elif [ "$REIN" = "33" ] || [[ "$REIN" != *"!33"* && "$REIN" == *"!"* ]]
 	then
 		if [ -d /root/Sn1per ]
 		then
@@ -1023,7 +1026,7 @@ do
 		cd /root/Sn1per
 		chmod +x install.sh
 		./install.sh
-	elif [ "$REIN" = "34" ]
+	elif [ "$REIN" = "34" ] || [[ "$REIN" != *"!34"* && "$REIN" == *"!"* ]]
 	then
 		if [ -d /root/ReconDog ]
 		then
@@ -1036,7 +1039,7 @@ do
 		echo -e "Installing ReconDog"
 		echo -e "Tool by UltimateHackers"
 		git clone https://github.com/UltimateHackers/ReconDog.git
-	elif [ "$REIN" = "35" ]
+	elif [ "$REIN" = "35" ] || [[ "$REIN" != *"!35"* && "$REIN" == *"!"* ]]
 	then
 		if [ -d /root/RED_HAWK ]
 		then
@@ -1049,7 +1052,7 @@ do
 		echo -e "Installing RED HAWK"
 		echo -e "Tool by Tuhinshubhra"
 		git clone https://github.com/Tuhinshubhra/RED_HAWK.git
-	elif [ "$REIN" = "36" ]
+	elif [ "$REIN" = "36" ] || [[ "$REIN" != *"!36"* && "$REIN" == *"!"* ]]
 	then
 		if [ -d /root/Winpayloads ]
 		then
@@ -1066,11 +1069,11 @@ do
 		chmod +x setup.sh
 		./setup.sh
 		cd
-	elif [ "$REIN" = "37" ]
+	elif [ "$REIN" = "37" ] || [[ "$REIN" != *"!37"* && "$REIN" == *"!"* ]]
 	then
 		apt-get install shellter
 		sleep 2
-	elif [ "$REIN" = "38" ]
+	elif [ "$REIN" = "38" ] || [[ "$REIN" != *"!38"* && "$REIN" == *"!"* ]]
 	then
 		apt install golang upx-ucl -y
 		cd
@@ -1082,7 +1085,7 @@ do
 			rm -r /root/CHAOS
 		fi
 		git clone https://github.com/tiagorlampert/CHAOS.git
-	elif [ "$REIN" = "39" ]
+	elif [ "$REIN" = "39" ] || [[ "$REIN" != *"!39"* && "$REIN" == *"!"* ]]
 	then
 		if [ -d /root/routersploit ]
 		then
@@ -1098,10 +1101,10 @@ do
 		cd /root/routersploit
 		pip install -r requirements.txt
 		cd
-	elif [ "$REIN" = "40" ]
+	elif [ "$REIN" = "40" ] || [[ "$REIN" != *"!40"* && "$REIN" == *"!"* ]]
 	then
 		apt-get install geany
-	elif [ "$REIN" = "41" ]
+	elif [ "$REIN" = "41" ] || [[ "$REIN" != *"!41"* && "$REIN" == *"!"* ]]
 	then
 		if [ -d /root/Infoga ]
 		then
@@ -1114,7 +1117,7 @@ do
 		cd /root/Infoga
 		pip install -r requirements.txt
 		cd
-	elif [ "$REIN" = "42" ]
+	elif [ "$REIN" = "42" ] || [[ "$REIN" != *"!42"* && "$REIN" == *"!"* ]]
 	then
 		if [ -d /root/nWatch ]
 		then
@@ -1127,7 +1130,7 @@ do
 		echo -e "Installing nWatch"
 		echo -e "Tool by Suraj"
 		git clone https://github.com/suraj-root/nWatch.git
-	elif [ "$REIN" = "43" ]
+	elif [ "$REIN" = "43" ] || [[ "$REIN" != *"!43"* && "$REIN" == *"!"* ]]
 	then
 		if [ -d /root/eternal_scanner ]
 		then
@@ -1141,7 +1144,7 @@ do
 		echo -e "Tool by Peterpt"
 		git clone https://github.com/peterpt/eternal_scanner.git
 		apt-get install masscan metasploit-framework
-	elif [ "$REIN" = "44" ]
+	elif [ "$REIN" = "44" ] || [[ "$REIN" != *"!44"* && "$REIN" == *"!"* ]]
 	then
 		if [ -d /root/eaphammer ]
 		then
@@ -1160,7 +1163,7 @@ do
 		cd
 		clear
 		apt-get install python-tqdm
-	#~ elif [ "$REIN" = "45" ]
+	#~ elif [ "$REIN" = "45" ] || [[ "$REIN" != *"!45"* && "$REIN" == *"!"* ]]
 	#~ then
 		#~ if [ -d /root/dagon ]
 		#~ then

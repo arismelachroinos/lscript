@@ -1,2 +1,14 @@
 add inverse install ( all except : x)
 add tools 
+
+syntax base for mass install
+
+echo "test"
+read UPP
+
+if [ ${UPP:0:2} = "23" ]||[[ ${UPP:0:2} != "ye" && ${UPP:2:2} = "op" ]];
+then
+echo "23* or **op was inputted"
+fi
+
+echo "script done"

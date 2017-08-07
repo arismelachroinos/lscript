@@ -75,13 +75,13 @@ clear
 echo -e "Are you \e[1;33mu\e[0mpdating or \e[1;33mi\e[0mnstalling the script?(\e[1;33mu\e[0m/\e[1;33mi\e[0m): "
 echo -e "Only use 'i' for the first time."
 read UORI
-if [ "$UORI" = "u" ]
+if [ "${UORI:0:1}" = "u" ]
 then 
 	clear
 	echo -e "Type 'changelog' to see what's new on this version"
 	sleep 3
 	break
-elif [ "$UORI" = "i" ]
+elif [ "${UORI:0:1}" = "i" ]
 then
 	clear
 	BASHCHECK=$(cat ~/.bashrc | grep "bin/lscript")

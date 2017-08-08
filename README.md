@@ -17,7 +17,7 @@ A video sstec made: https://www.youtube.com/watch?v=gSO7c2MN7TY
 **Its not only for noobs.Its for whoever wants to type less and do actually more.**
 
 ### What is this
-This is a script that automates many procedures about wifi penetration and hacking.
+This is a script for Kali Linux that automates many procedures about wifi penetration and hacking.
 I actually made it for fun for me just to save some time, but i don't mind publicing it.
 
 ### Features
@@ -87,7 +87,7 @@ View your MAC faster
 	Metasploit automation (create payloads,listeners,save listeners for later etc...)
 	Auto eternalblue exploiting (check on ks) -> hidden shortcuts
 		
-# How to install
+# How to install (Kali Linux)
 (make sure you are a root user)
 
 **Be carefull.If you download it as a .zip file, it will not run.Make sure to follow these simple instructions.**

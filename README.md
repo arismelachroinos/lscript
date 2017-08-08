@@ -72,6 +72,7 @@ View your MAC faster
 	Eternal scanner                 by Peterpt
 	Eaphammer                       by S0lst1c3
 	Dagon                           by Ekultek
+	LALIN                           by Screetsec
 	MORE ARE BEING ADDED ON EVERY UPDATE
 	
 **Wifi password scripts**

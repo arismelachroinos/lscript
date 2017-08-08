@@ -1,4 +1,4 @@
-## Welcome to the LAZY script  v2.0.2
+## Welcome to the LAZY script  v2.0.3
 <p align="center">
 <img src="https://i.imgur.com/yppDJcY.png"/>
 <img src="https://i.imgur.com/jAbzXMU.png"/>
@@ -71,6 +71,7 @@ View your MAC faster
 	nWatch                          by Suraj
 	Eternal scanner                 by Peterpt
 	Eaphammer                       by S0lst1c3
+	Dagon                           by Ekultek
 	MORE ARE BEING ADDED ON EVERY UPDATE
 	
 **Wifi password scripts**

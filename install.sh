@@ -1,6 +1,10 @@
 #! /bin/bash
 clear
 printf '\033]2;INSTALLER\a'
+#~ echo -e "\e[1;33m 1\e[0m) KALI"
+#~ echo -e "\e[1;33m 2\e[0m) UBUNTU"
+#~ echo -e "Choose your OS: "
+#~ read OS
 echo -e "Press \e[1;33many key\e[0m to install the script..."
 read -n 1
 clear
@@ -16,7 +20,12 @@ then
 	mkdir /root/lscript
 	cp -r "$DIR"/* /root/lscript
 	chmod +x /root/lscript/install.sh
+if [ $OS = 2 ]
+then
+	gnome-terminal -e "sudo bash /root/lscript/install.sh"
+else
 	gnome-terminal -e "bash /root/lscript/install.sh"
+fi
 	sleep 2
 	kill -9 $PPID
 	exit
@@ -44,10 +53,15 @@ echo -e "Copying script to /bin/lscript"
 sleep 1
 mkdir /bin/lscript
 cd /root/lscript
-cp /root/lscript/l /bin/lscript
+if [ $OS = 2 ]
+then
+	cp /root/lscript/l /bin/lscript/u
+	echo -e "I am an Ubuntu user" > /root/lscript/ubuntu.txt
+else
+	cp /root/lscript/l /bin/lscript
+fi
 cp /root/lscript/lh1 /bin/lscript
 cp /root/lscript/lh2 /bin/lscript
-#cp /root/lscript/lh21 /bin/lscript
 cp /root/lscript/lh3 /bin/lscript
 cp /root/lscript/lh31 /bin/lscript
 cp /root/lscript/lh4 /bin/lscript
@@ -88,7 +102,7 @@ then
 	if [[ $BASHCHECK != "" ]]
 	then
 		echo -e "I SAID USE i ONLY ONE TIME..........."
-		SLEEP 2
+		sleep 3
 	fi
 	echo -e "Adding lscript to PATH so you can access it from anywhere"
 	sleep 1
@@ -101,16 +115,28 @@ then
 fi
 done
 clear
+if [ $OS = 2 ]
+then
+	sudo apt-get install leafpad
+	sudo apt-get install aircrack-ng
+	sudo apt-get install git
+	sudo apt-get install xterm
+	sudo apt-get install gnome-terminal
+	sudo apt-get install net-tools
+fi
 echo -e "DONE"
 sleep 1
 clear
-#~ echo -e "Just open a NEW terminal and type 'l'"
-#~ echo -e ""
-#~ sleep 2
-#~ echo -e "Ok, ok..."
-#~ sleep 1
-#~ echo -e "I know you are lazy. I will do it for you..."
-sleep 3
-gnome-terminal -e l
+if [ $OS = 2 ]
+then
+
+	echo -e "Open a NEW terminal and type 'u' to launch the script"
+	sleep  4
+	gnome-terminal -e u
+else
+	echo -e "Open a NEW terminal and type 'l' to launch the script"
+	sleep  4
+	gnome-terminal -e l
+fi
 sleep 2
 kill -9 $PPID

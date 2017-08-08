@@ -1,6 +1,6 @@
 #! /bin/bash
-VERSION=2.0.2
-HOWMANYTOOLS=29
+VERSION=2.0.3
+HOWMANYTOOLS=30
 BACKL="0"
 #############DEFAULTS###############
 function defaults_l
@@ -119,13 +119,13 @@ function banner
 function enable_wlan
 {
 	echo -e "Enabling $WLANN..."
-	rfkill unblock wifi; rfkill unblock all
+	rfkill unblock wifi &> /dev/null; rfkill unblock all &> /dev/null
 	(ifconfig $WLANN up &>/dev/null && echo -e "Done" ) || echo -e ""$RS"Error. I can't find your wireless adapter"$CE""
 }
 function disable_wlan
 {
 	echo -e "Disabling $WLANN..."
-	rfkill unblock wifi; rfkill unblock all
+	rfkill unblock wifi &> /dev/null; rfkill unblock all &> /dev/null
 	(ifconfig $WLANN down &>/dev/null && echo -e "Done" ) || echo -e ""$RS"Error. I can't find your wireless adapter."$CE""
 }
 function stop_monitor
@@ -525,6 +525,11 @@ function listshortcuts
 		TITLE="Eternal_scanner"
 		NAMECD="cd /root/eternal_scanner"
 		KSSET="./escan"
+	elif [ "$nn" = "30" ]
+	then
+		TITLE="LALIN"
+		NAMECD="cd /root/LALIN"
+		KSSET="./Lalin.sh"
 	fi
 }
 function reinstall_tools
@@ -537,9 +542,9 @@ do
 	echo -e ""$YS" 2"$CE") Wifite           "$YS"22"$CE") Openvas          "$YS"42"$CE") nWatch"
 	echo -e ""$YS" 3"$CE") Wifiphisher      "$YS"23"$CE") BeeLogger        "$YS"43"$CE") Eternal scanner"
 	echo -e ""$YS" 4"$CE") Zatacker         "$YS"24"$CE") Ezsploit         "$YS"44"$CE") Eaphammer"
-	echo -e ""$YS" 5"$CE") Morpheus         "$YS"25"$CE") Pupy"
-	echo -e ""$YS" 6"$CE") Osrfconsole      "$YS"26"$CE") Zirikatu"
-	echo -e ""$YS" 7"$CE") Hakku            "$YS"27"$CE") WiFi-autopwner"
+	echo -e ""$YS" 5"$CE") Morpheus         "$YS"25"$CE") Pupy             "$YS"45"$CE") Dagon"
+	echo -e ""$YS" 6"$CE") Osrfconsole      "$YS"26"$CE") Zirikatu         "$YS"46"$CE") Lalin"
+	echo -e ""$YS" 7"$CE") Hakku            "$YS"27"$CE") WiFi-autopwner   "$YS"47"$CE") Knockmail"
 	echo -e ""$YS" 8"$CE") Trity            "$YS"28"$CE") Bully"
 	echo -e ""$YS" 9"$CE") Cupp             "$YS"29"$CE") Anonsurf"
 	echo -e ""$YS"10"$CE") Dracnmap         "$YS"30"$CE") Anonym8"
@@ -894,10 +899,12 @@ do
 		echo -e "Tool by n1nj4sec"
 		cd
 		git clone https://github.com/n1nj4sec/pupy.git
-		cd pupy
+		cd /root/pupy
 		git submodule init
 		git submodule update
-		pip install -r pupy/requirements.txt
+		cd /root/pupy/pupy
+		pip install -r requirements.txt
+		cd
 	elif [ "$REIN" = "26" ]
 	then
 		if [ -d "/root/zirikatu" ]
@@ -1160,23 +1167,57 @@ do
 		cd
 		clear
 		apt-get install python-tqdm
-	#~ elif [ "$REIN" = "45" ]
-	#~ then
-		#~ if [ -d /root/dagon ]
-		#~ then
-			#~ echo -e "Removing old..."
-			#~ echo -e "$PAKTC"
-			#~ $READAK
-			#~ rm -r /root/dagon
-		#~ fi
-		#~ cd
-		#~ echo -e "Installing Dagon"
-		#~ echo -e "Tool by Ekultek"
-		#~ git clone https://github.com/ekultek/dagon.git
-		#~ cd dagon
-		#~ pip install -r requirements.txt
-		#~ apt-get install bcrypt
-		#~ cd
+	elif [ "$REIN" = "45" ]
+	then
+		if [ -d /root/dagon ]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/dagon
+		fi
+		cd
+		echo -e "Installing Dagon"
+		echo -e "Tool by Ekultek"
+		git clone https://github.com/ekultek/dagon.git
+		cd dagon
+		pip install -r requirements.txt
+		pip2.7 install -r requirements.txt
+		apt-get install bcrypt
+		cd
+	elif [ "$REIN" = "46" ]
+	then
+		if [ -d /root/LALIN ]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/LALIN
+		fi
+		cd
+		echo -e "Installing Lalin"
+		echo -e "Tool by Edo -maland-"
+		git clone https://github.com/Screetsec/LALIN.git
+		cd LALIN
+		chmod +x Lalin.sh
+		cd
+	elif [ "$REIN" = "47" ]
+	then
+		if [ -d /root/KnockMail ]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/KnockMail
+		fi
+		cd
+		echo -e "Installing KnockMail"
+		echo -e "Tool by 4w4k3"
+		git clone https://github.com/4w4k3/KnockMail.git
+		cd KnockMail
+		pip install -r requeriments.txt
+		
+		cd
 	elif [ "$REIN" = "back" ]
 	then
 		clear
@@ -1274,9 +1315,6 @@ then
 	break
 elif [ "$ERRS" = "0" ]
 then
-	clear
-	echo -e "EXITING"
-	sleep 1
 	clear
 	exit
 elif [ "$ERRS" = "00" ]
@@ -1706,6 +1744,275 @@ then
 	clear
 	exit
 fi
+}
+function dagon_script
+{
+printf '\033]2;Dagon\a'
+while true
+do
+	clear
+	if [[ $HASH = "" || $HASH = "\e[1;31mNONE\e[0m" ]]
+	then
+		HASH="\e[1;31mNONE\e[0m"
+		OK=0
+	fi
+	if [[ $CORV = "" ]]
+	then
+		CORV="crack"
+	fi
+	echo -e "-----------------Basic options-----------------"
+	echo -e ""$YS" 1"$CE") Specify your hash(es)        CURRENT:$HASH"
+	echo -e ""$YS" 2"$CE") Crack/verify                 CURRENT:$CORV"
+	if [ -f /root/lscript/hashlog.txt ]
+	then
+		echo -e ""$YS" 3"$CE") View your last log"
+	else
+		echo -e ""$RS" 3"$CE") View your last log"
+	fi
+	echo -e "--------------------Optional--------------------"
+	if [[ $DICTATTACK = "" ]]
+	then
+		DICTATTACK="OFF"
+	fi
+	echo -e ""$YS" 4"$CE") Dictionary attack            CURRENT:$DICTATTACK"
+	if [[ $DICT = "" && $DICTATTACK = "OFF" ]]
+	then
+		DICT="OFF"
+	elif [[ $DICT = "\e[1;31mNONE\e[0m" && $DICTATTACK = "OFF" ]]
+	then
+		DICT="OFF"
+	elif [[ $DICT = "OFF" && $DICTATTACK = "ON" ]]
+	then
+		DICT="\e[1;31mNONE\e[0m"
+	elif [[ $DICT = "" && $DICTATTACK = "ON" ]]
+	then
+		DICT="\e[1;31mNONE\e[0m"
+	fi
+	if [[ $DICTTYPE = 1 ]]
+	then
+		DICT="$DICTPATH"
+	elif [[ $DICTTYPE = 2 ]]
+	then
+		DICT="multiple"
+	elif [[ $DICTTYPE = 3 ]]
+	then
+		DICT="$DICTPATH folder"
+	fi
+	echo -e "   "$YS"5"$CE") Specify dictionary/ies     CURRENT:$DICT"
+	echo -e "------------------------------------------------"
+	echo -e ""$YS"back"$CE") Go back              "$YS"update"$CE") Update dagon"
+	echo -e ""$YS"start"$CE") Start"
+	echo -e "Choose: "
+	read DAGON
+	clear
+	if [ $DAGON = "back" ]
+	then
+		break
+	elif [ $DAGON = "4" ]
+	then
+		if [[ $DICTATTACK = "OFF" ]]
+		then
+			DICTATTACK="ON"
+		else
+			DICTATTACK="OFF"
+		fi
+	elif [ $DAGON = "update" ]
+	then
+		cd /root/dagon
+		python dagon.py --update
+		sleep 3
+	elif [ $DAGON = "start" ]
+	then
+		if [[ $HASH = "" || $HASH = "\e[1;31mNONE\e[0m" ]]
+		then
+			echo -e ""$RS"No hash selected."$CE""
+			sleep 3
+		fi
+		if [[ $DICTATTACK = "ON" && $DICT = "\e[1;31mNONE\e[0m" ]]
+		then
+			echo -e ""$RS"No dictionary selected, but dictionary option is enabled"$CE""
+			sleep 5
+			continue
+		fi
+		cd /root/dagon
+		if [ $HASHTYPE = 1 ]
+		then
+			if [[ $CORV = "crack" ]]
+			then
+				HASHCOMMAND="python dagon.py -c "$HASH" --bruteforce"
+			else
+				HASHCOMMAND="python dagon.py -v "$HASH""
+			fi
+		elif [ $HASHTYPE = 2 || $HASHTYPE = 3 ]
+		then
+			if [[ $CORV = "crack" ]]
+			then
+				HASHCOMMAND="python dagon.py -l "$HASH" --bruteforce"
+			else
+				HASHCOMMAND="python dagon.py -V "$HASH""
+			fi
+		fi
+		if [[ $DICTATTACK = "ON" ]]
+		then
+			if [ $DICTTYPE = 1 ]
+			then
+				DICTCOMMAND="-w $DICTPATH"
+			elif [ $DICTTYPE = 2 ]
+			then
+				DICTCOMMAND="-W $DICTPATH"
+			elif [ $DICTTYPE = 3 ]
+			then
+				DICTCOMMAND="-D $DICTPATH"	
+			fi
+		else
+			DICTCOMMAND=""
+		fi	
+		
+	$HASHCOMMAND $DICTCOMMAND | tee "$LPATH/hashlog.txt"
+	echo -e "$PAKTGB"
+	$READAK
+	elif [ $DAGON = 5 ]
+	then
+		echo -e ""$YS" 1"$CE") Select one disctionary"
+		echo -e ""$YS" 2"$CE") Select multiple disctionaries"
+		echo -e ""$YS" 3"$CE") Select a folder with disctionaries"
+		echo -e ""$YS"back"$CE") Go back"
+		echo -e "Choose: "
+		read DICTSEL
+		clear
+		if [ $DICTSEL = 1 ]
+		then
+			echo -e "Type the path of the dictionary:"
+			read DICTPATH
+			if [ ! -f $DICTPATH ]
+			then
+				echo -e ""$RS"No such file"$CE""
+				sleep 2
+				continue
+			fi
+			DICTTYPE=1
+		elif [ $DICTSEL = 2 ]
+		then
+			echo -e "Type the path of the first dictionary:"
+			read DICTPATH
+			if [ ! -f $DICTPATH ]
+			then
+				echo -e ""$RS"No such file"$CE""
+				sleep 2
+				continue
+			fi
+			while true
+			do
+				clear
+				echo -e ""$RS"----------TO STOP, TYPE 0----------"
+				echo -e "Type the path of the next dictionary: "
+				read DICTNEXT
+				if [[ $DICTNEXT = "0" || $DICTNEXT = "o" || $DICTNEXT = "O" ]]
+				then
+					DICTTYPE=2
+					break
+				fi
+			if [ ! -f $DICTNEXT ]
+			then
+				echo -e ""$RS"No such file"$CE""
+				sleep 2
+				continue
+			fi
+				DICTPATH=""$DICTPATH","$DICTNEXT""
+			done
+		elif [ $DICTSEL = 3 ]
+		then
+			echo -e "Type the path of the folder:"
+			read DICTPATH
+			if [ ! -d $DICTPATH ]
+			then
+				echo -e ""$RS"No such folder"$CE""
+				sleep 2
+				continue
+			fi
+			DICTTYPE=3
+		elif [ $DICTSEL = "back" ]
+		then
+			continue
+		fi
+	elif [ $DAGON = 3 ]
+	then
+		if [ ! -f /root/lscript/hashlog.txt ]
+		then
+			echo -e ""$RS"No log found."$CE""
+			sleep 2
+		else
+			cat /root/lscript/hashlog.txt
+			echo -e "$PAKTGB"
+			$READAK
+		fi
+	elif [ $DAGON = 1 ]
+	then
+		clear
+		echo -e ""$YS" 1"$CE") Type a hash"
+		echo -e ""$YS" 2"$CE") Type multiple hashes"
+		echo -e ""$YS" 3"$CE") Select a file with hashes"
+		echo -e ""$YS"back"$CE") Go back"
+		echo -e "Choose: "
+		read HASHES
+		clear
+		if [ $HASHES = "back" ]
+		then
+			continue
+		elif [ $HASHES = 1 ]
+		then
+			echo -e "Type your hash: "
+			read HASH
+			HASHTYPE=1
+		elif [ $HASHES = 2 ]
+		then
+			echo -e "Type your first hash: "
+			read HASH
+			echo -e "$HASH" > $LPATH/hashes.txt
+			while true
+			do
+				clear
+				echo -e ""$RS"----------TO STOP, TYPE 0----------"
+				echo -e "Type your next hash: "
+				read HASH
+				if [[ $HASH = "0" || $HASH = "o" || $HASH = "O" ]]
+				then
+					HASH="multiple"
+					break
+				fi
+				echo -e "$HASH" >> $LPATH/hashes.txt
+			done
+			HASHTYPE=2
+		elif [ $HASHES = 3 ]
+		then
+			echo -e "Type the full path of the file: "
+			read HASHPATH
+			if [[ ! -f $HASHPATH ]]
+			then
+				echo -e ""$RS"There is not such file."$CE""
+				sleep 3
+			else
+				HASH="$HASHPATH"
+			fi
+			HASHTYPE=3
+		fi
+	elif [ $DAGON = 00 ]
+	then
+		exec bash $0
+	elif [ $DAGON = 0 ]
+	then
+		clear
+		exit
+	elif [ $DAGON = 2 ]
+	then
+		if [[ $CORV = "crack" ]]
+		then
+			CORV="verify"
+		else
+			CORV="crack"
+		fi
+	fi
+done
 }
 function eaphammer_automation
 {
@@ -2955,6 +3262,12 @@ function information_gathering
 		else
 			echo -e ""$RS" 4"$CE") "$RS"Infoga"$CE""
 		fi
+		if [ -d /root/KnockMail ]
+		then
+			echo -e ""$YS" 5"$CE") KnockMail"
+		else
+			echo -e ""$RS" 5"$CE") "$RS"KnockMail"$CE""
+		fi
 		echo -e ""$YS"back"$CE") Go back"
 		echo -e ""$YS"00"$CE") Main menu"
 		echo -e "Choose: "
@@ -3016,6 +3329,19 @@ function information_gathering
 				echo -e "$PAKTGB"
 				$READAK
 			fi
+		elif [ $INFOG = 5 ]
+		then
+			if [ -d /root/KnockMail ]
+			then
+				clear
+				cd /root/KnockMail
+				python2.7 knock.py
+				cd
+			else
+				echo -e "$TNI"
+				echo -e "$PAKTGB"
+				$READAK
+			fi
 		elif [ $INFOG = 0 ]
 		then
 			exit
@@ -3040,6 +3366,18 @@ do
 	else
 		echo -e ""$RS" 1"$CE") "$RS"Geany"$CE"            Best notepad for linux"
 	fi
+	if [ -d /root/dagon ]
+	then
+		echo -e ""$YS" 2"$CE") Dagon            Hash cracker/Advanced Hash Manipulation"
+	else
+		echo -e ""$RS" 2"$CE") "$RS"Dagon"$CE"            Hash cracker/Advanced Hash Manipulation"
+	fi
+	if [ -d /root/LALIN ]
+	then
+		echo -e ""$YS" 3"$CE") LALIN            Automatically install any package for pentest "
+	else
+		echo -e ""$RS" 3"$CE") "$RS"LALIN"$CE"            Automatically install any package for pentest "
+	fi
 	echo -e ""$YS"back"$CE") Go back"
 	echo -e ""$YS" 0"$CE") EXIT"
 	echo -e "Choose: "
@@ -3050,6 +3388,28 @@ do
 		if [ -f /usr/bin/geany ]
 		then
 			geany
+		else
+			echo -e "$TNI"
+			echo -e "$PAKTGB"
+			$READAK
+		fi
+	elif [ $OTHERT = 2 ]
+	then
+		if [ -d /root/dagon ]
+		then
+			dagon_script
+		else
+			echo -e "$TNI"
+			echo -e "$PAKTGB"
+			$READAK
+		fi
+	elif [ $OTHERT = 3 ]
+	then
+		if [ -d /root/LALIN ]
+		then
+			cd /root/LALIN
+			./Lalin.sh
+			cd
 		else
 			echo -e "$TNI"
 			echo -e "$PAKTGB"
@@ -3881,18 +4241,35 @@ function main_options
 		enable_wlan
 	elif [ "$YORNAA" = "d1" ]
 	then
-		disable_wlan
+		check_wlans
+		if [[ $WLANCHECKING = "" ]]
+		then
+			echo -e ""$RS"Error. Could find $WLANN interface to disable."$CE""
+		else
+			disable_wlan
+		fi
 	elif [ "$YORNAA" = "2" ]
 	then
-		echo -e "Enabling $WLANNM..."
-		echo -e "Killing services..."
-		airmon-ng check kill
-		echo -e "Done."
-		echo -e "Starting monitor mode..."
-		(airmon-ng start $WLANN &>/dev/null && echo -e "Done" ) || echo -e "Error starting monitor mode."
+		check_wlans
+		if [[ $WLANCHECKING = "" ]]
+		then
+			echo -e ""$RS"Error. Could find $WLANN interface."$CE""
+		else
+			echo -e "Enabling $WLANNM..."
+			echo -e "Killing services..."
+			(airmon-ng check kill &> /dev/null && echo -e "Done." ) || echo -e ""$RS"Error killing services"$YS""
+			echo -e "Starting monitor mode..."
+			(airmon-ng start $WLANN &>/dev/null && echo -e "Done" ) || echo -e "Error starting monitor mode."
+		fi
 	elif [ "$YORNAA" = "d2" ]
 	then
-		stop_monitor
+		check_wlans
+		if [[ $WLANMCHECKING = "" ]]
+		then
+			echo -e ""$RS"Error. Could find $WLANNM interface."$CE""
+		else
+			stop_monitor
+		fi
 		#~ echo -e "$WLANN is probably up.Bring it down?"$YNNO": "
 		#~ read -e YORN
 		#~ if [ "$YORN" = "y" ] 

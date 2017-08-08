@@ -1,3 +1,11 @@
+2.0.3
+Added Dagon automation script to other tools.
+Added LALIN to other tools.
+Added LALIN to keyboard shortcuts.
+Added error when trying to change interface that is not available.
+Added knockmail to infoga tools.
+
+
 2.0.2
 Improved change mac feature.
 Added red color to wirelessinterface if not available.

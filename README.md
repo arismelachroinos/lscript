@@ -1,11 +1,4 @@
 ## Welcome to the LAZY script  v2.0.3
-
-<p align="center">
-
-[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=GC9RSY4CS6KAY)
-
-</p>
-
 <p align="center">
 <img src="https://i.imgur.com/yppDJcY.png"/>
 <img src="https://i.imgur.com/jAbzXMU.png"/>
@@ -131,9 +124,8 @@ Run the script
 Type "update"
 ```
 
-### Things to keep in mind
-1)you should be a root user to run the script 
+### Donate
+If you like my work, consider buying me a coffee :)
 
-2)you should contact me if something doesnt work (Write it on the "issues" tab at the top)
+[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=GC9RSY4CS6KAY)
 
-3)you should contact me if you want a feature to be added (Write it on the "issues" tab at the top)

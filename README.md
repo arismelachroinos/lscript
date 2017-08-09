@@ -1,8 +1,8 @@
 ## Welcome to the LAZY script  v2.0.3
-## Donation
-If this project helped you a lot, you can give me a cup of coffee :) 
 
+<p align="center">
 [![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=GC9RSY4CS6KAY)
+</p>
 
 <p align="center">
 <img src="https://i.imgur.com/yppDJcY.png"/>

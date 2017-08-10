@@ -1,7 +1,8 @@
 #! /bin/bash
-VERSION=2.0.3
-HOWMANYTOOLS=30
+VERSION=2.0.4
+HOWMANYTOOLS=31
 BACKL="0"
+DONATIONS=0
 #############DEFAULTS###############
 function defaults_l
 {
@@ -98,13 +99,13 @@ function banner
 	if [ -f /usr/bin/anonsurf ]
 	then
 	echo -e ""$YS" 5"$CE") Enable anonsurf   "$YS"d5"$CE") Disable anonsurf     "$RS"|"$CE"    "$YS"ks"$CE") Keyboard shortucts"
-	echo -e ""$YS" 6"$CE") Anonsurf's status "$YS"d6"$CE") Restart anonsurf     "$RS"|"$CE""
+	echo -e ""$YS" 6"$CE") Anonsurf's status "$YS"d6"$CE") Restart anonsurf     "$RS"|"$CE""$YS"donate"$CE") Buy me a coffee"
 	else
 	echo -e ""$RS" 5"$CE") Enable anonsurf   "$RS"d5"$CE") Disable anonsurf     "$RS"|"$CE"    "$YS"ks"$CE") Keyboard shortucts"
-	echo -e ""$RS" 6"$CE") Anonsurf's status "$RS"d6"$CE") Restart anonsurf     "$RS"|"$CE""	
+	echo -e ""$RS" 6"$CE") Anonsurf's status "$RS"d6"$CE") Restart anonsurf     "$RS"|"$CE""$YS"donate"$CE") Buy me a coffee"
 	fi
-	echo -e ""$YS" 7"$CE") View Public IP   "
-	echo -e ""$YS" 8"$CE") View MAC         "
+	echo -e ""$YS" 7"$CE") View Public IP"
+	echo -e ""$YS" 8"$CE") View MAC"
 	echo -e ""$YS" 9"$CE") TOOLS             "$YS"15"$CE") Spoof EMAIL"
 	echo -e ""$YS"10"$CE") Handshake    "
 	echo -e ""$YS"11"$CE") Find WPS pin "
@@ -530,6 +531,11 @@ function listshortcuts
 		TITLE="LALIN"
 		NAMECD="cd /root/LALIN"
 		KSSET="./Lalin.sh"
+	elif [ "$nn" = "31" ]
+	then
+		TITLE="Shellter"
+		NAMECD=""
+		KSSET="shellter"
 	fi
 }
 function reinstall_tools
@@ -545,7 +551,7 @@ do
 	echo -e ""$YS" 5"$CE") Morpheus         "$YS"25"$CE") Pupy             "$YS"45"$CE") Dagon"
 	echo -e ""$YS" 6"$CE") Osrfconsole      "$YS"26"$CE") Zirikatu         "$YS"46"$CE") Lalin"
 	echo -e ""$YS" 7"$CE") Hakku            "$YS"27"$CE") WiFi-autopwner   "$YS"47"$CE") Knockmail"
-	echo -e ""$YS" 8"$CE") Trity            "$YS"28"$CE") Bully"
+	echo -e ""$YS" 8"$CE") Trity            "$YS"28"$CE") Bully            "$YS"48"$CE") BoopSuite"
 	echo -e ""$YS" 9"$CE") Cupp             "$YS"29"$CE") Anonsurf"
 	echo -e ""$YS"10"$CE") Dracnmap         "$YS"30"$CE") Anonym8"
 	echo -e ""$YS"11"$CE") Fern             "$YS"31"$CE") TheFatRat"
@@ -1216,7 +1222,25 @@ do
 		git clone https://github.com/4w4k3/KnockMail.git
 		cd KnockMail
 		pip install -r requeriments.txt
-		
+		cd
+	elif [ "$REIN" = "48" ]
+	then
+		if [ -d /root/BoopSuite ]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/BoopSuite
+		fi
+		cd
+		echo -e "Installing BoopSuite"
+		echo -e "Tool by MisterBianco"
+		git clone https://github.com/M1ND-B3ND3R/BoopSuite.git
+		cd BoopSuite
+		pip2.7 install -r requirements.txt
+		pip install -r requirements.txt
+		chmod +x install.py
+		./install.py
 		cd
 	elif [ "$REIN" = "back" ]
 	then
@@ -2391,120 +2415,114 @@ function wifi_tools
 	else
 		echo -e ""$RS" 8"$CE") "$RS"Trity"$CE"              Multitool-locate ip-email bombs-brutforse etc.."
 	fi
-	if [ -d /root/cupp ]
-	then
-		echo -e ""$YS" 9"$CE") Cupp               Make specific worldlists"
-	else
-		echo -e ""$RS" 9"$CE") "$RS"Cupp"$CE"               Make specific worldlists"
-	fi
 	if [ -d /root/Dracnmap ]
 	then				
-		echo -e ""$YS"10"$CE") Dracnmap           Many scan options"
+		echo -e ""$YS" 9"$CE") Dracnmap           Many scan options"
 	else
-		echo -e ""$RS"10"$CE") "$RS"Dracnmap"$CE"           Many scan options"
+		echo -e ""$RS" 9"$CE") "$RS"Dracnmap"$CE"           Many scan options"
 	fi
 	if [ -d "/usr/share/fern-wifi-cracker" ]
 	then	
-		echo -e ""$YS"11"$CE") Fern               Wifi cracker GUI"
+		echo -e ""$YS"10"$CE") Fern               Wifi cracker GUI"
 	else
-		echo -e ""$RS"11"$CE") "$RS"Fern"$CE"               Wifi cracker GUI"
+		echo -e ""$RS"10"$CE") "$RS"Fern"$CE"               Wifi cracker GUI"
 	fi
 	if [ -f /usr/sbin/netdiscover ]
 	then	
-		echo -e ""$YS"12"$CE") Netdiscover        IPs and MACs on your net"
+		echo -e ""$YS"11"$CE") Netdiscover        IPs and MACs on your net"
 	else
-		echo -e ""$RS"12"$CE") "$RS"Netdiscover"$CE"        IPs and MACs on your net"
+		echo -e ""$RS"11"$CE") "$RS"Netdiscover"$CE"        IPs and MACs on your net"
 	fi
 	if [ -d /root/kickthemout ]
 	then	
-		echo -e ""$YS"13"$CE") KickThemOut        Kick clients out of your network"
+		echo -e ""$YS"12"$CE") KickThemOut        Kick clients out of your network"
 	else
-		echo -e ""$RS"13"$CE") "$RS"KickThemOut"$CE"        Kick clients out of your network"
+		echo -e ""$RS"12"$CE") "$RS"KickThemOut"$CE"        Kick clients out of your network"
 	fi
 	if [ -d "/usr/share/ghost-phisher" ]
 	then	
-		echo -e ""$YS"14"$CE") Ghost-Phisher      Fake AP,MITM,Session hijacking etc..."
+		echo -e ""$YS"13"$CE") Ghost-Phisher      Fake AP,MITM,Session hijacking etc..."
 	else
-		echo -e ""$RS"14"$CE") "$RS"Ghost-Phisher"$CE"      Fake AP,MITM,Session hijacking etc..."
+		echo -e ""$RS"13"$CE") "$RS"Ghost-Phisher"$CE"      Fake AP,MITM,Session hijacking etc..."
 	fi
 	if [ -d /root/The-Eye ]
 	then	
-		echo -e ""$YS"15"$CE") The Eye            Detects ARP poisoning DNS spoofing etc..."
+		echo -e ""$YS"14"$CE") The Eye            Detects ARP poisoning DNS spoofing etc..."
 	else
-		echo -e ""$RS"15"$CE") "$RS"The Eye"$CE"            Detects ARP poisoning DNS spoofing etc..."
+		echo -e ""$RS"14"$CE") "$RS"The Eye"$CE"            Detects ARP poisoning DNS spoofing etc..."
 	fi
 	if [ -d /root/xerxes ]
 	then	
-		echo -e ""$YS"16"$CE") Xerxes             The most powerful DoS tool(CAUTION)"
+		echo -e ""$YS"15"$CE") Xerxes             The most powerful DoS tool(CAUTION)"
 	else
-		echo -e ""$RS"16"$CE") "$RS"Xerxes"$CE"             The most powerful DoS tool(CAUTION)"
+		echo -e ""$RS"15"$CE") "$RS"Xerxes"$CE"             The most powerful DoS tool(CAUTION)"
 	fi
 	#~ echo -e ""$YS"16"$CE") ShARP(problematic) Detects who is spoofing on your network"
 	if [ -d /root/mdk3-master ]
 	then
-		echo -e ""$YS"17"$CE") Mdk3-master        Tries to lock / reboot AP and more..."
+		echo -e ""$YS"16"$CE") Mdk3-master        Tries to lock / reboot AP and more..."
 	else
-		echo -e ""$RS"17"$CE") "$RS"Mdk3-master"$CE"        Tries to lock / reboot AP and more..."
+		echo -e ""$RS"16"$CE") "$RS"Mdk3-master"$CE"        Tries to lock / reboot AP and more..."
 	fi
 	if [ -d /root/mdk3-master ]
 	then
-		echo -e ""$YS"18"$CE") Mdk3-master        Tries to reboot the AP and unlock the WPS lock"
+		echo -e ""$YS"17"$CE") Mdk3-master        Tries to reboot the AP and unlock the WPS lock"
 	else
-		echo -e ""$RS"18"$CE") "$RS"Mdk3-master"$CE"        Tries to reboot the AP and unlock the WPS lock"
+		echo -e ""$RS"17"$CE") "$RS"Mdk3-master"$CE"        Tries to reboot the AP and unlock the WPS lock"
 	fi
 	if [ -d /root/KatanaFramework ]
 	then
-		echo -e ""$YS"19"$CE") Katana Framework   Many penetration testing features"
+		echo -e ""$YS"18"$CE") Katana Framework   Many penetration testing features"
 	else
-		echo -e ""$RS"19"$CE") "$RS"Katana Framework"$CE"   Many penetration testing features"
+		echo -e ""$RS"18"$CE") "$RS"Katana Framework"$CE"   Many penetration testing features"
 	fi
 	if [ -d /root/airgeddon ]
 	then
-		echo -e ""$YS"20"$CE") Airgeddon          Evil twin-WPA WPA2-WEP-WPS and more"
+		echo -e ""$YS"19"$CE") Airgeddon          Evil twin-WPA WPA2-WEP-WPS and more"
 	else
-		echo -e ""$RS"20"$CE") "$RS"Airgeddon"$CE"          Evil twin-WPA WPA2-WEP-WPS and more"
+		echo -e ""$RS"19"$CE") "$RS"Airgeddon"$CE"          Evil twin-WPA WPA2-WEP-WPS and more"
 	fi
 	if [ -f /usr/bin/websploit ]
 	then
-		echo -e ""$YS"21"$CE") Websploit          Wireless attack-multitool"
+		echo -e ""$YS"20"$CE") Websploit          Wireless attack-multitool"
 	else
-		echo -e ""$RS"21"$CE") "$RS"Websploit"$CE"          Wireless attack-multitool"
+		echo -e ""$RS"20"$CE") "$RS"Websploit"$CE"          Wireless attack-multitool"
 	fi
 	if [ -d /etc/openvas ]
 	then
-		echo -e ""$YS"22"$CE") Openvas            Vulnerability scanner LAN"
+		echo -e ""$YS"21"$CE") Openvas            Vulnerability scanner LAN"
 	else
-		echo -e ""$RS"22"$CE") "$RS"Openvas"$CE"            Vulnerability scanner LAN"
+		echo -e ""$RS"21"$CE") "$RS"Openvas"$CE"            Vulnerability scanner LAN"
 	fi
 	if [ -f /usr/bin/ipscan ]
 	then
-		echo -e ""$YS"23"$CE") Angry IP Scanner   IP Scanner"
+		echo -e ""$YS"22"$CE") Angry IP Scanner   IP Scanner"
 	else
-		echo -e ""$RS"23"$CE") "$RS"Angry IP Scanner"$CE"   IP Scanner"
+		echo -e ""$RS"22"$CE") "$RS"Angry IP Scanner"$CE"   IP Scanner"
 	fi
 	if [ -d /root/routersploit ]
 	then
-		echo -e ""$YS"24"$CE") Routersploit       Find/exploit router vulnerabilities"
+		echo -e ""$YS"23"$CE") Routersploit       Find/exploit router vulnerabilities"
 	else
-		echo -e ""$RS"24"$CE") "$RS"Routersploit"$CE"       Find/exploit router vulnerabilities"
+		echo -e ""$RS"23"$CE") "$RS"Routersploit"$CE"       Find/exploit router vulnerabilities"
 	fi
 	if [ -d /root/nWatch ]
 	then
-		echo -e ""$YS"25"$CE") nWatch             IP scanner/OS detection"
+		echo -e ""$YS"24"$CE") nWatch             IP scanner/OS detection"
 	else
-		echo -e ""$RS"25"$CE") "$RS"nWatch"$CE"             IP scanner/OS detection"
+		echo -e ""$RS"24"$CE") "$RS"nWatch"$CE"             IP scanner/OS detection"
 	fi
 	if [ -d /root/eternal_scanner ]
 	then
-		echo -e ""$YS"26"$CE") Eternal scanner    Scans hosts for eternalblue vulnerabilities"
+		echo -e ""$YS"25"$CE") Eternal scanner    Scans hosts for eternalblue vulnerabilities"
 	else
-		echo -e ""$RS"26"$CE") "$RS"Eternal scanner"$CE"    Scans hosts for eternalblue vulnerabilities"
+		echo -e ""$RS"25"$CE") "$RS"Eternal scanner"$CE"    Scans hosts for eternalblue vulnerabilities"
 	fi
 	if [ -d /root/eaphammer ]
 	then
-		echo -e ""$YS"27"$CE") Eaphammer          Evil twin attacks against WPA2-Enterprise networks. "
+		echo -e ""$YS"26"$CE") Eaphammer          Evil twin attacks against WPA2-Enterprise networks. "
 	else
-		echo -e ""$RS"27"$CE") "$RS"Eaphammer"$CE"          Evil twin attacks against WPA2-Enterprise networks. "
+		echo -e ""$RS"26"$CE") "$RS"Eaphammer"$CE"          Evil twin attacks against WPA2-Enterprise networks. "
 	fi
 	echo -e ""$YS"back"$CE") Go back"
 	echo -e ""$YS"00"$CE") Main menu"
@@ -2633,18 +2651,6 @@ function wifi_tools
 		fi
 	elif [ "$APPP" = "9" ]
 	then
-		if [ -d "/root/cupp" ]
-		then
-				cd /root/cupp
-			python cupp.py -i
-			cd			
-		else
-			echo -e "$TNI"
-			echo -e "$PAKTGB"
-			$READAK
-		fi
-	elif [ "$APPP" = "10" ]
-	then
 		if [ -d "/root/Dracnmap" ]
 		then
 			cd /root/Dracnmap/
@@ -2655,7 +2661,7 @@ function wifi_tools
 			echo -e "$PAKTGB"
 			$READAK
 		fi
-	elif [ "$APPP" = "11" ]
+	elif [ "$APPP" = "10" ]
 	then
 		if [ -d "/usr/share/fern-wifi-cracker" ]
 		then
@@ -2667,7 +2673,7 @@ function wifi_tools
 			echo -e "$PAKTGB"
 			$READAK
 		fi
-	elif [ "$APPP" = "12" ]
+	elif [ "$APPP" = "11" ]
 	then
 		if [ -f /usr/sbin/netdiscover ]
 		then
@@ -2683,7 +2689,7 @@ function wifi_tools
 			echo -e "$PAKTGB"
 			$READAK
 		fi
-	elif [ "$APPP" = "13" ]
+	elif [ "$APPP" = "12" ]
 	then
 		if [ -d "/root/kickthemout" ]
 		then
@@ -2695,7 +2701,7 @@ function wifi_tools
 			echo -e "$PAKTGB"
 			$READAK
 		fi
-	elif [ "$APPP" = "14" ]
+	elif [ "$APPP" = "13" ]
 	then
 		if [ -d "/usr/share/ghost-phisher" ]
 		then	
@@ -2707,7 +2713,7 @@ function wifi_tools
 			echo -e "$PAKTGB"
 			$READAK
 		fi
-	elif [ "$APPP" = "15" ]
+	elif [ "$APPP" = "14" ]
 	then
 		if [ -d "/root/The-Eye" ]
 		then
@@ -2719,7 +2725,7 @@ function wifi_tools
 			echo -e "$PAKTGB"
 			$READAK
 		fi
-	elif [ "$APPP" = "16" ]
+	elif [ "$APPP" = "15" ]
 	then
 		if [ -d "/root/xerxes" ]
 		then
@@ -2753,7 +2759,7 @@ function wifi_tools
 			echo -e "$PAKTGB"
 			$READAK
 		fi
-	elif [ "$APPP" = "17" ]
+	elif [ "$APPP" = "16" ]
 	then
 		if [ -d /root/mdk3-master ]
 		then
@@ -2774,7 +2780,7 @@ function wifi_tools
 			echo -e "$PAKTGB"
 			$READAK
 		fi	
-	elif [ "$APPP" = "18" ]
+	elif [ "$APPP" = "17" ]
 	then	
 		if [ -d /root/mdk3-master ]
 		then
@@ -2796,7 +2802,7 @@ function wifi_tools
 			echo -e "$PAKTGB"
 			$READAK
 		fi
-	elif [ "$APPP" = "19" ]
+	elif [ "$APPP" = "18" ]
 	then
 		if [ -d "/usr/share/KatanaFramework" ]
 		then
@@ -2806,7 +2812,7 @@ function wifi_tools
 			echo -e "$PAKTGB"
 			$READAK
 		fi
-	elif [ "$APPP" = "20" ]
+	elif [ "$APPP" = "19" ]
 	then
 		if [ -d "/root/airgeddon" ]
 		then
@@ -2818,7 +2824,7 @@ function wifi_tools
 			echo -e "$PAKTGB"
 			$READAK
 		fi
-	elif [ "$APPP" = "21" ]
+	elif [ "$APPP" = "20" ]
 	then
 		if [ -d "/usr/share/websploit" ]
 		then
@@ -2828,7 +2834,7 @@ function wifi_tools
 			echo -e "$PAKTGB"
 			$READAK
 		fi
-	elif [ "$APPP" = "22" ]
+	elif [ "$APPP" = "21" ]
 	then
 		if [ -d /etc/openvas ]
 		then
@@ -2849,7 +2855,7 @@ function wifi_tools
 			echo -e "$PAKTGB"
 			$READAK
 		fi
-	elif [ "$APPP" = "23" ]
+	elif [ "$APPP" = "22" ]
 	then
 		if [ -d "/usr/lib/ipscan" ]
 		then
@@ -2859,7 +2865,7 @@ function wifi_tools
 			echo -e "$PAKTGB"
 			$READAK
 		fi
-	elif [ "$APPP" = "24" ]
+	elif [ "$APPP" = "23" ]
 	then
 		if [ -d "/root/routersploit" ]
 		then
@@ -2871,7 +2877,7 @@ function wifi_tools
 			echo -e "$PAKTGB"
 			$READAK
 		fi
-	elif [ "$APPP" = "25" ]
+	elif [ "$APPP" = "24" ]
 	then
 		if [ -d "/root/nWatch" ]
 		then
@@ -2883,9 +2889,9 @@ function wifi_tools
 			echo -e "$PAKTGB"
 			$READAK
 		fi
-	elif [ "$APPP" = "26" ]
+	elif [ "$APPP" = "25" ]
 	then
-		if [ -d "/root/eternal-scanner" ]
+		if [ -d "/root/eternal_scanner" ]
 		then
 			cd /root/eternal_scanner
 			./escan
@@ -2895,7 +2901,7 @@ function wifi_tools
 			echo -e "$PAKTGB"
 			$READAK
 		fi
-	elif [ "$APPP" = "27" ]
+	elif [ "$APPP" = "26" ]
 	then
 		if [ -d "/root/eaphammer" ]
 		then
@@ -2984,6 +2990,11 @@ function wifi_tools
 	elif [ "$APPP" = "back" ]
 	then
 		break
+	fi
+	if [ "$APPP" != "" ]
+	then
+		echo -e "$PAKTGB"
+		$READAK
 	fi
 	done
 }
@@ -3378,6 +3389,12 @@ do
 	else
 		echo -e ""$RS" 3"$CE") "$RS"LALIN"$CE"            Automatically install any package for pentest "
 	fi
+	if [ -d /root/cupp ]
+	then
+		echo -e ""$YS" 4"$CE") Cupp             Make specific worldlists"
+	else
+		echo -e ""$RS" 4"$CE") "$RS"Cupp"$CE"             Make specific worldlists"
+	fi
 	echo -e ""$YS"back"$CE") Go back"
 	echo -e ""$YS" 0"$CE") EXIT"
 	echo -e "Choose: "
@@ -3410,6 +3427,18 @@ do
 			cd /root/LALIN
 			./Lalin.sh
 			cd
+		else
+			echo -e "$TNI"
+			echo -e "$PAKTGB"
+			$READAK
+		fi
+	elif [ "$APPP" = "4" ]
+	then
+		if [ -d "/root/cupp" ]
+		then
+				cd /root/cupp
+			python cupp.py -i
+			cd			
 		else
 			echo -e "$TNI"
 			echo -e "$PAKTGB"
@@ -4187,11 +4216,41 @@ function wififb
 	export ESSIDAP
 	xterm -geometry 90x60+9999+999999 -e bash -c 'printf "\033]2;WIFI FB TRAP\a" && wifiphisher --nojamming --essid "$ESSIDAP" -p oauth-login; exec bash' & disown 
 }
+function donate_option
+{
+	while true
+	do
+	clear
+	printf '\033]2;Donation\a'
+	echo -e "If you found my script useful, you can buy me a coffee :)"
+	echo -e "Total lscript donations: $DONATIONS"
+	echo -e ""$YS" 1"$CE") Open browser to donate"
+	echo -e ""$YS" 2"$CE") Copy donation link"
+	echo -e ""$YS"back"$CE") I don't care about your work! :P"
+	echo -e "Choose: "
+	read DON
+	if [ $DON = "1" ]
+	then
+		xdg-open "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=GC9RSY4CS6KAY"
+	elif [ $DON = "2" ]
+	then
+		echo -e "Donation link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=GC9RSY4CS6KAY"
+		echo -e "$PAKTGB"
+		$READAK
+	elif [ $DON = "back" ]
+	then
+		break
+	fi
+	done
+}
 function main_options
 {
 	if [ "$YORNAA" = "0" ]
 	then
 		exit
+	elif [ "$YORNAA" = "donate" ]
+	then
+		donate_option
 	elif [ "$YORNAA" = "pstart" ]
 	then
 		service postgresql start

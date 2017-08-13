@@ -86,136 +86,141 @@ file="/root/lscript/tempairodump-01.csv"
 lines=$(cat $file | awk '/WPA|WPA2|OPN/ {print}' | awk 'END{print NR}')
 n2=1
 power=100
-while [ $n2 -le "$lines" ]
-do
-	n3=$((n2+2))
-	apower[$n2]=$(cat $file | awk -v nn="$n3" '{FS=", "}{if(NR==nn && /WPA|WPA2/)print $8}')
-	aopen[$n2]=0
-	if [[ ${apower[$n2]} = "" ]]
-	then
-		aopen[$n2]=1
-		apower[$n2]=$(cat $file | awk -v nn="$n3" '{FS=", "}{if(NR==nn && /OPN/)print $9}')
-	fi
-	adata[$n2]=$(cat $file | awk -v nn="$n3" '{FS=", "} {if(NR==nn && /WPA|WPA2/)print $10}')
-	if [[ ${adata[$n2]} = "" ]]
-	then
-		adata[$n2]=$(cat $file | awk -v nn="$n3" '{FS=", "}{if(NR==nn && /OPN/)print $11}')
-	fi
-	aessid[$n2]=$(cat $file | awk -v nn="$n3" '{FS=", "} {if(NR==nn && /WPA|WPA2/)print $13}')
-	if [[ ${aessid[$n2]} = "" ]]
-	then
-		aessid[$n2]=$(cat $file | awk -v nn="$n3" '{FS=", "}{if(NR==nn && /OPN/)print $14}')
-	fi
-	achannel[$n2]=$(cat $file | awk -v nn="$n3" '{FS=", "} {if(NR==nn && /WPA|WPA2/)print $4}')
-	if [[ ${achannel[$n2]} = "" ]]
-	then
-		achannel[$n2]=$(cat $file | awk -v nn="$n3" '{FS=", "}{if(NR==nn && /OPN/)print $14}')
-	fi
-	amac[$n2]=$(cat $file | awk -v nn="$n3" '{FS=", "} {if(NR==nn && /WPA|WPA2/)print $1}')
-	if [[ ${amac[$n2]} = "" ]]
-	then
-		amac[$n2]=$(cat $file | awk -v nn="$n3" '{FS=", "}{if(NR==nn && /OPN/)print $1}')
-	fi
-	powerunfixed="${apower[$n2]}"
-	apowerfixed[$n2]=$powerunfixed
-	apowerfixed[$n2]=$((power+apowerfixed[$n2]))
-	#echo ""$n2") "${apowerfixed[$n2]}"% "${amac[$n2]}" "${achannel[$n2]}" "${adata[$n2]}" "${aessid[$n2]}""
-	n2=$(( n2+1 ))
-done
-n3=1
-while [ $n3 -le "$lines" ]
-do
-	n=1
-	topsignal=100
-	while [ $n -le "$lines" ]
+if [ $lines != 0 ]
+then
+	while [ $n2 -le "$lines" ]
 	do
-		if [ ${apowerfixed[$n]} -le $topsignal ]
+		n3=$((n2+2))
+		apower[$n2]=$(cat $file | awk -v nn="$n3" '{FS=", "}{if(NR==nn && /WPA|WPA2/)print $8}')
+		aopen[$n2]=0
+		if [[ ${apower[$n2]} = "" ]]
 		then
-			lowestn=$n
-			topsignal=${apowerfixed[$n]}				
+			aopen[$n2]=1
+			apower[$n2]=$(cat $file | awk -v nn="$n3" '{FS=", "}{if(NR==nn && /OPN/)print $9}')
 		fi
-		n=$((n+1))
-	done 
-	zn[$n3]=$lowestn
-	zopen[$n3]=${aopen[$lowestn]}
-	zdata[$n3]=${adata[$lowestn]}
-	zessid[$n3]=${aessid[$lowestn]}
-	zpowerfixed[$n3]=${apowerfixed[$lowestn]}
-	zmac[$n3]=${amac[$lowestn]}
-	zchannel[$n3]=${achannel[$lowestn]}
-	apowerfixed[$lowestn]=101
-	n3=$((n3+1)) 
-done
-n3=1
-echo -e ""$BS"  BLUE"$CE"=OPEN NETWORK"
-echo -e ""$YS"YELLOW"$CE"=WPA/WPA2 NETWORK WITH ACTIVE CLIENTS"
-echo -e ""$RS"   RED"$CE"=WPA/WPA2 NETWORK WITHOUT ACTIVE CLIENTS"
-echo -e "_________________________________________________________________________________________"
-echo -e "     POWER ESSID                                  MAC               CLIENTS  DATA"
-while [ $n3 -le "$lines" ]
-do
-	size=${#zessid[$n3]}
-	calc=$(( 40-size ))
-	numcalc=1
-	SPACES=""
-	while [ $numcalc != $calc ]
-	do
-		SPACES=""$SPACES"_"
-		numcalc=$(( numcalc+1 ))
+		adata[$n2]=$(cat $file | awk -v nn="$n3" '{FS=", "} {if(NR==nn && /WPA|WPA2/)print $10}')
+		if [[ ${adata[$n2]} = "" ]]
+		then
+			adata[$n2]=$(cat $file | awk -v nn="$n3" '{FS=", "}{if(NR==nn && /OPN/)print $11}')
+		fi
+		aessid[$n2]=$(cat $file | awk -v nn="$n3" '{FS=", "} {if(NR==nn && /WPA|WPA2/)print $13}')
+		if [[ ${aessid[$n2]} = "" ]]
+		then
+			aessid[$n2]=$(cat $file | awk -v nn="$n3" '{FS=", "}{if(NR==nn && /OPN/)print $14}')
+		fi
+		achannel[$n2]=$(cat $file | awk -v nn="$n3" '{FS=", "} {if(NR==nn && /WPA|WPA2/)print $4}')
+		if [[ ${achannel[$n2]} = "" ]]
+		then
+			achannel[$n2]=$(cat $file | awk -v nn="$n3" '{FS=", "}{if(NR==nn && /OPN/)print $14}')
+		fi
+		amac[$n2]=$(cat $file | awk -v nn="$n3" '{FS=", "} {if(NR==nn && /WPA|WPA2/)print $1}')
+		if [[ ${amac[$n2]} = "" ]]
+		then
+			amac[$n2]=$(cat $file | awk -v nn="$n3" '{FS=", "}{if(NR==nn && /OPN/)print $1}')
+		fi
+		powerunfixed="${apower[$n2]}"
+		apowerfixed[$n2]=$powerunfixed
+		apowerfixed[$n2]=$((power+apowerfixed[$n2]))
+		#echo ""$n2") "${apowerfixed[$n2]}"% "${amac[$n2]}" "${achannel[$n2]}" "${adata[$n2]}" "${aessid[$n2]}""
+		n2=$(( n2+1 ))
 	done
-	if [ $n3 -le 9 ]
-	then
-		num=" "$n3""
-	else
-		num=$n3
-	fi
-	size=${#zpowerfixed[$n3]}
-	if [ $size == 3 ]
-	then
-		space=""
-	elif [ $size == 2 ]
-	then
-		space=" "
-	elif [ $size == 1 ]
-	then
-		space="  "
-	fi
-	DATAA=" "$RS"0"$CE""
-	##put less than
-	#~ if [[ ! ${zpowerfixed[$n3]} = 100 ]]
-	if [[ ${zpowerfixed[$n3]} -lt 100 ]]
-	then
-		size2=${#zessid[$n3]}
-		if [[ $size2 -eq 36 ]]
-		then
-			zessid[$n3]="____________________________________"
-		fi
-		START=""
-		if [[ ${zopen[$n3]} = 1 ]]
-		then
-			START="$BS"
-			if [[ ${zdata[$n3]} -gt 0 ]]
+	n3=1
+	while [ $n3 -le "$lines" ]
+	do
+		n=1
+		topsignal=100
+		while [ $n -le "$lines" ]
+		do
+			if [ ${apowerfixed[$n]} -le $topsignal ]
 			then
-				CLIENTS="YES"
-				DATAA="${zdata[$n3]}"
-			else
-				CLIENTS="NO "
+				lowestn=$n
+				topsignal=${apowerfixed[$n]}				
 			fi
+			n=$((n+1))
+		done 
+		zn[$n3]=$lowestn
+		zopen[$n3]=${aopen[$lowestn]}
+		zdata[$n3]=${adata[$lowestn]}
+		zessid[$n3]=${aessid[$lowestn]}
+		zpowerfixed[$n3]=${apowerfixed[$lowestn]}
+		zmac[$n3]=${amac[$lowestn]}
+		zchannel[$n3]=${achannel[$lowestn]}
+		apowerfixed[$lowestn]=101
+		n3=$((n3+1)) 
+	done
+	n3=1
+	echo -e ""$BS"  BLUE"$CE"=OPEN NETWORK"
+	echo -e ""$YS"YELLOW"$CE"=WPA/WPA2 NETWORK WITH ACTIVE CLIENTS"
+	echo -e ""$RS"   RED"$CE"=WPA/WPA2 NETWORK WITHOUT ACTIVE CLIENTS"
+	echo -e "_________________________________________________________________________________________"
+	echo -e "     POWER ESSID                                  MAC               CLIENTS  DATA"
+	while [ $n3 -le "$lines" ]
+	do
+		size=${#zessid[$n3]}
+		calc=$(( 40-size ))
+		numcalc=1
+		SPACES=""
+		while [ $numcalc != $calc ]
+		do
+			SPACES=""$SPACES"_"
+			numcalc=$(( numcalc+1 ))
+		done
+		if [ $n3 -le 9 ]
+		then
+			num=" "$n3""
 		else
-			if [[ ${zdata[$n3]} -gt 0 ]]
-			then
-				CLIENTS="YES"
-				START="$YS"
-				DATAA="${zdata[$n3]}"
-			else
-				START="$RS"
-				CLIENTS="NO "
-			fi
+			num=$n3
 		fi
-		echo -e ""$YS""$num""$CE") "$START"${space}"${zpowerfixed[$n3]}"%   "${zessid[$n3]}""$SPACES""${zmac[$n3]}" "$CLIENTS"     "$DATAA""$CE""
-	fi
-	n3=$((n3+1))
-done
+		size=${#zpowerfixed[$n3]}
+		if [ $size == 3 ]
+		then
+			space=""
+		elif [ $size == 2 ]
+		then
+			space=" "
+		elif [ $size == 1 ]
+		then
+			space="  "
+		fi
+		DATAA=" "$RS"0"$CE""
+		##put less than
+		#~ if [[ ! ${zpowerfixed[$n3]} = 100 ]]
+		if [[ ${zpowerfixed[$n3]} -lt 100 ]]
+		then
+			size2=${#zessid[$n3]}
+			if [[ $size2 -eq 36 ]]
+			then
+				zessid[$n3]="____________________________________"
+			fi
+			START=""
+			if [[ ${zopen[$n3]} = 1 ]]
+			then
+				START="$BS"
+				if [[ ${zdata[$n3]} -gt 0 ]]
+				then
+					CLIENTS="YES"
+					DATAA="${zdata[$n3]}"
+				else
+					CLIENTS="NO "
+				fi
+			else
+				if [[ ${zdata[$n3]} -gt 0 ]]
+				then
+					CLIENTS="YES"
+					START="$YS"
+					DATAA="${zdata[$n3]}"
+				else
+					START="$RS"
+					CLIENTS="NO "
+				fi
+			fi
+			echo -e ""$YS""$num""$CE") "$START"${space}"${zpowerfixed[$n3]}"%   "${zessid[$n3]}""$SPACES""${zmac[$n3]}" "$CLIENTS"     "$DATAA""$CE""
+		fi
+		n3=$((n3+1))
+	done
+else
+	echo -e ""$RS"No networks found nearby."$CE""
+fi
 echo -e ""$YS" r"$CE") rescan"
 echo -e ""$YS"back"$CE") Go back"
 echo -e "Choose: "
@@ -240,15 +245,16 @@ do
 	autoapselect
 	read APCHOOSE
 	clear
-	if [ $APCHOOSE = "back" ]
+	if [[ $APCHOOSE = "back" ]]
 	then
 		clear
 		break
-	elif [ $APCHOOSE = "r" ]
+	elif [[ $APCHOOSE = "r" ]]
 	then
 		clear
 		break
-	else
+	elif [[ ! -z $APCHOOSE ]]
+	then
 		if [[ ${zopen[$APCHOOSE]} = 1 ]]
 		then
 			echo -e ""$RS"You selected an open network.Please select a password protected network."$CE""
@@ -415,7 +421,17 @@ else
 		fi
 	else
 		clear
-		echo -e "Your handshake file is saved in: /root/handshakes/"$HANDF"-01.cap"
+		echo -e "Do you want to clean your handshake?"$YNYES""
+		read HANDCC
+		clear
+		if [ $HANDCC = "n" ]
+		then
+			echo -e "Your handshake file is saved in: /root/handshakes/"$HANDF"-01.cap"
+		else
+			pyrit -r $HANDCAP -o /root/handshakes/"$HANDF"-cleaned.cap strip && echo -e "Your handshake is now cleaned! You can find it at: /root/handshakes/"$HANDF"-cleaned.cap"
+			echo -e "$PAKTGB"
+			$READAK
+		fi
 		echo -e "$PAKTC"
 		$READAK
 	fi

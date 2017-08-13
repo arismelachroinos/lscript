@@ -1,3 +1,16 @@
+2.0.5
+Added option to clean the handshake after being verified.
+Automation script for bully.
+Check if bully is installed.
+Check if wifiautopwner is installed.
+Improved code.
+Added error message when no networks found in wash/airodump scan.
+Added ngrok to downloads.
+Added ngrok automation.
+Added automated payload genaration for Shellter intergration.
+
+
+
 2.0.4
 Cupp moved to other tools.
 Added delay to wifi tools.
@@ -13,6 +26,7 @@ Added LALIN to other tools.
 Added LALIN to keyboard shortcuts.
 Added error when trying to change interface that is not available.
 Added knockmail to infoga tools.
+
 
 
 2.0.2

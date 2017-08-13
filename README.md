@@ -1,4 +1,4 @@
-## Welcome to the LAZY script  v2.0.4
+## Welcome to the LAZY script  v2.0.5
 <p align="center">
 <img src="https://i.imgur.com/yppDJcY.png"/>
 <img src="https://i.imgur.com/jAbzXMU.png"/>

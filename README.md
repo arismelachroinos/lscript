@@ -1,10 +1,12 @@
 ## Welcome to the LAZY script  v2.0.5
 <p align="center">
-<img src="https://i.imgur.com/yppDJcY.png"/>
-<img src="https://i.imgur.com/jAbzXMU.png"/>
-<img src="https://i.imgur.com/gkXGMkk.png"/>
-<img src="https://i.imgur.com/onqxQJ0.png"/>
-<img src="https://i.imgur.com/km9iAjv.png"/>
+<img src="https://i.imgur.com/6KlD6u4.png"/>
+<img src="https://i.imgur.com/wmY0WaZ.png"/>
+<img src="https://i.imgur.com/aY2nVcs.png"/>
+<img src="https://i.imgur.com/HKgs9iC.png"/>
+<img src="https://i.imgur.com/NxU7Ixa.png"/>
+<img src="https://i.imgur.com/FMm9jko.png"/>
+<img src="https://i.imgur.com/6gztpfp.png"/>
 </p>
 A video sstec made: https://www.youtube.com/watch?v=gSO7c2MN7TY
 

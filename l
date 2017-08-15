@@ -1,5 +1,5 @@
 #! /bin/bash
-VERSION=2.0.6
+VERSION=2.0.7
 HOWMANYTOOLS=31
 BACKL="0"
 DONATIONS=0
@@ -139,25 +139,16 @@ function banner
 }
 function enable_wlan
 {
+	O4=0
 	echo -e "Enabling $WLANN..."
 	rfkill unblock wifi &> /dev/null; rfkill unblock all &> /dev/null
-	(ifconfig $WLANN up &>/dev/null && echo -e "Done" ) || echo -e ""$RS"Error. I can't find your wireless adapter"$CE""
+	ifconfig $WLANN up &>/dev/null && echo -e ""$YS"Done"$CE"" && O4=1  || echo -e ""$RS"Error. I can't find your wireless adapter"$CE""
 }
 function disable_wlan
 {
 	echo -e "Disabling $WLANN..."
 	rfkill unblock wifi &> /dev/null; rfkill unblock all &> /dev/null
-	(ifconfig $WLANN down &>/dev/null && echo -e "Done" ) || echo -e ""$RS"Error. I can't find your wireless adapter."$CE""
-}
-function stop_monitor
-{
-	echo -e "Disabling $WLANNM..."
-	echo -e "Stopping monitor mode..."
-	(airmon-ng stop $WLANNM &>/dev/null && echo -e "Done" ) || echo -e ""$RS"Error stoping monitor mode."$CE""
-	echo -e "ok..."
-	echo -e "Starting network-manager service..."
-	service network-manager start
-	echo -e "ok..."
+	ifconfig $WLANN down &>/dev/null && echo -e ""$YS"Done"$CE"" && O4=1 || echo -e ""$RS"Error. I can't find your wireless adapter."$CE""
 }
 function interface_selection
 {
@@ -570,744 +561,7 @@ do
 	echo -e "Choose: "
 	read REIN
 	clear
-	function install_fluxion
-	{
-		if [[ -d "/root/fluxion" ]]
-		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/fluxion
-		fi
-		echo -e "Installing fluxion"
-		echo -e "Tool by Deltaxflux"
-		sleep 1
-		cd
-		wget https://fluxion.tk/fluxion-unstable.zip
-		apt-get install unzip
-		clear
-		unzip /root/fluxion*.zip -d /root
-		cd /root/fluxion/install
-		chmod +x install.sh
-		./install.sh	
-	}
-	function install_wifite
-	{
-	apt-get install wifite
-	}
-	function install_wifiphisher
-	{
-		if [[ -d "/root/wifiphisher" ]]
-		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/wifiphisher
-		fi
-		echo -e "Installing Wifiphisher"
-		echo -e "Tool idea by Dan McInerney"
-		sleep 1
-		cd
-		git clone https://github.com/wifiphisher/wifiphisher.git
-		cd wifiphisher
-		sudo python setup.py install
-		sleep 1
-	}
-	function install_zatacker
-	{
-		echo -e "I cannot install Zatacker. Please google how to do that yourself."
-		echo -e "PAKTGB"
-		read
-	}
-	function install_morpheus
-	{
-		if [[ -d "/root/morpheus" ]]
-		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/morpheus
-		fi				
-		echo -e "Installing Morpheus"
-		echo -e "Tool by Pedro ubuntu  [ r00t-3xp10it ]"
-		sleep 1
-		cd
-		git clone https://github.com/r00t-3xp10it/morpheus.git
-		cd morpheus
-		chmod +x morpheus.sh
-	}
-	function install_osrframework
-	{
-		pip install osrframework
-	}
-	function install_hakku
-	{
-		if [[ -d "/root/hakkuframework" ]]
-		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/hakkuframework
-		fi		
-		echo -e "Installing Hakku"
-		echo -e "Tool by 4shadoww"
-		sleep 1
-		cd
-		git clone https://github.com/4shadoww/hakkuframework.git
-		cd hakkuframework
-		chmod +x hakku
-		chmod +x install
-	}
-	function install_trity
-	{
-		if [[ -d "/root/Trity" ]]
-		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/Trity
-		fi		
-		echo -e "Installing Trity"
-		echo -e "Tool by Toxic-ig"
-		sleep 1
-		git clone https://github.com/toxic-ig/Trity.git
-		cd Trity
-		sudo python install.py	
-	}
-	function install_cupp
-	{
-		if [[ -d "/root/cupp" ]]
-		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/cupp
-		fi			
-		echo -e "Installing Cupp"
-		echo -e "Tool by Muris Kurgas"
-		sleep 1
-		cd
-		git clone https://github.com/Mebus/cupp.git
-		cd cupp
-		chmod +x cupp.py	
-	}
-	function install_dracnmap
-	{
-		if [[ -d "/root/Dracnmap" ]]
-		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/Dracnmap
-		fi			
-		echo -e "Installing Dracnmap"
-		echo -e "Tool by Edo -maland-"
-		cd
-		git clone https://github.com/Screetsec/Dracnmap.git
-		cd Dracnmap
-		chmod +x Dracnmap.sh
-	}
-	function install_fern
-	{
-		if [[ -d "/root/Fern-Wifi-Cracker" ]]
-		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/Fern-Wifi-Cracker
-		fi		
-		echo -e "Installing Fern"
-		echo -e "Tool by Savio-code"
-		sleep 1
-		cd 
-		svn checkout http://github.com/savio-code/fern-wifi-cracker/trunk/Fern-Wifi-Cracker/
-		cd Fern-Wifi-Cracker
-		chmod +x execute.py	
-	}
-	function install_kickthemout
-	{
-		if [[ -d "/root/kickthemout" ]]
-		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/kickthemout
-		fi		
-		echo -e "Installing Kichthemout"
-		echo -e "Tool by Nikolaos Kamarinakis & David Schütz"
-		sleep 2
-		apt-get install nmap
-		git clone https://github.com/k4m4/kickthemout.git
-		cd kickthemout/
-		sudo python -m pip install -r requirements.txt
-	}
-	function install_ghostphisher
-	{
-		if [[ -d "/root/ghost-phisher" ]]
-		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/ghost-phisher
-		fi			
-		echo -e "Installing Ghost-Phisher"
-		echo -e "Tool by Savio-code"
-		sleep 1
-		cd
-		git clone https://github.com/savio-code/ghost-phisher.git
-		sleep 1
-		chmod +x /root/ghost-phisher/Ghost-Phisher/ghost.py
-	}
-	function install_theeye
-	{
-		if [[ -d "/root/The-Eye" ]]
-		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/The-Eye
-		fi			
-		echo -e "Installing The Eye"
-		echo -e "Tool by EgeBalci"
-		sleep 1
-		cd
-		git clone https://github.com/EgeBalci/The-Eye.git
-		cd The-Eye
-		chmod +x TheEye	
-	}
-	function install_xerxes
-	{
-		if [[ -d "/root/xerxes" ]]
-		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/xerxes
-		fi			
-		echo -e "Installing Xerxes"
-		echo -e "Tool by zanyarjamal"
-		cd
-		git clone https://github.com/zanyarjamal/xerxes
-		cd xerxes
-		gcc xerxes.c -o xerxes	
-	}
-	function install_mdk3
-	{
-		if [[ -d "/root/mdk3-master" ]]
-		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/mdk3-master
-		fi				
-		echo -e "Installing Mdk3-master"
-		echo -e "Tool by Musket Developer"
-		cd
-		git clone https://github.com/wi-fi-analyzer/mdk3-master.git
-		cd /root/mdk3-master
-		make
-		make install
-	}
-	function install_katana
-	{
-		if [[ -d "/root/KatanaFramework" ]]
-		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/KatanaFramework
-		fi				
-		echo -e "Installing Katana framework"
-		echo -e "Tool by PowerScript"
-		cd
-		git clone https://github.com/PowerScript/KatanaFramework.git
-		cd KatanaFramework
-		sh dependencies
-		python install
-	}
-	function install_airgeddon
-	{
-		if [[ -d "/root/airgeddon" ]]
-		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/airgeddon
-		fi
-		echo -e "Installing..."
-		sleep 1
-		echo -e "Installing Airgeddon"
-		echo -e "Tool by v1s1t0r1sh3r3"
-		cd
-		git clone https://github.com/v1s1t0r1sh3r3/airgeddon.git
-		cd airgeddon
-		chmod +x airgeddon.sh
-	}
-	function install_4nonimizer
-	{
-		if [[ -d "/root/4nonimizer" ]]
-		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/4nonimizer
-		fi		
-		echo -e "Installing 4nonimizer"
-		echo -e "Tool by Hackplayers"
-		cd
-		git clone https://github.com/Hackplayers/4nonimizer.git
-		cd 4nonimizer
-		chmod +x 4nonimizer
-		./4nonimizer install
-		clear
-		cd
-		apt-get install python-pip
-		apt-get install php-curl
-		gem install pcaprub
-		gem install packetfu	
-	}
-	function install_beelogger
-	{
-		if [[ -d "/root/BeeLogger" ]]
-		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/BeeLogger
-		fi	
-		echo -e "Installing BeeLogger"
-		echo -e "Tool by Alisson Moretto - 4w4k3"
-		cd
-		git clone https://github.com/4w4k3/BeeLogger.git
-		cd BeeLogger
-		chmod +x install.sh
-		./install.sh
-		cd
-		apt-get install python-pip
-		apt-get install php-curl
-		gem install pcaprub
-		gem install packetfu
-		clear
-	}
-	function install_ezsploit
-	{
-		if [[ -d "/root/ezsploit" ]]
-		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/ezsploit
-		fi				
-		echo -e "Installing Ezsploit"
-		echo -e "Tool by rand0m1ze"
-		git clone https://github.com/rand0m1ze/ezsploit.git
-		cd ezsploit/
-		chmod +x ezsploit.sh
-	}
-	function install_pupy
-	{
-		if [[ -d "/root/pupy" ]]
-		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/pupy
-		fi			
-		echo -e "Installing Pupy"
-		echo -e "Tool by n1nj4sec"
-		cd
-		git clone https://github.com/n1nj4sec/pupy.git
-		cd /root/pupy
-		git submodule init
-		git submodule update
-		cd /root/pupy/pupy
-		pip install -r requirements.txt
-		cd
-	}
-	function install_zirikatu
-	{
-		if [[ -d "/root/zirikatu" ]]
-		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/zirikatu
-		fi		
-		echo -e "Installing Zirikatu"
-		echo -e "Tool by pasahitz"
-		cd
-		git clone https://github.com/pasahitz/zirikatu.git
-		cd zirikatu
-		chmod +x zirikatu.sh
-	}
-	function install_wifiautopwner
-	{
-		if [[ -d "/root/WiFi-autopwner" ]]
-		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/WiFi-autopwner
-		fi		
-		echo -e "Installing WiFi-autopwner"
-		echo -e "Tool by Mi-Al"
-		cd
-		git clone https://github.com/Mi-Al/WiFi-autopwner.git
-	}
-	function install_bully
-	{
-		if [[ -d "/root/bully" ]]
-		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/bully
-		fi				
-		echo -e "Installing Bully"
-		echo -e "Tool by Aanarchyy"
-		cd
-		git clone https://github.com/aanarchyy/bully.git
-		cd /root/bully/src
-		make
-		sudo make install	
-		cd	
-	}
-	function install_anonsurf
-	{
-		if [[ -d "/root/kali-anonsurf" ]]
-		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/kali-anonsurf
-		fi		
-		cd
-		echo -e "Installing Anonsurf"
-		echo -e "Tool by Und3rf10w"
-		git clone https://github.com/Und3rf10w/kali-anonsurf.git
-		cd kali-anonsurf
-		chmod +x installer.sh
-		./installer.sh
-		sleep 1
-		cd
-	}
-	function install_anonym8
-	{
-		if [[ -d "/root/anonym8" ]]
-		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/anonym8
-		fi		
-		echo -e "Installing Anonym8"
-		echo -e "Tool by HiroshiManRise"
-		git clone https://github.com/HiroshiManRise/anonym8.git
-		cd anonym8
-		chmod +x INSTALL.sh
-		./INSTALL.sh
-		sleep 1	
-		cd
-	}
-	function install_thefatrat
-	{
-		if [[ -d "/root/TheFatRat" ]]
-		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/TheFatRat
-		fi	
-		echo -e "Installing TheFatRat"
-		echo -e "Tool by Screetsec"
-		cd
-		git clone https://github.com/Screetsec/TheFatRat.git
-		cd TheFatRat
-		chmod +x setup.sh && ./setup.sh	
-		cd
-	}
-	function install_angryip
-	{
-		cd
-		if [[ -f "/root/ipscan_*" ]]
-		then
-			echo -e "Removing old file"
-			sleep 2
-			rm -f /root/ipscan_*
-		fi
-		echo -e "Downloading angryipscanner"
-		sleep 2
-		wget https://github.com/angryip/ipscan/releases/download/3.5.1/ipscan_3.5.1_amd64.deb
-		echo -e "Installing..."
-		dpkg -i ipscan_*
-		echo -e "Done"
-		sleep 1
-	}
-	function install_sniper
-	{
-		if [[ -d /root/Sn1per ]]
-		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/Sn1per
-		fi
-		echo -e "Installing Sn1per"
-		echo -e "Tool by 1N3"
-		cd
-		git clone https://github.com/1N3/Sn1per.git
-		cd /root/Sn1per
-		chmod +x install.sh
-		./install.sh
-		cd
-	}
-	function install_recondog
-	{
-		if [[ -d /root/ReconDog ]]
-		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/ReconDog
-		fi
-		cd
-		echo -e "Installing ReconDog"
-		echo -e "Tool by UltimateHackers"
-		git clone https://github.com/UltimateHackers/ReconDog.git
-	}
-	function install_redhawk
-	{
-		if [[ -d /root/RED_HAWK ]]
-		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/RED_HAWK
-		fi
-		cd
-		echo -e "Installing RED HAWK"
-		echo -e "Tool by Tuhinshubhra"
-		git clone https://github.com/Tuhinshubhra/RED_HAWK.git
-	}
-	function install_winpayloads
-	{
-		if [[ -d /root/Winpayloads ]]
-		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/Winpayloads
-		fi
-		cd
-		echo -e "Installing Winpayloads"
-		echo -e "Tool by Nccgroup"
-		git clone https://github.com/nccgroup/Winpayloads.git
-		cd /root/Winpayloads
-		chmod +x setup.sh
-		./setup.sh
-		cd
-	}
-	function install_chaos
-	{
-		apt install golang upx-ucl -y
-		cd
-		if [[ -d /root/CHAOS ]]
-		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/CHAOS
-		fi
-		git clone https://github.com/tiagorlampert/CHAOS.git
-	}
-	function install_routersploit
-	{
-		if [[ -d /root/routersploit ]]
-		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/routersploit
-		fi
-		cd
-		echo -e "Installing routersploit"
-		echo -e "Tool by reverse-shell"
-		git clone https://github.com/reverse-shell/routersploit
-		cd /root/routersploit
-		pip install -r requirements.txt
-		cd
-	}
-	function install_infoga
-	{
-		if [[ -d /root/Infoga ]]
-		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/Infoga
-		fi
-		git clone https://github.com/m4ll0k/Infoga.git
-		cd /root/Infoga
-		pip install -r requirements.txt
-		cd
-	}
-	function install_nwatch
-	{
-		if [[ -d /root/nWatch ]]
-		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/nWatch
-		fi
-		cd
-		echo -e "Installing nWatch"
-		echo -e "Tool by Suraj"
-		git clone https://github.com/suraj-root/nWatch.git
-	}
-	function install_eternalscanner
-	{
-		if [[ -d /root/eternal_scanner ]]
-		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/eternal_scanner
-		fi
-		cd
-		echo -e "Installing eternal_scanner"
-		echo -e "Tool by Peterpt"
-		git clone https://github.com/peterpt/eternal_scanner.git
-		apt-get install masscan metasploit-framework
-	}
-	function install_eaphammer
-	{
-		if [[ -d /root/eaphammer ]]
-		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/eaphammer
-		fi
-		cd
-		echo -e "Installing eaphammer"
-		echo -e "Tool by s0lst1c3"
-		git clone https://github.com/s0lst1c3/eaphammer
-		cd eaphammer
-		chmod +x kali-setup
-		./kali-setup
-		cd
-		clear
-		apt-get install python-tqdm
-	}
-	function install_dagon
-	{
-		if [[ -d /root/dagon ]]
-		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/dagon
-		fi
-		cd
-		echo -e "Installing Dagon"
-		echo -e "Tool by Ekultek"
-		git clone https://github.com/ekultek/dagon.git
-		cd dagon
-		pip install -r requirements.txt
-		pip2.7 install -r requirements.txt
-		apt-get install bcrypt
-		cd
-	}
-	function install_lalin
-	{
-		if [[ -d /root/LALIN ]]
-		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/LALIN
-		fi
-		cd
-		echo -e "Installing Lalin"
-		echo -e "Tool by Edo -maland-"
-		git clone https://github.com/Screetsec/LALIN.git
-		cd LALIN
-		chmod +x Lalin.sh
-		cd
-	}
-	function install_knockmail
-	{
-		if [[ -d /root/KnockMail ]]
-		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/KnockMail
-		fi
-		cd
-		echo -e "Installing KnockMail"
-		echo -e "Tool by 4w4k3"
-		git clone https://github.com/4w4k3/KnockMail.git
-		cd KnockMail
-		pip install -r requeriments.txt
-		cd
-	}
-	function install_kwetza
-	{
-		if [[ -d /root/kwetza ]]
-		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/kwetza
-		fi
-		cd
-		echo -e "Installing Kwetza"
-		echo -e "Tool by Sensepost"
-		https://github.com/sensepost/kwetza.git
-		pip install beautifulsoup4
-		pip2.7 install beautifulsoup4
-	}
-	function install_ngrok
-	{
-		if [[ -f /root/ngrok ]]
-		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm /root/ngrok
-		fi
-		rm -f /root/ngrok.zip
-		cd
-		echo -e "Downloading Ngrok"
-		wget https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip --output-document=/root/ngrok.zip
-		echo -e "Unzipping Ngrok"
-		unzip /root/ngrok.zip
-	}
-	function install_netdiscover
-	{
-		apt-get install netdiscover	
-	}
-	function install_websploit
-	{
-		apt-get install websploit
-	}
-	function install_openvas
-	{
-		apt-get install openvas
-		openvas-setup
-	}
-	function install_shellter
-	{
-		apt-get install shellter
-		sleep 2
-	}
-	function install_geany
-	{
-		apt-get install geany
-	}
-	
+
 	
 	if [[ "$REIN" = "1" ]]
 	then
@@ -1480,7 +734,8 @@ echo -e ""$YS" 2"$CE") No output in wash"
 echo -e ""$YS" 3"$CE") No full screen"
 echo -e ""$YS" 4"$CE") Error constructing proxy for org.gnome.Terminal"
 echo -e ""$YS" 5"$CE") Error starting apache2 service"
-echo -e ""$YS" 6"$CE") Errors when  apt-get update"
+echo -e ""$YS" 6"$CE") Errors when apt-get update"
+echo -e ""$YS" 7"$CE") Errors when creating a payload with Winpayloads"
 echo -e ""$YS" b"$CE") Go back"
 echo -e ""$YS" 0"$CE") EXIT"
 echo -e " Choose: "
@@ -1548,6 +803,12 @@ then
 	rm -r -f /etc/apt/sources.list.d/*
 	echo -e "Try   apt-get update    again. That's all i can do."
 	sleep 3
+elif [[ "$ERRS" = "7" ]]
+then
+	rm -f -r /usr/local/lib/python2.7/dist-packages/Crypto
+	echo -e "Error was fixed!"
+	echo -e "$PAKTGB"
+	$READAK
 elif [[ "$ERRS" = "back" || "$ERRS" = "b" ]]
 then
 	BACKL="1"
@@ -2763,7 +2024,7 @@ function wifi_tools
 		fi
 	elif [[ "$APPP" = "2" ]]
 	then
-		if [[ -f /usr/bin/wifite ]]
+		if [[ -f /usr/bin/wifitee ]]
 		then
 			wifite
 		else
@@ -3723,6 +2984,8 @@ function remote_access
 	then
 		break
 	fi
+	echo -e "$PAKTGB"
+	$READAK
 	done
 }
 function information_gathering
@@ -4315,12 +3578,14 @@ function hidden_shortcuts
 	echo -e ""$YS"eternalblue"$CE") Launch msfconsole with eternalblue exploit on target"
 	echo -e ""$YS"  etercheck"$CE") Check if a target is vulnerable to eternalblue exploit"
 	echo -e ""$YS"  changelog"$CE") View the changelog of the lscript versions"
-	echo -e ""$YS"     pstart"$CE") service postgresql start"
-	echo -e ""$YS"      pstop"$CE") service postgresql stop"
-	echo -e ""$YS"     nstart"$CE") service network-manager start"
-	echo -e ""$YS"      nstop"$CE") service network-manager stop"
-	echo -e ""$YS"     astart"$CE") service apache2 start"
-	echo -e ""$YS"      astop"$CE") service apache2 stop"
+	echo -e ""$YS"     pstart"$CE") Service postgresql start"
+	echo -e ""$YS"      pstop"$CE") Service postgresql stop"
+	echo -e ""$YS"     nstart"$CE") Service network-manager start"
+	echo -e ""$YS"      nstop"$CE") Service network-manager stop"
+	echo -e ""$YS"     astart"$CE") Service apache2 start"
+	echo -e ""$YS"      astop"$CE") Service apache2 stop"
+	echo -e ""$YS"nessusstart"$CE") Start Nessus"
+	echo -e ""$YS" nessusstop"$CE") Stop Nessus"
 	echo -e "$PAKTGB"
 	$READAK
 	clear
@@ -4522,28 +3787,47 @@ function eternalblue_check
 }
 function start_menu
 {
+	O1=0
+	O2=0
+	O3=0
 	enable_wlan
 	echo -e "Enabling $WLANNM..."
 	echo -e "Killing services..."
-	airmon-ng check kill | grep "nothing"
-	echo -e "Done."
+	airmon-ng check kill &> /dev/null && echo -e ""$YS"Done"$CE"" && O1=1
 	echo -e "Starting monitor mode..."
-	airmon-ng start $WLANN | grep "monitor mode" | awk -F "(" {'print $2'} | cut -d ')' -f1
-	echo -e "Done."
+	airmon-ng start $WLANN | grep "monitor mode" | awk -F "(" {'print $2'} | cut -d ')' -f1 &> /dev/null && echo -e ""$YS"Done"$CE"" && O2=1
 	echo -e "Changing mac address of $WLANNM to 00:11:22:33:44:55..."
 	ifconfig $WLANNM down
-	macchanger -m 00:11:22:33:44:55 $WLANNM | grep "New MAC:" 
-	ifconfig $WLANNM up
-	echo -e "Done."
+	macchanger -m 00:11:22:33:44:55 $WLANNM | grep "New MAC:" &> /dev/null && O3=1
+	ifconfig $WLANNM up && echo -e ""$YS"Done"$CE"" 
+	if [[ "$O1" = 1 && "$O2" = 1 && "$O3" = 1 && "$O4" = 1 ]]
+	then
+		BACKL=1
+	fi
 }
 function stop_menu
 {
+	O1=0
+	O2=0
+	O3=0
 	stop_monitor
 	echo -e "Changing mac address of $WLANN to the original one..."
 	ifconfig $WLANN down
-	macchanger -p $WLANN | grep "Current MAC:"
+	macchanger -p $WLANN | grep "Current MAC:" && O1=1
 	ifconfig $WLANN up
-	echo -e "SUCCESS!"
+	echo -e ""$YS"Done"$CE""
+	if [[ "$O1" = 1 && "$O2" = 1 && "$O3" = 1 ]]
+	then
+		BACKL=1
+	fi
+}
+function stop_monitor
+{
+	echo -e "Disabling $WLANNM..."
+	echo -e "Stopping monitor mode..."
+	airmon-ng stop $WLANNM &>/dev/null && echo -e ""$YS"Done"$CE"" && O2=1 || echo -e ""$RS"Error stoping monitor mode."$CE""
+	echo -e "Starting network-manager service..."
+	service network-manager start && echo -e ""$YS"Done"$CE"" && O3=1 || echo -e ""$RS"Error starting network-manager service"$CE""
 }
 function spoof_email
 {
@@ -5005,6 +4289,24 @@ function main_options
 	elif [[ "$YORNAA" = "astop" ]]
 	then
 		service apache2 stop
+	elif [[ "$YORNAA" = "nessusstart" ]]
+	then
+		if [[ -f /etc/init.d/nessusd ]]
+		then
+			/etc/init.d/nessusd start
+		else
+			echo -e ""$RS"Nessus is not already installed."$CE""
+			sleep 2
+		fi
+	elif [[ "$YORNAA" = "nessusstop" ]]
+	then
+		if [[ -f /etc/init.d/nessusd ]]
+		then
+			/etc/init.d/nessusd stop
+		else
+			echo -e ""$RS"Nessus is not already installed."$CE""
+			sleep 2
+		fi
 	elif [[ "$YORNAA" = "15" ]]
 	then
 		BACKL="1"
@@ -5292,7 +4594,746 @@ var1=1
 check_if_ks
 ####
 }
-
+----------------TOOLS---------------
+	function install_fluxion
+	{
+		if [[ -d "/root/fluxion" ]]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/fluxion
+		fi
+		echo -e "Installing fluxion"
+		echo -e "Tool by Deltaxflux"
+		sleep 1
+		cd
+		wget https://fluxion.tk/fluxion-unstable.zip
+		apt-get install unzip
+		clear
+		unzip /root/fluxion*.zip -d /root
+		cd /root/fluxion/install
+		chmod +x install.sh
+		./install.sh	
+	}
+	function install_wifite
+	{
+	apt-get install wifite
+	}
+	function install_wifiphisher
+	{
+		if [[ -d "/root/wifiphisher" ]]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/wifiphisher
+		fi
+		echo -e "Installing Wifiphisher"
+		echo -e "Tool idea by Dan McInerney"
+		sleep 1
+		cd
+		git clone https://github.com/wifiphisher/wifiphisher.git
+		cd wifiphisher
+		sudo python setup.py install
+		sleep 1
+	}
+	function install_zatacker
+	{
+		echo -e "I cannot install Zatacker. Please google how to do that yourself."
+		echo -e "PAKTGB"
+		read
+	}
+	function install_morpheus
+	{
+		if [[ -d "/root/morpheus" ]]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/morpheus
+		fi				
+		echo -e "Installing Morpheus"
+		echo -e "Tool by Pedro ubuntu  [ r00t-3xp10it ]"
+		sleep 1
+		cd
+		git clone https://github.com/r00t-3xp10it/morpheus.git
+		cd morpheus
+		chmod +x morpheus.sh
+	}
+	function install_osrframework
+	{
+		pip install osrframework
+	}
+	function install_hakku
+	{
+		if [[ -d "/root/hakkuframework" ]]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/hakkuframework
+		fi		
+		echo -e "Installing Hakku"
+		echo -e "Tool by 4shadoww"
+		sleep 1
+		cd
+		git clone https://github.com/4shadoww/hakkuframework.git
+		cd hakkuframework
+		chmod +x hakku
+		chmod +x install
+	}
+	function install_trity
+	{
+		if [[ -d "/root/Trity" ]]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/Trity
+		fi		
+		echo -e "Installing Trity"
+		echo -e "Tool by Toxic-ig"
+		sleep 1
+		git clone https://github.com/toxic-ig/Trity.git
+		cd Trity
+		sudo python install.py	
+	}
+	function install_cupp
+	{
+		if [[ -d "/root/cupp" ]]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/cupp
+		fi			
+		echo -e "Installing Cupp"
+		echo -e "Tool by Muris Kurgas"
+		sleep 1
+		cd
+		git clone https://github.com/Mebus/cupp.git
+		cd cupp
+		chmod +x cupp.py	
+	}
+	function install_dracnmap
+	{
+		if [[ -d "/root/Dracnmap" ]]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/Dracnmap
+		fi			
+		echo -e "Installing Dracnmap"
+		echo -e "Tool by Edo -maland-"
+		cd
+		git clone https://github.com/Screetsec/Dracnmap.git
+		cd Dracnmap
+		chmod +x Dracnmap.sh
+	}
+	function install_fern
+	{
+		if [[ -d "/root/Fern-Wifi-Cracker" ]]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/Fern-Wifi-Cracker
+		fi		
+		echo -e "Installing Fern"
+		echo -e "Tool by Savio-code"
+		sleep 1
+		cd 
+		svn checkout http://github.com/savio-code/fern-wifi-cracker/trunk/Fern-Wifi-Cracker/
+		cd Fern-Wifi-Cracker
+		chmod +x execute.py	
+	}
+	function install_kickthemout
+	{
+		if [[ -d "/root/kickthemout" ]]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/kickthemout
+		fi		
+		echo -e "Installing Kichthemout"
+		echo -e "Tool by Nikolaos Kamarinakis & David Schütz"
+		sleep 2
+		apt-get install nmap
+		git clone https://github.com/k4m4/kickthemout.git
+		cd kickthemout/
+		sudo python -m pip install -r requirements.txt
+	}
+	function install_ghostphisher
+	{
+		if [[ -d "/root/ghost-phisher" ]]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/ghost-phisher
+		fi			
+		echo -e "Installing Ghost-Phisher"
+		echo -e "Tool by Savio-code"
+		sleep 1
+		cd
+		git clone https://github.com/savio-code/ghost-phisher.git
+		sleep 1
+		chmod +x /root/ghost-phisher/Ghost-Phisher/ghost.py
+	}
+	function install_theeye
+	{
+		if [[ -d "/root/The-Eye" ]]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/The-Eye
+		fi			
+		echo -e "Installing The Eye"
+		echo -e "Tool by EgeBalci"
+		sleep 1
+		cd
+		git clone https://github.com/EgeBalci/The-Eye.git
+		cd The-Eye
+		chmod +x TheEye	
+	}
+	function install_xerxes
+	{
+		if [[ -d "/root/xerxes" ]]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/xerxes
+		fi			
+		echo -e "Installing Xerxes"
+		echo -e "Tool by zanyarjamal"
+		cd
+		git clone https://github.com/zanyarjamal/xerxes
+		cd xerxes
+		gcc xerxes.c -o xerxes	
+	}
+	function install_mdk3
+	{
+		if [[ -d "/root/mdk3-master" ]]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/mdk3-master
+		fi				
+		echo -e "Installing Mdk3-master"
+		echo -e "Tool by Musket Developer"
+		cd
+		git clone https://github.com/wi-fi-analyzer/mdk3-master.git
+		cd /root/mdk3-master
+		make
+		make install
+	}
+	function install_katana
+	{
+		if [[ -d "/root/KatanaFramework" ]]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/KatanaFramework
+		fi				
+		echo -e "Installing Katana framework"
+		echo -e "Tool by PowerScript"
+		cd
+		git clone https://github.com/PowerScript/KatanaFramework.git
+		cd KatanaFramework
+		sh dependencies
+		python install
+	}
+	function install_airgeddon
+	{
+		if [[ -d "/root/airgeddon" ]]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/airgeddon
+		fi
+		echo -e "Installing..."
+		sleep 1
+		echo -e "Installing Airgeddon"
+		echo -e "Tool by v1s1t0r1sh3r3"
+		cd
+		git clone https://github.com/v1s1t0r1sh3r3/airgeddon.git
+		cd airgeddon
+		chmod +x airgeddon.sh
+	}
+	function install_4nonimizer
+	{
+		if [[ -d "/root/4nonimizer" ]]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/4nonimizer
+		fi		
+		echo -e "Installing 4nonimizer"
+		echo -e "Tool by Hackplayers"
+		cd
+		git clone https://github.com/Hackplayers/4nonimizer.git
+		cd 4nonimizer
+		chmod +x 4nonimizer
+		./4nonimizer install
+		clear
+		cd
+		apt-get install python-pip
+		apt-get install php-curl
+		gem install pcaprub
+		gem install packetfu	
+	}
+	function install_beelogger
+	{
+		if [[ -d "/root/BeeLogger" ]]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/BeeLogger
+		fi	
+		echo -e "Installing BeeLogger"
+		echo -e "Tool by Alisson Moretto - 4w4k3"
+		cd
+		git clone https://github.com/4w4k3/BeeLogger.git
+		cd BeeLogger
+		chmod +x install.sh
+		./install.sh
+		cd
+		apt-get install python-pip
+		apt-get install php-curl
+		gem install pcaprub
+		gem install packetfu
+		clear
+	}
+	function install_ezsploit
+	{
+		if [[ -d "/root/ezsploit" ]]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/ezsploit
+		fi				
+		echo -e "Installing Ezsploit"
+		echo -e "Tool by rand0m1ze"
+		git clone https://github.com/rand0m1ze/ezsploit.git
+		cd ezsploit/
+		chmod +x ezsploit.sh
+	}
+	function install_pupy
+	{
+		if [[ -d "/root/pupy" ]]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/pupy
+		fi			
+		echo -e "Installing Pupy"
+		echo -e "Tool by n1nj4sec"
+		cd
+		git clone https://github.com/n1nj4sec/pupy.git
+		cd /root/pupy
+		git submodule init
+		git submodule update
+		cd /root/pupy/pupy
+		pip install -r requirements.txt
+		cd
+	}
+	function install_zirikatu
+	{
+		if [[ -d "/root/zirikatu" ]]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/zirikatu
+		fi		
+		echo -e "Installing Zirikatu"
+		echo -e "Tool by pasahitz"
+		cd
+		git clone https://github.com/pasahitz/zirikatu.git
+		cd zirikatu
+		chmod +x zirikatu.sh
+	}
+	function install_wifiautopwner
+	{
+		if [[ -d "/root/WiFi-autopwner" ]]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/WiFi-autopwner
+		fi		
+		echo -e "Installing WiFi-autopwner"
+		echo -e "Tool by Mi-Al"
+		cd
+		git clone https://github.com/Mi-Al/WiFi-autopwner.git
+	}
+	function install_bully
+	{
+		if [[ -d "/root/bully" ]]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/bully
+		fi				
+		echo -e "Installing Bully"
+		echo -e "Tool by Aanarchyy"
+		cd
+		git clone https://github.com/aanarchyy/bully.git
+		cd /root/bully/src
+		make
+		sudo make install	
+		cd	
+	}
+	function install_anonsurf
+	{
+		if [[ -d "/root/kali-anonsurf" ]]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/kali-anonsurf
+		fi		
+		cd
+		echo -e "Installing Anonsurf"
+		echo -e "Tool by Und3rf10w"
+		git clone https://github.com/Und3rf10w/kali-anonsurf.git
+		cd kali-anonsurf
+		chmod +x installer.sh
+		./installer.sh
+		sleep 1
+		cd
+	}
+	function install_anonym8
+	{
+		if [[ -d "/root/anonym8" ]]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/anonym8
+		fi		
+		echo -e "Installing Anonym8"
+		echo -e "Tool by HiroshiManRise"
+		git clone https://github.com/HiroshiManRise/anonym8.git
+		cd anonym8
+		chmod +x INSTALL.sh
+		./INSTALL.sh
+		sleep 1	
+		cd
+	}
+	function install_thefatrat
+	{
+		if [[ -d "/root/TheFatRat" ]]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/TheFatRat
+		fi	
+		echo -e "Installing TheFatRat"
+		echo -e "Tool by Screetsec"
+		cd
+		git clone https://github.com/Screetsec/TheFatRat.git
+		cd TheFatRat
+		chmod +x setup.sh && ./setup.sh	
+		cd
+	}
+	function install_angryip
+	{
+		cd
+		if [[ -f "/root/ipscan_*" ]]
+		then
+			echo -e "Removing old file"
+			sleep 2
+			rm -f /root/ipscan_*
+		fi
+		echo -e "Downloading angryipscanner"
+		sleep 2
+		wget https://github.com/angryip/ipscan/releases/download/3.5.1/ipscan_3.5.1_amd64.deb
+		echo -e "Installing..."
+		dpkg -i ipscan_*
+		echo -e "Done"
+		sleep 1
+	}
+	function install_sniper
+	{
+		if [[ -d /root/Sn1per ]]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/Sn1per
+		fi
+		echo -e "Installing Sn1per"
+		echo -e "Tool by 1N3"
+		cd
+		git clone https://github.com/1N3/Sn1per.git
+		cd /root/Sn1per
+		chmod +x install.sh
+		./install.sh
+		cd
+	}
+	function install_recondog
+	{
+		if [[ -d /root/ReconDog ]]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/ReconDog
+		fi
+		cd
+		echo -e "Installing ReconDog"
+		echo -e "Tool by UltimateHackers"
+		git clone https://github.com/UltimateHackers/ReconDog.git
+	}
+	function install_redhawk
+	{
+		if [[ -d /root/RED_HAWK ]]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/RED_HAWK
+		fi
+		cd
+		echo -e "Installing RED HAWK"
+		echo -e "Tool by Tuhinshubhra"
+		git clone https://github.com/Tuhinshubhra/RED_HAWK.git
+	}
+	function install_winpayloads
+	{
+		if [[ -d /root/Winpayloads ]]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/Winpayloads
+		fi
+		cd
+		echo -e "Installing Winpayloads"
+		echo -e "Tool by Nccgroup"
+		git clone https://github.com/nccgroup/Winpayloads.git
+		cd /root/Winpayloads
+		chmod +x setup.sh
+		./setup.sh
+		cd
+	}
+	function install_chaos
+	{
+		apt install golang upx-ucl -y
+		cd
+		if [[ -d /root/CHAOS ]]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/CHAOS
+		fi
+		git clone https://github.com/tiagorlampert/CHAOS.git
+	}
+	function install_routersploit
+	{
+		if [[ -d /root/routersploit ]]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/routersploit
+		fi
+		cd
+		echo -e "Installing routersploit"
+		echo -e "Tool by reverse-shell"
+		git clone https://github.com/reverse-shell/routersploit
+		cd /root/routersploit
+		pip install -r requirements.txt
+		cd
+	}
+	function install_infoga
+	{
+		if [[ -d /root/Infoga ]]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/Infoga
+		fi
+		git clone https://github.com/m4ll0k/Infoga.git
+		cd /root/Infoga
+		pip install -r requirements.txt
+		cd
+	}
+	function install_nwatch
+	{
+		if [[ -d /root/nWatch ]]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/nWatch
+		fi
+		cd
+		echo -e "Installing nWatch"
+		echo -e "Tool by Suraj"
+		git clone https://github.com/suraj-root/nWatch.git
+	}
+	function install_eternalscanner
+	{
+		if [[ -d /root/eternal_scanner ]]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/eternal_scanner
+		fi
+		cd
+		echo -e "Installing eternal_scanner"
+		echo -e "Tool by Peterpt"
+		git clone https://github.com/peterpt/eternal_scanner.git
+		apt-get install masscan metasploit-framework
+	}
+	function install_eaphammer
+	{
+		if [[ -d /root/eaphammer ]]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/eaphammer
+		fi
+		cd
+		echo -e "Installing eaphammer"
+		echo -e "Tool by s0lst1c3"
+		git clone https://github.com/s0lst1c3/eaphammer
+		cd eaphammer
+		chmod +x kali-setup
+		./kali-setup
+		cd
+		clear
+		apt-get install python-tqdm
+	}
+	function install_dagon
+	{
+		if [[ -d /root/dagon ]]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/dagon
+		fi
+		cd
+		echo -e "Installing Dagon"
+		echo -e "Tool by Ekultek"
+		git clone https://github.com/ekultek/dagon.git
+		cd dagon
+		pip install -r requirements.txt
+		pip2.7 install -r requirements.txt
+		apt-get install bcrypt
+		cd
+	}
+	function install_lalin
+	{
+		if [[ -d /root/LALIN ]]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/LALIN
+		fi
+		cd
+		echo -e "Installing Lalin"
+		echo -e "Tool by Edo -maland-"
+		git clone https://github.com/Screetsec/LALIN.git
+		cd LALIN
+		chmod +x Lalin.sh
+		cd
+	}
+	function install_knockmail
+	{
+		if [[ -d /root/KnockMail ]]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/KnockMail
+		fi
+		cd
+		echo -e "Installing KnockMail"
+		echo -e "Tool by 4w4k3"
+		git clone https://github.com/4w4k3/KnockMail.git
+		cd KnockMail
+		pip install -r requeriments.txt
+		cd
+	}
+	function install_kwetza
+	{
+		if [[ -d /root/kwetza ]]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/kwetza
+		fi
+		cd
+		echo -e "Installing Kwetza"
+		echo -e "Tool by Sensepost"
+		https://github.com/sensepost/kwetza.git
+		pip install beautifulsoup4
+		pip2.7 install beautifulsoup4
+	}
+	function install_ngrok
+	{
+		if [[ -f /root/ngrok ]]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm /root/ngrok
+		fi
+		rm -f /root/ngrok.zip
+		cd
+		echo -e "Downloading Ngrok"
+		wget https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip --output-document=/root/ngrok.zip
+		echo -e "Unzipping Ngrok"
+		unzip /root/ngrok.zip
+	}
+	function install_netdiscover
+	{
+		apt-get install netdiscover	
+	}
+	function install_websploit
+	{
+		apt-get install websploit
+	}
+	function install_openvas
+	{
+		apt-get install openvas
+		openvas-setup
+	}
+	function install_shellter
+	{
+		apt-get install shellter
+		sleep 2
+	}
+	function install_geany
+	{
+		apt-get install geany
+	}
+	
+------------------------------------
 ####################################
 defaults_l
 printf '\033]2;The LAZY script\a'

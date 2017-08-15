@@ -2024,7 +2024,7 @@ function wifi_tools
 		fi
 	elif [[ "$APPP" = "2" ]]
 	then
-		if [[ -f /usr/bin/wifitee ]]
+		if [[ -f /usr/bin/wifite ]]
 		then
 			wifite
 		else

@@ -9,7 +9,7 @@ echo -e "Press \e[1;33many key\e[0m to install the script..."
 read -n 1
 clear
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-if [[ $DIR != "/root/lscript" ]]
+if [[ "$DIR" != "/root/lscript" ]]
 then
 	echo -e "You didn't follow the github's simple install instructions.I will try to do it for you..."
 	sleep 4
@@ -20,7 +20,7 @@ then
 	mkdir /root/lscript
 	cp -r "$DIR"/* /root/lscript
 	chmod +x /root/lscript/install.sh
-if [ $OS = 2 ]
+if [ "$OS" = 2 ]
 then
 	gnome-terminal -e "sudo bash /root/lscript/install.sh"
 else
@@ -53,7 +53,7 @@ echo -e "Copying script to /bin/lscript"
 sleep 1
 mkdir /bin/lscript
 cd /root/lscript
-if [ $OS = 2 ]
+if [ "$OS" = 2 ]
 then
 	cp /root/lscript/l /bin/lscript/u
 	echo -e "I am an Ubuntu user" > /root/lscript/ubuntu.txt
@@ -115,7 +115,7 @@ then
 fi
 done
 clear
-if [ $OS = 2 ]
+if [ "$OS" = 2 ]
 then
 	sudo apt-get install leafpad
 	sudo apt-get install aircrack-ng
@@ -127,7 +127,7 @@ fi
 echo -e "DONE"
 sleep 1
 clear
-if [ $OS = 2 ]
+if [ "$OS" = 2 ]
 then
 
 	echo -e "Open a NEW terminal and type 'u' to launch the script"

@@ -4594,7 +4594,7 @@ var1=1
 check_if_ks
 ####
 }
-----------------TOOLS---------------
+#----------------TOOLS---------------
 	function install_fluxion
 	{
 		if [[ -d "/root/fluxion" ]]
@@ -5333,7 +5333,7 @@ check_if_ks
 		apt-get install geany
 	}
 	
-------------------------------------
+#------------------------------------
 ####################################
 defaults_l
 printf '\033]2;The LAZY script\a'

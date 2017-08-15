@@ -22,7 +22,7 @@ while true
 do
 	echo -e "----------------------"$RS"Packet injection"$CE"-----------------------"
 	echo -e "You need to do the Fake-authentication first!(on the other terminal)"
-	if [ "$FIRSTT" = "1" ]
+	if [[ "$FIRSTT" = "1" ]]
 	then
 		aireplay-ng -3 -b $WEPB -h $MYMAC $WLANNM
 	else
@@ -40,7 +40,7 @@ do
 	fi
 	echo -e "Inject packets again?"$YNYES": "
 	read REF
-	if [ "$REF" = "n" ]
+	if [[ "$REF" = "n" ]]
 	then
 		exit
 	else

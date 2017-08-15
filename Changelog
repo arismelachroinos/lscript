@@ -1,3 +1,20 @@
+2.0.6
+Added Kwetza (payload to apk) to remote access tools.
+Added Kwetza automated script.
+Fixed small error when cleaning handshake.
+Removed boopsuite from install/reinstall.
+Fixed/improved code in WPS cracking menu.
+Fixed delay when going back from ngrok to main menu.
+Fixed install.sh error.
+Moved the installation of all tools into functions.
+Added option to install every tool when being launched but not installed already.
+Added settings menu for future features.
+Improved all 'if' statements.
+Changed all 'back)' options with 'b)'.
+Added indication if tools in WPS menu are not installed.
+
+
+
 2.0.5
 Added option to clean the handshake after being verified.
 Automation script for bully.

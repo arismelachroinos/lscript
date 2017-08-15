@@ -23,7 +23,7 @@ read
 while true
 do
 	echo -e "--------------------"$RS"Fake authentication"$CE"----------------------"
-	if [ "$FIRST" = "1" ]
+	if [[ "$FIRST" = "1" ]]
 	then
 		aireplay-ng -1 0 -a $WEPB -h $MYMAC $WLANNM
 	else
@@ -39,7 +39,7 @@ do
 	fi
 	echo -e "Re-fakeauth again?"$YNYES": "
 	read REF
-	if [ "$REF" = "n" ]
+	if [[ "$REF" = "n" ]]
 	then
 		exit
 	else

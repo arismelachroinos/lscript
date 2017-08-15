@@ -15,35 +15,87 @@ YNONLY="("$YS"y"$CE"/"$YS"n"$CE")"
 PAKT="Press "$YS"any key$CE to"
 PAKTC="Press "$YS"any key$CE to continue..."
 PAKTGB="Press "$YS"any key$CE to go back..."
-
+READAK="read -n 1"
 ####################################
-printf '\033]2;WPS MENU\a'
 WLANNM=$(cat /root/lscript/wlanmon.txt)
 export WLANNM
+SCW=1
+function install_bully
+{
+	if [[ -d "/root/bully" ]]
+	then
+		echo -e "Removing old..."
+		echo -e "$PAKTC"
+		$READAK
+		rm -r /root/bully
+	fi				
+	echo -e "Installing Bully"
+	echo -e "Tool by Aanarchyy"
+	cd
+	git clone https://github.com/aanarchyy/bully.git
+	cd /root/bully/src
+	make
+	sudo make install	
+	cd	
+}
+function install_wifiautopwner
+{
+	if [[ -d "/root/WiFi-autopwner" ]]
+	then
+		echo -e "Removing old..."
+		echo -e "$PAKTC"
+		$READAK
+		rm -r /root/WiFi-autopwner
+	fi		
+	echo -e "Installing WiFi-autopwner"
+	echo -e "Tool by Mi-Al"
+	cd
+	git clone https://github.com/Mi-Al/WiFi-autopwner.git
+}
+function dash_calc
+{
+	
+	size=${#TERMINALTITLE}
+	calc=$(( 65-size ))
+	calc=$(( calc/2 ))
+	numcalc=1
+	DASHESN="-"
+	while [ $numcalc != $calc ]
+	do
+		DASHESN=""$DASHESN"-"
+		numcalc=$(( numcalc+1 ))
+	done
+	echo -e "$DASHESN"$RS"$TERMINALTITLE"$CE"$DASHESN"
+}
 function scan_wash
 {
 	while true
 	do
+	if [[ "$SCW" != 0 ]]
+	then
 		clear
 		echo -e "Scaning in new terminal..."
 		echo -e ""$YS"PRESS CTRL C IN WASH WHEN READY."$CE""
 		sleep 1
 		xterm -geometry 80x25+9999+9999 -e "wash  -i $WLANNM | tee /root/lscript/tempwash "
+	fi
+		SCW=1
 		clear
 		wash_awk
-		if [ $lines = 0 ]
+		if [[ "$lines" = 0 ]]
 		then
 			echo -e ""$RS"No networks with WPS found nearby"$CE""
 		fi
 		echo -e ""$YS" r"$CE") Rescan"
-		echo -e ""$YS"back"$CE") Go back"
+		echo -e ""$YS" b"$CE") Go back"
 		echo -e "Choose: "
 		read WASHSCAN
-		if [ $WASHSCAN = "r" ]
+		if [[ "$WASHSCAN" = "r" ]]
 		then
 			continue
-		elif [ $WASHSCAN = "back" ]
+		elif [[ "$WASHSCAN" = "back" || "$WASHSCAN" = "b" ]]
 		then
+			SCW=0
 			break
 		else
 			WASHSCAN2=${nnum[$WASHSCAN]}
@@ -58,29 +110,33 @@ function scan_wash
 				echo -e ""$YS" 2"$CE") Bruteforse       slow"
 				echo -e ""$YS" 3"$CE") Bully            fast+automated"
 				echo -e ""$YS" r"$CE") Rescan"
-				echo -e ""$YS"back"$CE") Go back"
+				echo -e ""$YS" b"$CE") Go back"
 				echo -e "Choose: "
 				read WPSL
-				if [ $WPSL = "r" ]
+				if [[ "$WPSL" = "r" ]]
 				then
 					RESCAN=1
+					SCW=1
 					break
-				elif [ $WPSL = "back" ]
+				elif [[ "$WPSL" = "back" || "$WPSL" = "b" ]]
 				then
+					RESCAN=1
+					SCW=0
 					break
-				elif [ $WPSL = "1" ]
+				elif [[ "$WPSL" = "1" ]]
 				then
 					pixie_attack
-				elif [ $WPSL = "2" ]
+				elif [[ "$WPSL" = "2" ]]
 				then
 					reaver_attack
-				elif [ $WPSL = "3" ]
+				elif [[ "$WPSL" = "3" ]]
 				then
 					bully_script
 				fi
 			done
-			if [ $RESCAN = 1 ]
+			if [[ "$RESCAN" = 1 ]]
 			then
+				RESCAN=0
 				continue
 			else
 				break
@@ -126,7 +182,7 @@ file="/root/lscript/tempwash"
 linestotal=$(cat $file | awk 'END{print NR}')
 lines=$((linestotal-7))
 n=1
-if [ $lines != 0 ]
+if [[ "$lines" != 0 ]]
 then
 	echo -e "    BSSID             CH ESSID"
 fi
@@ -138,23 +194,23 @@ do
 	achannel[$nnn]=$(cat $file | awk -v nn="$nnn" '{if(NR==nn)print $2}')
 	aessid[$nnn]=$(cat $file | awk -v nn="$nnn" '{if(NR==nn)print $6}')
 	alock[$nnn]=$(cat $file | awk -v nn="$nnn" '{if(NR==nn)print $5}')
-	if [ $alock[$nnn] = "No" ]
+	if [[ $alock[$nnn] = "No" ]]
 	then
 		locked="$RS"
 	else
 		locked="$YS"
 	fi
 	size=${#achannel[$nnn]}
-	if [ $n -le 9 ]
+	if [[ "$n" -le 9 ]]
 	then
-		if [ $size = 2 ]
+		if [[ "$size" = 2 ]]
 		then
 			echo -e " "$locked""$n""$CE") "$locked"${abssid[$nnn]} ${achannel[$nnn]} ${aessid[$nnn]}"$CE""
 		else
 			echo -e " "$locked""$n""$CE") "$locked"${abssid[$nnn]} ${achannel[$nnn]}  ${aessid[$nnn]}"$CE""
 		fi
 	else
-		if [ $size = 2 ]
+		if [[ "$size" = 2 ]]
 		then
 			echo -e ""$locked""$n""$CE") "$locked"${abssid[$nnn]} ${achannel[$nnn]} ${aessid[$nnn]}"$CE""
 		else
@@ -170,39 +226,39 @@ printf '\033]2;BULLY AUTOMATION\a'
 while true
 do
 	clear
-	if [[ $BRUTE = "" ]]
+	if [[ "$BRUTE" = "" ]]
 	then
 		BRUTE="OFF"
 	fi
-	if [[ $FORCE = "" ]]
+	if [[ "$FORCE" = "" ]]
 	then
 		FORCE="OFF"
 	fi
-	if [[ $PIXIE = "" ]]
+	if [[ "$PIXIE" = "" ]]
 	then
 		PIXIE="ON"
 	fi
-	if [[ $SEQ = "" ]]
+	if [[ "$SEQ" = "" ]]
 	then
 		SEQ="OFF"
 	fi
-	if [[ $VERBOSITY = "" ]]
+	if [[ "$VERBOSITY" = "" ]]
 	then
 		VERBOSITY=3
 	fi
-	if [[ $IGNORELOCKOUT = "" ]]
+	if [[ "$IGNORELOCKOUT" = "" ]]
 	then
 		IGNORELOCKOUT="OFF"
 	fi
-	if [[ $LOCKWAIT = "" ]]
+	if [[ "$LOCKWAIT" = "" ]]
 	then
 		LOCKWAIT=60
 	fi
-	if [[ $WAITPERATTEMPT = "" ]]
+	if [[ "$WAITPERATTEMPT" = "" ]]
 	then
 		WAITPERATTEMPT=0
 	fi
-	if [[ $BSSIDT = "" || $ESSIDT = "" || $CHANT = "" ]]
+	if [[ "$BSSIDT" = "" || "$ESSIDT" = "" || "$CHANT" = "" ]]
 	then
 		OK=0
 	else
@@ -219,68 +275,70 @@ do
 	echo -e ""$YS" 9"$CE") Sequential                  CURRENT:"$SEQ""
 	echo -e ""$YS"10"$CE") Verbosity                   CURRENT:"$VERBOSITY""
 	echo -e ""$YS"11"$CE") Ignore lockout              CURRENT:"$IGNORELOCKOUT""
-	echo -e ""$YS" back"$CE") Go back"
+	echo -e ""$YS" b"$CE") Go back"
 	echo -e ""$YS"start"$CE") Start"
 	echo -e "Choose: "
 	read B
 	clear
-	if [ $B = "back" ]
+	if [[ "$B" = "back" || "$B" = "b" ]]
 	then
 		clear
 		break
-	elif [ $B = "start" ]
+	elif [[ "$B" = "start" ]]
 	then
-		if [ $OK = 0 ]
+		if [[ "$OK" = 0 ]]
 		then
 			echo -e ""$RS"Error 1"$CE""
 			sleep 3
 		else
-			if [[ $BRUTE = "ON" ]]
+			if [[ "$BRUTE" = "ON" ]]
 			then
 				LBRUTE="-B"
 			else
 				LBRUTE=""
 			fi
-			if [[ $PIXIE = "ON" ]]
+			if [[ "$PIXIE" = "ON" ]]
 			then
 				LPIXIE="-d"
 			else
 				LPIXIE=""
 			fi
-			if [[ $FORCE = "ON" ]]
+			if [[ "$FORCE" = "ON" ]]
 			then
 				LFORCE="-F"
 			else
 				LFORCE=""
 			fi
-			if [[ $SEQ = "ON" ]]
+			if [[ "$SEQ" = "ON" ]]
 			then
 				LSEQ="-S"
 			else
 				LSEQ=""
 			fi
 			LVERBOSITY="-v $VERBOSITY"
-			if [[ $IGNORELOCKOUT = "ON" ]]
+			if [[ "$IGNORELOCKOUT" = "ON" ]]
 			then
 				LIGNORELOCKOUT="-L"
 			else
 				LIGNORELOCKOUT=""
 			fi
 			bully -b $BSSIDT -e $ESSIDT -c $CHANT -v $VERBOSITY -l $LOCKWAIT -1 $WAITPERATTEMPT,1 $LFORCE $LSEQ $LBRUTE $LPIXIE $LIGNORELOCKOUT $WLANNM
+			echo -e "$PAKTGB"
+			$READAK
 		fi
-	elif [ $B = 1 ]
+	elif [[ "$B" = 1 ]]
 	then
 		echo -e "Essid:"
 		read ESSIDT
-	elif [ $B = 2 ]
+	elif [[ "$B" = 2 ]]
 	then
 		echo -e "Bssid:"
 		read BSSIDT
-	elif [ $B = 3 ]
+	elif [[ "$B" = 3 ]]
 	then
 		echo -e "Channel:"
 		read CHANT
-	elif [ $B = 4 ]
+	elif [[ "$B" = 4 ]]
 	then
 		if [[ "$BRUTE" = "ON" ]]
 		then
@@ -288,7 +346,7 @@ do
 		else
 			BRUTE="ON"
 		fi
-	elif [ $B = 5 ]
+	elif [[ "$B" = 5 ]]
 	then
 		if [[ "$PIXIE" = "ON" ]]
 		then
@@ -296,15 +354,15 @@ do
 		else
 			PIXIE="ON"
 		fi
-	elif [ $B = 6 ]
+	elif [[ "$B" = 6 ]]
 	then
 		echo -e "Wait after lock(in seconds): "
 		read LOCKWAIT
-	elif [ $B = 7 ]
+	elif [[ "$B" = 7 ]]
 	then
 		echo -e "Wait per attempt(in seconds): "
 		read WAITPERATTEMPT
-	elif [ $B = 8 ]
+	elif [[ "$B" = 8 ]]
 	then
 		if [[ "$FORCE" = "ON" ]]
 		then
@@ -312,7 +370,7 @@ do
 		else
 			FORCE="ON"
 		fi
-	elif [ $B = 9 ]
+	elif [[ "$B" = 9 ]]
 	then
 		if [[ "$SEQ" = "ON" ]]
 		then
@@ -320,14 +378,14 @@ do
 		else
 			SEQ="ON"
 		fi
-	elif [ $B = 10 ]
+	elif [[ "$B" = 10 ]]
 	then
 		while true
 		do
 			echo -e "Verbosity (1-4): "
 			read VERB
 			clear
-			if [[ $VERB = 1 || $VERB = 2 || $VERB = 3 || $VERB = 4 ]]
+			if [[ "$VERB" = 1 || "$VERB" = 2 || "$VERB" = 3 || "$VERB" = 4 ]]
 			then
 				VERBOSITY="$VERB"
 				break
@@ -336,7 +394,7 @@ do
 				sleep 3
 			fi			
 		done
-	elif [ $B = 11 ]
+	elif [[ "$B" = 11 ]]
 	then
 		if [[ "$IGNORELOCKOUT" = "ON" ]]
 		then
@@ -353,8 +411,10 @@ function main_wps_options
 while true
 do
 clear
-echo -e "-------------------------"$RS"Finding WPS pin"$CE"-------------------------"
-if [[ $ESSIDT = "" ]]
+TERMINALTITLE="WPS PIN"
+dash_calc
+printf '\033]2;WPS PIN\a'
+if [[ "$ESSIDT" = "" ]]
 then
 	echo -e ""$YS" 1"$CE") Scan with wash         Selected: "$RS"None"$CE""
 else
@@ -363,29 +423,40 @@ fi
 echo -e ""$YS" 2"$CE") Reaver bruteforce"
 echo -e ""$YS" 3"$CE") Reaver                 (if you already have the WPS pin)"
 echo -e ""$YS" 4"$CE") Pixie Dust"
-echo -e ""$YS" 5"$CE") Bully                  AUTOMATED SCRIPT"
-echo -e ""$YS" 6"$CE") Bully"
-echo -e ""$YS" 7"$CE") WiFi autopwner"
+if [[ -f /usr/bin/bully ]]
+then
+	echo -e ""$YS" 5"$CE") Bully                  AUTOMATED SCRIPT"
+	echo -e ""$YS" 6"$CE") Bully"
+else
+	echo -e ""$RS" 5"$CE") "$RS"Bully"$CE"                   AUTOMATED SCRIPT"
+	echo -e ""$RS" 6"$CE") "$RS"Bully"$CE""
+fi
+if [[ -d /root/WiFi-autopwner ]]
+then
+	echo -e ""$YS" 7"$CE") WiFi autopwner"
+else
+	echo -e ""$RS" 7"$CE") "$RS"WiFi autopwner"$CE""
+fi
 echo -e ""$YS" 8"$CE") See latest log"
 echo -e ""$YS" 0"$CE") Exit"
 echo -e "Choose: "
 read -e YN
 clear
-if [ "$YN" = "1" ]
+if [[ "$YN" = "1" ]]
 then
 	scan_wash
-elif [ "$YN" = "2" ]
+elif [[ "$YN" = "2" ]]
 then
-	if [[ $ESSIDT != "" ]]
+	if [[ "$ESSIDT" != "" ]]
 	then
 		reaver_attack
 	else
 		echo -e ""$RS"No network selected"$CE""
 		sleep 2
 	fi
-elif [ "$YN" = "3" ]
+elif [[ "$YN" = "3" ]]
 then
-	if [[ $ESSIDT != "" ]]
+	if [[ "$ESSIDT" != "" ]]
 	then
 		echo -e "Enter your target's WPS pin: "
 		read -e WPST
@@ -398,20 +469,20 @@ then
 		sleep 2
 	fi
 
-elif [ "$YN" = "4" ]
+elif [[ "$YN" = "4" ]]
 then
-	if [[ $ESSIDT != "" ]]
+	if [[ "$ESSIDT" != "" ]]
 	then
 		pixie_attack
 	else
 		echo -e ""$RS"No network selected"$CE""
 		sleep 2
 	fi
-elif [ "$YN" = "5" ]
+elif [[ "$YN" = "5" ]]
 then
-	if [ -f /usr/bin/bully ]
+	if [[ -f /usr/bin/bully ]]
 	then
-		if [[ $ESSIDT != "" ]]
+		if [[ "$ESSIDT" != "" ]]
 		then
 			bully_script
 		else
@@ -419,43 +490,49 @@ then
 			sleep 2
 		fi
 	else
-		echo -e ""$RS"Bully isn't installed.Please install it from lscript."$CE""
-		sleep 3
-		echo -e "$PAKTGB"
-		$READAK
+		echo -e ""$RS"Bully isn't installed.Type '"$CE""$YS"install"$CE""$YS"' to install it."$CE""
+		read INSTALL
+		if [[ "$INSTALL" = "install" ]]
+		then
+			install_bully
+		fi
 	fi
-elif [ "$YN" = "6" ]
+elif [[ "$YN" = "6" ]]
 then
-	if [ -f /root/bully/src/bully.py ]
+	if [[ -f /root/bully/src/bully.py ]]
 	then
 		cd /root/bully/src
 		./bully.py
 		cd
 	else
-		echo -e ""$RS"Bully wasn't found in /root .Please install it from lscript."$CE""
-		sleep 3
-		echo -e "$PAKTGB"
-		$READAK
+		echo -e ""$RS"Bully isn't installed.Type '"$CE""$YS"install"$CE""$YS"' to install it."$CE""
+		read INSTALL
+		if [[ "$INSTALL" = "install" ]]
+		then
+			install_bully
+		fi
 	fi
-elif [ "$YN" = "7" ]
+elif [[ "$YN" = "7" ]]
 then
-	if [ -f /root/WiFi-autopwner/wifi-autopwner.sh ]
+	if [[ -f /root/WiFi-autopwner/wifi-autopwner.sh ]]
 	then
 		cd /root/WiFi-autopwner
 		./wifi-autopwner.sh
 		cd
 	else
-		echo -e ""$RS"Wifi autopwner wasn't found in /root .Please install it from lscript."$CE""
-		sleep 3
-		echo -e "$PAKTGB"
-		$READAK
+		echo -e ""$RS"Wifi autopwner isn't installed.Type '"$CE""$YS"install"$CE""$YS"' to install it."$CE""
+		read INSTALL
+		if [[ "$INSTALL" = "install" ]]
+		then
+			install_wifiautopwner
+		fi
 	fi
-elif [ "$YN" = "8" ]
+elif [[ "$YN" = "8" ]]
 then
 	cat /root/lscript/wpslog
 	echo -e "Press "$YS"enter"$CE" to go back"
 	read
-elif [ "$YN" = "0" ]
+elif [[ "$YN" = "0" ]]
 then
 	exit
 fi

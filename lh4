@@ -19,13 +19,13 @@ WLANNM=$(cat /root/lscript/wlanmon.txt)
 export WLANNM
 echo -e "---------------------------"$RS"WEP hacking"$CE"---------------------------"
 printf '\033]2;WEP MENU\a'
-if [ ! -z ${WEPB+x} ]
+if [[ ! -z ${WEPB+x} ]]
 then
 	echo -e "BSSID: $WEPB"
 else
 	echo -e "Target's BSSID not set"
 fi
-if [ ! -z ${WEPC+x} ]
+if [[ ! -z ${WEPC+x} ]]
 then
 	echo -e "Channel: $WEPC"
 else
@@ -43,11 +43,11 @@ echo -e ""$YS" 7"$CE") WiFi autopwner - automated tool"
 echo -e ""$YS" 0"$CE") EXIT"
 echo -e "Choose: "
 read WEP
-if [ "$WEP" = "1" ]
+if [[ "$WEP" = "1" ]]
 then
 	clear
 	airodump-ng $WLANNM
-elif [ "$WEP" = "2" ]
+elif [[ "$WEP" = "2" ]]
 then
 	WEP=-1
 	echo -e "Enter your target's bssid: "
@@ -63,33 +63,33 @@ then
 	export WEPF
 	export WEPFF
 	gnome-terminal -e lh41
-elif [ "$WEP" = "w" ]
+elif [[ "$WEP" = "w" ]]
 then
 	clear
 	wifite
-elif [ "$WEP" = "3" ]
+elif [[ "$WEP" = "3" ]]
 then
 	gnome-terminal -e lh43
 	gnome-terminal -e lh42
-#~ elif [ "$WEP" = "4" ]
+#~ elif [[ "$WEP" = "4" ]]
 #~ then
 	#~ clear
-#~ elif [ "$WEP" = "5" ]
+#~ elif [[ "$WEP" = "5" ]]
 #~ then
 	#~ clear
-elif [ "$WEP" = "6" ]
+elif [[ "$WEP" = "6" ]]
 then
 	aircrack-ng $WEPFF
-elif [ "$WEP" = "7" ]
+elif [[ "$WEP" = "7" ]]
 then
 	cd /root/WiFi-autopwner
 	./wifi-autopwner.sh
 	cd
-elif [ "$WEP" = "0" ]
+elif [[ "$WEP" = "0" ]]
 then
 	clear
 	exit
-#~ elif [ "$WEP" = "00" ]
+#~ elif [[ "$WEP" = "00" ]]
 #~ then
 	#~ clear
 	#~ exec bash "$0"
@@ -102,12 +102,12 @@ else
 fi
 echo -e "Choose again?"$YNYES": "
 read -e CAG
-if [ "$CAG" = "n" ]
+if [[ "$CAG" = "n" ]]
 then
 	clear
 	exit
 else
-	if [ "$WEP" = "1" ]
+	if [[ "$WEP" = "1" ]]
 		then
 		exec bash "$0"
 	else

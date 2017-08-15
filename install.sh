@@ -20,7 +20,7 @@ then
 	mkdir /root/lscript
 	cp -r "$DIR"/* /root/lscript
 	chmod +x /root/lscript/install.sh
-if [ $OS = 2 ]
+if [ "$OS" = 2 ]
 then
 	gnome-terminal -e "sudo bash /root/lscript/install.sh"
 else

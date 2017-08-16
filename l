@@ -837,7 +837,7 @@ while true
 do
 TERMINALTITLE="KEYBOARD SHORTCUTS"
 dash_calc
-printf '\033]2;KEYBOARD SHORTCUTS'
+printf '\033]2;KEYBOARD SHORTCUTS\a'
 echo -e ""$YS" 1"$CE") Tools"
 echo -e ""$YS" 2"$CE") See hidden shortcuts"
 echo -e ""$YS" b"$CE") Go back"

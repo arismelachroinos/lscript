@@ -2,7 +2,7 @@
 VERSION=2.0.7
 HOWMANYTOOLS=31
 BACKL="0"
-DONATIONS=1
+DONATIONS=0
 #############DEFAULTS###############
 function defaults_l
 {

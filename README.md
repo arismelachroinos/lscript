@@ -96,6 +96,8 @@ View your MAC faster
 
 **Be carefull.If you download it as a .zip file, it will not run.Make sure to follow these simple instructions.**
 
+**MADE FOR KALI LINUX**
+
 ```
 cd
 git clone https://github.com/arismelachroinos/lscript.git

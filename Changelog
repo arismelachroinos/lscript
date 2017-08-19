@@ -1,3 +1,16 @@
+2.0.8
+Removed delay from donation menu to main menu.
+Added option to change logo color in settings.
+Fixed typo in keyboard shortcuts.
+Added delay in info tools.
+Fixed error in keyboard shortcuts line 4028.
+Fixed error file not found in handshake menu.
+Fixed error when launching cupp.
+Added bleachbit to other tools + to installation menu.
+Added VMR MDK in wifi tools + to installation menu.
+
+
+
 2.0.7
 Improved start/stop options.
 +Added color to 'Done'.

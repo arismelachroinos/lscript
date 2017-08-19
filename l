@@ -1,29 +1,11 @@
 #! /bin/bash
-VERSION=2.0.7
+VERSION=2.0.8
 HOWMANYTOOLS=31
 BACKL="0"
 DONATIONS=0
 #############DEFAULTS###############
 function defaults_l
 {
-#setting yellow-start 
-	YS="\e[1;33m"
-#setting blue-start 
-	BS="\e[0;34m"
-#setting color-end
-	CE="\e[0m"
-#setting red-start
-	RS="\e[1;31m"
-#setting frequent stings
-	YNYES="("$YS"y"$CE"/"$YS"n"$CE")("$YS"Enter"$CE"=yes)"
-	YNNO="("$YS"y"$CE"/"$YS"n"$CE")("$YS"Enter"$CE"=no)"
-	YNONLY="("$YS"y"$CE"/"$YS"n"$CE")"
-	PAKT="Press "$YS"any key$CE to"
-	PAKTC="Press "$YS"any key$CE to continue..."
-	PAKTGB="Press "$YS"any key$CE to go back..."
-	TNI=""$RS"Tool is not installed. To install it type '"$CE""$YS"install"$CE""$RS"'."$CE""
-#code to read from keyboard without return
-	READAK="read -n 1"
 #path for lscript
 	LPATH="/root/lscript"
 	export LPATH
@@ -35,6 +17,31 @@ function defaults_l
 	then
 		mkdir "$KSPATH"
 	fi
+#setting yellow-start 
+	YS="\e[1;33m"
+#setting blue-start 
+	BS="\e[0;34m"
+#setting color-end
+	CE="\e[0m"
+#setting red-start
+	RS="\e[1;31m"
+#setting custom color for logo
+	if [[ -f "$LPATH"/settings/logocolor.txt ]]
+	then
+		read COL < "$LPATH"/settings/logocolor.txt
+	else
+		COL="$RS"
+	fi
+#setting frequent stings
+	YNYES="("$YS"y"$CE"/"$YS"n"$CE")("$YS"Enter"$CE"=yes)"
+	YNNO="("$YS"y"$CE"/"$YS"n"$CE")("$YS"Enter"$CE"=no)"
+	YNONLY="("$YS"y"$CE"/"$YS"n"$CE")"
+	PAKT="Press "$YS"any key$CE to"
+	PAKTC="Press "$YS"any key$CE to continue..."
+	PAKTGB="Press "$YS"any key$CE to go back..."
+	TNI=""$RS"Tool is not installed. To install it type '"$CE""$YS"install"$CE""$RS"'."$CE""
+#code to read from keyboard without return
+	READAK="read -n 1"
 }
 ##############FUNCTIONS#############
 function dash_calc
@@ -89,12 +96,12 @@ function banner
 {
 	check_wlans
 	echo -e ""
-	echo -e "$RS         ██╗      █████╗ ███████╗██╗   ██╗$CE v$VERSION"
-	echo -e "$RS         ██║     ██╔══██╗╚══███╔╝╚██╗ ██╔╝$CE"
-	echo -e "$RS         ██║     ███████║  ███╔╝  ╚████╔╝ $CE   by "$RS"ARIS MELACHROINOS$CE"
-	echo -e "$RS         ██║     ██╔══██║ ███╔╝    ╚██╔╝  $CE"
-	echo -e "$RS    The  ███████╗██║  ██║███████╗   ██║  script$CE"
-	echo -e "$RS         ╚══════╝╚═╝  ╚═╝╚══════╝   ╚═╝   $CE"
+	echo -e "$COL         ██╗      █████╗ ███████╗██╗   ██╗$CE v$VERSION"
+	echo -e "$COL         ██║     ██╔══██╗╚══███╔╝╚██╗ ██╔╝$CE"
+	echo -e "$COL         ██║     ███████║  ███╔╝  ╚████╔╝ $CE   by "$COL"ARIS MELACHROINOS$CE"
+	echo -e "$COL         ██║     ██╔══██║ ███╔╝    ╚██╔╝  $CE"
+	echo -e "$COL    The  ███████╗██║  ██║███████╗   ██║  script$CE"
+	echo -e "$COL         ╚══════╝╚═╝  ╚═╝╚══════╝   ╚═╝   $CE"
 	echo -e ""$YS"if"$CE") Ifconfig"
 	if [[ "$WLANCHECKING" = "" ]]
 	then
@@ -545,8 +552,8 @@ do
 	echo -e ""$YS" 7"$CE") Hakku            "$YS"27"$CE") WiFi-autopwner   "$YS"47"$CE") Knockmail"
 	echo -e ""$YS" 8"$CE") Trity            "$YS"28"$CE") Bully            "$YS"48"$CE") Kwetza"
 	echo -e ""$YS" 9"$CE") Cupp             "$YS"29"$CE") Anonsurf         "$YS"49"$CE") Ngrok"
-	echo -e ""$YS"10"$CE") Dracnmap         "$YS"30"$CE") Anonym8"
-	echo -e ""$YS"11"$CE") Fern             "$YS"31"$CE") TheFatRat"
+	echo -e ""$YS"10"$CE") Dracnmap         "$YS"30"$CE") Anonym8          "$YS"50"$CE") Bleachbit"
+	echo -e ""$YS"11"$CE") Fern             "$YS"31"$CE") TheFatRat        "$YS"51"$CE") Vmr mdk"
 	echo -e ""$YS"12"$CE") Netdiscover      "$YS"32"$CE") Angry IP Scanner"
 	echo -e ""$YS"13"$CE") KickThemOut      "$YS"33"$CE") Sniper"
 	echo -e ""$YS"14"$CE") Ghost-Phisher    "$YS"34"$CE") ReconDog"
@@ -710,6 +717,12 @@ do
 	elif [[ "$REIN" = "49" ]]
 	then
 		install_ngrok
+	elif [[ "$REIN" = "50" ]]
+	then
+		install_bleachbit
+	elif [[ "$REIN" = "51" ]]
+	then
+		install_vmr
 	elif [[ "$REIN" = "back" || "$REIN" = "b" ]]
 	then
 		clear
@@ -1995,9 +2008,15 @@ function wifi_tools
 	fi
 	if [[ -d /root/eaphammer ]]
 	then
-		echo -e ""$YS"26"$CE") Eaphammer          Evil twin attacks against WPA2-Enterprise networks. "
+		echo -e ""$YS"26"$CE") Eaphammer          Evil twin attacks against WPA2-Enterprise networks"
 	else
-		echo -e ""$RS"26"$CE") "$RS"Eaphammer"$CE"          Evil twin attacks against WPA2-Enterprise networks. "
+		echo -e ""$RS"26"$CE") "$RS"Eaphammer"$CE"          Evil twin attacks against WPA2-Enterprise networks"
+	fi
+	if [[ -d /root/VMR ]]
+	then
+		echo -e ""$YS"27"$CE") VMR                Best WPS cracker, mdk3-v6"
+	else
+		echo -e ""$RS"27"$CE") "$RS"VMR"$CE"                Best WPS cracker, mdk3-v6"
 	fi
 	echo -e ""$YS" b"$CE") Go back"
 	echo -e ""$YS"00"$CE") Main menu"
@@ -2494,6 +2513,23 @@ function wifi_tools
 			if [[ "$INSTALL" = "install" ]]
 			then
 				install_eaphammer
+			else
+				continue
+			fi
+		fi
+		cd
+	elif [[ "$APPP" = "27" ]]
+	then
+		if [[ -d "/root/VMR" ]]
+		then
+			cd /root/VMR
+			./VMR-MDK-K2-2017R-012x2.sh
+		else
+			echo -e "$TNI"
+			read INSTALL
+			if [[ "$INSTALL" = "install" ]]
+			then
+				install_vmr
 			else
 				continue
 			fi
@@ -3138,6 +3174,8 @@ function information_gathering
 		then
 			break
 		fi
+		echo -e "$PAKTGB"
+		$READAK
 	done
 }
 function other_tools
@@ -3171,6 +3209,12 @@ do
 		echo -e ""$YS" 4"$CE") Cupp             Make specific worldlists"
 	else
 		echo -e ""$RS" 4"$CE") "$RS"Cupp"$CE"             Make specific worldlists"
+	fi
+	if [[ -d /root/cupp ]]
+	then
+		echo -e ""$YS" 5"$CE") Bleachbit        Free up space"
+	else
+		echo -e ""$RS" 5"$CE") "$RS"Bleachbit"$CE"        Free up space"
 	fi
 	echo -e ""$YS" b"$CE") Go back"
 	echo -e ""$YS" 0"$CE") EXIT"
@@ -3218,13 +3262,13 @@ do
 			cd
 		else
 			echo -e "$TNI"
-				read INSTALL
-				if [[ "$INSTALL" = "install" ]]
-				then
-					install_lalin
-				else
-					continue
-				fi
+			read INSTALL
+			if [[ "$INSTALL" = "install" ]]
+			then
+				install_lalin
+			else
+				continue
+			fi
 		fi
 	elif [[ "$OTHERT" = "4" ]]
 	then
@@ -3235,13 +3279,28 @@ do
 			cd			
 		else
 			echo -e "$TNI"
-				read INSTALL
-				if [[ "$INSTALL" = "install" ]]
-				then
-					install_cupp
-				else
-					continue
-				fi
+			read INSTALL
+			if [[ "$INSTALL" = "install" ]]
+			then
+				install_cupp
+			else
+				continue
+			fi
+		fi
+	elif [[ "$OTHERT" = "5" ]]
+	then
+		if [[ -f "/usr/bin/bleachbit" ]]
+		then
+			bleachbit		
+		else
+			echo -e "$TNI"
+			read INSTALL
+			if [[ "$INSTALL" = "install" ]]
+			then
+				install_bleachbit
+			else
+				continue
+			fi
 		fi
 	elif [[ "$OTHERT" = 00 ]]
 	then
@@ -4016,20 +4075,23 @@ function check_if_ks
 {
 	while [ $var1 -le $HOWMANY ]
 	do
-		read TITLE < "$KSPATH"/nums/"$var1".txt
-		read YORNAKS < "$KSPATH"/"$TITLE"/"$TITLE"ks.txt
-		if [[ "$YORNAA" = "$YORNAKS" ]]
+		if [[ -f "$KSPATH"/nums/"$var1".txt ]]
 		then
-			read COMMAND1 < ""$KSPATH"/"$TITLE"/"$TITLE".txt"
-			read COMMAND2 < ""$KSPATH"/"$TITLE"/"$TITLE"2.txt"
-			$COMMAND1
-			#~ if [[ -f ""$KSPATH"/"$TITLE"/"$TITLE"3.txt" ]]
-			#~ then
-				#~ read $COMMAND3 < ""$KSPATH"/"$TITLE"/"$TITLE"3.txt"
-				#~ $COMMAND3
-			#~ fi
-			$COMMAND2
-			BACKL="1"
+			read TITLE < "$KSPATH"/nums/"$var1".txt
+			read YORNAKS < "$KSPATH"/"$TITLE"/"$TITLE"ks.txt
+			if [[ "$YORNAA" = "$YORNAKS" ]]
+			then
+				read COMMAND1 < ""$KSPATH"/"$TITLE"/"$TITLE".txt"
+				read COMMAND2 < ""$KSPATH"/"$TITLE"/"$TITLE"2.txt"
+				$COMMAND1
+				#~ if [[ -f ""$KSPATH"/"$TITLE"/"$TITLE"3.txt" ]]
+				#~ then
+					#~ read $COMMAND3 < ""$KSPATH"/"$TITLE"/"$TITLE"3.txt"
+					#~ $COMMAND3
+				#~ fi
+				$COMMAND2
+				BACKL="1"
+			fi
 		fi
 		var1=$(( var1+1 ))
 	done
@@ -4066,6 +4128,7 @@ function donate_option
 		$READAK
 	elif [[ "$DON" = "back" || "$DON" = "b" ]]
 	then
+		BACKL=1
 		break
 	fi
 	done
@@ -4228,9 +4291,10 @@ function settings_menu
 		TERMINALTITLE="SETTINGS"
 		dash_calc
 		printf '\033]2;SETTINGS\a'
-		echo -e ""$YS" 1"$CE") Nothing here yet."
+		echo -e ""$YS" 1"$CE") Change logo color"
 		echo -e ""$YS" b"$CE") Go back"
 		echo -e ""$YS" 0"$CE") Exit"
+		echo -e "Choose: "
 		read SET
 		if [[ "$SET" = "back" || "$SET" = "b" ]]
 		then
@@ -4240,19 +4304,78 @@ function settings_menu
 		then
 			clear
 			exit
-		#~ elif [[ "$SET" = 1 ]]
-		#~ then
-				#~ if [[ -f "$LPATH"/settings/auto-update.txt ]]
-				#~ then
-					#~ read AUTOUPADATE < "$LPATH"/settings/auto-update.txt
-				#~ fi
-				#~ if [[ "$AUTOUPDATE" = "" ]]
-				#~ then
-					#~ AUTOUPDATE=0
-				#~ fi
-				#~ echo -e ""$RS"This will delay the script's launch time "
-				#~ echo -e "Set the interval(Current:"$AUTOUPDATE"):"
-				
+		elif [[ "$SET" = 1 ]]
+		then
+			clear
+			TERMINALTITLE="LOGO COLORS"
+			dash_calc
+			echo -e ""$YS" 1"$CE") Light Red (default)"
+			echo -e ""$YS" 2"$CE") Red"
+			echo -e ""$YS" 3"$CE") Light Purple"
+			echo -e ""$YS" 4"$CE") Purple"
+			echo -e ""$YS" 5"$CE") Light Green"
+			echo -e ""$YS" 6"$CE") Green"
+			echo -e ""$YS" 7"$CE") Light Cyan"
+			echo -e ""$YS" 8"$CE") Cyan"
+			echo -e ""$YS" 9"$CE") Light Blue"
+			echo -e ""$YS"10"$CE") Blue"
+			echo -e ""$YS"11"$CE") Light Gray"
+			echo -e ""$YS"12"$CE") Dark Gray"
+			echo -e ""$YS"13"$CE") Yellow"
+			echo -e ""$YS"14"$CE") Brown"
+			echo -e ""$YS"15"$CE") White"
+			echo -e ""$YS"16"$CE") Black"	
+			echo -e "Choose: "
+			read LC
+			if [[ "$LC" = 1 ]]
+			then
+				echo -e "\e[1;31m" > "$LPATH"/settings/logocolor.txt
+			elif [[ "$LC" = 2 ]]
+			then
+				echo -e "\e[0;31m" > "$LPATH"/settings/logocolor.txt
+			elif [[ "$LC" = 3 ]]
+			then
+				echo -e "\e[1;35m" > "$LPATH"/settings/logocolor.txt
+			elif [[ "$LC" = 4 ]]
+			then
+				echo -e "\e[0;35m" > "$LPATH"/settings/logocolor.txt
+			elif [[ "$LC" = 5 ]]
+			then
+				echo -e "\e[1;32m" > "$LPATH"/settings/logocolor.txt
+			elif [[ "$LC" = 6 ]]
+			then
+				echo -e "\e[0;32m" > "$LPATH"/settings/logocolor.txt
+			elif [[ "$LC" = 7 ]]
+			then
+				echo -e "\e[1;36m" > "$LPATH"/settings/logocolor.txt
+			elif [[ "$LC" = 8 ]]
+			then
+				echo -e "\e[0;36m" > "$LPATH"/settings/logocolor.txt
+			elif [[ "$LC" = 9 ]]
+			then
+				echo -e "\e[1;34m" > "$LPATH"/settings/logocolor.txt
+			elif [[ "$LC" = 10 ]]
+			then
+				echo -e "\e[0;34m" > "$LPATH"/settings/logocolor.txt
+			elif [[ "$LC" = 11 ]]
+			then
+				echo -e "\e[0;37m" > "$LPATH"/settings/logocolor.txt
+			elif [[ "$LC" = 12 ]]
+			then
+				echo -e "\e[1;30m" > "$LPATH"/settings/logocolor.txt
+			elif [[ "$LC" = 13 ]]
+			then
+				echo -e "\e[1;33m" > "$LPATH"/settings/logocolor.txt
+			elif [[ "$LC" = 14 ]]
+			then
+				echo -e "\e[0;33m" > "$LPATH"/settings/logocolor.txt
+			elif [[ "$LC" = 15 ]]
+			then
+				echo -e "\e[1;37m" > "$LPATH"/settings/logocolor.txt
+			elif [[ "$LC" = 16 ]]
+			then
+				echo -e "\e[0;30m" > "$LPATH"/settings/logocolor.txt
+			fi		
 		fi
 	done
 }
@@ -4618,7 +4741,7 @@ check_if_ks
 	}
 	function install_wifite
 	{
-	apt-get install wifite
+		apt-get install wifite
 	}
 	function install_wifiphisher
 	{
@@ -5331,6 +5454,38 @@ check_if_ks
 	function install_geany
 	{
 		apt-get install geany
+	}
+	function install_bleachbit
+	{
+		apt-get install bleachbit
+	}
+	function install_vmr
+	{
+		if [[ -d /root/mdk3-v6 || -d /root/VMR ]]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/mdk3-v6
+			if [[ -f /root/VMR-MDK-K2-2017R-012x2.zip ]]
+			then
+				rm /root/VMR-MDK-K2-2017R-012x2.zip
+			fi
+			if [[ -d /root/VMR ]]
+			then
+				rm -r /root/VMR
+			fi
+		fi
+		cd
+		wget https://github.com/musket33/VMR-MDK-Kali2-Kali2016/raw/master/VMR-MDK-K2-2017R-012x2.zip
+		unzip /root/VMR-MDK-K2-2017R-012x2.zip -d /root/VMR
+		cp -r /root/VMR/mdk3-v6 /root/
+		cd /root/mdk3-v6
+		make
+		make install
+		chmod 755 /root/mdk3-v6/*
+		chmod +x /root/VMR/*.sh
+		cd
 	}
 	
 #------------------------------------

@@ -3226,7 +3226,7 @@ do
 					continue
 				fi
 		fi
-	elif [[ "$APPP" = "4" ]]
+	elif [[ "$OTHERT" = "4" ]]
 	then
 		if [[ -d "/root/cupp" ]]
 		then

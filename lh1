@@ -56,7 +56,7 @@ else
 	airodump-ng --bssid $TARGB -c $TARGC $WLANNM
 	echo -e "Start capturing on a file?"$YNYES""
 	read SCF
-	if [["$SCF" = "n" ]]
+	if [[ "$SCF" = "n" ]]
 	then
 		clear
 		exec bash "$0"

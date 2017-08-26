@@ -5419,12 +5419,13 @@ check_if_ks
 	}
 	function install_ngrok
 	{
-		if [[ -f /root/ngrok ]]
+		if [[ -f /root/ngrok || -f /root/ngrok.zip ]]
 		then
 			echo -e "Removing old..."
 			echo -e "$PAKTC"
 			$READAK
-			rm /root/ngrok
+			rm -f /root/ngrok
+			rm -f /root/ngrok.zip
 		fi
 		rm -f /root/ngrok.zip
 		cd

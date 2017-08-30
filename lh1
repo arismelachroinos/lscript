@@ -38,7 +38,7 @@ function dash_calc
 function start_capture
 {
 export HANDF
-if [[ "$HANDF" != "0" ]]
+if [[ "$HANDF" != "0" && "$HANDF" != "deauth" ]]
 then
 	if [[ -f "$HANDCAP" ]]
 	then
@@ -47,13 +47,18 @@ then
 	gnome-terminal --geometry 70x10+0+0 -e lh2
 	HANDFORDEAUTH="/root/handshakes/$HANDF-01.csv"
 	export HANDFORDEAUTH
-	airodump-ng --bssid $TARGB -c $TARGC -w /root/handshakes/$HANDF $WLANNM # | tee /root/lscript/temphandshake
+	airodump-ng --bssid $TARGB -c $TARGC -w /root/handshakes/$HANDF $WLANNM
 	validhandshake
 	exec bash "$0"
 else
-	HANDFORDEAUTH=""
+	if [[ -f /root/handshakes/deauth-01.csv || -f /root/handshakes/deauth-01.cap || -f /root/handshakes/deauth-01.kismet.csv || -f /root/handshakes/deauth-01.kismet.netxml ]]
+	then
+		rm -f /root/handshakes/deauth-01.*
+	fi
+	HANDF="deauth"
+	HANDFORDEAUTH="/root/handshakes/deauth-01.csv"
 	gnome-terminal --geometry 70x10+0+0 -e lh2
-	airodump-ng --bssid $TARGB -c $TARGC $WLANNM
+	airodump-ng --bssid $TARGB -c $TARGC -w /root/handshakes/$HANDF $WLANNM
 	echo -e "Start capturing on a file?"$YNYES""
 	read SCF
 	if [[ "$SCF" = "n" ]]
@@ -98,7 +103,12 @@ function remove_temps
 function autoapselect
 {
 file="/root/lscript/tempairodump-01.csv"
-lines=$(cat $file | awk '/WPA|WPA2|OPN/ {print}' | awk 'END{print NR}')
+if [[ -f "$file" ]]
+then
+	lines=$(cat $file | awk '/WPA|WPA2|OPN/ {print}' | awk 'END{print NR}')
+else
+	lines=0
+fi
 n2=1
 power=100
 if [[ "$lines" != 0 ]]
@@ -164,7 +174,7 @@ then
 		n3=$((n3+1)) 
 	done
 	n3=1
-	echo -e ""$BS"  BLUE"$CE"=OPEN NETWORK"
+	echo -e ""$BS"  BLUE"$CE"=OPEN NETWORK OR WEP PROTECTED"
 	echo -e ""$YS"YELLOW"$CE"=WPA/WPA2 NETWORK WITH ACTIVE CLIENTS"
 	echo -e ""$RS"   RED"$CE"=WPA/WPA2 NETWORK WITHOUT ACTIVE CLIENTS"
 	echo -e "_________________________________________________________________________________________"
@@ -268,11 +278,11 @@ do
 	then
 		clear
 		break
-	elif [[ ! -z "$APCHOOSE" ]]
+	elif [[ "$APCHOOSE" -le "$lines" && "$APCHOOSE" -ge 1 ]]
 	then
 		if [[ ${zopen[$APCHOOSE]} = 1 ]]
 		then
-			echo -e ""$RS"You selected an open network.Please select a password protected network."$CE""
+			echo -e ""$RS"You selected an open or a WEP protected network.Please select a WPA/WPA2 protected network."$CE""
 			echo -e "Press "$YS"enter"$CE" to go back"
 			read
 			break
@@ -283,14 +293,25 @@ do
 		echo -e "Enter the name of the handshake file(no extention)(e.g: "$YS"hand1"$CE")"
 		echo -e "Type "$YS""0""$CE" for no file"
 		read -e HANDF
+		if [[ "$HANDF" = 0 ]]
+		then
+			if [[ -f /root/handshakes/deauth-01.csv || -f /root/handshakes/deauth-01.cap || -f /root/handshakes/deauth-01.kismet.csv || -f /root/handshakes/deauth-01.kismet.netxml ]]
+			then
+				rm -f /root/handshakes/deauth-01.*
+			fi
+			HANDF="deauth"
+			HANDFORDEAUTH="/root/handshakes/deauth-01.csv"
+		else
+			HANDFORDEAUTH="/root/handshakes/$HANDF-01.csv"
+		fi
 		HANDFFP="/root/handshakes/"$HANDF"-01.cap"
 		HANDCAP="/root/handshakes/"$HANDF"-01.cap"
+		export HANDFORDEAUTH
 		export HANDCAP
 		export HANDFFP
 		export TARGB
 		export TARGC
 		export TARGE
-		#echo $TARGB $TARGC $TARGE
 		clear
 		start_capture
 		break
@@ -417,7 +438,7 @@ then
 	echo -e "Removing the file..."
 	sleep 2
 	rm $HANDFFP
-	remove_temps
+	#~ remove_temps
 	FJC=0
 else
 	FJC=1

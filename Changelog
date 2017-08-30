@@ -1,3 +1,25 @@
+2.0.9
+Fixed error in handshake menu line 59.
+Added Findsploit to metasploit menu.
+Fixed minor mistakes with handshake menu.
+Handshake deauth improved.
+Added auto-sorting of connected clients in deauth.
+Added option to select which client to disconnect.
+Added blue color for WEP ap's on handshake menu.
+Added option to check multiple hosts for eternalblue.
+Fixed minor issue with ngrok.
+Fixed: 'Found -6 clients error' in deauth.
+Fixed 'No networks found' after unsuccessful capture.
+Added Howdoi tool in banner.
+Added automated Howdoi settings in settings menu.
+Added operative-framework to information gathering tools.
+Improved AP select in handshake menu(-le -ge).
+Added support for ALFA AWUS036ACH wireless USB adapter.
+Added netattack2 to wifi tools.
+Added operative-framework and netattack2 to keyboard shortcuts.
+
+
+
 2.0.8
 Removed delay from donation menu to main menu.
 Added option to change logo color in settings.

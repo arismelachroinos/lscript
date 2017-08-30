@@ -1,6 +1,6 @@
 #! /bin/bash
-VERSION=2.0.8
-HOWMANYTOOLS=31
+VERSION=2.0.9
+HOWMANYTOOLS=33
 BACKL="0"
 DONATIONS=0
 #############DEFAULTS###############
@@ -16,6 +16,13 @@ function defaults_l
 	if [[ ! -d "$KSPATH" ]]
 	then
 		mkdir "$KSPATH"
+	fi
+#ALFA SUPPORT SETTING
+	if [[ -f "$LPATH"/settings/AWUS036ACH.txt ]]
+	then
+		read ALFA < "$LPATH"/settings/AWUS036ACH.txt
+	else
+		ALFA="no"
 	fi
 #setting yellow-start 
 	YS="\e[1;33m"
@@ -135,7 +142,12 @@ function banner
 	else
 		echo -e ""$YS"10"$CE") Handshake         "$RS"16"$CE") "$RS"Ngrok"$CE" port forward"
 	fi
-	echo -e ""$YS"11"$CE") Find WPS pin "
+	if [[ -f /usr/local/bin/howdoi ]]
+	then
+		echo -e ""$YS"11"$CE") Find WPS pin      "$YS"17"$CE") Ask (Howdoi tool)"
+	else
+		echo -e ""$YS"11"$CE") Find WPS pin      "$RS"17"$CE") Ask ("$RS"Howdoi"$CE" tool)"
+	fi
 	echo -e ""$YS"12"$CE") WEP hacking  "
 	echo -e ""$YS"13"$CE") MITM         "
 	echo -e ""$YS"14"$CE") Metasploit   "   
@@ -532,6 +544,16 @@ function listshortcuts
 		TITLE="Shellter"
 		NAMECD=""
 		KSSET="shellter"
+	elif [[ "$nn" = "32" ]]
+	then
+		TITLE="Netattack2"
+		NAMECD="cd /root/netattack2"
+		KSSET="python2 netattack2.py"
+	elif [[ "$nn" = "33" ]]
+	then
+		TITLE="Operative-framework"
+		NAMECD="cd /root/operative-framework"
+		KSSET="python operative.py"
 	fi
 }
 function reinstall_tools
@@ -554,11 +576,11 @@ do
 	echo -e ""$YS" 9"$CE") Cupp             "$YS"29"$CE") Anonsurf         "$YS"49"$CE") Ngrok"
 	echo -e ""$YS"10"$CE") Dracnmap         "$YS"30"$CE") Anonym8          "$YS"50"$CE") Bleachbit"
 	echo -e ""$YS"11"$CE") Fern             "$YS"31"$CE") TheFatRat        "$YS"51"$CE") Vmr mdk"
-	echo -e ""$YS"12"$CE") Netdiscover      "$YS"32"$CE") Angry IP Scanner"
-	echo -e ""$YS"13"$CE") KickThemOut      "$YS"33"$CE") Sniper"
-	echo -e ""$YS"14"$CE") Ghost-Phisher    "$YS"34"$CE") ReconDog"
-	echo -e ""$YS"15"$CE") The Eye          "$YS"35"$CE") RED HAWK"
-	echo -e ""$YS"16"$CE") Xerxes           "$YS"36"$CE") WinPayloads"
+	echo -e ""$YS"12"$CE") Netdiscover      "$YS"32"$CE") Angry IP Scanner "$YS"52"$CE") Hash Buster"
+	echo -e ""$YS"13"$CE") KickThemOut      "$YS"33"$CE") Sniper           "$YS"53"$CE") Findsploit"
+	echo -e ""$YS"14"$CE") Ghost-Phisher    "$YS"34"$CE") ReconDog         "$YS"54"$CE") Howdoi"
+	echo -e ""$YS"15"$CE") The Eye          "$YS"35"$CE") RED HAWK         "$YS"55"$CE") Operative-frmwork"
+	echo -e ""$YS"16"$CE") Xerxes           "$YS"36"$CE") WinPayloads      "$YS"56"$CE") Netattack2"
 	echo -e ""$YS"17"$CE") Mdk3-master      "$YS"37"$CE") Shellter"
 	echo -e ""$YS"18"$CE") Katana Framework "$YS"38"$CE") CHAOS"
 	echo -e ""$YS"19"$CE") Airgeddon        "$YS"39"$CE") Routersploit"
@@ -723,6 +745,21 @@ do
 	elif [[ "$REIN" = "51" ]]
 	then
 		install_vmr
+	elif [[ "$REIN" = "52" ]]
+	then
+		install_hashbuster
+	elif [[ "$REIN" = "53" ]]
+	then
+		install_findsploit
+	elif [[ "$REIN" = "54" ]]
+	then
+		install_howdoi
+	elif [[ "$REIN" = "55" ]]
+	then
+		install_operative
+	elif [[ "$REIN" = "56" ]]
+	then
+		install_netattack2
 	elif [[ "$REIN" = "back" || "$REIN" = "b" ]]
 	then
 		clear
@@ -2018,6 +2055,12 @@ function wifi_tools
 	else
 		echo -e ""$RS"27"$CE") "$RS"VMR"$CE"                Best WPS cracker, mdk3-v6"
 	fi
+	if [[ -d /root/netattack2 ]]
+	then
+		echo -e ""$YS"28"$CE") Netattack3         Advanced network scan and attack script"
+	else
+		echo -e ""$RS"28"$CE") "$RS"Netattack2"$CE"         Advanced network scan and attack script"
+	fi
 	echo -e ""$YS" b"$CE") Go back"
 	echo -e ""$YS"00"$CE") Main menu"
 	#echo -e ""$YS" 0"$CE") EXIT"
@@ -2530,6 +2573,23 @@ function wifi_tools
 			if [[ "$INSTALL" = "install" ]]
 			then
 				install_vmr
+			else
+				continue
+			fi
+		fi
+		cd
+	elif [[ "$APPP" = "28" ]]
+	then
+		if [[ -d "/root/netattack2" ]]
+		then
+			cd /root/netattack2
+			python2 netattack2.py
+		else
+			echo -e "$TNI"
+			read INSTALL
+			if [[ "$INSTALL" = "install" ]]
+			then
+				install_netattack2
 			else
 				continue
 			fi
@@ -3062,6 +3122,12 @@ function information_gathering
 		else
 			echo -e ""$RS" 5"$CE") "$RS"KnockMail"$CE""
 		fi
+		if [[ -d /root/operative-framework ]]
+		then
+			echo -e ""$YS" 6"$CE") Operative-framework"
+		else
+			echo -e ""$RS" 6"$CE") "$RS"Operative-framework"$CE""
+		fi
 		echo -e ""$YS" b"$CE") Go back"
 		echo -e ""$YS"00"$CE") Main menu"
 		echo -e "Choose: "
@@ -3164,6 +3230,25 @@ function information_gathering
 				fi
 
 			fi
+		elif [[ "$INFOG" = 6 ]]
+		then
+			if [[ -d /root/operative-framework ]]
+			then
+				clear
+				cd /root/operative-framework
+				python2.7 operative.py
+				cd
+			else
+				echo -e "$TNI"
+				read INSTALL
+				if [[ "$INSTALL" = "install" ]]
+				then
+					install_operative
+				else
+					continue
+				fi
+
+			fi
 		elif [[ "$INFOG" = 0 ]]
 		then
 			exit
@@ -3215,6 +3300,12 @@ do
 		echo -e ""$YS" 5"$CE") Bleachbit        Free up space"
 	else
 		echo -e ""$RS" 5"$CE") "$RS"Bleachbit"$CE"        Free up space"
+	fi
+	if [[ -d /root/Hash-Buster ]]
+	then
+		echo -e ""$YS" 6"$CE") Hash Buster      Hash cracker"
+	else
+		echo -e ""$RS" 6"$CE") "$RS"Hash Buster"$CE"      Hash cracker"
 	fi
 	echo -e ""$YS" b"$CE") Go back"
 	echo -e ""$YS" 0"$CE") EXIT"
@@ -3302,6 +3393,22 @@ do
 				continue
 			fi
 		fi
+	elif [[ "$OTHERT" = "6" ]]
+	then
+		if [[ -d "/root/Hash-Buster" ]]
+		then
+			cd /root/Hash-Buster
+			python hash.py		
+		else
+			echo -e "$TNI"
+			read INSTALL
+			if [[ "$INSTALL" = "install" ]]
+			then
+				install_hashbuster
+			else
+				continue
+			fi
+		fi
 	elif [[ "$OTHERT" = 00 ]]
 	then
 		clear
@@ -3315,6 +3422,15 @@ do
 		exit
 	fi
 done
+}
+function findsploit_menu
+{
+	clear
+	echo -e "Search: "
+	read FSEARCH
+	findsploit "$FSEARCH"
+	echo -e "$PAKTGB"
+	$READAK
 }
 function metasploit_menu
 {
@@ -3334,6 +3450,7 @@ function metasploit_menu
 	echo -e ""$YS" 4"$CE") Start msfconsole"
 	echo -e ""$YS" 5"$CE") Update msfconsole"
 	echo -e ""$YS" 6"$CE") Armitage"
+	echo -e ""$YS" 7"$CE") Findsploit"
 	echo -e ""$YS" b"$CE") Go back"
 	echo -e ""$YS" 0"$CE") EXIT"
 	echo -e "Choose: "
@@ -3519,6 +3636,9 @@ function metasploit_menu
 		service postgresql start
 		armitage
 		clear
+	elif [[ "$METASP" = "7" ]]
+	then
+		findsploit_menu
 	elif [[ "$METASP" = "back" || "$METASP" = "b" ]]
 	then
 		BACKL="1"
@@ -3836,7 +3956,7 @@ function eternalblue_check
 	then
 		mkdir	"$LPATH"/rce
 	fi
-	echo -e "RHOST: "
+	echo -e "RHOST:("$BS"if scanning multiple hosts, seperate with space"$CE") "
 	read RHOSTL
 	echo "use auxiliary/scanner/smb/smb_ms17_010" > "$LPATH"/rce/eternalbluerc.rc
 	echo "set RHOSTS "$RHOSTL"" >> "$LPATH"/rce/eternalbluerc.rc
@@ -3849,12 +3969,19 @@ function start_menu
 	O1=0
 	O2=0
 	O3=0
-	enable_wlan
 	echo -e "Enabling $WLANNM..."
+	enable_wlan
 	echo -e "Killing services..."
 	airmon-ng check kill &> /dev/null && echo -e ""$YS"Done"$CE"" && O1=1
 	echo -e "Starting monitor mode..."
-	airmon-ng start $WLANN | grep "monitor mode" | awk -F "(" {'print $2'} | cut -d ')' -f1 &> /dev/null && echo -e ""$YS"Done"$CE"" && O2=1
+	if [[ "$ALFA" = "yes" ]]
+	then
+		ifconfig $WLANN down
+		iwconfig $WLANN mode monitor &> /dev/null && echo -e ""$YS"Done"$CE"" && O2=1
+		ifconfig $WLANN up
+	else
+		airmon-ng start $WLANN | grep "monitor mode" | awk -F "(" {'print $2'} | cut -d ')' -f1 &> /dev/null && echo -e ""$YS"Done"$CE"" && O2=1
+	fi
 	echo -e "Changing mac address of $WLANNM to 00:11:22:33:44:55..."
 	ifconfig $WLANNM down
 	macchanger -m 00:11:22:33:44:55 $WLANNM | grep "New MAC:" &> /dev/null && O3=1
@@ -3884,7 +4011,23 @@ function stop_monitor
 {
 	echo -e "Disabling $WLANNM..."
 	echo -e "Stopping monitor mode..."
-	airmon-ng stop $WLANNM &>/dev/null && echo -e ""$YS"Done"$CE"" && O2=1 || echo -e ""$RS"Error stoping monitor mode."$CE""
+	if [[ "$ALFA" = "yes" ]]
+	then
+		A1=0
+		A2=0
+		A3=0
+		ifconfig $WLANN down && A1=1
+		iwconfig $WLANN mode managed && A2=1
+		ifconfig $WLANN up && A3=1
+		if [[ "$A1" = 1 && "$A2" = 1 && "$A3" = 1 ]]
+		then
+			echo -e ""$YS"Done"$CE"" && O2=1
+		else
+			echo -e ""$RS"Error stoping monitor mode."$CE""
+		fi
+	else
+		airmon-ng stop $WLANNM &>/dev/null && echo -e ""$YS"Done"$CE"" && O2=1 || echo -e ""$RS"Error stoping monitor mode."$CE""
+	fi
 	echo -e "Starting network-manager service..."
 	service network-manager start && echo -e ""$YS"Done"$CE"" && O3=1 || echo -e ""$RS"Error starting network-manager service"$CE""
 }
@@ -4292,21 +4435,120 @@ function settings_menu
 		dash_calc
 		printf '\033]2;SETTINGS\a'
 		echo -e ""$YS" 1"$CE") Change logo color"
+		echo -e ""$YS" 2"$CE") Howdoi settings"
+		if [[ -f "$LPATH"/settings/AWUS036ACH.txt ]]
+		then
+			read ALFA < "$LPATH"/settings/AWUS036ACH.txt
+		else
+			ALFA="no"
+		fi
+		echo -e ""$YS" 3"$CE") ALFA AWUS036ACH support                      $ALFA"
 		echo -e ""$YS" b"$CE") Go back"
 		echo -e ""$YS" 0"$CE") Exit"
 		echo -e "Choose: "
 		read SET
-		if [[ "$SET" = "back" || "$SET" = "b" ]]
+		clear
+		if [[ "$SET" = "back" || "$SET" = "b" || "$SET" = "00" ]]
 		then
 			BACKL=1
 			break
 		elif [[ "$SET" = 0 ]]
 		then
-			clear
 			exit
+		elif [[ "$SET" = 3 ]]
+		then
+			if [[ "$ALFA" = "yes" ]]
+			then
+				ALFA="no"
+			else
+				ALFA="yes"
+			fi
+			echo -e "$ALFA" > "$LPATH"/settings/AWUS036ACH.txt
+		elif [[ "$SET" = 2 ]]
+		then
+			while true
+			do
+				clear
+				if [[ -f "$LPATH"/settings/dispfull.txt ]]
+				then
+					read dispfull < "$LPATH"/settings/dispfull.txt
+				else
+					dispfull="false"
+				fi
+				if [[ -f "$LPATH"/settings/colorout.txt ]]
+				then
+					read colorout < "$LPATH"/settings/colorout.txt
+				else
+					colorout="false"
+				fi
+				if [[ -f "$LPATH"/settings/onlylink.txt ]]
+				then
+					read onlylink < "$LPATH"/settings/onlylink.txt
+				else
+					onlylink="false"
+				fi
+				if [[ -f "$LPATH"/settings/numofans.txt ]]
+				then
+					read numofans < "$LPATH"/settings/numofans.txt
+				else
+					numofans="1"
+				fi
+				echo -e ""$YS" 1"$CE") Display the full answer text              "$dispfull""
+				echo -e ""$YS" 2"$CE") Colorized output                          "$colorout""
+				echo -e ""$YS" 3"$CE") Display only the answer link              "$onlylink""
+				echo -e ""$YS" 4"$CE") Number of answers to return               "$numofans""
+				echo -e ""$YS" 5"$CE") Clear the cache"
+				echo -e ""$YS" b"$CE") Go back"
+				echo -e "Choose: "
+				read HOWCH
+				if [[ "$HOWCH" = 1 ]]
+				then
+					if [[ "$dispfull" = "false" ]]
+					then
+						dispfull="true"
+					else
+						dispfull="false"
+					fi
+					echo "$dispfull" > "$LPATH"/settings/dispfull.txt
+				elif [[ "$HOWCH" = 2 ]]
+				then
+					if [[ "$colorout" = "false" ]]
+					then
+						colorout="true"
+					else
+						colorout="false"
+					fi
+					echo "$colorout" > "$LPATH"/settings/colorout.txt
+				elif [[ "$HOWCH" = 3 ]]
+				then
+					if [[ "$onlylink" = "false" ]]
+					then
+						onlylink="true"
+					else
+						onlylink="false"
+					fi
+					echo "$onlylink" > "$LPATH"/settings/onlylink.txt
+				elif [[ "$HOWCH" = 4 ]]
+				then
+					echo -e "Type number of answers to return: "
+					read numofans
+					echo "$numofans" > "$LPATH"/settings/numofans.txt
+				elif [[ "$HOWCH" = 5 ]]
+				then
+					howdoi -C
+				elif [[ "$HOWCH" = "b" || "$HOWCH" = "back" ]]
+				then
+					break
+				elif [[ "$HOWCH" = 00 ]]
+				then
+					exec bash $0
+				elif [[ "$HOWCH" = 0 ]]
+				then
+					exit
+				fi
+			done
 		elif [[ "$SET" = 1 ]]
 		then
-			clear
 			TERMINALTITLE="LOGO COLORS"
 			dash_calc
 			echo -e ""$YS" 1"$CE") Light Red (default)"
@@ -4384,6 +4626,62 @@ function main_options
 	if [[ "$YORNAA" = "0" ]]
 	then
 		exit
+	elif [[ "$YORNAA" = "17" ]]
+	then
+		if [[ ! -f "/usr/local/bin/howdoi" ]]
+		then
+			echo -e ""$RS"Howdoi is not installed.type '"$CE""$YS"install"$CE""$RS"' to install it."
+			read INSTALL
+			if [[ "$INSTALL" = "install" ]]
+			then
+				install_howdoi
+			fi
+		else
+			clear
+			if [[ -f "$LPATH"/settings/dispfull.txt ]]
+			then
+				read dispfull < "$LPATH"/settings/dispfull.txt
+				if [[ "$dispfull" = "true" ]]
+				then
+					df="-a"
+				fi
+			else
+				df=""
+			fi
+			if [[ -f "$LPATH"/settings/colorout.txt ]]
+			then
+				read colorout < "$LPATH"/settings/colorout.txt
+				if [[ "$colorout" = "true" ]]
+				then
+					co="-c"
+				fi
+			else
+				co=""
+			fi
+			if [[ -f "$LPATH"/settings/onlylink.txt ]]
+			then
+				read onlylink < "$LPATH"/settings/onlylink.txt
+				if [[ "$onlylink" = "true" ]]
+				then
+					ol="-l"
+				fi
+			else
+				ol=""
+			fi
+			if [[ -f "$LPATH"/settings/numofans.txt ]]
+			then
+				read numofans < "$LPATH"/settings/numofans.txt
+				if [[ "$numofans" = "true" ]]
+				then
+					na="-n "$numofans""
+				fi
+			else
+				na=""
+			fi
+			echo -e "How do i :  "
+			read HOW
+			howdoi $co $na $ol $df $HOW
+		fi
 	elif [[ "$YORNAA" = "settings" ]]
 	then
 		settings_menu
@@ -5488,6 +5786,69 @@ check_if_ks
 		chmod +x /root/VMR/*.sh
 		cd
 	}
+	function install_hashbuster
+	{
+		if [[ -d /root/Hash-Buster ]]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/Hash-Buster
+		fi
+		cd
+		git clone https://github.com/UltimateHackers/Hash-Buster.git
+		
+	}
+	function install_findsploit
+	{
+		if [[ -d /root/Findsploit ]]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/Findsploit
+		fi
+		cd
+		git clone https://github.com/1N3/Findsploit.git
+		cd /root/Findsploit
+		chmod +x install.sh
+		./install.sh
+		cd
+	}
+	function install_howdoi
+	{
+		pip install howdoi
+		pip2.7 install howdoi
+	}
+	function install_operative
+	{
+		if [[ -d /root/operative-framework ]]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/oparative-framework
+		fi
+		cd
+		git clone https://github.com/graniet/operative-framework.git
+		cd /root/operative-framework
+		pip install -r requirements.txt
+		pip2.7 install -r requirements.txt
+	}
+	function install_netattack2
+	{
+		if [[ -d "/root/netattack2" ]]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/netattack2
+		fi
+		cd
+		git clone https://github.com/chrizator/netattack2.git
+	}
+	
+	
 	
 #------------------------------------
 ####################################

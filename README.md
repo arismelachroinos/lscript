@@ -92,11 +92,12 @@ View your MAC faster
 	Meterpreter_Paranoid_Mode-SSL   by r00t-3xp10it
 	Koadic                          by zerosum0x0
 	Empire                          by Will Schroeder,
-	                                   Justin Warner, 
-					   Matt Nelson,
-					   Steve Borosh,
-					   Alex Rymdeko-harvey, 
-					   Chris Ross
+                                           Justin Warner, 
+                                           Matt Nelson,
+                                           Steve Borosh,
+                                           Alex Rymdeko-harvey, 
+                                           Chris Ross
+	Veil                            by ChrisTruncer
 	MORE ARE BEING ADDED ON EVERY UPDATE
 	
 **Wifi password scripts**

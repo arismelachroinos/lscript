@@ -77,6 +77,26 @@ View your MAC faster
 	Eaphammer                       by S0lst1c3
 	Dagon                           by Ekultek
 	LALIN                           by Screetsec
+	Ngrok                           by inconshreveable + more
+	Kwetza                          by Chris Le Roy
+	Bleachbit                       by Andrew Ziem
+	Operative framework             by Tristan Granier
+	Netattack2                      by Christian Klein
+	Findsploit                      by 1N3
+	Howdoi                          by Benjamin Gleitzman
+	Dr0p1t-Framework                by Karim Shoair
+	FakeImageExploiter              by r00t-3xp10it
+	Laviathan                       by Utku Sen, Ozge Barbaros
+	WiFi-Pumpkin                    by P0cL4bs
+	Avet                            by govolution
+	Meterpreter_Paranoid_Mode-SSL   by r00t-3xp10it
+	Koadic                          by zerosum0x0
+	Empire                          by Will Schroeder,
+	                                   Justin Warner, 
+					   Matt Nelson,
+					   Steve Borosh,
+					   Alex Rymdeko-harvey, 
+					   Chris Ross
 	MORE ARE BEING ADDED ON EVERY UPDATE
 	
 **Wifi password scripts**

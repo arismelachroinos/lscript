@@ -102,5 +102,4 @@ clear
 echo -e "Open a NEW terminal and type 'l' to launch the script"
 sleep  4
 gnome-terminal -e l
-sleep 2
-kill -9 $PPID
+exit

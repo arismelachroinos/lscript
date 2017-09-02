@@ -4611,7 +4611,7 @@ function update_lscript
 			rm -rf /root/lscriptold
 			echo -e "Exiting..."
 			sleep 1
-			exit
+			kill -9 $PPID
 		else 
 			clear
 			echo -e "You didnt select "y" so you go back..."

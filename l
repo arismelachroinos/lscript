@@ -4551,95 +4551,96 @@ function update_lscript
 		VER=$(timeout -s SIGTERM 20 curl "https://raw.githubusercontent.com/arismelachroinos/lscript/master/version.txt" 2>/dev/null)
 		if [[ "$VERSION" != "$VER" ]]
 		then
-		clear
-		echo -e "There is an update available."
-		echo -e "Current version: $VERSION"
-		echo -e "Updated version: $VER"
-		echo -e "$PAKTC"
-		$READAK
-		clear
-		echo -e "Do you want to update?"$YNONLY": "
-		read UPDATEYN
-		if [[ "$UPDATEYN" = "y" ]]
-		then
 			clear
-			#~ echo -e "Making new directory for the old lscript (will pass it to /root/lscriptold)"
-			sleep 1
-			if [[ -d /root/lscriptold ]]
-			then
-				rm -r /root/lscriptold
-			fi
-			mkdir /root/lscriptold
-			echo -e ""
-			#~ echo -e "Moving lscript to lscriptold"
-			sleep 1
-			mv "$LPATH" /root/lscriptold
-			#~ echo -e "Cloning the latest github version to new "$LPATH""
-			sleep 1
-			cd
-			git clone https://github.com/arismelachroinos/lscript.git
-			cd "$LPATH"
-			chmod +x install.sh
-			clear
-			sleep 1
-			if [[ -d /root/lscriptold/lscript/ks ]]
-			then
-				echo -e "Copying your shortcuts"
-				cp -r /root/lscriptold/lscript/ks "$LPATH"
-				echo -e "Done."
-				sleep 1
-				clear
-			fi
-			if [[ -d /root/lscriptold/lscript/settings ]]
-			then
-				echo -e "Copying your settings"
-				cp -r /root/lscriptold/lscript/settings "$LPATH"
-				echo -e "Done."
-				sleep 1
-				clear
-			fi
-			if [[ -f /root/lscriptold/lscript/wlanmon.txt ]]
-			then
-				echo -e "Copying your interfaces"
-				cp /root/lscriptold/lscript/wlanmon.txt "$LPATH"
-				echo -e "Done."
-				sleep 1
-				clear
-			fi
-			echo -e ""
-			if [[ -f /root/lscriptold/lscript/wlan.txt ]]
-			then
-				cp /root/lscriptold/lscript/wlan.txt "$LPATH"
-				echo -e "Done."
-				sleep 1
-				clear
-			fi
+			echo -e "There is an update available."
+			echo -e "Current version: $VERSION"
+			echo -e "Updated version: $VER"
 			echo -e "$PAKTC"
 			$READAK
-			cd "$LPATH"
-			gnome-terminal -e ./install.sh
-			clear 
-			sleep 1
-			rm -rf /root/lscriptold
-			echo -e "Exiting..."
-			sleep 1
-			kill -9 $PPID
-		else 
 			clear
-			echo -e "You didnt select "y" so you go back..."
-			sleep 3
-			exec bash "$0"
-		fi
+			echo -e "Do you want to update?"$YNONLY": "
+			read UPDATEYN
+			if [[ "$UPDATEYN" = "y" ]]
+			then
+				clear
+				#~ echo -e "Making new directory for the old lscript (will pass it to /root/lscriptold)"
+				sleep 1
+				if [[ -d /root/lscriptold ]]
+				then
+					rm -r /root/lscriptold
+				fi
+				mkdir /root/lscriptold
+				echo -e ""
+				#~ echo -e "Moving lscript to lscriptold"
+				sleep 1
+				mv "$LPATH" /root/lscriptold
+				#~ echo -e "Cloning the latest github version to new "$LPATH""
+				sleep 1
+				cd
+				git clone https://github.com/arismelachroinos/lscript.git
+				cd "$LPATH"
+				chmod +x install.sh
+				clear
+				sleep 1
+				if [[ -f /root/lscriptold/lscript/IAGREE.txt ]]
+				then
+					cp /root/lscriptold/lscript/IAGREE.txt "$LPATH"
+				fi
+				if [[ -d /root/lscriptold/lscript/ks ]]
+				then
+					echo -e "Copying your shortcuts"
+					cp -r /root/lscriptold/lscript/ks "$LPATH"
+					echo -e "Done."
+					sleep 0.2
+				fi
+				if [[ -d /root/lscriptold/lscript/settings ]]
+				then
+					echo -e "Copying your settings"
+					cp -r /root/lscriptold/lscript/settings "$LPATH"
+					echo -e "Done."
+					sleep 0.2
+				fi
+				if [[ -f /root/lscriptold/lscript/wlanmon.txt ]]
+				then
+					echo -e "Copying your interfaces"
+					cp /root/lscriptold/lscript/wlanmon.txt "$LPATH"
+					echo -e "Done."
+					sleep 0.2
+				fi
+				echo -e ""
+				if [[ -f /root/lscriptold/lscript/wlan.txt ]]
+				then
+					cp /root/lscriptold/lscript/wlan.txt "$LPATH"
+					echo -e "Done."
+					sleep 0.2
+					clear
+				fi
+				echo -e "$PAKTC"
+				$READAK
+				cd "$LPATH"
+				gnome-terminal -e ./install.sh
+				clear 
+				sleep 1
+				rm -rf /root/lscriptold
+				echo -e "Exiting..."
+				sleep 1
+				kill -9 $PPID
+			else 
+				clear
+				echo -e "You didnt select "y" so you go back..."
+				sleep 3
+				exec bash "$0"
+			fi
 		else
-		echo -e "There is no update available"
-		sleep 1
-		echo -e "Installed version: $VERSION"
-		sleep 1
-		echo -e "Github version:    $VER"
-		sleep 1
-		echo -e "$PAKTGB"
-		$READAK	
-		exec bash "$0"
+			echo -e "There is no update available"
+			sleep 1
+			echo -e "Installed version: $VERSION"
+			sleep 1
+			echo -e "Github version:    $VER"
+			sleep 1
+			echo -e "$PAKTGB"
+			$READAK	
+			exec bash "$0"
 		fi
 	else
 		clear

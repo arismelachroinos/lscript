@@ -1,3 +1,24 @@
+2.1.0
+Fixed error in deauth when selecting a non existing station number.
+Fixed error when checking if monitor enabled.
+Added support for ALFA AWUS036ACH when checking if monitor enabled.
+Added Koadic tool to remote access and keyboard shortcuts.
+Added Empire tool to remote access and keyboard shortcuts.
+Added Meterpreter_Paranoid_Mode tool to remote access and keyboard shortcuts.
+Added Dr0p1t-Framework tool.
+Added Dr0p1t-Framework automation script to remote access.
+Added Wifi-Pumpkin in wifi tools and keyboard shortcuts.
+Added Veil in remote access tools and keyboard shortcuts.
+Added Leviathan in remote access tools and keyboard shortcuts.
+Added FakeImageExploiter to remote access tools.
+Added Avet to remote access tools.
+Added complete fix for apache2 failed to start error.
+Added latest changelog view at every update.
+Fixed no shortcuts saving after update error.
+Fixed settings not saved after update.
+
+
+
 2.0.9
 Fixed error in handshake menu line 59.
 Added Findsploit to metasploit menu.
@@ -8,7 +29,7 @@ Added option to select which client to disconnect.
 Added blue color for WEP ap's on handshake menu.
 Added option to check multiple hosts for eternalblue.
 Fixed minor issue with ngrok.
-Fixed: 'Found -6 clients error' in deauth.
+Fixed 'Found -6 clients error' in deauth.
 Fixed 'No networks found' after unsuccessful capture.
 Added Howdoi tool in banner.
 Added automated Howdoi settings in settings menu.

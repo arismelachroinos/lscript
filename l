@@ -1,6 +1,6 @@
 #! /bin/bash
-VERSION=2.0.9
-HOWMANYTOOLS=33
+VERSION=2.1.0
+HOWMANYTOOLS=39
 BACKL="0"
 DONATIONS=0
 #############DEFAULTS###############
@@ -49,8 +49,24 @@ function defaults_l
 	TNI=""$RS"Tool is not installed. To install it type '"$CE""$YS"install"$CE""$RS"'."$CE""
 #code to read from keyboard without return
 	READAK="read -n 1"
+#trap
+	#~ trap finish EXIT
 }
 ##############FUNCTIONS#############
+function latest_changelog
+{
+	clear
+	printf '\033]2;LATEST CHANGELOG\a'
+	echo -e ""$BS"Wellcome to version $VERSION"$CE""
+	echo -e "What is included in this update: "
+	cat "$LPATH"/Changelog | head -n 20
+	echo -e "$PAKTC"
+	$READAK
+}
+function finish 
+{
+  echo -e ""$RS"Hard kill detected.."$CE""
+}
 function dash_calc
 {
 	
@@ -554,6 +570,36 @@ function listshortcuts
 		TITLE="Operative-framework"
 		NAMECD="cd /root/operative-framework"
 		KSSET="python operative.py"
+	elif [[ "$nn" = "34" ]]
+	then
+		TITLE="Koadic"
+		NAMECD="cd /root/koadic"
+		KSSET="./koadic"
+	elif [[ "$nn" = "35" ]]
+	then
+		TITLE="Empire"
+		NAMECD="cd /root/Empire"
+		KSSET="./empire"
+	elif [[ "$nn" = "36" ]]
+	then
+		TITLE="Meterpreter_Paranoid_Mode"
+		NAMECD="cd /root/Meterpreter_Paranoid_Mode-SSL"
+		KSSET="./Meterpreter_Paranoid_Mode.sh"
+	elif [[ "$nn" = "37" ]]
+	then
+		TITLE="Wifi-Pumpkin"
+		NAMECD=""
+		KSSET="wifi-pumpkin"
+	elif [[ "$nn" = "38" ]]
+	then
+		TITLE="Veil"
+		NAMECD="cd /root/Veil"
+		KSSET="./Veil.py"
+	elif [[ "$nn" = "39" ]]
+	then
+		TITLE="Leviathan"
+		NAMECD="cd /root/leviathan"
+		KSSET="python leviathan.py"
 	fi
 }
 function reinstall_tools
@@ -565,26 +611,26 @@ do
 	dash_calc
 	printf '\033]2;INSTALL/REINSTALL A TOOL\a'
 	echo -e "Select a tool to install/reinstall"
-	echo -e " "$YS"1"$CE") Fluxion          "$YS"21"$CE") 4nonimizer       "$YS"41"$CE") Infoga"
-	echo -e ""$YS" 2"$CE") Wifite           "$YS"22"$CE") Openvas          "$YS"42"$CE") nWatch"
-	echo -e ""$YS" 3"$CE") Wifiphisher      "$YS"23"$CE") BeeLogger        "$YS"43"$CE") Eternal scanner"
-	echo -e ""$YS" 4"$CE") Zatacker         "$YS"24"$CE") Ezsploit         "$YS"44"$CE") Eaphammer"
-	echo -e ""$YS" 5"$CE") Morpheus         "$YS"25"$CE") Pupy             "$YS"45"$CE") Dagon"
-	echo -e ""$YS" 6"$CE") Osrfconsole      "$YS"26"$CE") Zirikatu         "$YS"46"$CE") Lalin"
-	echo -e ""$YS" 7"$CE") Hakku            "$YS"27"$CE") WiFi-autopwner   "$YS"47"$CE") Knockmail"
-	echo -e ""$YS" 8"$CE") Trity            "$YS"28"$CE") Bully            "$YS"48"$CE") Kwetza"
-	echo -e ""$YS" 9"$CE") Cupp             "$YS"29"$CE") Anonsurf         "$YS"49"$CE") Ngrok"
-	echo -e ""$YS"10"$CE") Dracnmap         "$YS"30"$CE") Anonym8          "$YS"50"$CE") Bleachbit"
-	echo -e ""$YS"11"$CE") Fern             "$YS"31"$CE") TheFatRat        "$YS"51"$CE") Vmr mdk"
-	echo -e ""$YS"12"$CE") Netdiscover      "$YS"32"$CE") Angry IP Scanner "$YS"52"$CE") Hash Buster"
-	echo -e ""$YS"13"$CE") KickThemOut      "$YS"33"$CE") Sniper           "$YS"53"$CE") Findsploit"
-	echo -e ""$YS"14"$CE") Ghost-Phisher    "$YS"34"$CE") ReconDog         "$YS"54"$CE") Howdoi"
-	echo -e ""$YS"15"$CE") The Eye          "$YS"35"$CE") RED HAWK         "$YS"55"$CE") Operative-frmwork"
-	echo -e ""$YS"16"$CE") Xerxes           "$YS"36"$CE") WinPayloads      "$YS"56"$CE") Netattack2"
-	echo -e ""$YS"17"$CE") Mdk3-master      "$YS"37"$CE") Shellter"
-	echo -e ""$YS"18"$CE") Katana Framework "$YS"38"$CE") CHAOS"
-	echo -e ""$YS"19"$CE") Airgeddon        "$YS"39"$CE") Routersploit"
-	echo -e ""$YS"20"$CE") Websploit        "$YS"40"$CE") Geany"
+	echo -e " "$YS"1"$CE") Fluxion      "$YS"21"$CE") 4nonimizer    "$YS"41"$CE") Infoga           "$YS"61"$CE") Wifi-Pumpkin"
+	echo -e ""$YS" 2"$CE") Wifite       "$YS"22"$CE") Openvas       "$YS"42"$CE") nWatch           "$YS"62"$CE") Veil-Framework"
+	echo -e ""$YS" 3"$CE") Wifiphisher  "$YS"23"$CE") BeeLogger     "$YS"43"$CE") Eternal scanner  "$YS"63"$CE") Leviathan"
+	echo -e ""$YS" 4"$CE") Zatacker     "$YS"24"$CE") Ezsploit      "$YS"44"$CE") Eaphammer        "$YS"64"$CE") FakeImageExploiter"
+	echo -e ""$YS" 5"$CE") Morpheus     "$YS"25"$CE") Pupy          "$YS"45"$CE") Dagon            "$YS"65"$CE") Avet"
+	echo -e ""$YS" 6"$CE") Osrfconsole  "$YS"26"$CE") Zirikatu      "$YS"46"$CE") Lalin"
+	echo -e ""$YS" 7"$CE") Hakku        "$YS"27"$CE") WiFi-autopwner"$YS"47"$CE") Knockmail"
+	echo -e ""$YS" 8"$CE") Trity        "$YS"28"$CE") Bully         "$YS"48"$CE") Kwetza"
+	echo -e ""$YS" 9"$CE") Cupp         "$YS"29"$CE") Anonsurf      "$YS"49"$CE") Ngrok"
+	echo -e ""$YS"10"$CE") Dracnmap     "$YS"30"$CE") Anonym8       "$YS"50"$CE") Bleachbit"
+	echo -e ""$YS"11"$CE") Fern         "$YS"31"$CE") TheFatRat     "$YS"51"$CE") Vmr mdk"
+	echo -e ""$YS"12"$CE") Netdiscover  "$YS"32"$CE") Angry IP      "$YS"52"$CE") Hash Buster"
+	echo -e ""$YS"13"$CE") KickThemOut  "$YS"33"$CE") Sniper        "$YS"53"$CE") Findsploit"
+	echo -e ""$YS"14"$CE") Ghost-Phisher"$YS"34"$CE") ReconDog      "$YS"54"$CE") Howdoi"
+	echo -e ""$YS"15"$CE") The Eye      "$YS"35"$CE") RED HAWK      "$YS"55"$CE") Operative-frmwork"
+	echo -e ""$YS"16"$CE") Xerxes       "$YS"36"$CE") WinPayloads   "$YS"56"$CE") Netattack2"
+	echo -e ""$YS"17"$CE") Mdk3-master  "$YS"37"$CE") Shellter      "$YS"57"$CE") Koadic"
+	echo -e ""$YS"18"$CE") Katana       "$YS"38"$CE") CHAOS         "$YS"58"$CE") Empire"
+	echo -e ""$YS"19"$CE") Airgeddon    "$YS"39"$CE") Routersploit  "$YS"59"$CE") Meterpr.-Paranoid"
+	echo -e ""$YS"20"$CE") Websploit    "$YS"40"$CE") Geany         "$YS"60"$CE") Dr0p1t"
 	echo -e ""$YS" b"$CE") Go back"
 	echo -e ""$YS" 0"$CE") Exit"
 	echo -e "Choose: "
@@ -760,6 +806,33 @@ do
 	elif [[ "$REIN" = "56" ]]
 	then
 		install_netattack2
+	elif [[ "$REIN" = "57" ]]
+	then
+		install_koadic
+	elif [[ "$REIN" = "58" ]]
+	then
+		install_empire
+	elif [[ "$REIN" = "59" ]]
+	then
+		install_meterpreter_paranoid_mode
+	elif [[ "$REIN" = "60" ]]
+	then
+		install_dropit_frmw
+	elif [[ "$REIN" = "61" ]]
+	then
+		install_wifi_pumpkin
+	elif [[ "$REIN" = "62" ]]
+	then
+		install_veil
+	elif [[ "$REIN" = "63" ]]
+	then
+		install_leviathan
+	elif [[ "$REIN" = "64" ]]
+	then
+		install_fake_image
+	elif [[ "$REIN" = "65" ]]
+	then
+		install_avet
 	elif [[ "$REIN" = "back" || "$REIN" = "b" ]]
 	then
 		clear
@@ -786,6 +859,7 @@ echo -e ""$YS" 4"$CE") Error constructing proxy for org.gnome.Terminal"
 echo -e ""$YS" 5"$CE") Error starting apache2 service"
 echo -e ""$YS" 6"$CE") Errors when apt-get update"
 echo -e ""$YS" 7"$CE") Errors when creating a payload with Winpayloads"
+echo -e ""$YS" 8"$CE") Complete fix for apache2 service failed to start"
 echo -e ""$YS" b"$CE") Go back"
 echo -e ""$YS" 0"$CE") EXIT"
 echo -e " Choose: "
@@ -856,6 +930,16 @@ then
 elif [[ "$ERRS" = "7" ]]
 then
 	rm -f -r /usr/local/lib/python2.7/dist-packages/Crypto
+	echo -e "Error was fixed!"
+	echo -e "$PAKTGB"
+	$READAK
+elif [[ "$ERRS" = "8" ]]
+then
+	apt-get -y remove nginx
+	apt-get -y remove nginx-full
+	apt-get -y remove nginx-common
+	apt-get -y autoremove
+	clear
 	echo -e "Error was fixed!"
 	echo -e "$PAKTGB"
 	$READAK
@@ -1884,6 +1968,558 @@ function eaphammer_automation
 				fi
 			done
 }
+function dropit_automation
+{
+clear
+while true
+do
+	clear
+	TERMINALTITLE="Dr0p1t-Framework"
+	dash_calc
+	printf '\033]2;Dr0p1t-Framework\a'
+	if [[ "$MALURL" = "" ]]
+	then
+		MALURL="\e[1;31mNONE\e[0m"
+	fi
+	if [[ "$STARTUP" = "" ]]
+	then
+		STARTUP="OFF"
+	fi
+	if [[ "$TASK" = "" ]]
+	then
+		TASK="OFF"
+	fi
+	if [[ "$LTPUP" = "" ]]
+	then
+		LTPUP="OFF"
+	fi
+	if [[ "$KILLANT" = "" ]]
+	then
+		KILLANT="OFF"
+	fi
+	if [[ "$RUNBAT" = "" ]]
+	then
+		RUNBAT="OFF"
+	fi
+	if [[ "$RUNPOW" = "" ]]
+	then
+		RUNPOW="OFF"
+	fi
+	if [[ "$RUNVBS" = "" ]]
+	then
+		RUNVBS="OFF"
+	fi
+	if [[ "$UACASADMIN" = "" ]]
+	then
+		UACASADMIN="OFF"
+	fi
+	if [[ "$SPOOFEXT" = "" ]]
+	then
+		SPOOFEXT="OFF"
+	fi
+	if [[ "$ISZIP" = "" ]]
+	then
+		ISZIP="OFF"
+	fi
+	if [[ "$COMPRESS" = "" ]]
+	then
+		COMPRESS="OFF"
+	fi
+	if [[ "$DISUAC" = "" ]]
+	then
+		DISUAC="OFF"
+	fi
+	if [[ "$ICON" = "" ]]
+	then
+		ICON="OFF"
+	fi
+	if [[ "$EVENT" = "" ]]
+	then
+		EVENT="OFF"
+	fi
+	if [[ "$COMPILE" = "" ]]
+	then
+		COMPILE="OFF"
+	fi
+	if [[ "$D32" = "" ]]
+	then
+		D32="OFF"
+	fi
+	if [[ "$D64" = "" ]]
+	then
+		D64="OFF"
+	fi
+	if [[ "$BANN" = "" ]]
+	then
+		BANN="OFF"
+	fi
+	echo -e ""$YS" 1"$CE") Malware URL                          CURRENT:$MALURL"
+	echo -e ""$YS" 2"$CE") Malware to startup                   CURRENT:$STARTUP"
+	echo -e ""$YS" 3"$CE") Malware to task scheduler            CURRENT:$TASK"
+	echo -e ""$YS" 4"$CE") Add link to powershell user profile  CURRENT:$LTPUP"
+	echo -e ""$YS" 5"$CE") Kill antivirus before malware        CURRENT:$KILLANT"
+	echo -e ""$YS" 6"$CE") Run batch script before malware      CURRENT:$RUNBAT"
+	echo -e ""$YS" 7"$CE") Run powershell script before malware CURRENT:$RUNPOW"
+	echo -e ""$YS" 8"$CE") Run vbs script before malware        CURRENT:$RUNVBS"
+	echo -e ""$YS" 9"$CE") Bypass UAC and run malware as admin  CURRENT:$UACASADMIN"
+	echo -e ""$YS"10"$CE") Spoof final file to an extension     CURRENT:$SPOOFEXT"
+	echo -e ""$YS"11"$CE") Malware is zip compressed            CURRENT:$ISZIP"
+	echo -e ""$YS"12"$CE") Compress the final file with UPX     CURRENT:$COMPRESS"
+	echo -e ""$YS"13"$CE") Try to disable UAC on victim device  CURRENT:$DISUAC"
+	echo -e ""$YS"14"$CE") Use icon to the final file           CURRENT:$ICON"
+	echo -e ""$YS"15"$CE") Don't clean target's event log       CURRENT:$EVENT"
+	echo -e ""$YS"16"$CE") Don't compile the final file         CURRENT:$COMPILE"
+	echo -e ""$YS"17"$CE") Download malware for 32 bit only     CURRENT:$D32"
+	echo -e ""$YS"18"$CE") Download malware for 64 bit only     CURRENT:$D64"
+	echo -e ""$YS"19"$CE") Stay quite(no banner)                CURRENT:$BANN"
+	echo -e ""$YS" o"$CE") Open output folder"
+	echo -e ""$YS" u"$CE") Check for updates"
+	echo -e ""$YS" b"$CE") Go back"
+	echo -e ""$YS"start"$CE") Generate"
+	echo -e "Choose: "
+	read DR
+	clear
+	if [[ "$DR" = "o" ]]
+	then
+		xdg-open /root/Dr0p1t-Framework/output
+		continue
+	fi
+	if [[ "$DR" = "u" ]]
+	then
+		cd /root/Dr0p1t-Framework
+		python Dr0p1t.py -u
+		cd
+		continue
+	fi
+	if [[ "$DR" = "start" ]]
+	then
+		if [[ "$MALURL" = "\e[1;31mNONE\e[0m" ]]
+		then
+			echo -e ""$RS"No URL specified."$CE""
+			sleep 2
+			continue
+		fi
+		if [[ "$STARTUP" = "OFF" ]]
+		then
+			DSTARTUP=""
+		else
+			DSTARTUP="-s"
+		fi
+		if [[ "$TASK" = "OFF" ]]
+		then
+			DTASK=""
+		else
+			DTASK="-t"
+		fi
+		if [[ "$LTPUP" = "OFF" ]]
+		then
+			DLTPUP=""
+		else
+			DLTPUP="-a"
+		fi
+		if [[ "$KILLANT" = "OFF" ]]
+		then
+			DKILLANT=""
+		else
+			DKILLANT="-k"
+		fi
+		if [[ "$RUNBAT" = "OFF" ]]
+		then
+			DRUNBAT=""
+		else
+			DRUNBAT="-b $RUNBAT"
+		fi
+		if [[ "$RUNPOW" = "OFF" ]]
+		then
+			DRUNPOW=""
+		else
+			DRUNPOW="-p $RUNPOW"
+		fi
+		if [[ "$RUNVBS" = "OFF" ]]
+		then
+			DRUNVBS=""
+		else
+			DRUNVBS="-v $RUNVBS"
+		fi
+		if [[ "$UACASADMIN" = "OFF" ]]
+		then
+			DUACASADMIN=""
+		else
+			DUACASADMIN="--runas"
+		fi
+		if [[ "$SPOOFEXT" = "OFF" ]]
+		then
+			DSPOOFEXT=""
+		else
+			DSPOOFEXT="--spoof $SPOOFEXT"
+		fi
+		if [[ "$ISZIP" = "OFF" ]]
+		then
+			DISZIP=""
+		else
+			DISZIP="--zip"
+		fi
+		if [[ "$COMPRESS" = "OFF" ]]
+		then
+			DCOMPRESS=""
+		else
+			DCOMPRESS="--upx"
+		fi
+		if [[ "$DISUAC" = "OFF" ]]
+		then
+			DDISUAC=""
+		else
+			DDISIAC="--nouac"
+		fi
+		if [[ "$ICON" = "OFF" ]]
+		then
+			DICON=""
+		else
+			DICON="-i $ICON"
+		fi
+		if [[ "$EVENT" = "OFF" ]]
+		then
+			DEVENT=""
+		else
+			DEVENT="--noclearevent"
+		fi
+		if [[ "$COMPILE" = "OFF" ]]
+		then
+			DCOMPILE=""
+		else
+			DCOMPILE="--nocompile"
+		fi
+		if [[ "$D32" = "OFF" ]]
+		then
+			DD32=""
+		else
+			DD32="--only32"
+		fi
+		if [[ "$D64" = "OFF" ]]
+		then
+			DD64=""
+		else
+			DD64="--only64"
+		fi
+		if [[ "$BANN" = "OFF" ]]
+		then
+			DBANN=""
+		else
+			DBANN="-q"
+		fi
+		cd /root/Dr0p1t-Framework
+		python Dr0p1t.py $MALURL $DSTARTUP $DTASK $DLTPUP $DKILLANT $DRUNBAT $DRUNPOW $DRUNVBS $DUACASADMIN $DSPOOFEXT $DISZIP $DCOMPRESS $DDISUAC $DICON $DEVENT $DCOMPILE $DD32 $DD64 $DBANN
+		echo -e "$PAKTGB"
+		$READAK
+		cd
+	elif [[ "$DR" = 1 ]]
+	then
+		echo -e "Malware URL: "
+		read MALURL
+	elif [[ "$DR" = 14 ]]
+	then
+		if [[ "$ICON" = "OFF" ]]
+		then
+			while true
+			do
+				echo -e ""$RS"Icon must be on /root/Dr0p1t-Framework/icons folder."$CE""
+				echo -e ""
+				ls -1 /root/Dr0p1t-Framework/icons/
+				echo -e ""
+				echo -e ""$YS"cp"$CE") Copy my icon to that folder"
+				echo -e ""$YS" b"$CE") Go back"
+				echo -e "Enter the name of your icon: "
+				read ICON
+				if [[ "$ICON" = "b" ]]
+				then
+					ICON="OFF"
+					break
+				elif [[ "$ICON" = "m" ]]
+				then
+					clear
+					echo -e "Your file path: "
+					read FP
+					if [[ ! -f "$FP" ]]
+					then
+						echo -e ""$RS"File does not exist."$CE""
+						sleep 2
+					else
+						cp "$FP" /root/Dr0p1t-Framework/icons/
+					fi
+				elif [[ ! -f /root/Dr0p1t-Framework/icons/"$ICON" ]]
+				then
+					if [[ ! -f /root/Dr0p1t-Framework/icons/"$ICON".ico ]]
+					then
+						echo -e ""$RS"File not found."$CE""
+						sleep 2
+					else
+						ICON=""$ICON".ico"
+						break
+					fi
+				else
+					break
+				fi
+			done
+		else
+			ICON="OFF"
+		fi
+	elif [[ "$DR" = 8 ]]
+	then
+		if [[ "$RUNVBS" = "OFF" ]]
+		then
+			while true
+			do
+				echo -e ""$RS"Script must be on /root/Dr0p1t-Framework/scripts/vbs folder."$CE""
+				echo -e ""
+				ls -1 /root/Dr0p1t-Framework/scripts/vbs/
+				echo -e ""
+				echo -e ""$YS"cp"$CE") Copy my script to that folder"
+				echo -e ""$YS" b"$CE") Go back"
+				echo -e "Enter the name of your script: "
+				read RUNVBS
+				if [[ "$RUNVBS" = "b" ]]
+				then
+					RUNVBS="OFF"
+					break
+				elif [[ "$RUNVBS" = "m" ]]
+				then
+					clear
+					echo -e "Your file path: "
+					read FP
+					if [[ ! -f "$FP" ]]
+					then
+						echo -e ""$RS"File does not exist."$CE""
+						sleep 2
+					else
+						cp "$FP" /root/Dr0p1t-Framework/scripts/vbs/
+					fi
+				elif [[ ! -f /root/Dr0p1t-Framework/scripts/vbs/"$RUNVBS" ]]
+				then
+					if [[ ! -f /root/Dr0p1t-Framework/scripts/vbs/"$RUNVBS".vbs ]]
+					then
+						echo -e ""$RS"File not found."$CE""
+						sleep 2
+					else
+						RUNVBS=""$RUNVBS".vbs"
+						break
+					fi
+				else
+					break
+				fi
+			done
+		else
+			RUNVBS="OFF"
+		fi
+	elif [[ "$DR" = 7 ]]
+	then
+		if [[ "$RUNPOW" = "OFF" ]]
+		then
+			while true
+			do
+				echo -e ""$RS"Script must be on /root/Dr0p1t-Framework/scripts/powershell folder."$CE""
+				echo -e ""
+				ls -1 /root/Dr0p1t-Framework/scripts/powershell/
+				echo -e ""
+				echo -e ""$YS"cp"$CE") Copy my script to that folder"
+				echo -e ""$YS" b"$CE") Go back"
+				echo -e "Enter the name of your script: "
+				read RUNPOW
+				if [[ "$RUNPOW" = "b" ]]
+				then
+					RUNPOW="OFF"
+					break
+				elif [[ "$RUNPOW" = "m" ]]
+				then
+					clear
+					echo -e "Your file path: "
+					read FP
+					if [[ ! -f "$FP" ]]
+					then
+						echo -e ""$RS"File does not exist."$CE""
+						sleep 2
+					else
+						cp "$FP" /root/Dr0p1t-Framework/scripts/powershell/
+					fi
+				elif [[ ! -f /root/Dr0p1t-Framework/scripts/powershell/"$RUNPOW" ]]
+				then
+					if [[ ! -f /root/Dr0p1t-Framework/scripts/powershell/"$RUNPOW".ps1 ]]
+					then
+						echo -e ""$RS"File not found."$CE""
+						sleep 2
+					else
+						RUNPOW=""$RUNPOW".ps1"
+						break
+					fi
+				else
+					break
+				fi
+			done
+		else
+			RUNPOW="OFF"
+		fi
+	elif [[ "$DR" = 6 ]]
+	then
+		if [[ "$RUNBAT" = "OFF" ]]
+		then
+			while true
+			do
+				echo -e ""$RS"Script must be on /root/Dr0p1t-Framework/scripts/bat folder."$CE""
+				echo -e ""
+				ls -1 /root/Dr0p1t-Framework/scripts/bat/
+				echo -e ""
+				echo -e ""$YS"cp"$CE") Copy my script to that folder"
+				echo -e ""$YS" b"$CE") Go back"
+				echo -e "Enter the name of your script: "
+				read RUNBAT
+				if [[ "$RUNBAT" = "b" ]]
+				then
+					RUNBAT="OFF"
+					break
+				elif [[ "$RUNBAT" = "m" ]]
+				then
+					clear
+					echo -e "Your file path: "
+					read FP
+					if [[ ! -f "$FP" ]]
+					then
+						echo -e ""$RS"File does not exist."$CE""
+						sleep 2
+					else
+						cp "$FP" /root/Dr0p1t-Framework/scripts/bat/
+					fi
+				elif [[ ! -f /root/Dr0p1t-Framework/scripts/bat/"$RUNBAT" ]]
+				then
+					if [[ ! -f /root/Dr0p1t-Framework/scripts/bat/"$RUNBAT".bat ]]
+					then
+						echo -e ""$RS"File not found."$CE""
+						sleep 2
+					else
+						RUNBAT=""$RUNBAT".bat"
+						break
+					fi
+				else
+					break
+				fi
+			done
+		else
+			RUNBAT="OFF"
+		fi
+	elif [[ "$DR" = 2 ]]
+	then
+		if [[ "$STARTUP" = "OFF" ]]
+		then
+			STARTUP="ON"
+		else
+			STARTUP="OFF"
+		fi
+	elif [[ "$DR" = 3 ]]
+	then
+		if [[ "$TASK" = "OFF" ]]
+		then
+			TASK="ON"
+		else
+			TASK="OFF"
+		fi
+	elif [[ "$DR" = 4 ]]
+	then
+		if [[ "$LTPUP" = "OFF" ]]
+		then
+			LTPUP="ON"
+		else
+			LTPUP="OFF"
+		fi
+	elif [[ "$DR" = 5 ]]
+	then
+		if [[ "$KILLANT" = "OFF" ]]
+		then
+			KILLANT="ON"
+		else
+			KILLANT="OFF"
+		fi
+	elif [[ "$DR" = 9 ]]
+	then
+		if [[ "$UACASADMIN" = "OFF" ]]
+		then
+			UACASADMIN="ON"
+		else
+			UACASADMIN="OFF"
+		fi
+	elif [[ "$DR" = 10 ]]
+	then
+		if [[ "$SPOOFEXT" = "OFF" ]]
+		then
+			echo -e "Extension: "
+			read SPOOFEXT
+		else
+			SPOOFEXT="OFF"
+		fi
+	elif [[ "$DR" = 11 ]]
+	then
+		if [[ "$ISZIP" = "OFF" ]]
+		then
+			ISZIP="ON"
+		else
+			ISZIP="OFF"
+		fi
+	elif [[ "$DR" = 12 ]]
+	then
+		if [[ "$COMPRESS" = "OFF" ]]
+		then
+			COMPRESS="ON"
+		else
+			COMPRESS="OFF"
+		fi
+	elif [[ "$DR" = 13 ]]
+	then
+		if [[ "$DISUAC" = "OFF" ]]
+		then
+			DISUAC="ON"
+		else
+			DISUAC="OFF"
+		fi
+	elif [[ "$DR" = 15 ]]
+	then
+		if [[ "$EVENT" = "OFF" ]]
+		then
+			EVENT="ON"
+		else
+			EVENT="OFF"
+		fi
+	elif [[ "$DR" = 16 ]]
+	then
+		if [[ "$COMPILE" = "OFF" ]]
+		then
+			COMPILE="ON"
+		else
+			COMPILE="OFF"
+		fi
+	elif [[ "$DR" = 17 ]]
+	then
+		if [[ "$D32" = "OFF" ]]
+		then
+			D32="ON"
+		else
+			D32="OFF"
+		fi
+	elif [[ "$DR" = 18 ]]
+	then
+		if [[ "$D64" = "OFF" ]]
+		then
+			D64="ON"
+		else
+			D64="OFF"
+		fi
+	elif [[ "$DR" = 19 ]]
+	then
+		if [[ "$BANN" = "OFF" ]]
+		then
+			BANN="ON"
+		else
+			BANN="OFF"
+		fi
+	fi
+done
+}
 function wifi_tools
 {
 	while true
@@ -2060,6 +2696,12 @@ function wifi_tools
 		echo -e ""$YS"28"$CE") Netattack3         Advanced network scan and attack script"
 	else
 		echo -e ""$RS"28"$CE") "$RS"Netattack2"$CE"         Advanced network scan and attack script"
+	fi
+	if [[ -f /usr/bin/wifi-pumpkin ]]
+	then
+		echo -e ""$YS"29"$CE") Wifi-Pumpkin       Framework for Rogue Wi-Fi Access Point Attack"
+	else
+		echo -e ""$RS"29"$CE") "$RS"Wifi-Pumpkin"$CE"       Framework for Rogue Wi-Fi Access Point Attack"
 	fi
 	echo -e ""$YS" b"$CE") Go back"
 	echo -e ""$YS"00"$CE") Main menu"
@@ -2595,6 +3237,22 @@ function wifi_tools
 			fi
 		fi
 		cd
+	elif [[ "$APPP" = "29" ]]
+	then
+		if [[ -f "/usr/bin/wifi-pumpkin" ]]
+		then
+			wifi-pumpkin
+		else
+			echo -e "$TNI"
+			read INSTALL
+			if [[ "$INSTALL" = "install" ]]
+			then
+				install_wifi_pumpkin
+			else
+				continue
+			fi
+		fi
+		cd
 	elif [[ "$APPP" = "6" ]]
 	then
 		if [[ -d "/root/hakkuframework" ]]
@@ -2694,59 +3352,146 @@ function remote_access
 	TERMINALTITLE="REMOTE ACCESS"
 	dash_calc
 	printf '\033]2;REMOTE ACCESS\a'
+	#~ HOWMANYREMOTE=10
+	#~ n=1
+	#~ #------------------
+	#~ NAME[1]="BeeLogger"
+	#~ DISC[1]="Generate keylogger"
+	#~ CASE[1]="-d /root/BeeLogger"
+	#~ NAME[2]="Ezsploit"
+	#~ DISC[2]="Generate payloads for many platforms,listeners etc..."
+	#~ CASE[2]="-d /root/ezsploit"
+	#~ NAME[3]="BeeLogger"
+	#~ DISC[3]="Generate keylogger"
+	#~ CASE[3]="-d /root/BeeLogger"
+	#~ NAME[4]="BeeLogger"
+	#~ DISC[4]="Generate keylogger"
+	#~ CASE[4]="-d /root/BeeLogger"
+	#~ NAME[5]="BeeLogger"
+	#~ DISC[5]="Generate keylogger"
+	#~ CASE[5]="-d /root/BeeLogger"
+	#~ while [[ "$n" -le "$HOWMANYREMOTE" ]]
+	#~ do
+		#~ if [ {CASE[$n]} ]
+		#~ then
+			#~ if [[ "$n" -le 9 ]]
+			#~ then
+				#~ echo -e ""$YS" $n"$CE") NAME[$n] DISC[$n]"
+			#~ else
+				#~ echo -e ""$YS"$n"$CE") {NAME[$n]}{DISC[$n]}"
+			#~ fi
+		#~ else
+			#~ if [[ "$n" -le 9 ]]
+			#~ then
+				#~ echo -e ""$RS" $n"$CE") "$RS"{NAME[$n]}"$CE"{DISC[$n]}"
+			#~ else
+				#~ echo -e ""$RS"$n"$CE") "$RS"{NAME[$n]}"$CE"{DISC[$n]}"
+			#~ fi
+		#~ fi
+		#~ n=$((n+1))
+	#~ done
+	
 	if [[ -d /root/BeeLogger ]]
 	then
-		echo -e ""$YS" 1"$CE") BeeLogger    Generate keylogger"
+		echo -e ""$YS" 1"$CE") BeeLogger             Generate keylogger"
 	else
-		echo -e ""$RS" 1"$CE") "$RS"BeeLogger"$CE"    Generate keylogger"
+		echo -e ""$RS" 1"$CE") "$RS"BeeLogger"$CE"             Generate keylogger"
 	fi
 	if [[ -d /root/ezsploit ]]
 	then
-		echo -e ""$YS" 2"$CE") Ezsploit     Generate payloads for many platforms,listeners etc..."
+		echo -e ""$YS" 2"$CE") Ezsploit              Generate payloads for many platforms,listeners etc..."
 	else
-		echo -e ""$RS" 2"$CE") "$RS"Ezsploit"$CE"     Generate payloads for many platforms,listeners etc..."
+		echo -e ""$RS" 2"$CE") "$RS"Ezsploit"$CE"              Generate payloads for many platforms,listeners etc..."
 	fi
 	if [[ -d /root/pupy ]]
 	then
-		echo -e ""$YS" 3"$CE") Pupy         Generate payloads for many platforms,listeners etc..."
+		echo -e ""$YS" 3"$CE") Pupy                  Generate payloads for many platforms,listeners etc..."
 	else
-		echo -e ""$RS" 3"$CE") "$RS"Pupy"$CE"         Generate payloads for many platforms,listeners etc..."
+		echo -e ""$RS" 3"$CE") "$RS"Pupy"$CE"                  Generate payloads for many platforms,listeners etc..."
 	fi
 	if [[ -d /root/zirikatu ]]
 	then
-		echo -e ""$YS" 4"$CE") Zirikatu     Generate undetectable payloads"
+		echo -e ""$YS" 4"$CE") Zirikatu              Generate undetectable payloads"
 	else
-		echo -e ""$RS" 4"$CE") "$RS"Zirikatu"$CE"     Generate undetectable payloads"
+		echo -e ""$RS" 4"$CE") "$RS"Zirikatu"$CE"              Generate undetectable payloads"
 	fi
 	if [[ -d /root/TheFatRat ]]
 	then
-		echo -e ""$YS" 5"$CE") TheFatRat    Generate undetectable payloads"
+		echo -e ""$YS" 5"$CE") TheFatRat             Generate undetectable payloads"
 	else
-		echo -e ""$RS" 5"$CE") "$RS"TheFatRat"$CE"    Generate undetectable payloads"
+		echo -e ""$RS" 5"$CE") "$RS"TheFatRat"$CE"             Generate undetectable payloads"
 	fi
 	if [[ -d /root/Winpayloads ]]
 	then
-		echo -e ""$YS" 6"$CE") Winpayloads  Generate undetectable payloads"
+		echo -e ""$YS" 6"$CE") Winpayloads           Generate undetectable payloads"
 	else
-		echo -e ""$RS" 6"$CE") "$RS"Winpayloads"$CE"  Generate undetectable payloads"
+		echo -e ""$RS" 6"$CE") "$RS"Winpayloads"$CE"           Generate undetectable payloads"
 	fi
 	if [[ -f /usr/bin/shellter ]]
 	then
-		echo -e ""$YS" 7"$CE") Shellter     Inject payload into .exe"
+		echo -e ""$YS" 7"$CE") Shellter              Inject payload into .exe"
 	else
-		echo -e ""$RS" 7"$CE") "$RS"Shellter"$CE"     Inject payload into .exe"
+		echo -e ""$RS" 7"$CE") "$RS"Shellter"$CE"              Inject payload into .exe"
 	fi
 	if [[ -d /root/CHAOS ]]
 	then
-		echo -e ""$YS" 8"$CE") CHAOS        Generate payloads/listeners"
+		echo -e ""$YS" 8"$CE") CHAOS                 Generate payloads/listeners"
 	else
-		echo -e ""$RS" 8"$CE") "$RS"CHAOS"$CE"        Generate payloads/listeners"
+		echo -e ""$RS" 8"$CE") "$RS"CHAOS"$CE"                 Generate payloads/listeners"
 	fi
 	if [[ -d /root/kwetza ]]
 	then
-		echo -e ""$YS" 9"$CE") Kwetza        Inject payload to apk"
+		echo -e ""$YS" 9"$CE") Kwetza                Inject payload to apk"
 	else
-		echo -e ""$RS" 9"$CE") "$RS"Kwetza"$CE"        Inject payload to apk"
+		echo -e ""$RS" 9"$CE") "$RS"Kwetza"$CE"                Inject payload to apk"
+	fi
+	if [[ -d /root/koadic ]]
+	then
+		echo -e ""$YS"10"$CE") Koadic                Windows post-exploitation rootkit"
+	else
+		echo -e ""$RS"10"$CE") "$RS"Koadic"$CE"                Windows post-exploitation rootkit"
+	fi
+	if [[ -d /root/Empire ]]
+	then
+		echo -e ""$YS"11"$CE") Empire                PowerShell and Python post-exploitation agent"
+	else
+		echo -e ""$RS"11"$CE") "$RS"Empire"$CE"                PowerShell and Python post-exploitation agent"
+	fi
+	if [[ -d /root/Meterpreter_Paranoid_Mode-SSL ]]
+	then
+		echo -e ""$YS"12"$CE") Meterpreter Paranoid  Meterpreter Paranoid Mode - SSL/TLS connections"
+	else
+		echo -e ""$RS"12"$CE") "$RS"Meterpreter Paranoid"$CE"  Meterpreter Paranoid Mode - SSL/TLS connections"
+	fi
+	if [[ -d /root/Dr0p1t-Framework ]]
+	then
+		echo -e ""$YS"13"$CE") Dr0p1t-Framework      Create an advanced stealthy dropper"
+	else
+		echo -e ""$RS"13"$CE") "$RS"Dr0p1t-Framework"$CE"      Create an advanced stealthy dropper"
+	fi
+	if [[ -d /root/Veil ]]
+	then
+		echo -e ""$YS"14"$CE") Veil-Framework        Generate payloads that bypass common anti-virus"
+	else
+		echo -e ""$RS"14"$CE") "$RS"Veil-Framework"$CE"        Generate payloads that bypass common anti-virus"
+	fi
+	if [[ -d /root/leviathan ]]
+	then
+		echo -e ""$YS"15"$CE") Leviathan             Wide range mass audit toolkit"
+	else
+		echo -e ""$RS"15"$CE") "$RS"Leviathan"$CE"             Wide range mass audit toolkit"
+	fi
+	if [[ -d /root/FakeImageExploiter ]]
+	then
+		echo -e ""$YS"16"$CE") FakeImageExploiter    Use a Fake image.jpg to exploit targets"
+	else
+		echo -e ""$RS"16"$CE") "$RS"FakeImageExploiter"$CE"    Use a Fake image.jpg to exploit targets"
+	fi
+	if [[ -d /root/avet ]]
+	then
+		echo -e ""$YS"17"$CE") Avet                  AntiVirus Evasion Tool"
+	else
+		echo -e ""$RS"17"$CE") "$RS"Avet"$CE"                  AntiVirus Evasion Tool"
 	fi
 	echo -e ""$YS" b"$CE") Go back"
 	echo -e ""$YS"00"$CE") Main menu"
@@ -2771,6 +3516,150 @@ function remote_access
 				continue
 			fi
 		fi
+	elif [[ "$KEYLOG" = "10" ]]
+	then
+		if [[ -d /root/koadic ]]
+		then
+			cd /root/koadic
+			./koadic
+		else
+			echo -e "$TNI"
+			read INSTALL
+			if [[ "$INSTALL" = "install" ]]
+			then
+				install_koadic
+			else
+				continue
+			fi
+		fi
+	elif [[ "$KEYLOG" = "11" ]]
+	then
+		if [[ -d /root/Empire ]]
+		then
+			cd /root/Empire
+			./empire
+		else
+			echo -e "$TNI"
+			read INSTALL
+			if [[ "$INSTALL" = "install" ]]
+			then
+				install_empire
+			else
+				continue
+			fi
+		fi	
+	elif [[ "$KEYLOG" = "12" ]]
+	then
+		if [[ -d /root/Meterpreter_Paranoid_Mode-SSL ]]
+		then
+			cd /root/Meterpreter_Paranoid_Mode-SSL
+			./Meterpreter_Paranoid_Mode.sh
+		else
+			echo -e "$TNI"
+			read INSTALL
+			if [[ "$INSTALL" = "install" ]]
+			then
+				install_meterpreter_paranoid_mode
+			else
+				continue
+			fi
+		fi	
+	elif [[ "$KEYLOG" = "13" ]]
+	then
+		if [[ -d /root/Dr0p1t-Framework ]]
+		then
+			cd /root/Dr0p1t-Framework
+			dropit_automation
+		else
+			echo -e "$TNI"
+			read INSTALL
+			if [[ "$INSTALL" = "install" ]]
+			then
+				install_dropit_frmw
+			else
+				continue
+			fi
+		fi	
+	elif [[ "$KEYLOG" = "14" ]]
+	then
+		if [[ -d /root/Veil ]]
+		then
+			cd /root/Veil
+			./Veil.py
+		else
+			echo -e "$TNI"
+			read INSTALL
+			if [[ "$INSTALL" = "install" ]]
+			then
+				install_veil
+			else
+				continue
+			fi
+		fi
+	elif [[ "$KEYLOG" = "15" ]]
+	then
+		if [[ -d /root/leviathan ]]
+		then
+			cd /root/leviathan
+			python leviathan.py
+		else
+			echo -e "$TNI"
+			read INSTALL
+			if [[ "$INSTALL" = "install" ]]
+			then
+				install_leviathan
+			else
+				continue
+			fi
+		fi	
+	elif [[ "$KEYLOG" = "16" ]]
+	then
+		if [[ -d /root/FakeImageExploiter ]]
+		then
+			cd /root/FakeImageExploiter
+			nano settings
+			./FakeImageExploiter.sh
+		else
+			echo -e "$TNI"
+			read INSTALL
+			if [[ "$INSTALL" = "install" ]]
+			then
+				install_fake_image
+			else
+				continue
+			fi
+		fi	
+	elif [[ "$KEYLOG" = "17" ]]
+	then
+		if [[ -d /root/avet ]]
+		then
+			cd /root/avet/build
+			ls -1 build*
+			echo -e ""
+			echo -e "Type which one you want: "
+			read AVE
+			if [[ ! -f /root/avet/build/"$AVE" ]]
+			then
+				echo -e ""$RS"File not found"$CE""
+				sleep 2
+			else
+				nano /root/avet/build/"$AVE"
+				echo -e "$PAKTC"
+				$READAK
+				cd /root/avet
+				./build/"$AVE"
+				xdg-open /root/avet
+			fi
+		else
+			echo -e "$TNI"
+			read INSTALL
+			if [[ "$INSTALL" = "install" ]]
+			then
+				install_avet
+			else
+				continue
+			fi
+		fi	
 	elif [[ "$KEYLOG" = "8" ]]
 	then
 		if [[ -d /root/CHAOS ]]
@@ -3676,6 +4565,10 @@ function update_lscript
 			clear
 			echo -e "Making new directory for the old lscript (will pass it to /root/lscriptold)"
 			sleep 2
+			if [[ -d /root/lscriptold ]]
+			then
+				rm -r /root/lscriptold
+			fi
 			mkdir /root/lscriptold
 			echo -e ""
 			echo -e "Moving lscript to lscriptold"
@@ -3688,24 +4581,25 @@ function update_lscript
 			cd "$LPATH"
 			chmod +x install.sh
 			clear
-			if [[ -d /root/lscriptold/lscript/ks ]]
-			then
-				cp /root/lscriptold/lscript/ks "$LPATH"
-			fi
-			echo -e "Ok , everything seems to be fine by now."
 			sleep 1
-			echo -e "A new terminal will open, and then the new install.sh will run to update the lscript.I will close."
-			echo -e ""
-			sleep 4
 			echo -e "$PAKTC"
 			$READAK
 			cd "$LPATH"
 			gnome-terminal -e ./install.sh
 			clear 
-			if [[ -d /root/lscriptold/ks ]]
+			if [[ -d /root/lscriptold/lscript/ks ]]
 			then
-				echo -e "Copying old shortcuts"
-				cp /root/lscriptold/ks "$LPATH"
+				echo -e "Copying your shortcuts"
+				cp -r /root/lscriptold/lscript/ks "$LPATH"
+				sleep 1
+				echo -e "Done."
+				sleep 1
+				clear
+			fi
+			if [[ -d /root/lscriptold/lscript/settings ]]
+			then
+				echo -e "Copying your settings"
+				cp -r /root/lscriptold/lscript/settings "$LPATH"
 				sleep 1
 				echo -e "Done."
 				sleep 1
@@ -3899,11 +4793,8 @@ function terms_of_use
 	$READAK
 	clear
 	echo -e "This tool is only for educational purposes only."
-	sleep 2
 	echo -e "Use this tool only on your own network and never without permission."
-	sleep 2
 	echo -e "I am not responsible for anything you do with this tool."
-	sleep 2
 	echo -e "Will you use this tool only on your own network and only with your own responsibility?("$YS"YES"$CE"/"$YS"NO"$CE"): "
 	read YESORNO
 	if [[ "$YESORNO" = "YES" ]]
@@ -4163,7 +5054,13 @@ function new_terminal
 		while true
 		do
 		clear
-		CHECKMON=$(ifconfig | grep "mon")
+		if [[ "$ALFA" = "yes" ]]
+		then
+			CHECKMON=$(iwconfig "$WLANN" | grep "Mode:Monitor")
+		else
+			CHECKMON=$(ifconfig | grep "$WLANNM")
+		fi
+		clear
 		if [[ "$CHECKMON" = "" ]]
 		then
 			echo -e "Monitor mode is not enabled."
@@ -4269,10 +5166,14 @@ function donate_option
 		echo -e "Donation link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=GC9RSY4CS6KAY"
 		echo -e "$PAKTGB"
 		$READAK
-	elif [[ "$DON" = "back" || "$DON" = "b" ]]
+	elif [[ "$DON" = "back" || "$DON" = "b" || "$DON" = "00" ]]
 	then
 		BACKL=1
 		break
+	elif [[ "$DON" = "0" ]]
+	then
+		clear
+		exit
 	fi
 	done
 }
@@ -4399,10 +5300,14 @@ function ngrok_option
 						break
 					fi
 				done
-			elif [[ "$NG" = "back" || "$NG" = "b" ]]
+			elif [[ "$NG" = "back" || "$NG" = "b" || "$NG" = "00" ]]
 			then
 				clear
 				break
+			elif [[ "$NG" = 0 ]]
+			then
+				clear
+				exit
 			elif [[ "$NG" = 5 ]]
 			then
 					echo -e "Type your authtoken: "
@@ -4948,7 +5853,7 @@ function main_options
 	then
 		clear
 		BACKL=1
-		cat "$LPATH"/Changelog
+		cat "$LPATH"/Changelog | head -n 20
 		echo -e "$PAKTC"
 		$READAK
 		clear
@@ -5847,7 +6752,196 @@ check_if_ks
 		cd
 		git clone https://github.com/chrizator/netattack2.git
 	}
-	
+	function install_koadic
+	{
+		foldname="koadic"
+		gitlink="https://github.com/zerosum0x0/koadic.git"
+		if [[ "$foldname" = "" ]]
+		then
+			exit
+		fi
+		if [[ -d "/root/"$foldname"" ]]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/"$foldname"
+		fi
+		cd
+		git clone $gitlink
+		cd /root/$foldname
+		pip install -r requirements.txt
+		pip2.7 install -r requirements.txt
+		cd
+	}
+	function install_empire
+	{
+		foldname="Empire"
+		gitlink="https://github.com/EmpireProject/Empire.git"
+		if [[ "$foldname" = "" ]]
+		then
+			exit
+		fi
+		if [[ -d "/root/"$foldname"" ]]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/"$foldname"
+		fi
+		cd
+		git clone $gitlink
+		cd /root/$foldname
+		chmod +x setup/install.sh
+		cd setup
+		./install.sh
+		./setup_database.py
+	}
+	function install_meterpreter_paranoid_mode
+	{
+		foldname="Meterpreter_Paranoid_Mode-SSL"
+		gitlink="https://github.com/r00t-3xp10it/Meterpreter_Paranoid_Mode-SSL.git"
+		if [[ "$foldname" = "" ]]
+		then
+			exit
+		fi
+		if [[ -d "/root/"$foldname"" ]]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/"$foldname"
+		fi
+		cd
+		git clone $gitlink
+	}
+	function install_dropit_frmw
+	{
+		foldname="Dr0p1t-Framework"
+		gitlink="https://github.com/D4Vinci/Dr0p1t-Framework.git"
+		if [[ "$foldname" = "" ]]
+		then
+			exit
+		fi
+		if [[ -d "/root/"$foldname"" ]]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/"$foldname"
+		fi
+		cd
+		git clone $gitlink
+		chmod 777 -R Dr0p1t-Framework
+		cd Dr0p1t-Framework
+		chmod +x install.sh
+		./install.sh	
+		#python Dr0p1t.py
+	}
+	function install_wifi_pumpkin
+	{
+		foldname="WiFi-Pumpkin"
+		gitlink="https://github.com/P0cL4bs/WiFi-Pumpkin.git"
+		if [[ "$foldname" = "" ]]
+		then
+			exit
+		fi
+		if [[ -d "/root/"$foldname"" ]]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/"$foldname"
+		fi
+		cd
+		git clone $gitlink
+		cd /root/$foldname
+		./installer.sh --install
+	}
+	function install_veil
+	{
+		foldname="Veil"
+		gitlink="https://github.com/Veil-Framework/Veil.git"
+		if [[ "$foldname" = "" ]]
+		then
+			exit
+		fi
+		if [[ -d "/root/"$foldname"" ]]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/"$foldname"
+		fi
+		cd
+		git clone $gitlink
+		cd /root/$foldname
+		cd setup
+		./setup.sh -c
+		cd
+	}
+	function install_leviathan
+	{
+		foldname="leviathan"
+		gitlink="https://github.com/leviathan-framework/leviathan.git"
+		if [[ "$foldname" = "" ]]
+		then
+			exit
+		fi
+		if [[ -d "/root/"$foldname"" ]]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/"$foldname"
+		fi
+		cd
+		git clone $gitlink
+		cd /root/$foldname
+		pip install -r requirements
+		
+		pip2.7 install -r requirements
+		cd
+	}
+	function install_fake_image
+	{
+		foldname="FakeImageExploiter"
+		gitlink="https://github.com/r00t-3xp10it/FakeImageExploiter.git"
+		if [[ "$foldname" = "" ]]
+		then
+			exit
+		fi
+		if [[ -d "/root/"$foldname"" ]]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/"$foldname"
+		fi
+		cd
+		git clone $gitlink
+		cd /root/$foldname
+		chmod +x *.sh
+	}
+	function install_avet
+	{
+		foldname="avet"
+		gitlink="https://github.com/govolution/avet.git"
+		if [[ "$foldname" = "" ]]
+		then
+			exit
+		fi
+		if [[ -d "/root/"$foldname"" ]]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/"$foldname"
+		fi
+		cd
+		git clone $gitlink
+		cd /root/$foldname
+	}
 	
 	
 #------------------------------------
@@ -5873,6 +6967,11 @@ then
 	export WLANN
 	managed_spaces
 	monitor_spaces
+	if [[ ! -f "$LPATH"/latestchangelog.txt ]]
+	then
+		echo -e "1" > "$LPATH"/latestchangelog.txt
+		latest_changelog
+	fi		
 	banner
 	main_options
 	if [[ "$BACKL" = "1" ]]

@@ -139,17 +139,20 @@ do
 	then
 		break
 	fi
-	echo -e "Number of deauths to send("$YS"0"$CE"=inf)("$YS"Enter"$CE"=0): "
-	read DEAUTHS
-	if [[ "$DEAUTHS" = "" ]]
+	if [[ "$STATION" -le "$dlines" && "$STATION" -ge 1 ]]
 	then
-		DEAUTHS=0
+		echo -e "Number of deauths to send("$YS"0"$CE"=inf)("$YS"Enter"$CE"=0): "
+		read DEAUTHS
+		if [[ "$DEAUTHS" = "" ]]
+		then
+			DEAUTHS=0
+		fi
+		DSTATION="${station[$STATION]}"
+		export DEAUTHS
+		export TARGB
+		export DSTATION
+		xterm -geometry 90x15+9999+999999 -e bash -c 'printf "\033]2;DEAUTHING\a" && aireplay-ng -0 $DEAUTHS -a $TARGB -c $DSTATION $WLANNM && exit; exec bash' & disown
 	fi
-	DSTATION="${station[$STATION]}"
-	export DEAUTHS
-	export TARGB
-	export DSTATION
-	xterm -geometry 90x15+9999+999999 -e bash -c 'printf "\033]2;DEAUTHING\a" && aireplay-ng -0 $DEAUTHS -a $TARGB -c $DSTATION $WLANNM && exit; exec bash' & disown
 done
 }
 

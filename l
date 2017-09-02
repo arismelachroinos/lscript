@@ -4563,35 +4563,29 @@ function update_lscript
 		if [[ "$UPDATEYN" = "y" ]]
 		then
 			clear
-			echo -e "Making new directory for the old lscript (will pass it to /root/lscriptold)"
-			sleep 2
+			#~ echo -e "Making new directory for the old lscript (will pass it to /root/lscriptold)"
+			sleep 1
 			if [[ -d /root/lscriptold ]]
 			then
 				rm -r /root/lscriptold
 			fi
 			mkdir /root/lscriptold
 			echo -e ""
-			echo -e "Moving lscript to lscriptold"
-			sleep 2
+			#~ echo -e "Moving lscript to lscriptold"
+			sleep 1
 			mv "$LPATH" /root/lscriptold
-			echo -e "Cloning the latest github version to new "$LPATH""
-			sleep 2
+			#~ echo -e "Cloning the latest github version to new "$LPATH""
+			sleep 1
 			cd
 			git clone https://github.com/arismelachroinos/lscript.git
 			cd "$LPATH"
 			chmod +x install.sh
 			clear
 			sleep 1
-			echo -e "$PAKTC"
-			$READAK
-			cd "$LPATH"
-			gnome-terminal -e ./install.sh
-			clear 
 			if [[ -d /root/lscriptold/lscript/ks ]]
 			then
 				echo -e "Copying your shortcuts"
 				cp -r /root/lscriptold/lscript/ks "$LPATH"
-				sleep 1
 				echo -e "Done."
 				sleep 1
 				clear
@@ -4600,14 +4594,32 @@ function update_lscript
 			then
 				echo -e "Copying your settings"
 				cp -r /root/lscriptold/lscript/settings "$LPATH"
-				sleep 1
 				echo -e "Done."
 				sleep 1
 				clear
 			fi
-			sleep 1
+			if [[ -f /root/lscriptold/lscript/wlanmon.txt ]]
+			then
+				echo -e "Copying your interfaces"
+				cp /root/lscriptold/lscript/wlanmon.txt "$LPATH"
+				echo -e "Done."
+				sleep 1
+				clear
+			fi
 			echo -e ""
-			echo -e "Removing old lscript"
+			if [[ -f /root/lscriptold/lscript/wlan.txt ]]
+			then
+				cp /root/lscriptold/lscript/wlan.txt "$LPATH"
+				echo -e "Done."
+				sleep 1
+				clear
+			fi
+			echo -e "$PAKTC"
+			$READAK
+			cd "$LPATH"
+			gnome-terminal -e ./install.sh
+			clear 
+			sleep 1
 			rm -rf /root/lscriptold
 			echo -e "Exiting..."
 			sleep 1

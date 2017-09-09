@@ -20,6 +20,65 @@ READAK="read -n 1"
 WLANNM=$(cat /root/lscript/wlanmon.txt)
 export WLANNM
 SCW=1
+function enable2_wlan
+{
+	echo -e "Enabling $WLANN..."
+	rfkill unblock wifi &> /dev/null; rfkill unblock all &> /dev/null
+	ifconfig $WLANN up &>/dev/null && echo -e ""$YS"Done"$CE"" && O4=1  || echo -e ""$RS"Error. I can't find your wireless adapter"$CE""
+}
+function start2_menu
+{
+	echo -e "Enabling $WLANNM..."
+	enable2_wlan
+	echo -e "Killing services..."
+	airmon-ng check kill &> /dev/null && echo -e ""$YS"Done"$CE"" && O1=1
+	echo -e "Starting monitor mode..."
+	if [[ "$ALFA" = "yes" ]]
+	then
+		ifconfig $WLANN down
+		iwconfig $WLANN mode monitor &> /dev/null && echo -e ""$YS"Done"$CE"" && O2=1
+		ifconfig $WLANN up
+	else
+		airmon-ng start $WLANN | grep "monitor mode" | awk -F "(" {'print $2'} | cut -d ')' -f1 &> /dev/null && echo -e ""$YS"Done"$CE"" && O2=1
+	fi
+	echo -e "Changing mac address of $WLANNM to 00:11:22:33:44:55..."
+	ifconfig $WLANNM down
+	macchanger -m 00:11:22:33:44:55 $WLANNM | grep "New MAC:" &> /dev/null && O3=1
+	ifconfig $WLANNM up && echo -e ""$YS"Done"$CE"" 
+}
+function stop2_menu
+{
+	stop2_monitor
+	echo -e "Changing mac address of $WLANN to the original one..."
+	ifconfig $WLANN down
+	macchanger -p $WLANN | grep "Current MAC:" && O1=1
+	ifconfig $WLANN up
+	echo -e ""$YS"Done"$CE""
+}
+function stop2_monitor
+{
+	echo -e "Disabling $WLANNM..."
+	echo -e "Stopping monitor mode..."
+	if [[ "$ALFA" = "yes" ]]
+	then
+		A1=0
+		A2=0
+		A3=0
+		ifconfig $WLANN down && A1=1
+		iwconfig $WLANN mode managed && A2=1
+		ifconfig $WLANN up && A3=1
+		if [[ "$A1" = 1 && "$A2" = 1 && "$A3" = 1 ]]
+		then
+			echo -e ""$YS"Done"$CE"" && O2=1
+		else
+			echo -e ""$RS"Error stoping monitor mode."$CE""
+		fi
+	else
+		airmon-ng stop $WLANNM &>/dev/null && echo -e ""$YS"Done"$CE"" && O2=1 || echo -e ""$RS"Error stoping monitor mode."$CE""
+	fi
+	echo -e "Starting network-manager service..."
+	service network-manager start && echo -e ""$YS"Done"$CE"" && O3=1 || echo -e ""$RS"Error starting network-manager service"$CE""
+}
 function install_bully
 {
 	if [[ -d "/root/bully" ]]
@@ -490,11 +549,15 @@ then
 			sleep 2
 		fi
 	else
-		echo -e ""$RS"Bully isn't installed.Type '"$CE""$YS"install"$CE""$YS"' to install it."$CE""
+		echo -e ""$RS"Bully isn't installed.Type '"$CE""$YS"install"$CE""$RS"' to stop monitor mode and install it."$CE""
 		read INSTALL
 		if [[ "$INSTALL" = "install" ]]
 		then
+			stop2_menu
+			echo -e "Press "$YS"enter"$CE" when connected to a network"
+			read ENT
 			install_bully
+			start2_menu
 		fi
 	fi
 elif [[ "$YN" = "6" ]]
@@ -505,26 +568,34 @@ then
 		./bully.py
 		cd
 	else
-		echo -e ""$RS"Bully isn't installed.Type '"$CE""$YS"install"$CE""$YS"' to install it."$CE""
+		echo -e ""$RS"Bully isn't installed.Type '"$CE""$YS"install"$CE""$RS"'to stop monitor mode and install it."$CE""
 		read INSTALL
 		if [[ "$INSTALL" = "install" ]]
 		then
+			stop2_menu
+			echo -e "Press "$YS"enter"$CE" when connected to a network"
+			read ENT
 			install_bully
+			start2_menu
 		fi
 	fi
 elif [[ "$YN" = "7" ]]
 then
-	if [[ -f /root/WiFi-autopwner/wifi-autopwner.sh ]]
+	if [[ -f /root/WiFi-autopwner/wifi-autopwner.s ]]
 	then
 		cd /root/WiFi-autopwner
 		./wifi-autopwner.sh
 		cd
 	else
-		echo -e ""$RS"Wifi autopwner isn't installed.Type '"$CE""$YS"install"$CE""$YS"' to install it."$CE""
+		echo -e ""$RS"Wifi autopwner isn't installed.Type '"$CE""$YS"install"$CE""$RS"' to stop monitor mode and install it."$CE""
 		read INSTALL
 		if [[ "$INSTALL" = "install" ]]
 		then
+			stop2_menu
+			echo -e "Press "$YS"enter"$CE" when connected to a network"
+			read ENT
 			install_wifiautopwner
+			start2_menu
 		fi
 	fi
 elif [[ "$YN" = "8" ]]

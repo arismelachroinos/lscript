@@ -65,9 +65,21 @@ else
 	then
 		clear
 		exec bash "$0"
-	else 
-		echo -e "Enter the name of the handshake file(no extension): "
-		read -e HANDF
+	else
+		while true
+		do
+			clear
+			echo -e "Enter the name of the handshake file(no extension): "
+			read -e HANDF
+			if [[ ! -f "/root/handshakes/$HANDF-01.cap" ]]
+			then
+				break
+			else
+				echo -e ""$RS"File already exists."$CE""
+				sleep 2
+				continue
+			fi
+		done
 		HANDFFP="/root/handshakes/$HANDF-01.cap"
 		export HANDFFP
 		if [[ -f "$HANDFFP" ]]
@@ -290,25 +302,40 @@ do
 		TARGB="${zmac[$APCHOOSE]}"
 		TARGC="${zchannel[$APCHOOSE]}"
 		TARGE="${zessid[$APCHOOSE]}"
-		echo -e "Enter the name of the handshake file(no extention)(e.g: "$YS"hand1"$CE")"
-		echo -e "Type "$YS""0""$CE" for no file"
-		read -e HANDF
-		if [[ "$HANDF" = 0 ]]
-		then
-			if [[ -f /root/handshakes/deauth-01.csv || -f /root/handshakes/deauth-01.cap || -f /root/handshakes/deauth-01.kismet.csv || -f /root/handshakes/deauth-01.kismet.netxml ]]
+		while true
+		do
+			clear
+			echo -e "Enter the name of the handshake file(no extention)(e.g: "$YS"hand1"$CE")"
+			echo -e "Type "$YS""0""$CE" for no file"
+			read -e HANDF
+			if [[ "$HANDF" = 0 ]]
 			then
-				rm -f /root/handshakes/deauth-01.*
+				if [[ -f /root/handshakes/deauth-01.csv || -f /root/handshakes/deauth-01.cap || -f /root/handshakes/deauth-01.kismet.csv || -f /root/handshakes/deauth-01.kismet.netxml ]]
+				then
+					rm -f /root/handshakes/deauth-01.*
+				fi
+				HANDF="deauth"
+				HANDFORDEAUTH="/root/handshakes/deauth-01.csv"
+				break
+			else
+				if [[ ! -f "/root/handshakes/$HANDF-01.csv" ]]
+				then
+					HANDFORDEAUTH="/root/handshakes/$HANDF-01.csv"
+					break
+				else
+					clear
+					echo -e ""$RS"File already exists."$CE""
+					sleep 2
+					continue	
+				fi				
 			fi
-			HANDF="deauth"
-			HANDFORDEAUTH="/root/handshakes/deauth-01.csv"
-		else
-			HANDFORDEAUTH="/root/handshakes/$HANDF-01.csv"
-		fi
+		done
 		HANDFFP="/root/handshakes/"$HANDF"-01.cap"
 		HANDCAP="/root/handshakes/"$HANDF"-01.cap"
 		export HANDFORDEAUTH
 		export HANDCAP
 		export HANDFFP
+		export HANDF
 		export TARGB
 		export TARGC
 		export TARGE
@@ -372,32 +399,32 @@ function validate_with_pyrit
 {
 	clear
 	echo -e "Checking handshake with pyrit..."
-	TEMP=$(pyrit -r "$HANDCAP" analyze) 
+	TEMP=$(pyrit -r "$HANDCAP" analyze 2>/dev/null) 
 	TEMPHAND=$(echo "$TEMP" | grep "No valid EAOPL-handshake + ESSID detected.")
 	clear
 	if [[ "$TEMPHAND" = "" ]]
 	then
 		VALIDH=1
-		#TEMPHANDD=$(pyrit -r "$HANDCAP" analyze | grep "good")
+		#TEMPHANDD=$(pyrit -r "$HANDCAP" analyze 2>/dev/null | grep "good")
 		TEMPHANDD=$(echo "$TEMP" | grep "good")
 		if [[ "$TEMPHANDD" = "" ]]
 		then
-			#TEMPHANDDD=$(pyrit -r "$HANDCAP" analyze | grep "bad")
+			#TEMPHANDDD=$(pyrit -r "$HANDCAP" analyze 2>/dev/null | grep "bad")
 			TEMPHANDDD=$(echo $TEMP | grep "bad")
 			if [[ "TEMPHANDDD" = "" ]]
 			then
-				echo -e "Handshake found!(Status: unknown)"
+				echo -e "Handshake found!(Status: "$RS"unknown"$CE")"
 			else
-				echo -e "Handshake found!(Status: bad)"
+				echo -e "Handshake found!(Status: "$RS"bad"$CE")"
 			fi
 			sleep 3
 		else
-			echo -e "Valid handshake found!(Status: good)"
+			echo -e "Valid handshake found!(Status: "$YS"good"$CE")"
 			sleep 3
 		fi
 	else
 		VALIDH=0
-		echo -e "No handshake found."
+		echo -e ""$RS"No handshake found."$CE""
 		sleep 2
 	fi
 }

@@ -1,3 +1,24 @@
+2.1.1
+Fixed interfaces not saved after update.
+Fixed Terms of use not saved after update.
+Added delay after cupp wordlist generation.
+Fixed tool's installation in WPS menu.
+Added Gloom-Framework to wifi tools and keyboard shortcuts.
+Check handshake name if already exists.
+Added handshake check option in deauth menu.	
+Added automated install of nWatch requirements due to error reports.
+Added Arcanus to wifi tools and keyboard shortcuts.
+Added automated MSFPC script to remote access tools.
+Added automated morphHTA script to remote access tools.
+Added LFISuite to remote access tools and keyboard shortcuts.
+Added automated UniByAv script to remote access.
+Added automated demiguise script to remote access.
+Added DKMC to remote access tools and keyboard shortcuts.
+Added SecHub to wifi tools and keyboard shortcuts.
+Added color to pyrit handshake validation output.
+
+
+
 2.1.0
 Fixed error in deauth when selecting a non existing station number.
 Fixed error when checking if monitor enabled.

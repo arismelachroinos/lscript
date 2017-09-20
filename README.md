@@ -1,12 +1,13 @@
 ## Welcome to the LAZY script  v2.1.3
 <p align="center">
-<img src="https://i.imgur.com/6KlD6u4.png"/>
-<img src="https://i.imgur.com/wmY0WaZ.png"/>
-<img src="https://i.imgur.com/aY2nVcs.png"/>
-<img src="https://i.imgur.com/HKgs9iC.png"/>
-<img src="https://i.imgur.com/NxU7Ixa.png"/>
-<img src="https://i.imgur.com/FMm9jko.png"/>
-<img src="https://i.imgur.com/6gztpfp.png"/>
+<img src="https://i.imgur.com/awIplS6.jpg"/>
+<img src="https://i.imgur.com/pbq0DuE.jpg"/>
+<img src="https://i.imgur.com/QgTLKxR.jpg"/>
+<img src="https://i.imgur.com/oJIk2oG.jpg"/>
+<img src="https://i.imgur.com/icT4x55.jpg"/>
+<img src="https://i.imgur.com/sSf1JcI.jpg"/>
+<img src="https://i.imgur.com/MlDFWax.jpg"/>
+<img src="https://i.imgur.com/rbdUIQI.jpg"/>
 </p>
 A video Hackersploit made : https://www.youtube.com/watch?v=oBpo5sElrMY
 

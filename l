@@ -1,5 +1,5 @@
 #! /bin/bash
-VERSION=2.1.2
+VERSION=2.1.3
 #Number of tools with keyboard shortcut support
 HOWMANYTOOLS=45
 BACKL="0"

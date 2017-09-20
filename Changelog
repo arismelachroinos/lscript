@@ -1,3 +1,27 @@
+2.1.2
+Added Geolocate IP feature.
+Added fully automatic beef + mitmf browser injection.
+Added automated local IPs & gateways print feature.
+Added Beef to remote access tools and keyboard shortcuts.
+Added option to verify the handshake with pyrit too from deauth menu.
+Added option to deauth all, wait and loop.
+Added ngrok installation option from main menu.
+Fixed error when going back from creating a keyboard shortcut.
+Fixed angry ip scanner keyboard shortcut.
+Changed to new gnome-terminal command.
+Added delay option to WPS bruteforce and fixed errors.
+Added red color when WPS is locked on an AP.
+Added error message when selecting a WPS-locked AP.
+Added setting to enable --ingore-negative-one in deauthing.
+Added option to manually type a MAC to deauth.
+Added return when starting/stopping services.
+Added choosing if you want to keep a bad handshake.
+Added cowpatty handshake check on deauth.
+Added setting to specify another MAC address for when starting monitor.
+Added samples to banner's changing color option in settings.
+
+
+
 2.1.1
 Fixed interfaces not saved after update.
 Fixed Terms of use not saved after update.

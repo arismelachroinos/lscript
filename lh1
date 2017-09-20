@@ -44,10 +44,19 @@ then
 	then
 		rm $HANDCAP
 	fi
-	gnome-terminal --geometry 70x10+0+0 -e lh2
+	gnome-terminal --geometry 70x10+0+0 -- lh2
 	HANDFORDEAUTH="/root/handshakes/$HANDF-01.csv"
 	export HANDFORDEAUTH
 	airodump-ng --bssid $TARGB -c $TARGC -w /root/handshakes/$HANDF $WLANNM
+	if [[ -f "$LPATH"/dpid.txt ]]
+	then
+		read DPID < "$LPATH"/dpid.txt
+		PIF=$(ps -A | grep "$DPID")
+		if [[ "$PIF" != "" ]]
+		then
+			kill $DPID
+		fi
+	fi
 	validhandshake
 	exec bash "$0"
 else
@@ -57,8 +66,17 @@ else
 	fi
 	HANDF="deauth"
 	HANDFORDEAUTH="/root/handshakes/deauth-01.csv"
-	gnome-terminal --geometry 70x10+0+0 -e lh2
+	gnome-terminal --geometry 70x10+0+0 -- lh2
 	airodump-ng --bssid $TARGB -c $TARGC -w /root/handshakes/$HANDF $WLANNM
+	if [[ -f "$LPATH"/dpid.txt ]]
+	then
+		read DPID < "$LPATH"/dpid.txt
+		PIF=$(ps -A | grep "$DPID")
+		if [[ "$PIF" != "" ]]
+		then
+			kill $DPID
+		fi
+	fi
 	echo -e "Start capturing on a file?"$YNYES""
 	read SCF
 	if [[ "$SCF" = "n" ]]
@@ -86,8 +104,17 @@ else
 		then
 			rm $HANDFFP
 		fi
-		gnome-terminal -e lh2
+		gnome-terminal --geometry 70x10+0+0 -- lh2
 		airodump-ng --bssid $TARGB -c $TARGC -w /root/handshakes/$HANDF $WLANNM
+		if [[ -f "$LPATH"/dpid.txt ]]
+		then
+			read DPID < "$LPATH"/dpid.txt
+			PIF=$(ps -A | grep "$DPID")
+			if [[ "$PIF" != "" ]]
+			then
+				kill $DPID
+			fi
+		fi
 		validhandshake
 		exec bash "$0"
 	fi
@@ -268,7 +295,7 @@ function capture_again
 			read CAGAIN
 			if [[ ! "$CAGAIN" = "n" ]]
 			then
-				gnome-terminal --geometry 70x10+0+0 -e lh2
+				gnome-terminal --geometry 70x10+0+0 -- lh2
 				airodump-ng --bssid $TARGB -c $TARGC -w /root/handshakes/$HANDF $WLANNM
 				validhandshake
 				exec bash "$0"
@@ -413,9 +440,24 @@ function validate_with_pyrit
 			TEMPHANDDD=$(echo $TEMP | grep "bad")
 			if [[ "TEMPHANDDD" = "" ]]
 			then
-				echo -e "Handshake found!(Status: "$RS"unknown"$CE")"
+				TEMPHAD=$(echo $TEMP | grep "workable")
+				if [[ "$TEMPHAD" = "" ]]
+				then
+					echo -e "Handshake found!(Status: "$RS"unknown"$CE")"
+				else
+					echo -e "Handshake found!(Status: "$RS"workable"$CE")"
+				fi
 			else
 				echo -e "Handshake found!(Status: "$RS"bad"$CE")"
+			fi
+			echo -e ""
+			echo -e "Do you want to keep it?("$YNNO"): "
+			read KORD
+			if [[ "$KORD" = "y" ]]
+			then
+				VALIDH=1
+			else
+				VALIDH=0
 			fi
 			sleep 3
 		else
@@ -438,15 +480,20 @@ function validate_with_cowpatty
 	if [[ "$TEMPHAND" = "" ]]
 	then
 		VALIDH=0
-		echo -e "No handshake found."
+		echo -e ""$RS"No handshake found"$CE""
 		sleep 1
 		echo -e ""
-		echo -e "Press "$YS"enter"$CE" to check with pyrit..."
-		read
-		validate_with_pyrit
+		echo -e "Do you want to check it with pyrit? "$YNYES": "
+		read CWP
+		if [[ "$CWP" = "n" ]]
+		then
+			VALIDH=0
+		else
+			validate_with_pyrit
+		fi
 	else
 		VALIDH=1
-		echo -e "Valid handshake found!"
+		echo -e ""$YS"Valid handshake found!"$CE""
 		sleep 2
 	fi
 }

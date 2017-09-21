@@ -5580,10 +5580,10 @@ function public_ip
 	CHECKMON=$(ifconfig | grep "mon")
 	if [[ "$CHECKMON" = "" ]]
 	then
-		PUBLICIP=$(curl -s ipinfo.io/ip)
+		PUBLICIP=$( curl -s ipinfo.io/ip ) 
 		if [[ "$PUBLICIP" = "" ]]
 		then
-			PUBLICIP=$(curl -s checkip.dyndns.org | sed -e 's/.*Current IP Address: //' -e 's/<.*$//')
+			PUBLICIP=$( curl -s checkip.dyndns.org | sed -e 's/.*Current IP Address: //' -e 's/<.*$//' )
 			if [[ "$PUBLICIP" = "" ]]
 			then
 				PUBLICIP="Connection error."

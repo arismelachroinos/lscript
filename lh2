@@ -79,8 +79,6 @@ do
 		then
 			DEAUTHS=0
 		fi
-		echo -e "MAC to deauth: "
-		read MACTD
 		export DEAUTHS
 		export TARGB
 		export MACTD

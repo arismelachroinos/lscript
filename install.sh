@@ -13,7 +13,7 @@ then
 	then
 		rm -r /root/lscript
 	fi
-	mkdir /root/lscript
+	mkdir -p /root/lscript
 	cp -r "$DIR"/* /root/lscript
 	chmod +x /root/lscript/install.sh
 	gnome-terminal -e "bash /root/lscript/install.sh"

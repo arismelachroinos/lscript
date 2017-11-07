@@ -2840,95 +2840,89 @@ function wifi_tools
 	else
 		echo -e ""$RS"16"$CE") "$RS"Mdk3-master"$CE"        Tries to lock / reboot AP and more..."
 	fi
-	if [[ -d /root/mdk3-master ]]
-	then
-		echo -e ""$YS"17"$CE") Mdk3-master        Tries to reboot the AP and unlock the WPS lock"
-	else
-		echo -e ""$RS"17"$CE") "$RS"Mdk3-master"$CE"        Tries to reboot the AP and unlock the WPS lock"
-	fi
 	if [[ -d /root/KatanaFramework ]]
 	then
-		echo -e ""$YS"18"$CE") Katana Framework   Many penetration testing features"
+		echo -e ""$YS"17"$CE") Katana Framework   Many penetration testing features"
 	else
-		echo -e ""$RS"18"$CE") "$RS"Katana Framework"$CE"   Many penetration testing features"
+		echo -e ""$RS"17"$CE") "$RS"Katana Framework"$CE"   Many penetration testing features"
 	fi
 	if [[ -d /root/airgeddon ]]
 	then
-		echo -e ""$YS"19"$CE") Airgeddon          Evil twin-WPA WPA2-WEP-WPS and more"
+		echo -e ""$YS"18"$CE") Airgeddon          Evil twin-WPA WPA2-WEP-WPS and more"
 	else
-		echo -e ""$RS"19"$CE") "$RS"Airgeddon"$CE"          Evil twin-WPA WPA2-WEP-WPS and more"
+		echo -e ""$RS"18"$CE") "$RS"Airgeddon"$CE"          Evil twin-WPA WPA2-WEP-WPS and more"
 	fi
 	if [[ -f /usr/bin/websploit ]]
 	then
-		echo -e ""$YS"20"$CE") Websploit          Wireless attack-multitool"
+		echo -e ""$YS"19"$CE") Websploit          Wireless attack-multitool"
 	else
-		echo -e ""$RS"20"$CE") "$RS"Websploit"$CE"          Wireless attack-multitool"
+		echo -e ""$RS"19"$CE") "$RS"Websploit"$CE"          Wireless attack-multitool"
 	fi
 	if [[ -d /etc/openvas ]]
 	then
-		echo -e ""$YS"21"$CE") Openvas            Vulnerability scanner LAN"
+		echo -e ""$YS"20"$CE") Openvas            Vulnerability scanner LAN"
 	else
-		echo -e ""$RS"21"$CE") "$RS"Openvas"$CE"            Vulnerability scanner LAN"
+		echo -e ""$RS"20"$CE") "$RS"Openvas"$CE"            Vulnerability scanner LAN"
 	fi
 	if [[ -f /usr/bin/ipscan ]]
 	then
-		echo -e ""$YS"22"$CE") Angry IP Scanner   IP Scanner"
+		echo -e ""$YS"21"$CE") Angry IP Scanner   IP Scanner"
 	else
-		echo -e ""$RS"22"$CE") "$RS"Angry IP Scanner"$CE"   IP Scanner"
+		echo -e ""$RS"21"$CE") "$RS"Angry IP Scanner"$CE"   IP Scanner"
 	fi
 	if [[ -d /root/routersploit ]]
 	then
-		echo -e ""$YS"23"$CE") Routersploit       Find/exploit router vulnerabilities"
+		echo -e ""$YS"22"$CE") Routersploit       Find/exploit router vulnerabilities"
 	else
-		echo -e ""$RS"23"$CE") "$RS"Routersploit"$CE"       Find/exploit router vulnerabilities"
+		echo -e ""$RS"22"$CE") "$RS"Routersploit"$CE"       Find/exploit router vulnerabilities"
 	fi
 	if [[ -d /root/nWatch ]]
 	then
-		echo -e ""$YS"24"$CE") nWatch             IP scanner/OS detection"
+		echo -e ""$YS"23"$CE") nWatch             IP scanner/OS detection"
 	else
-		echo -e ""$RS"24"$CE") "$RS"nWatch"$CE"             IP scanner/OS detection"
+		echo -e ""$RS"23"$CE") "$RS"nWatch"$CE"             IP scanner/OS detection"
 	fi
 	if [[ -d /root/eternal_scanner ]]
 	then
-		echo -e ""$YS"25"$CE") Eternal scanner    Scans hosts for eternalblue vulnerabilities"
+		echo -e ""$YS"24"$CE") Eternal scanner    Scans hosts for eternalblue vulnerabilities"
 	else
-		echo -e ""$RS"25"$CE") "$RS"Eternal scanner"$CE"    Scans hosts for eternalblue vulnerabilities"
+		echo -e ""$RS"24"$CE") "$RS"Eternal scanner"$CE"    Scans hosts for eternalblue vulnerabilities"
 	fi
 	if [[ -d /root/eaphammer ]]
 	then
-		echo -e ""$YS"26"$CE") Eaphammer          Evil twin attacks against WPA2-Enterprise networks"
+		echo -e ""$YS"25"$CE") Eaphammer          Evil twin attacks against WPA2-Enterprise networks"
 	else
-		echo -e ""$RS"26"$CE") "$RS"Eaphammer"$CE"          Evil twin attacks against WPA2-Enterprise networks"
+		echo -e ""$RS"25"$CE") "$RS"Eaphammer"$CE"          Evil twin attacks against WPA2-Enterprise networks"
 	fi
 	if [[ -d /root/VMR ]]
 	then
-		echo -e ""$YS"27"$CE") VMR                Best WPS cracker, mdk3-v6"
+		echo -e ""$YS"26"$CE") VMR                Best WPS cracker, mdk3-v6"
 	else
-		echo -e ""$RS"27"$CE") "$RS"VMR"$CE"                Best WPS cracker, mdk3-v6"
+		echo -e ""$RS"26"$CE") "$RS"VMR"$CE"                Best WPS cracker, mdk3-v6"
 	fi
 	if [[ -d /root/netattack2 ]]
 	then
-		echo -e ""$YS"28"$CE") Netattack3         Advanced network scan and attack script"
+		echo -e ""$YS"27"$CE") Netattack3         Advanced network scan and attack script"
 	else
-		echo -e ""$RS"28"$CE") "$RS"Netattack2"$CE"         Advanced network scan and attack script"
+		echo -e ""$RS"27"$CE") "$RS"Netattack2"$CE"         Advanced network scan and attack script"
 	fi
 	if [[ -f /usr/bin/wifi-pumpkin ]]
 	then
-		echo -e ""$YS"29"$CE") Wifi-Pumpkin       Framework for Rogue Wi-Fi Access Point Attack"
+		echo -e ""$YS"28"$CE") Wifi-Pumpkin       Framework for Rogue Wi-Fi Access Point Attack"
 	else
-		echo -e ""$RS"29"$CE") "$RS"Wifi-Pumpkin"$CE"       Framework for Rogue Wi-Fi Access Point Attack"
+		echo -e ""$RS"28"$CE") "$RS"Wifi-Pumpkin"$CE"       Framework for Rogue Wi-Fi Access Point Attack"
 	fi
 	if [[ -d /root/Gloom-Framework ]]
 	then
-		echo -e ""$YS"30"$CE") Gloom              Penetration Testing Framework"
+		echo -e ""$YS"29"$CE") Gloom              Penetration Testing Framework"
 	else
-		echo -e ""$RS"30"$CE") "$RS"Gloom"$CE"              Penetration Testing Framework"
+		echo -e ""$RS"29"$CE") "$RS"Gloom"$CE"              Penetration Testing Framework"
 	fi
 	if [[ -f /usr/bin/sechub ]]
 	then
-		echo -e ""$YS"31"$CE") secHub             Security/Hacking Kit"
+		echo -e ""$YS"30"$CE") secHub             Security/Hacking Kit"
 	else
-		echo -e ""$RS"31"$CE") "$RS"secHub"$CE"             Security/Hacking Kit"
+		echo -e ""$RS"30"$CE") "$RS"secHub"$CE"             Security/Hacking Kit"
 	fi
 	echo -e ""$YS" b"$CE") Go back"
 	echo -e ""$YS"00"$CE") Main menu"
@@ -8071,7 +8065,7 @@ check_if_ks
 		cd
 		echo -e "Installing nWatch"
 		echo -e "Tool by Suraj"
-		git clone https://github.com/suraj-root/nWatch.gi
+		git clone https://github.com/suraj-root/nWatch.git
 		pip install scapy
 		pip install colorama
 		pip install nmap

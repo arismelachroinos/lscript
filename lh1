@@ -1,25 +1,83 @@
 #! /bin/bash
 WLANNM=$(cat /root/lscript/wlanmon.txt)
 export WLANNM
-#############DEFAULTS###############
-
-#setting blue-start 
-BS="\e[0;34m"
-#setting yellow-start 
-YS="\e[1;33m"
-#setting color-end
-CE="\e[0m"
-#setting red-start
-RS="\e[1;31m"
-#setting frequent stings
-YNYES="("$YS"y"$CE"/"$YS"n"$CE")("$YS"Enter"$CE"=yes)"
-YNNO="("$YS"y"$CE"/"$YS"n"$CE")("$YS"Enter"$CE"=no)"
-YNONLY="("$YS"y"$CE"/"$YS"n"$CE")"
-PAKT="Press "$YS"any key"$CE" to"
-PAKTC="Press "$YS"any key"$CE" to continue..."
-PAKTGB="Press "$YS"any key"$CE" to go back..."
-READAK="read -n 1"
 #-----------------FUNCTIONS-----------------
+function defaults_lh1
+{
+#path for lscript
+	LPATH="/root/lscript"
+	export LPATH
+#path for keyboard shortcuts
+	KSPATH=""$LPATH"/ks"
+	export KSPATH
+#making sure the kspath is set
+	if [[ ! -d "$KSPATH" ]]
+	then
+		mkdir "$KSPATH"
+	fi
+#ALFA SUPPORT SETTING
+	if [[ -f "$LPATH"/settings/AWUS036ACH.txt ]]
+	then
+		read ALFA < "$LPATH"/settings/AWUS036ACH.txt
+	else
+		ALFA="no"
+	fi
+#yellow start 
+	YS="\e[1;33m"
+#blue start 
+	BS="\e[0;34m"
+#color end
+	CE="\e[0m"
+#red start
+	RS="\e[1;31m"
+#black start
+	BLS="\e[0;30m"
+#dark gray start
+	DGYS="\e[1;30m"
+#light blue start
+	LBS="\e[1;34m"
+#green start
+	GNS="\e[0;32m"
+#light green start
+	LGNS="\e[1;32m"
+#cyan start
+	CYS="\e[0;36m"
+#light cyan start
+	LCYS="\e[1;36m"
+#light red start
+	DRS="\e[0;31m"
+#purple start
+	PS="\e[0;35m"
+#light purple start
+	LPS="\e[1;35m"
+#brown start
+	BRS="\e[0;33m"
+#light gray start
+	LGYS="\e[0;37m"
+#white start
+	WHS="\e[1;37m"
+#setting custom color for logo
+	if [[ -f "$LPATH"/settings/logocolor.txt ]]
+	then
+		read COL < "$LPATH"/settings/logocolor.txt
+	else
+		COL="$RS"
+	fi
+#setting frequent stings
+	YNYES="("$YS"y"$CE"/"$YS"n"$CE")("$YS"Enter"$CE"=yes)"
+	YNNO="("$YS"y"$CE"/"$YS"n"$CE")("$YS"Enter"$CE"=no)"
+	YNONLY="("$YS"y"$CE"/"$YS"n"$CE")"
+	PAKT="Press "$YS"any key$CE to"
+	PAKTC="Press "$YS"any key$CE to continue..."
+	PAKTGB="Press "$YS"any key$CE to go back..."
+	TNI=""$RS"Tool is not installed. To install it type '"$CE""$YS"install"$CE""$RS"'."$CE""
+#code to read from keyboard without return
+	READAK="read -n 1"
+#default MAC when starting monitor
+	DEFMAC="00:11:22:33:44:55"
+	
+	wififb="wififb"
+}
 function dash_calc
 {
 	
@@ -144,7 +202,9 @@ function autoapselect
 file="/root/lscript/tempairodump-01.csv"
 if [[ -f "$file" ]]
 then
-	lines=$(cat $file | awk '/WPA|WPA2|OPN/ {print}' | awk 'END{print NR}')
+	lines=$(cat $file | awk '/WPA|WPA2|OPN|WEP/ {print}' | awk 'END{print NR}')
+	#add safety-lines
+	lines=$((lines+10))
 else
 	lines=0
 fi
@@ -160,32 +220,34 @@ then
 		if [[ ${apower[$n2]} = "" ]]
 		then
 			aopen[$n2]=1
-			apower[$n2]=$(cat $file | awk -v nn="$n3" '{FS=", "}{if(NR==nn && /OPN/)print $9}')
+			apower[$n2]=$(cat $file | awk -v nn="$n3" '{FS=", "}{if(NR==nn && /OPN|WEP/)print $9}')
 		fi
 		adata[$n2]=$(cat $file | awk -v nn="$n3" '{FS=", "} {if(NR==nn && /WPA|WPA2/)print $10}')
 		if [[ ${adata[$n2]} = "" ]]
 		then
-			adata[$n2]=$(cat $file | awk -v nn="$n3" '{FS=", "}{if(NR==nn && /OPN/)print $11}')
+			adata[$n2]=$(cat $file | awk -v nn="$n3" '{FS=", "}{if(NR==nn && /OPN|WEP/)print $11}')
 		fi
 		aessid[$n2]=$(cat $file | awk -v nn="$n3" '{FS=", "} {if(NR==nn && /WPA|WPA2/)print $13}')
 		if [[ ${aessid[$n2]} = "" ]]
 		then
-			aessid[$n2]=$(cat $file | awk -v nn="$n3" '{FS=", "}{if(NR==nn && /OPN/)print $14}')
+			aessid[$n2]=$(cat $file | awk -v nn="$n3" '{FS=", "}{if(NR==nn && /OPN|WEP/)print $14}')
 		fi
 		achannel[$n2]=$(cat $file | awk -v nn="$n3" '{FS=", "} {if(NR==nn && /WPA|WPA2/)print $4}')
 		if [[ ${achannel[$n2]} = "" ]]
 		then
-			achannel[$n2]=$(cat $file | awk -v nn="$n3" '{FS=", "}{if(NR==nn && /OPN/)print $14}')
+			achannel[$n2]=$(cat $file | awk -v nn="$n3" '{FS=", "}{if(NR==nn && /OPN|WEP/)print $14}')
 		fi
 		amac[$n2]=$(cat $file | awk -v nn="$n3" '{FS=", "} {if(NR==nn && /WPA|WPA2/)print $1}')
 		if [[ ${amac[$n2]} = "" ]]
 		then
-			amac[$n2]=$(cat $file | awk -v nn="$n3" '{FS=", "}{if(NR==nn && /OPN/)print $1}')
+			amac[$n2]=$(cat $file | awk -v nn="$n3" '{FS=", "}{if(NR==nn && /OPN|WEP/)print $1}')
 		fi
 		powerunfixed="${apower[$n2]}"
 		apowerfixed[$n2]=$powerunfixed
 		apowerfixed[$n2]=$((power+apowerfixed[$n2]))
 		#echo ""$n2") "${apowerfixed[$n2]}"% "${amac[$n2]}" "${achannel[$n2]}" "${adata[$n2]}" "${aessid[$n2]}""
+		###DEBUGGING
+		#~ echo -e "n2="$n2" ${aessid[$n2]}"
 		n2=$(( n2+1 ))
 	done
 	n3=1
@@ -247,8 +309,6 @@ then
 			space="  "
 		fi
 		DATAA=" "$RS"0"$CE""
-		##put less than
-		#~ if [[ ! ${zpowerfixed[$n3]} = 100 ]]
 		if [[ ${zpowerfixed[$n3]} -lt 100 ]]
 		then
 			size2=${#zessid[$n3]}
@@ -311,11 +371,10 @@ do
 	clear
 	if [[ "$APCHOOSE" = "back" || "$APCHOOSE" = "b" ]]
 	then
-		clear
 		break
 	elif [[ "$APCHOOSE" = "r" ]]
 	then
-		clear
+		JC=0
 		break
 	elif [[ "$APCHOOSE" -le "$lines" && "$APCHOOSE" -ge 1 ]]
 	then
@@ -375,16 +434,19 @@ done
 function pre_scan
 {
 while true
-	do
+do
+	if [[ "$JC" != 1 ]]
+	then
 		remove_temps
 		echo -e "Select what to scan: "
 		echo -e ""$YS"ENTER"$CE") All channels"
 		echo -e " "$YS"1"$CE"-"$YS"13"$CE") Specific channel"
-		echo -e ""$YS" back"$CE") Go back"
+		echo -e ""$YS"    b"$CE") Go back"
 		read CHANNELSL
 		if [[ "$CHANNELSL" = "" ]]
 		then
 			FJC=0
+			JC=1
 			airodump-ng $WLANNM -w /root/lscript/tempairodump
 		elif [[ "$CHANNELSL" = "back" || "$CHANNELSL" = "b" ]]
 		then
@@ -393,11 +455,14 @@ while true
 			break
 		else
 			FJC=0
+			JC=1
 			airodump-ng -c $CHANNELSL $WLANNM -w /root/lscript/tempairodump
 		fi
+	fi
 		ap_sort_and_choose
 		if [[ "$APCHOOSE" = "r" ]]
 		then
+			JC=0
 			continue
 		elif [[ "$APCHOOSE" = "back" || "$APCHOOSE" = "b" ]]
 		then
@@ -451,7 +516,7 @@ function validate_with_pyrit
 				echo -e "Handshake found!(Status: "$RS"bad"$CE")"
 			fi
 			echo -e ""
-			echo -e "Do you want to keep it?("$YNNO"): "
+			echo -e "Do you want to keep it?"$YNNO": "
 			read KORD
 			if [[ "$KORD" = "y" ]]
 			then
@@ -746,8 +811,8 @@ echo -e ""$YS" 3"$CE") Aircrack the handshake"
 echo -e ""$YS" 4"$CE") Verify a handshake"
 echo -e ""$YS" 5"$CE") Clean a handshake"
 echo -e ""$YS" 6"$CE") Remove .csv and .netxml files"
-echo -e ""$YS" 0"$CE") EXIT"
-echo -e " Choose: "
+echo -e ""$YS" 0"$CE") Exit"
+echo -e "Choose: "
 sleep 1
 CH=0
 read -e AA
@@ -794,7 +859,27 @@ then
 	else
 		HANDCAP=/root/handshakes/"$HANDF"
 	fi
-	validate_with_cowpatty
+	while true
+	do
+		clear
+		echo -e ""$BS"Validate with: "$CE""
+		echo -e ""$YS" 1"$CE") Pyrit"
+		echo -e ""$YS" 2"$CE") Cowpatty"
+		echo -e "Choose: "
+		read VLD
+		if [[ "$VLD" = 1 ]]
+		then
+			validate_with_pyrit
+			break
+		elif [[ "$VLD" = 2 ]]
+		then
+			validate_with_cowpatty
+			break
+		elif [[ "$VLD" = "b" || "$VLD" = "back" || "$VLD" = 00 ]]
+		then
+			break
+		fi
+	done
 elif [[ "$AA" = "5" ]]
 then
 	echo -e "------------------You are in /root/handshakes folder--------------------"
@@ -838,4 +923,5 @@ fi
 done	
 }
 #-------------------------------------------
+defaults_lh1
 main_handshake_options

@@ -1,3 +1,34 @@
+2.1.4
+New WPS feature added: Pixie loop till pin found.
+New WPS feature added: Unlock WPS for APs with locked WPS.(beta)
+New feature: Bruteforce router's login password.
+Remade old WEP menu.
+Added option to re arp-scan network.
+Added option to show bandwidth via iftop tool.
+Fixed wash output if network has space in it.
+Improved geolocation feature.
+Fixed arp-scan error.
+Fixed major issue on handshake scan, sometimes APs disappearing.
+Fixed minor error in errors menu.
+Added description to information gathering tools.
+Improved descriptions on wifi tools.
+Added two options to validate handshake.
+Added netool-toolkit to wifi tools.
+Added website tools menu.
+Added Leviathan to website tools.
+Added VMR and Airgeddon to WPS menu.
+Added SQLmap automated script to website tools and banner.
+Added setting to change the interface for arp-scan feature.
+Added checking if interface available before scan.
+Added patator to other tools.
+Added Evil-Droid to remote access tools and keyboard shortcuts.
+Improved pixie dust loop attack.
+Added NoSQLMap to website tools and keyboard shortcuts.
+Added option in settings to change iftop's interface.
+Add e.g. to LHOST on eternalblue.
+
+
+
 2.1.3
 Added Geolocate IP feature.
 Added fully automatic beef + mitmf browser injection.

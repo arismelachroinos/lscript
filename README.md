@@ -122,6 +122,9 @@ View your MAC faster
 	Email spoofing
 	Metasploit automation (create payloads,listeners,save listeners for later etc...)
 	Auto eternalblue exploiting (check on ks) -> hidden shortcuts
+	Browser auto-expoiting with BeEF and MITMf
+	SQLmap automated
+	+more
 		
 # How to install (Kali Linux)
 (make sure you are a root user)

@@ -1,4 +1,4 @@
-## Welcome to the LAZY script  v2.1.3
+## Welcome to the LAZY script  v2.1.4
 <p align="center">
 <img src="https://i.imgur.com/awIplS6.jpg"/>
 <img src="https://i.imgur.com/pbq0DuE.jpg"/>
@@ -87,7 +87,7 @@ View your MAC faster
 	Howdoi                          by Benjamin Gleitzman
 	Dr0p1t-Framework                by Karim Shoair
 	FakeImageExploiter              by r00t-3xp10it
-	Laviathan                       by Utku Sen, Ozge Barbaros
+	Leviathan                       by Utku Sen, Ozge Barbaros
 	WiFi-Pumpkin                    by P0cL4bs
 	Avet                            by govolution
 	Meterpreter_Paranoid_Mode-SSL   by r00t-3xp10it
@@ -106,6 +106,9 @@ View your MAC faster
 	LFISuite                        by D35m0nd142
 	Faraday                         by Infobyte
 	MSFPC                           by g0tmi1k
+	NoSQLMap                        by codingo, tcsstool
+	Evil-Droid                      by Mascerano Bachir
+	Iftop                           by Paul Warren, Chris Lightfoot
 	MORE ARE BEING ADDED ON EVERY UPDATE
 	
 **Wifi password scripts**

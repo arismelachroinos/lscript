@@ -165,7 +165,7 @@ Run the script
 Type "update"
 ```
 
-###Shoutouts
+### Shoutouts
 
 OpenSource Projects
 

@@ -9817,7 +9817,7 @@ check_if_ks
 	function install_gloom
 	{
 		foldname="Gloom-Framework"
-		gitlink="https://github.com/joshDelta/Gloom-Framework.git"
+		gitlink="https://github.com/cys3c/Gloom-Framework.git"
 		if [[ "$foldname" = "" ]]
 		then
 			exit
@@ -9951,7 +9951,7 @@ check_if_ks
 	function install_sechub
 	{
 		foldname="secHub"
-		gitlink="https://github.com/joshDelta/secHub.git"
+		gitlink="https://github.com/cys3c/secHub.git"
 		if [[ "$foldname" = "" ]]
 		then
 			exit

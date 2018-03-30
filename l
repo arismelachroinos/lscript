@@ -9488,7 +9488,7 @@ check_if_ks
 		cd
 		echo -e "Installing Kwetza"
 		echo -e "Tool by Sensepost"
-		https://github.com/sensepost/kwetza.git
+		git clone https://github.com/sensepost/kwetza.git
 		pip install beautifulsoup4
 		pip2.7 install beautifulsoup4
 	}

@@ -9770,9 +9770,9 @@ check_if_ks
 		cd
 		git clone $gitlink
 		cd /root/$foldname
-		pip install -r requirements
+		pip install -r requirements.txt
 		
-		pip2.7 install -r requirements
+		#~ pip2.7 install -r requirements.txt
 		cd
 	}
 	function install_fake_image

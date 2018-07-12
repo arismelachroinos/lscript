@@ -3113,7 +3113,7 @@ function wifi_tools
 		if [[ -d /root/fluxion ]]
 		then
 			cd /root/fluxion
-			./fluxion
+			./fluxion.sh
 			cd
 		else
 			echo -e "$TNI"

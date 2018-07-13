@@ -40,7 +40,7 @@ View your MAC faster
 	You can install whichever tool(s) you want from within lscript! 
 	Fluxion                         by Deltaxflux
 	WifiTe                          by derv82
-	Wifiphisher                     by Dan McInerney
+	Wifiphisher                     by George Chatzisofroniou
 	Zatacker                        by LawrenceThePentester
 	Morpheus                        by Pedro ubuntu  [ r00t-3xp10it ]
 	Osrframework                    by i3visio

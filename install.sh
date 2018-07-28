@@ -16,7 +16,7 @@ then
 	mkdir /root/lscript
 	cp -r "$DIR"/* /root/lscript
 	chmod +x /root/lscript/install.sh
-	gnome-terminal -e "bash /root/lscript/install.sh"
+	gnome-terminal -- "bash /root/lscript/install.sh"
 fi
 echo -e "Installing lscript..."
 sleep 1
@@ -49,6 +49,9 @@ cp /root/lscript/lh4 /bin/lscript
 cp /root/lscript/lh41 /bin/lscript
 cp /root/lscript/lh42 /bin/lscript
 cp /root/lscript/lh43 /bin/lscript
+clear
+#required for gui
+apt-get -y install ncurses-dev
 clear
 if [[ ! -d /root/handshakes ]]
 then
@@ -101,5 +104,5 @@ sleep 1
 clear
 echo -e "Open a NEW terminal and type 'l' to launch the script"
 sleep  4
-gnome-terminal -e l
+gnome-terminal -- l
 exit

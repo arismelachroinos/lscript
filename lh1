@@ -105,7 +105,9 @@ then
 	gnome-terminal --geometry 70x10+0+0 -- lh2
 	HANDFORDEAUTH="/root/handshakes/$HANDF-01.csv"
 	export HANDFORDEAUTH
-	airodump-ng --bssid $TARGB -c $TARGC -w /root/handshakes/$HANDF $WLANNM
+	airodump-ng --bssid $TARGB -c $TARGC -w /root/handshakes/$HANDF $WLANNM # & jobs -p > /root/lscript/dpidd.txt
+	#~ airodump-ng --bssid $TARGB -c $TARGC -w /root/handshakes/$HANDF $WLANNM
+	#kill the deauth menu if running
 	if [[ -f "$LPATH"/dpid.txt ]]
 	then
 		read DPID < "$LPATH"/dpid.txt
@@ -114,6 +116,20 @@ then
 		then
 			kill $DPID
 		fi
+	fi
+	#kill the autochecker for handshake if running
+	if [[ -f "$LPATH"/dpiddd.txt ]]
+	then
+		read DPID < "$LPATH"/dpiddd.txt
+		PIF=$(ps -A | grep "$DPID")
+		if [[ "$PIF" != "" ]]
+		then
+			kill $DPID
+		fi
+	fi
+	if [[ -f "/root/lscript/dpid*.txt" ]]
+	then
+		rm /root/lscript/dpid*.txt
 	fi
 	validhandshake
 	exec bash "$0"
@@ -173,6 +189,10 @@ else
 				kill $DPID
 			fi
 		fi
+		if [[ -f "/root/lscript/dpid*.txt" ]]
+		then
+			rm /root/lscript/dpid*.txt
+		fi
 		validhandshake
 		exec bash "$0"
 	fi
@@ -180,22 +200,11 @@ fi
 }
 function remove_temps
 {
-	if [[ -f /root/lscript/tempairodump-01.cap ]]
-	then
-		rm /root/lscript/tempairodump-01.cap
-	fi
-	if [[ -f /root/lscript/tempairodump-01.csv ]]
-	then
-		rm /root/lscript/tempairodump-01.csv
-	fi
-	if [[ -f /root/lscript/tempairodump-01.kismet.netxml ]]
-	then
-		rm /root/lscript/tempairodump-01.kismet.netxml
-	fi
-	if [[ -f /root/lscript/tempairodump-01.kismet.csv ]]
-	then
-		rm /root/lscript/tempairodump-01.kismet.csv
-	fi
+		rm -f /root/lscript/tempairodump-01.cap
+		rm -f /root/lscript/tempairodump-01.csv
+		rm -f /root/lscript/tempairodump-01.kismet.netxml
+		rm -f /root/lscript/tempairodump-01.kismet.csv
+		rm -f /root/lscript/dpid*.txt
 }
 function autoapselect
 {
@@ -215,19 +224,20 @@ then
 	while [ $n2 -le "$lines" ]
 	do
 		n3=$((n2+2))
-		apower[$n2]=$(cat $file | awk -v nn="$n3" '{FS=", "}{if(NR==nn && /WPA|WPA2/)print $8}')
+		##apower[$n2]=$(cat $file | awk -v nn="$n3" '{FS=", "}{if(NR==nn && /WPA|WPA2/)print $8}') BEFORE UPDATE
+		apower[$n2]=$(cat $file | awk -v nn="$n3" '{FS=", "}{if(NR==nn && /WPA|WPA2/)print $9}')
 		aopen[$n2]=0
 		if [[ ${apower[$n2]} = "" ]]
 		then
 			aopen[$n2]=1
 			apower[$n2]=$(cat $file | awk -v nn="$n3" '{FS=", "}{if(NR==nn && /OPN|WEP/)print $9}')
 		fi
-		adata[$n2]=$(cat $file | awk -v nn="$n3" '{FS=", "} {if(NR==nn && /WPA|WPA2/)print $10}')
+		adata[$n2]=$(cat $file | awk -v nn="$n3" '{FS=", "} {if(NR==nn && /WPA|WPA2/)print $11}')
 		if [[ ${adata[$n2]} = "" ]]
 		then
 			adata[$n2]=$(cat $file | awk -v nn="$n3" '{FS=", "}{if(NR==nn && /OPN|WEP/)print $11}')
 		fi
-		aessid[$n2]=$(cat $file | awk -v nn="$n3" '{FS=", "} {if(NR==nn && /WPA|WPA2/)print $13}')
+		aessid[$n2]=$(cat $file | awk -v nn="$n3" '{FS=", "} {if(NR==nn && /WPA|WPA2/)print $14}')
 		if [[ ${aessid[$n2]} = "" ]]
 		then
 			aessid[$n2]=$(cat $file | awk -v nn="$n3" '{FS=", "}{if(NR==nn && /OPN|WEP/)print $14}')
@@ -235,7 +245,7 @@ then
 		achannel[$n2]=$(cat $file | awk -v nn="$n3" '{FS=", "} {if(NR==nn && /WPA|WPA2/)print $4}')
 		if [[ ${achannel[$n2]} = "" ]]
 		then
-			achannel[$n2]=$(cat $file | awk -v nn="$n3" '{FS=", "}{if(NR==nn && /OPN|WEP/)print $14}')
+			achannel[$n2]=$(cat $file | awk -v nn="$n3" '{FS=", "}{if(NR==nn && /OPN|WEP/)print $4}')
 		fi
 		amac[$n2]=$(cat $file | awk -v nn="$n3" '{FS=", "} {if(NR==nn && /WPA|WPA2/)print $1}')
 		if [[ ${amac[$n2]} = "" ]]
@@ -243,7 +253,7 @@ then
 			amac[$n2]=$(cat $file | awk -v nn="$n3" '{FS=", "}{if(NR==nn && /OPN|WEP/)print $1}')
 		fi
 		powerunfixed="${apower[$n2]}"
-		apowerfixed[$n2]=$powerunfixed
+		apowerfixed[$n2]="$powerunfixed"
 		apowerfixed[$n2]=$((power+apowerfixed[$n2]))
 		#echo ""$n2") "${apowerfixed[$n2]}"% "${amac[$n2]}" "${achannel[$n2]}" "${adata[$n2]}" "${aessid[$n2]}""
 		###DEBUGGING
@@ -255,12 +265,12 @@ then
 	do
 		n=1
 		topsignal=100
-		while [ $n -le "$lines" ]
+		while [[ "$n" -le "$lines" ]]
 		do
-			if [[ ${apowerfixed[$n]} -le $topsignal ]]
+			if [[ "${apowerfixed[$n]}" -le "$topsignal" ]]
 			then
-				lowestn=$n
-				topsignal=${apowerfixed[$n]}				
+				lowestn="$n"
+				topsignal="${apowerfixed[$n]}"				
 			fi
 			n=$((n+1))
 		done 
@@ -282,11 +292,22 @@ then
 	echo -e "     POWER ESSID                                  MAC               CLIENTS  DATA"
 	while [ $n3 -le "$lines" ]
 	do
-		size=${#zessid[$n3]}
+		#fix for \x00\x00\x00 bug on airodump:
+			checkbug=$(echo "${zessid[$n3]}" | grep "\x00")
+			if [[ "$checkbug" == "" ]]
+			then
+				size="${#zessid[$n3]}"
+			else
+				zessidfixed=$(echo "${zessid[$n3]}" | cut -d '\' -f1)
+				size="${#zessidfixed}"
+			fi
+		##
+		
+		##calculating how many underscores needed for output
 		calc=$(( 40-size ))
 		numcalc=1
 		SPACES=""
-		while [ $numcalc != $calc ]
+		while [[ "$numcalc" != "$calc" ]]
 		do
 			SPACES=""$SPACES"_"
 			numcalc=$(( numcalc+1 ))
@@ -501,30 +522,30 @@ function validate_with_pyrit
 		TEMPHANDD=$(echo "$TEMP" | grep "good")
 		if [[ "$TEMPHANDD" = "" ]]
 		then
-			#TEMPHANDDD=$(pyrit -r "$HANDCAP" analyze 2>/dev/null | grep "bad")
-			TEMPHANDDD=$(echo $TEMP | grep "bad")
-			if [[ "TEMPHANDDD" = "" ]]
-			then
-				TEMPHAD=$(echo $TEMP | grep "workable")
-				if [[ "$TEMPHAD" = "" ]]
+			TEMPHAD=$(echo "$TEMP" | grep "workable")
+			if [[ "$TEMPHAD" = "" ]]
+			then	
+				#TEMPHANDDD=$(pyrit -r "$HANDCAP" analyze 2>/dev/null | grep "bad")
+				TEMPHANDDD=$(echo "$TEMP" | grep "bad")
+				if [[ "TEMPHANDDD" = "" ]]
 				then
 					echo -e "Handshake found!(Status: "$RS"unknown"$CE")"
 				else
-					echo -e "Handshake found!(Status: "$RS"workable"$CE")"
+					echo -e "Handshake found!(Status: "$RS"bad"$CE")"
 				fi
+				echo -e ""
+				echo -e "Do you want to keep it?"$YNNO": "
+				read KORD
+				if [[ "$KORD" = "y" ]]
+				then
+					VALIDH=1
+				else
+					VALIDH=0
+				fi
+				sleep 0.1
 			else
-				echo -e "Handshake found!(Status: "$RS"bad"$CE")"
-			fi
-			echo -e ""
-			echo -e "Do you want to keep it?"$YNNO": "
-			read KORD
-			if [[ "$KORD" = "y" ]]
-			then
-				VALIDH=1
-			else
-				VALIDH=0
-			fi
-			sleep 3
+				echo -e "Handshake found!(Status: "$RS"workable"$CE")"
+			fi			
 		else
 			echo -e "Valid handshake found!(Status: "$YS"good"$CE")"
 			sleep 3
@@ -576,7 +597,7 @@ if [[ "$HANDVALID" = "n" ]]
 then
 	echo -e "Removing the file..."
 	sleep 2
-	rm $HANDFFP
+	rm /root/handshakes/"$HANDF"-01*
 	#~ remove_temps
 	FJC=0
 else
@@ -602,8 +623,19 @@ else
 		if [[ "$HANDCC" = "n" ]]
 		then
 			echo -e "Your handshake file is saved in: /root/handshakes/"$HANDF"-01.cap"
+			CTD="/root/handshakes/"$HANDF"-01.cap"
 		else
 			pyrit -r $HANDCAP -o /root/handshakes/"$HANDF"-cleaned.cap strip && echo -e "Your handshake is now cleaned! You can find it at: /root/handshakes/"$HANDF"-cleaned.cap"
+			CTD="/root/handshakes/$HANDF-cleaned.cap"
+		fi
+		echo -e ""
+		echo -e "Do you want to copy the handshake file to Desktop?"$YNYES""
+		read CTDQ
+		if [[ ! "$CTDQ" == "n" ]]
+		then
+			cp "$CTD" /root/Desktop
+			echo -e ""$YS"Done!"$CE""
+			sleep 1
 		fi
 		echo -e "$PAKTC"
 		$READAK
@@ -739,6 +771,8 @@ function aircrack_handshakejust
 	fi
 	clear
 	aircrack-ng -w $WORDFF $HANDFFP
+	echo -e "$PAKTGB"
+	$READAK
 }
 function aircrack_handshake
 {
@@ -786,12 +820,15 @@ function aircrack_handshake
 
 	clear
 	aircrack-ng -w $WORDFF $HANDFFT
+	echo -e "$PAKTGB"
+	$READAK
 }
 function main_handshake_options
 {
 while true
 do
 clear
+
 if [[ -f "/root/handshakes/*.csv" ]]
 then
 	rm /root/handshakes/*.csv

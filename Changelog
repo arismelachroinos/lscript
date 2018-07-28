@@ -1,3 +1,30 @@
+2.1.5
+Remade installation menu, now you can select multiple tools at once.
+Fixed no output when handshake scanning.
+Fixed wifiphisher launch when only 1 interface available.
+Added option to select the entire network as target at auto-exploit browser menu.
+Angry IP updated.
+Fixed routersploit installation.
+Added new wififb menu that auto-saves captured credentials, triggered only via ks.
+Added new error for auto-fix, when pyrit handshake verification always is bad.
+Auto exiting deauth attack when specified num of deauths completed.
+Option to not ask for confirmation to remove and reinstall already installed tools.
+Improved "local IPs and gateways" feature.
+Added option to autocheck for handshake every x seconds.
+Added option to copy captured handshake to desktop after validating.
+Go to gateway's IP in browser by typing 'gate'.
+Added Yuki Chan to website tools.
+Fixed install.sh error in gnome-terminal command.
+Fixed airodump's \x00\x00\x00 bug on output when scanning. 
+Added default wififb names.
+Fixed fluxion's installation.
+Added option to test arp-scan IPs with eternalblue exploit.
+Fixed unlock WPS menu errors.
+Fixed Fluxion launch error due to latest fluxion version.
+Fixed Kwetza installation typo.
+Fixed many bugs, but not even half.
+
+
 2.1.4
 New WPS feature added: Pixie loop till pin found.
 New WPS feature added: Unlock WPS for APs with locked WPS.(beta)

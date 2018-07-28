@@ -1,0 +1,61 @@
+#!/bin/bash
+DPIDDD=$$
+echo $DPIDDD > /root/lscript/dpiddd.txt
+i=1
+delay="$Del"
+if [[ "$delay" == "" ]]
+then
+	delay=5
+fi
+while [[ "$i" == 1 ]]
+do
+	TEMP=$(pyrit -r "$HANDCAP" analyze 2>/dev/null)
+	TEMPHANDD=$(echo "$TEMP" | grep "good")
+	TEMPHAND=$(echo "$TEMP" | grep "workable")
+	if [[ "$TEMPHANDD" == "" && "$TEMPHAND" == "" ]]
+	then
+		printf "."	
+	else
+		clear
+		echo -e "HANDSHAKE FOUND!"
+		sleep 2
+		echo -e "Exiting terminals..."
+		sleep 1
+		if [[ -f "$LPATH"/dpid.txt ]]
+		then
+			read DPID < "$LPATH"/dpid.txt
+			PIF=$(ps -A | grep "$DPID")
+			if [[ "$PIF" != "" ]]
+			then
+				kill $DPID
+			fi
+		fi
+		break
+	fi
+	sleep "$delay"
+done
+j=1
+while true
+do
+	PIDSE="dpid"$j".txt"
+	if [[ -f "$LPATH"/"$PIDSE" ]]
+	then
+		read DPID < "$LPATH"/"$PIDSE"
+		PIF=$(ps -A | grep "$DPID")
+		if [[ "$PIF" != "" ]]
+		then
+			kill $DPID
+		fi
+	else
+		rm "$LPATH"/dpid*
+		break
+	fi
+	j=$((j+1))
+done
+if [[ -f "$LPATH"/dpidd.txt ]]
+then
+	read DPID2 < /root/lscript/dpidd.txt
+	kill -INT $DPID2
+fi
+exit
+

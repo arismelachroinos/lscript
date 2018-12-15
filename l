@@ -5,7 +5,7 @@ VERSION=2.1.5
 #Number of tools with keyboard shortcut support
 HOWMANYTOOLS=53
 BACKL="0"
-DONATIONS=10
+DONATIONS=13
 LATESTCHANGELOGLINES=26
 cd
 #############DEFAULTS###############

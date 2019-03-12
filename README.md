@@ -84,61 +84,61 @@ Type "update"
 #### List of Tools:
 ```
 	=== You can install whichever tool(s) you want from within lscript! ===
-	+ Fluxion                         by Deltaxflux
-	- WifiTe                          by derv82
-	+ Wifiphisher                     by George Chatzisofroniou
-	- Zatacker                        by LawrenceThePentester
-	+ Morpheus                        by Pedro ubuntu  [ r00t-3xp10it ]
-	- Osrframework                    by i3visio
-	+ Hakku                           by 4shadoww
-	- Trity                           by Toxic-ig
-	+ Cupp                            by Muris Kurgas
-	- Dracnmap                        by Edo -maland-
-	+ Fern Wifi Cracker               by Savio-code
-	- Kichthemout                     by Nikolaos Kamarinakis & David Schütz
-	+ BeeLogger                       by Alisson Moretto - 4w4k3
-	- Ghost-Phisher                   by Savio-code
-	+ Mdk3-master                     by Musket Developer
-	- Anonsurf                        by Und3rf10w
-	+ The Eye                         by EgeBalci
-	- Airgeddon                       by v1s1t0r1sh3r3
-	+ Xerxes                          by zanyarjamal
-	- Ezsploit                        by rand0m1ze
-	+ Katana framework                by PowerScript
-	+ 4nonimizer                      by Hackplayers
-	- Sslstrip2                       by LeonardoNve
-	+ Dns2proxy                       by LeonardoNve
-	- Pupy                            by n1nj4sec
-	+ Zirikatu                        by pasahitz
-	- TheFatRat                       by Sceetsec
-	+ Angry IP Scanner                by Anton Keks
-	- Sniper                          by 1N3
-	+ ReconDog                        by UltimateHackers
-	- RED HAWK                        by Tuhinshubhra
-	+ Routersploit                    by Reverse shell
-	- CHAOS                           by Tiagorlampert
-	+ Winpayloads                     by Ncc group 
-	- Infoga                          by m4ll0k
-	+ nWatch                          by Suraj
-	- Eternal scanner                 by Peterpt
-	+ Eaphammer                       by S0lst1c3
-	- Dagon                           by Ekultek
-	+ LALIN                           by Screetsec
-	- Ngrok                           by inconshreveable + more
-	+ Kwetza                          by Chris Le Roy
-	- Bleachbit                       by Andrew Ziem
-	+ Operative framework             by Tristan Granier
-	- Netattack2                      by Christian Klein
-	+ Findsploit                      by 1N3
-	- Howdoi                          by Benjamin Gleitzman
-	+ Dr0p1t-Framework                by Karim Shoair
-	- FakeImageExploiter              by r00t-3xp10it
-	+ Leviathan                       by Utku Sen, Ozge Barbaros
-	- WiFi-Pumpkin                    by P0cL4bs
-	+ Avet                            by govolution
-	- Meterpreter_Paranoid_Mode-SSL   by r00t-3xp10it
-	+ Koadic                          by zerosum0x0
-	- Empire                          by Will Schroeder,
+	  Fluxion                         by Deltaxflux
+	  WifiTe                          by derv82
+	  Wifiphisher                     by George Chatzisofroniou
+	  Zatacker                        by LawrenceThePentester
+	  Morpheus                        by Pedro ubuntu  [ r00t-3xp10it ]
+	  Osrframework                    by i3visio
+	  Hakku                           by 4shadoww
+	  Trity                           by Toxic-ig
+	  Cupp                            by Muris Kurgas
+	  Dracnmap                        by Edo -maland-
+	  Fern Wifi Cracker               by Savio-code
+	  Kichthemout                     by Nikolaos Kamarinakis & David Schütz
+	  BeeLogger                       by Alisson Moretto - 4w4k3
+	  Ghost-Phisher                   by Savio-code
+	  Mdk3-master                     by Musket Developer
+	  Anonsurf                        by Und3rf10w
+	  The Eye                         by EgeBalci
+	  Airgeddon                       by v1s1t0r1sh3r3
+	  Xerxes                          by zanyarjamal
+	  Ezsploit                        by rand0m1ze
+	  Katana framework                by PowerScript
+	  4nonimizer                      by Hackplayers
+	  Sslstrip2                       by LeonardoNve
+	  Dns2proxy                       by LeonardoNve
+	  Pupy                            by n1nj4sec
+	  Zirikatu                        by pasahitz
+	  TheFatRat                       by Sceetsec
+	  Angry IP Scanner                by Anton Keks
+	  Sniper                          by 1N3
+	  ReconDog                        by UltimateHackers
+	  RED HAWK                        by Tuhinshubhra
+	  Routersploit                    by Reverse shell
+	  CHAOS                           by Tiagorlampert
+	  Winpayloads                     by Ncc group 
+	  Infoga                          by m4ll0k
+	  nWatch                          by Suraj
+	  Eternal scanner                 by Peterpt
+	  Eaphammer                       by S0lst1c3
+	  Dagon                           by Ekultek
+	  LALIN                           by Screetsec
+	  Ngrok                           by inconshreveable + more
+	  Kwetza                          by Chris Le Roy
+	  Bleachbit                       by Andrew Ziem
+	  Operative framework             by Tristan Granier
+	  Netattack2                      by Christian Klein
+ 	  Findsploit                      by 1N3
+ 	  Howdoi                          by Benjamin Gleitzman
+	  Dr0p1t-Framework                by Karim Shoair
+	  FakeImageExploiter              by r00t-3xp10it
+	  Leviathan                       by Utku Sen, Ozge Barbaros
+	  WiFi-Pumpkin                    by P0cL4bs
+	  Avet                            by govolution
+	  Meterpreter_Paranoid_Mode-SSL   by r00t-3xp10it
+	  Koadic                          by zerosum0x0
+	  Empire                          by Will Schroeder,
                                            Justin Warner, 
                                            Matt Nelson,
                                            Steve Borosh,
@@ -155,7 +155,7 @@ Type "update"
 	+ NoSQLMap                        by codingo, tcsstool
 	- Evil-Droid                      by Mascerano Bachir
 	+ Iftop                           by Paul Warren, Chris Lightfoot
-	=== MORE ARE BEING ADDED ON EVERY UPDATE ===
+      === MORE ARE BEING ADDED ON EVERY UPDATE ===
 ```
 
 #### WIFI Password Scripts

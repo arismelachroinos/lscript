@@ -28,6 +28,47 @@ A video Hackersploit made : https://www.youtube.com/watch?v=oBpo5sElrMY
 
 A video sstec made:         https://www.youtube.com/watch?v=gSO7c2MN7TY
 
+------------------	
+
+# Installation (Kali Linux)
+(make sure you are a root user)
+
+**Be carefull.If you download it as a .zip file, it will not run. Make sure to follow these simple instructions.**
+
+### Installation
+
+```
+cd
+git clone https://github.com/arismelachroinos/lscript.git
+cd lscript
+chmod +x install.sh
+./install.sh
+```
+
+### How to run it
+
+(make sure you are a root user)
+
+```
+open terminal
+type  "l"
+press enter
+```
+**(Not even "lazy"!! Just "l"! The less you type , the better!)**
+
+### How to uninstall
+``` 
+cd /root/lscript
+./uninstall.sh
+rmdir -r /root/lscript 
+```
+
+### How to update
+``` 
+Run the script
+Type "update"
+```
+
 ------------------
 
 ## Features
@@ -41,7 +82,7 @@ A video sstec made:         https://www.youtube.com/watch?v=gSO7c2MN7TY
 - View your public IP faster
 - View your MAC faster
 	
-**TOOLS**
+### List of Tools
 
 	You can install whichever tool(s) you want from within lscript! 
 	Fluxion                         by Deltaxflux
@@ -117,61 +158,26 @@ A video sstec made:         https://www.youtube.com/watch?v=gSO7c2MN7TY
 	Iftop                           by Paul Warren, Chris Lightfoot
 	MORE ARE BEING ADDED ON EVERY UPDATE
 	
-**Wifi password scripts**
-
-	Handshake       (WPA-WPA2)
-	Find WPS pin    (WPA-WPA2)
-	WEP hacking     (WEP)    
-	
-**Others**
-
-	Email spoofing
-	Metasploit automation (create payloads,listeners,save listeners for later etc...)
-	Auto eternalblue exploiting (check on ks) -> hidden shortcuts
-	Browser auto-expoiting with BeEF and MITMf
-	SQLmap automated
-	+more
-		
-# How to install (Kali Linux)
-(make sure you are a root user)
-
-**Be carefull.If you download it as a .zip file, it will not run.Make sure to follow these simple instructions.**
-
-**MADE FOR KALI LINUX**
-
-```
-cd
-git clone https://github.com/arismelachroinos/lscript.git
-cd lscript
-chmod +x install.sh
-./install.sh
+### WIFI Password Scripts
+```diff
+	+ Handshake       (WPA-WPA2)
+	+ Find WPS pin    (WPA-WPA2)
+	+ WEP hacking     (WEP)    
 ```
 
-### How to run it
-
-(make sure you are a root user)
-
-```
-open terminal
-type  "l"
-press enter
-```
-**(Not even "lazy"!! Just "l"! The less you type , the better!)**
-
-### How to uninstall
-``` 
-cd /root/lscript
-./uninstall.sh
-rmdir -r /root/lscript 
+### Extra
+```diff
+	+ Email spoofing
+	+ Metasploit automation (create payloads,listeners,save listeners for later etc...)
+	+ Auto eternalblue exploiting (check on ks) -> hidden shortcuts
+	+ Browser auto-expoiting with BeEF and MITMf
+	+ SQLmap automated
+	+ Etc...
 ```
 
-### How to update
-``` 
-Run the script
-Type "update"
-```
+------------------
 
-### Screenshots
+## Screenshots of Tool
 
 <p align="center">
 <img src="https://i.imgur.com/awIplS6.jpg"/>
@@ -183,12 +189,16 @@ Type "update"
 <img src="https://i.imgur.com/MlDFWax.jpg"/>
 <img src="https://i.imgur.com/rbdUIQI.jpg"/>
 </p>
+	
+------------------
 
 ### Shoutouts
 
 ##### [OpenSource Projects](https://www.facebook.com/opensourceprojects/)
 
 OpenSource Projects is a Facebook community page who's goal is to give developers, new and old, a easy and simple place to share their opensource contributions and projects. I personally think this is an awesome idea, I know how hard it is to get your code noticed by people and support these guys 100%. Go ahead and give them a like [here](https://www.facebook.com/opensourceprojects/). They will share any opensource project you send them for free. Thank you OpenSource Projects for giving developers a place to share work with one another!
+
+------------------
 
 ### Donate
 If you like my work, consider buying me a coffee :)

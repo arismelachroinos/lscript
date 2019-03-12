@@ -20,12 +20,6 @@
 
 **Its not only for noobs.Its for whoever wants to type less and do actually more.**
 
-------------------
-
-### What is this
-This is a script for Kali Linux that automates many procedures about wifi penetration and hacking.
-I actually made it for fun for me just to save some time, but i don't mind publicing it.
-
 <p align="center">
 <img src="https://i.imgur.com/awIplS6.jpg"/>
 </p>
@@ -33,6 +27,8 @@ I actually made it for fun for me just to save some time, but i don't mind publi
 A video Hackersploit made : https://www.youtube.com/watch?v=oBpo5sElrMY
 
 A video sstec made:         https://www.youtube.com/watch?v=gSO7c2MN7TY
+
+------------------
 
 ### Features
 

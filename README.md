@@ -9,7 +9,7 @@
 
 ## Welcome to the LAZY script  v2.1.4
 
-**DISCLAIMER:** ***I AM NOT RESPONSIBLE HOW YOU USE THIS TOOL.BE LEGAL AND NOT STUPID.***
+**DISCLAIMER:** ***I AM NOT RESPONSIBLE HOW YOU USE THIS TOOL. BE LEGAL AND NOT STUPID.***
 
 **For feature-recommendation , add it on the "Issues" tab. NOW!**
 

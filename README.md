@@ -32,7 +32,7 @@ A video sstec made:         https://www.youtube.com/watch?v=gSO7c2MN7TY
 
 ## Features
 
-#### NEW FEATURE:** ***Custom keyboard shortcuts!!
+#### NEW FEATURE: *Custom keyboard shortcuts!!*
 **Launch any tool within lscript , with your own shortcuts!!! (type ks to set your shortcuts)**
 	
 - Enabling-Disabling interfaces faster

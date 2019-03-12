@@ -11,9 +11,12 @@
 
 **DISCLAIMER:** ***I AM NOT RESPONSIBLE HOW YOU USE THIS TOOL. BE LEGAL AND NOT STUPID.***
 
-**For feature-recommendation , add it on the "Issues" tab. NOW!**
+*This is a script for Kali Linux that automates many procedures about wifi penetration and hacking.
+I actually made it for fun for me just to save some time, but i don't mind publicing it.*
 
 **This script will make your life easier, and of course faster.**
+
+**For feature-recommendation , add it on the "Issues" tab. NOW!**
 
 **Its not only for noobs.Its for whoever wants to type less and do actually more.**
 

@@ -16,9 +16,9 @@
 
 **This script will make your life easier, and of course, faster.**
 
-**For feature-recommendation , add it on the "Issues" tab. NOW!**
+**For feature-recommendation, add it on the "Issues" tab. NOW!**
 
-**Its not only for noobs.Its for whoever wants to type less and do actually more.**
+**Its not only for noobs. Its for whoever wants to type less and actually do more.**
 
 <p align="center">
 <img src="https://i.imgur.com/awIplS6.jpg"/>
@@ -30,12 +30,12 @@ A video sstec made:         https://www.youtube.com/watch?v=gSO7c2MN7TY
 
 ------------------	
 
-# Installation (Kali Linux)
+## Installation (Only for Kali Linux) :books:
 (make sure you are a root user)
 
 **Be carefull.If you download it as a .zip file, it will not run. Make sure to follow these simple instructions.**
 
-### Installation
+#### Install
 
 ```
 cd
@@ -45,7 +45,7 @@ chmod +x install.sh
 ./install.sh
 ```
 
-### How to run it
+#### How to run it
 
 (make sure you are a root user)
 
@@ -54,16 +54,16 @@ open terminal
 type  "l"
 press enter
 ```
-**(Not even "lazy"!! Just "l"! The less you type , the better!)**
+**(Not even "lazy"!! Just "l"! The less you type, the better!)**
 
-### How to uninstall
+#### How to uninstall
 ``` 
 cd /root/lscript
 ./uninstall.sh
 rmdir -r /root/lscript 
 ```
 
-### How to update
+#### How to update
 ``` 
 Run the script
 Type "update"
@@ -82,7 +82,7 @@ Type "update"
 - View your public IP faster
 - View your MAC faster
 	
-### List of Tools
+#### List of Tools
 
 	You can install whichever tool(s) you want from within lscript! 
 	Fluxion                         by Deltaxflux
@@ -158,14 +158,14 @@ Type "update"
 	Iftop                           by Paul Warren, Chris Lightfoot
 	MORE ARE BEING ADDED ON EVERY UPDATE
 	
-### WIFI Password Scripts
+#### WIFI Password Scripts
 ```diff
 	+ Handshake       (WPA-WPA2)
 	+ Find WPS pin    (WPA-WPA2)
 	+ WEP hacking     (WEP)    
 ```
 
-### Extra
+#### Extra
 ```diff
 	+ Email spoofing
 	+ Metasploit automation (create payloads,listeners,save listeners for later etc...)
@@ -192,7 +192,7 @@ Type "update"
 	
 ------------------
 
-### Shoutouts
+## Shoutouts
 
 ##### [OpenSource Projects](https://www.facebook.com/opensourceprojects/)
 
@@ -200,7 +200,7 @@ OpenSource Projects is a Facebook community page who's goal is to give developer
 
 ------------------
 
-### Donate
+## Donate
 If you like my work, consider buying me a coffee :)
 
 [![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=GC9RSY4CS6KAY)

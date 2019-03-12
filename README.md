@@ -48,13 +48,12 @@ chmod +x install.sh
 ```
 
 #### How to run it:
-(make sure you are a root user)
 ```
 open terminal
 type  "l"
 press enter
 ```
-**(Not even "lazy"!! Just "l"! The less you type, the better!)**
+*(Not even "lazy"!! Just "l"! The less you type, the better!)*
 
 #### How to uninstall:
 ``` 

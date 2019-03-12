@@ -1,4 +1,4 @@
-# Lazy Script
+# Lazy Script :seat:
 
 ------------------
 
@@ -9,9 +9,9 @@
 
 ## Welcome to the LAZY script  v2.1.4
 
-**For feature-recommendation , add it on the "Issues" tab. NOW!**
+**DISCLAIMER:** ***I AM NOT RESPONSIBLE HOW YOU USE THIS TOOL.BE LEGAL AND NOT STUPID.***
 
-**I AM NOT RESPONSIBLE HOW YOU USE THIS TOOL.BE LEGAL AND NOT STUPID.**
+**For feature-recommendation , add it on the "Issues" tab. NOW!**
 
 **This script will make your life easier, and of course faster.**
 

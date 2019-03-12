@@ -23,11 +23,11 @@
 *This is a script for Kali Linux that automates many procedures about wifi penetration and hacking.*
 *I actually made it for fun for me just to save some time, but I do not mind publicing it.*
 
-**This script will make your life easier, and of course, faster.**
+- This script will make your life easier, and of course, faster.**
 
-**For feature-recommendation, add it on the "Issues" tab. NOW!**
+- For feature-recommendation, add it on the "Issues" tab. NOW!**
 
-**Its not only for noobs. Its for whoever wants to type less and actually do more.**
+- Its not only for noobs. Its for whoever wants to type less and actually do more.**
 
 A video Hackersploit made : https://www.youtube.com/watch?v=oBpo5sElrMY
 

@@ -25,6 +25,7 @@ A video Hackersploit made : https://www.youtube.com/watch?v=oBpo5sElrMY
 
 A video sstec made:         https://www.youtube.com/watch?v=gSO7c2MN7TY
 
+------------------
 
 ### What is this
 This is a script for Kali Linux that automates many procedures about wifi penetration and hacking.

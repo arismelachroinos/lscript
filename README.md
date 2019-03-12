@@ -30,15 +30,16 @@ A video sstec made:         https://www.youtube.com/watch?v=gSO7c2MN7TY
 
 ------------------
 
-### Features
+## Features
 
-   ### NEW FEATURE: Custom keyboard shortcuts!! Launch any tool within lscript , with your own shortcuts!!! (type ks to set your shortcuts)
+**NEW FEATURE:** ***Custom keyboard shortcuts!!*** 
+**Launch any tool within lscript , with your own shortcuts!!! (type ks to set your shortcuts)**
 	
-Enabling-Disabling interfaces faster
-Changing Mac faster
-Anonymizing yourself faster
-View your public IP faster
-View your MAC faster
+- Enabling-Disabling interfaces faster
+- Changing Mac faster
+- Anonymizing yourself faster
+- View your public IP faster
+- View your MAC faster
 	
 **TOOLS**
 

@@ -1,17 +1,13 @@
-## Welcome to the LAZY script  v2.1.4
-<p align="center">
-<img src="https://i.imgur.com/awIplS6.jpg"/>
-<img src="https://i.imgur.com/pbq0DuE.jpg"/>
-<img src="https://i.imgur.com/QgTLKxR.jpg"/>
-<img src="https://i.imgur.com/oJIk2oG.jpg"/>
-<img src="https://i.imgur.com/icT4x55.jpg"/>
-<img src="https://i.imgur.com/sSf1JcI.jpg"/>
-<img src="https://i.imgur.com/MlDFWax.jpg"/>
-<img src="https://i.imgur.com/rbdUIQI.jpg"/>
-</p>
-A video Hackersploit made : https://www.youtube.com/watch?v=oBpo5sElrMY
+# Lazy Script
 
-A video sstec made:         https://www.youtube.com/watch?v=gSO7c2MN7TY
+------------------
+
+## The README was edited by Lin8x :penguin:
+## The original repository can be found here: https://github.com/arismelachroinos/lscript
+
+------------------
+
+## Welcome to the LAZY script  v2.1.4
 
 **For feature-recommendation , add it on the "Issues" tab. NOW!**
 
@@ -20,6 +16,15 @@ A video sstec made:         https://www.youtube.com/watch?v=gSO7c2MN7TY
 **This script will make your life easier, and of course faster.**
 
 **Its not only for noobs.Its for whoever wants to type less and do actually more.**
+
+<p align="center">
+<img src="https://i.imgur.com/awIplS6.jpg"/>
+</p>
+
+A video Hackersploit made : https://www.youtube.com/watch?v=oBpo5sElrMY
+
+A video sstec made:         https://www.youtube.com/watch?v=gSO7c2MN7TY
+
 
 ### What is this
 This is a script for Kali Linux that automates many procedures about wifi penetration and hacking.
@@ -164,6 +169,19 @@ rmdir -r /root/lscript
 Run the script
 Type "update"
 ```
+
+### Screenshots
+
+<p align="center">
+<img src="https://i.imgur.com/awIplS6.jpg"/>
+<img src="https://i.imgur.com/pbq0DuE.jpg"/>
+<img src="https://i.imgur.com/QgTLKxR.jpg"/>
+<img src="https://i.imgur.com/oJIk2oG.jpg"/>
+<img src="https://i.imgur.com/icT4x55.jpg"/>
+<img src="https://i.imgur.com/sSf1JcI.jpg"/>
+<img src="https://i.imgur.com/MlDFWax.jpg"/>
+<img src="https://i.imgur.com/rbdUIQI.jpg"/>
+</p>
 
 ### Shoutouts
 

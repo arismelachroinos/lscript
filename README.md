@@ -33,7 +33,7 @@ A video sstec made:         https://www.youtube.com/watch?v=gSO7c2MN7TY
 
 ## Installation (Only for Kali Linux) :books:
 
-**Be carefull.If you download it as a .zip file, it will not run. Make sure to follow these simple instructions.**
+**Be carefull! If you download it as a .zip file, it will not run. Make sure to follow these simple instructions.**
 ```diff
 - PLEASE DO THIS IN ROOT OR GIVE SUDO TO THE INSTALLATION FILE
 ```

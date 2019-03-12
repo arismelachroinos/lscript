@@ -11,14 +11,20 @@
 
 **DISCLAIMER:** ***I AM NOT RESPONSIBLE HOW YOU USE THIS TOOL. BE LEGAL AND NOT STUPID.***
 
-*This is a script for Kali Linux that automates many procedures about wifi penetration and hacking.
-I actually made it for fun for me just to save some time, but i don't mind publicing it.*
+*This is a script for Kali Linux that automates many procedures about wifi penetration and hacking.*
+*I actually made it for fun for me just to save some time, but I do not mind publicing it.*
 
-**This script will make your life easier, and of course faster.**
+**This script will make your life easier, and of course, faster.**
 
 **For feature-recommendation , add it on the "Issues" tab. NOW!**
 
 **Its not only for noobs.Its for whoever wants to type less and do actually more.**
+
+------------------
+
+### What is this
+This is a script for Kali Linux that automates many procedures about wifi penetration and hacking.
+I actually made it for fun for me just to save some time, but i don't mind publicing it.
 
 <p align="center">
 <img src="https://i.imgur.com/awIplS6.jpg"/>
@@ -27,12 +33,6 @@ I actually made it for fun for me just to save some time, but i don't mind publi
 A video Hackersploit made : https://www.youtube.com/watch?v=oBpo5sElrMY
 
 A video sstec made:         https://www.youtube.com/watch?v=gSO7c2MN7TY
-
-------------------
-
-### What is this
-This is a script for Kali Linux that automates many procedures about wifi penetration and hacking.
-I actually made it for fun for me just to save some time, but i don't mind publicing it.
 
 ### Features
 

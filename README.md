@@ -5,6 +5,15 @@
 #### The README was edited by Lin8x :penguin:
 #### The original repository can be found here: https://github.com/arismelachroinos/lscript
 
+*I mainly had decided to edit and fix alot of things in this README file. As they say, the way you present your code is just as important as the code itself. If it isn't presented correctly, it will be difficult for newcomers to understand your project or idea behind it. With this in mind, I decided to edit a bit of the README file and see what I could change.*
+
+**Things I Changed:**
+- *Fixed many grammar or spelling mistakes*
+- *Moved around different sections of the README file to make it more organized*
+- *Added separators between different parts of the README file*
+- *Added emojis to make everything more user-friendly*
+- *Moved and fixed a bit of the bolding and size of words*
+
 ------------------
 
 ## Welcome to the LAZY script  v2.1.4

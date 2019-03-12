@@ -2,8 +2,8 @@
 
 ------------------
 
-## The README was edited by Lin8x :penguin:
-## The original repository can be found here: https://github.com/arismelachroinos/lscript
+#### The README was edited by Lin8x :penguin:
+#### The original repository can be found here: https://github.com/arismelachroinos/lscript
 
 ------------------
 

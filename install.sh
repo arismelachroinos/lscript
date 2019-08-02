@@ -29,6 +29,7 @@ chmod +x /root/lscript/lh31
 chmod +x /root/lscript/l
 chmod +x /root/lscript/lh4
 chmod +x /root/lscript/lh41
+chmod +x /root/lscript/lh21
 chmod +x /root/lscript/lh42
 chmod +x /root/lscript/lh43
 chmod +x /root/lscript/ls/l131.sh
@@ -47,6 +48,7 @@ cp /root/lscript/lh3 /bin/lscript
 cp /root/lscript/lh31 /bin/lscript
 cp /root/lscript/lh4 /bin/lscript
 cp /root/lscript/lh41 /bin/lscript
+cp /root/lscript/lh21 /bin/lscript
 cp /root/lscript/lh42 /bin/lscript
 cp /root/lscript/lh43 /bin/lscript
 clear

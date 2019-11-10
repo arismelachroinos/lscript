@@ -78,7 +78,7 @@ read UORI
 if [[ "$UORI" = "u" ]]
 then 
 	clear
-	echo -e "Type 'changelog' to see what's new on this version"
+	echo -e "Type 'changelog' to see what's new in this version"
 	sleep 3
 	break
 elif [[ "$UORI" = "i" ]]

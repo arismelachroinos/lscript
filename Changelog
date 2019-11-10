@@ -1,3 +1,17 @@
+2.1.6
+Minor cosmetic updates
+Wifite: Changed bin path /usr/bin/wifite -> /usr/sbin/wifite
+Wifite: Added additional modules to install_wifite: hcxdumptool hcxtools
+Trity: Updated Github url -> https://github.com/samyoyo/Trity-1.git
+Wifiphisher: Added installation of dependencies libnl-3-dev libnl-genl-3-dev
+Xeres: Updated Github url -> https://github.com/sepehrdaddev/Xerxes.git
+Xeres: Updated installation steps
+nWatch: Updated Github url -> https://github.com/Cyber-Forensic/nWatch.git
+Wifi-Pumpkin: Added execute permissions to installation script before launching
+secHub: Updated Github url -> https://github.com/cys3c/secHub.git
+Yuki-Chan: Changed function name to match call
+
+
 2.1.5
 Remade installation menu, now you can select multiple tools at once.
 Fixed no output when handshake scanning.

@@ -10386,7 +10386,7 @@ check_if_ks
 			./install.sh
 		fi
 	}
-	function install_yuki-chan
+	function install_yuki
 	{
 		foldname="Yuki-Chan-The-Auto-Pentest"
 		gitlink="https://github.com/Yukinoshita47/Yuki-Chan-The-Auto-Pentest.git"

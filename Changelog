@@ -10,6 +10,7 @@ nWatch: Updated Github url -> https://github.com/Cyber-Forensic/nWatch.git
 Wifi-Pumpkin: Added execute permissions to installation script before launching
 secHub: Updated Github url -> https://github.com/cys3c/secHub.git
 Yuki-Chan: Changed function name to match call
+Fixed missing color change at the end of some prompts
 
 
 2.1.5

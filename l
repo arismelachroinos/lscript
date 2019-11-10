@@ -9505,6 +9505,7 @@ check_if_ks
 		cloned=$?
 		if [[ "$cloned" == 1 ]]
 		then
+			apt install -y libnl-3-dev libnl-genl-3-dev
 			sudo python setup.py install
 		fi
 	}

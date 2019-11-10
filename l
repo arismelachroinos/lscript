@@ -2858,9 +2858,9 @@ function wifi_tools
 	fi
 	if [[ -f /usr/sbin/wifite ]]
 	then
-		echo -e ""$YS" 2"$CE") Wifite2             Automated wireless attack tool"
+		echo -e ""$YS" 2"$CE") Wifite2               Automated wireless attack tool"
 	else
-		echo -e ""$RS" 2"$CE") "$RS"Wifite2"$CE"             Automated wireless attack tool"
+		echo -e ""$RS" 2"$CE") "$RS"Wifite2"$CE"               Automated wireless attack tool"
 	fi
 	if [[ -d /root/wifiphisher ]]
 	then

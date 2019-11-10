@@ -651,8 +651,8 @@ function listshortcuts
 	elif [[ "$nn" = "14" ]]
 	then
 		TITLE="Xerxes"
-		NAMECD="cd /root/xerxes"
-		KSSET="./xerxes"
+		NAMECD="cd /root/Xerxes"
+		KSSET="./Xerxes"
 	elif [[ "$nn" = "15" ]]
 	then
 		TITLE="Katana"
@@ -2940,7 +2940,7 @@ function wifi_tools
 	else
 		echo -e ""$RS"14"$CE") "$RS"The Eye"$CE"               Detects ARP poisoning DNS spoofing etc..."
 	fi
-	if [[ -d /root/xerxes ]]
+	if [[ -d /root/Xerxes ]]
 	then	
 		echo -e ""$YS"15"$CE") Xerxes                The most powerful DoS tool(CAUTION)"
 	else
@@ -3299,7 +3299,7 @@ function wifi_tools
 		fi
 	elif [[ "$APPP" = "15" ]]
 	then
-		if [[ -d "/root/xerxes" ]]
+		if [[ -d "/root/Xerxes" ]]
 		then
 			echo -e "Do you own the site you want to DoS?"$YNONLY""
 			read DOSTERM
@@ -3315,7 +3315,7 @@ function wifi_tools
 				sleep 4
 				gio open http://www.isitdownrightnow.com/"$SITEDOS".html
 				clear	
-				cd /root/xerxes
+				cd /root/Xerxes
 				SITEDOSX=www.$SITEDOS
 				echo -e "Press "$YS"any key"$CE" to start DoS on $SITEDOSX"
 				$READAK
@@ -9631,13 +9631,13 @@ check_if_ks
 	}
 	function install_xerxes
 	{
-		foldname="xerxes"
-		gitlink="https://github.com/sepehrdaddev/Xerxes.git xerxes"
+		foldname="Xerxes"
+		gitlink="https://github.com/sepehrdaddev/Xerxes.git"
 		install_default
 		cloned=$?
 		if [[ "$cloned" == 1 ]]
 		then
-			gcc xerxes.c -o xerxes	
+			mv bash-completion/Xeres .
 		fi
 	}
 	function install_mdk3

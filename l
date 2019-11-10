@@ -3136,11 +3136,11 @@ function wifi_tools
 	else
 		echo -e ""$RS" 1"$CE") "$RS"Fluxion"$CE"               The future of MITM WPA attacks"
 	fi
-	if [[ -f /usr/bin/wifite ]]
+	if [[ -f /usr/sbin/wifite ]]
 	then
-		echo -e ""$YS" 2"$CE") Wifite                Automated wireless attack tool"
+		echo -e ""$YS" 2"$CE") Wifite2                Automated wireless attack tool"
 	else
-		echo -e ""$RS" 2"$CE") "$RS"Wifite"$CE"               Automated wireless attack tool"
+		echo -e ""$RS" 2"$CE") "$RS"Wifite2"$CE"              Automated wireless attack tool"
 	fi
 	if [[ -d /root/wifiphisher ]]
 	then
@@ -3347,7 +3347,7 @@ function wifi_tools
 		fi
 	elif [[ "$APPP" = "2" ]]
 	then
-		if [[ -f /usr/bin/wifite ]]
+		if [[ -f /usr/sbin/wifite ]]
 		then
 			wifite
 		else
@@ -9775,7 +9775,7 @@ check_if_ks
 	}
 	function install_wifite
 	{
-		apt-get install -y wifite
+		apt-get install -y wifite hcxdumptool hcxtools
 	}
 	function install_wifiphisher
 	{
@@ -9824,12 +9824,13 @@ check_if_ks
 	function install_trity
 	{
 		foldname="Trity"
-		gitlink="https://github.com/toxic-ig/Trity.git"
+		gitlink="https://github.com/samyoyo/Trity-1.git"
 		install_default
 		cloned=$?
 		if [[ "$cloned" == 1 ]]
 		then
-			sudo python install.py	
+			sudo python install.py
+			mv ~/Trity-1/ ~/Trity/
 		fi
 	}
 	function install_cupp

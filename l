@@ -9223,7 +9223,7 @@ function main_options
 	then
 		if [[ ! -f "/etc/init.d/anonym8.sh" ]]
 		then
-			echo -e ""$RS"Anonym8 is not installed.type '"$CE""$YS"install"$CE""$RS"' to install it."
+			echo -e ""$RS"Anonym8 is not installed.type '"$CE""$YS"install"$CE""$RS"' to install it.$CE"
 			read INSTALL
 			if [[ "$INSTALL" = "install" ]]
 			then
@@ -9238,7 +9238,7 @@ function main_options
 	then
 		if [[ ! -f "/etc/init.d/anonym8.sh" ]]
 		then
-			echo -e ""$RS"Anonym8 is not installed.type '"$CE""$YS"install"$CE""$RS"' to install it."
+			echo -e ""$RS"Anonym8 is not installed.type '"$CE""$YS"install"$CE""$RS"' to install it.$CE"
 			read INSTALL
 			if [[ "$INSTALL" = "install" ]]
 			then
@@ -9253,7 +9253,7 @@ function main_options
 	then
 		if [[ ! -f "/usr/bin/anonsurf" ]]
 		then
-			echo -e ""$RS"Anonsurf is not installed.type '"$CE""$YS"install"$CE""$RS"' to install it."
+			echo -e ""$RS"Anonsurf is not installed.type '"$CE""$YS"install"$CE""$RS"' to install it.$CE"
 			read INSTALL
 			if [[ "$INSTALL" = "install" ]]
 			then
@@ -9268,7 +9268,7 @@ function main_options
 	then
 		if [[ ! -f "/usr/bin/anonsurf" ]]
 		then
-			echo -e ""$RS"Anonsurf is not installed.type '"$CE""$YS"install"$CE""$RS"' to install it."
+			echo -e ""$RS"Anonsurf is not installed.type '"$CE""$YS"install"$CE""$RS"' to install it.$CE"
 			read INSTALL
 			if [[ "$INSTALL" = "install" ]]
 			then
@@ -9283,7 +9283,7 @@ function main_options
 	then
 		if [[ ! -f "/usr/bin/anonsurf" ]]
 		then
-			echo -e ""$RS"Anonsurf is not installed.type '"$CE""$YS"install"$CE""$RS"' to install it."
+			echo -e ""$RS"Anonsurf is not installed.type '"$CE""$YS"install"$CE""$RS"' to install it.$CE"
 			read INSTALL
 			if [[ "$INSTALL" = "install" ]]
 			then
@@ -9298,7 +9298,7 @@ function main_options
 	then
 		if [[ ! -f "/usr/bin/anonsurf" ]]
 		then
-			echo -e ""$RS"Anonsurf is not installed.type '"$CE""$YS"install"$CE""$RS"' to install it."
+			echo -e ""$RS"Anonsurf is not installed.type '"$CE""$YS"install"$CE""$RS"' to install it.$CE"
 			read INSTALL
 			if [[ "$INSTALL" = "install" ]]
 			then
@@ -9313,7 +9313,7 @@ function main_options
 	then
 		if [[ ! -f "/usr/bin/anonsurf" ]]
 		then
-			echo -e ""$RS"Anonsurf is not installed.type '"$CE""$YS"install"$CE""$RS"' to install it."
+			echo -e ""$RS"Anonsurf is not installed.type '"$CE""$YS"install"$CE""$RS"' to install it.$CE"
 			read INSTALL
 			if [[ "$INSTALL" = "install" ]]
 			then

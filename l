@@ -2886,7 +2886,7 @@ function wifi_tools
 	#~ else
 		#~ echo -e ""$RS" 6"$CE") "$RS"Osrfconsole"$CE"           Checks usernames-phones to platforms etc.."
 	#~ fi
-	if [[ -d /root/opensource ]]
+	if [[ -d /root/netool-toolkit ]]
 	then
 		echo -e ""$YS" 6"$CE") Netool-toolkit        MitM pentesting opensource toolkit"
 	else
@@ -3139,9 +3139,9 @@ function wifi_tools
 		fi
 	elif [[ "$APPP" = "6" ]]
 	then
-		if [[ -d "/root/opensource" ]]
+		if [[ -d "/root/netool-toolkit" ]]
 		then
-			cd /root/opensource
+			cd /root/netool-toolkit
 			./netool.sh
 		else
 			echo -e "$TNI"
@@ -9550,8 +9550,10 @@ check_if_ks
 		cloned=$?
 		if [[ "$cloned" == 1 ]]
 		then
-			sudo python install.py
+			cd ~
 			mv ~/Trity-1/ ~/Trity/
+			cd "$foldname"
+			sudo python install.py
 		fi
 	}
 	function install_cupp

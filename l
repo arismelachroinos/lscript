@@ -9361,7 +9361,7 @@ function main_options
 	then
 		clear
 		BACKL=1
-		cat "$LPATH"/Changelog | head -n 20
+		cat "$LPATH"/Changelog | head -n $LATESTCHANGELOGLINES
 		echo -e "$PAKTC"
 		$READAK
 		clear

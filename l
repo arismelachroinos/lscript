@@ -10142,7 +10142,7 @@ check_if_ks
 		cloned=$?
 		if [[ "$cloned" == 1 ]]
 		then
-			./installer.sh --install
+			chmod +x installer.sh && ./installer.sh --install
 		fi
 	}
 	function install_veil

@@ -9632,14 +9632,11 @@ check_if_ks
 	function install_xerxes
 	{
 		foldname="xerxes"
-		gitlink="https://github.com/sepehrdaddev/Xerxes.git"
+		gitlink="https://github.com/sepehrdaddev/Xerxes.git xerxes"
 		install_default
 		cloned=$?
 		if [[ "$cloned" == 1 ]]
 		then
-			cd ~
-			mv ~/Xerxes/ ~/xerxes
-			cd ~/xerxes
 			gcc xerxes.c -o xerxes	
 		fi
 	}

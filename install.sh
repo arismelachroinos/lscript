@@ -20,7 +20,7 @@ then
 fi
 echo -e "Installing lscript..."
 sleep 1
-echo -e "Fixing permissions"
+echo -e "Setting permissions"
 sleep 2
 chmod +x /root/lscript/lh1
 chmod +x /root/lscript/lh2

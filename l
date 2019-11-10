@@ -9637,7 +9637,7 @@ check_if_ks
 		cloned=$?
 		if [[ "$cloned" == 1 ]]
 		then
-			mv bash-completion/Xeres .
+			mv bash-completion/Xerxes .
 		fi
 	}
 	function install_mdk3

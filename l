@@ -6178,7 +6178,7 @@ function tools_menu
 	echo -e ""$YS" 1"$CE") Wifi tools"
 	echo -e ""$YS" 2"$CE") Remote access"
 	echo -e ""$YS" 3"$CE") Information gathering"
-	echo -e ""$YS" 4"$CE") Webside tools"
+	echo -e ""$YS" 4"$CE") Website tools"
 	echo -e ""$YS" 5"$CE") Others"
 	echo -e ""$YS" 6"$CE") Install/reinstall a tool"
 	echo -e ""$YS" i"$CE") Info"

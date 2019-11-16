@@ -9505,7 +9505,7 @@ check_if_ks
 		cloned=$?
 		if [[ "$cloned" == 1 ]]
 		then
-			apt install -y libnl-3-dev libnl-genl-3-dev
+			apt-get install -y libnl-3-dev libnl-genl-3-dev
 			sudo python setup.py install
 		fi
 	}
@@ -9855,7 +9855,7 @@ check_if_ks
 	}
 	function install_chaos
 	{
-		apt install golang upx-ucl -y
+		apt-get install -y golang upx-ucl -y
 		cd
 		foldname="CHAOS"
 		gitlink="https://github.com/tiagorlampert/CHAOS.git"
@@ -9869,7 +9869,7 @@ check_if_ks
 		cloned=$?
 		if [[ "$cloned" == 1 ]]
 		then
-			apt-get install python3-pip
+			apt-get install -y python3-pip
 			python3 -m pip install -r requirements.txt
 			python setup.py install
 		fi
@@ -10256,7 +10256,7 @@ check_if_ks
 	}
 	function install_beef
 	{
-		apt-get install beef-xss
+		apt-get install -y beef-xss
 	}
 	function install_mitmf
 	{
@@ -10285,13 +10285,13 @@ check_if_ks
 		cloned=$?
 		if [[ "$cloned" == 1 ]]
 		then
-			apt install -y curl libcurl3  libcurl3-dev php5 php5-curl php5-cli
+			apt-get install -y curl libcurl3  libcurl3-dev php5 php5-curl php5-cli gnome-desktop-item-edit
 			chmod +x INSTALL.sh && ./INSTALL.sh
 		fi
 	}
 	function install_sqlmap
 	{
-		apt-get install sqlmap
+		apt-get install -y sqlmap
 	}
 	function install_patator
 	{

@@ -2886,7 +2886,7 @@ function wifi_tools
 	#~ else
 		#~ echo -e ""$RS" 6"$CE") "$RS"Osrfconsole"$CE"           Checks usernames-phones to platforms etc.."
 	#~ fi
-	if [[ -d /root/netool-toolkit ]]
+	if [[ -d /root/opensource ]]
 	then
 		echo -e ""$YS" 6"$CE") Netool-toolkit        MitM pentesting opensource toolkit"
 	else
@@ -3139,9 +3139,9 @@ function wifi_tools
 		fi
 	elif [[ "$APPP" = "6" ]]
 	then
-		if [[ -d "/root/netool-toolkit" ]]
+		if [[ -d "/root/opensource" ]]
 		then
-			cd /root/netool-toolkit
+			cd /root/opensource
 			./netool.sh
 		else
 			echo -e "$TNI"
@@ -10279,8 +10279,8 @@ check_if_ks
 	}
 	function install_netool
 	{
-		foldname="netool-toolkit"
-		gitlink="https://github.com/r00t-3xp10it/netool-toolkit"
+		foldname="opensource"
+		gitlink="https://github.com/r00t-3xp10it/netool-toolkit opensource"
 		install_default
 		cloned=$?
 		if [[ "$cloned" == 1 ]]

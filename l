@@ -595,7 +595,7 @@ function listshortcuts
 		KSSET="./zirikatu.sh"
 	elif [[ "$nn" = "3" ]]
 	then
-		TITLE="Wifite"
+		TITLE="Wifite2"
 		NAMECD=""
 		KSSET="wifite"
 	elif [[ "$nn" = "4" ]]

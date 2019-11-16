@@ -7473,7 +7473,7 @@ function mitmf_hook
 			cd
 		fi
 	else
-		echo -e ""$RS"Mitmf is not installed.type '"$CE""$YS"install"$CE""$RS"' to install it."
+		echo -e ""$RS"Mitmf is not installed. Type '"$CE""$YS"install"$CE""$RS"' to install it."
 		read INSTALL
 		if [[ "$INSTALL" = "install" ]]
 		then
@@ -8099,7 +8099,7 @@ function ngrok_option
 					fi
 			fi
 		else
-			echo -e ""$RS"Ngrok is not installed.type '"$CE""$YS"install"$CE""$RS"' to install it."
+			echo -e ""$RS"Ngrok is not installed. Type '"$CE""$YS"install"$CE""$RS"' to install it."
 			read INSTALL
 			if [[ "$INSTALL" = "install" ]]
 			then
@@ -8612,7 +8612,7 @@ function browser_exploiting
 							$READAK
 						fi
 				else
-					echo -e ""$RS"Mitmf is not installed.Type '"$CE""$YS"install"$CE""$RS"' to install it."
+					echo -e ""$RS"Mitmf is not installed. Type '"$CE""$YS"install"$CE""$RS"' to install it."
 					read INSTALL
 					if [[ "$INSTALL" = "install" ]]
 					then
@@ -9053,7 +9053,7 @@ function main_options
 	then
 		if [[ ! -f "/usr/local/bin/howdoi" ]]
 		then
-			echo -e ""$RS"Howdoi is not installed.type '"$CE""$YS"install"$CE""$RS"' to install it."
+			echo -e ""$RS"Howdoi is not installed. Type '"$CE""$YS"install"$CE""$RS"' to install it."
 			read INSTALL
 			if [[ "$INSTALL" = "install" ]]
 			then
@@ -9223,7 +9223,7 @@ function main_options
 	then
 		if [[ ! -f "/etc/init.d/anonym8.sh" ]]
 		then
-			echo -e ""$RS"Anonym8 is not installed.type '"$CE""$YS"install"$CE""$RS"' to install it.$CE"
+			echo -e ""$RS"Anonym8 is not installed. Type '"$CE""$YS"install"$CE""$RS"' to install it.$CE"
 			read INSTALL
 			if [[ "$INSTALL" = "install" ]]
 			then
@@ -9238,7 +9238,7 @@ function main_options
 	then
 		if [[ ! -f "/etc/init.d/anonym8.sh" ]]
 		then
-			echo -e ""$RS"Anonym8 is not installed.type '"$CE""$YS"install"$CE""$RS"' to install it.$CE"
+			echo -e ""$RS"Anonym8 is not installed. Type '"$CE""$YS"install"$CE""$RS"' to install it.$CE"
 			read INSTALL
 			if [[ "$INSTALL" = "install" ]]
 			then
@@ -9253,7 +9253,7 @@ function main_options
 	then
 		if [[ ! -f "/usr/bin/anonsurf" ]]
 		then
-			echo -e ""$RS"Anonsurf is not installed.type '"$CE""$YS"install"$CE""$RS"' to install it.$CE"
+			echo -e ""$RS"Anonsurf is not installed. Type '"$CE""$YS"install"$CE""$RS"' to install it.$CE"
 			read INSTALL
 			if [[ "$INSTALL" = "install" ]]
 			then
@@ -9268,7 +9268,7 @@ function main_options
 	then
 		if [[ ! -f "/usr/bin/anonsurf" ]]
 		then
-			echo -e ""$RS"Anonsurf is not installed.type '"$CE""$YS"install"$CE""$RS"' to install it.$CE"
+			echo -e ""$RS"Anonsurf is not installed. Type '"$CE""$YS"install"$CE""$RS"' to install it.$CE"
 			read INSTALL
 			if [[ "$INSTALL" = "install" ]]
 			then
@@ -9283,7 +9283,7 @@ function main_options
 	then
 		if [[ ! -f "/usr/bin/anonsurf" ]]
 		then
-			echo -e ""$RS"Anonsurf is not installed.type '"$CE""$YS"install"$CE""$RS"' to install it.$CE"
+			echo -e ""$RS"Anonsurf is not installed. Type '"$CE""$YS"install"$CE""$RS"' to install it.$CE"
 			read INSTALL
 			if [[ "$INSTALL" = "install" ]]
 			then
@@ -9298,7 +9298,7 @@ function main_options
 	then
 		if [[ ! -f "/usr/bin/anonsurf" ]]
 		then
-			echo -e ""$RS"Anonsurf is not installed.type '"$CE""$YS"install"$CE""$RS"' to install it.$CE"
+			echo -e ""$RS"Anonsurf is not installed. Type '"$CE""$YS"install"$CE""$RS"' to install it.$CE"
 			read INSTALL
 			if [[ "$INSTALL" = "install" ]]
 			then
@@ -9313,7 +9313,7 @@ function main_options
 	then
 		if [[ ! -f "/usr/bin/anonsurf" ]]
 		then
-			echo -e ""$RS"Anonsurf is not installed.type '"$CE""$YS"install"$CE""$RS"' to install it.$CE"
+			echo -e ""$RS"Anonsurf is not installed. Type '"$CE""$YS"install"$CE""$RS"' to install it.$CE"
 			read INSTALL
 			if [[ "$INSTALL" = "install" ]]
 			then
@@ -9378,7 +9378,7 @@ function main_options
 		then
 			eternalblue_check
 		else
-			echo -e ""$RS"Wifiphisher is not installed.Type '"$CE""$YS"install"$CE""$RS"' to install it."$CE""
+			echo -e ""$RS"Wifiphisher is not installed. Type '"$CE""$YS"install"$CE""$RS"' to install it."$CE""
 			read INSTALL
 			if [[ "$INSTALL" = "install" ]]
 			then
@@ -9391,7 +9391,7 @@ function main_options
 		then
 			eternalblue
 		else
-			echo -e ""$RS"Wifiphisher is not installed.Type '"$CE""$YS"install"$CE""$RS"' to install it."$CE""
+			echo -e ""$RS"Wifiphisher is not installed. Type '"$CE""$YS"install"$CE""$RS"' to install it."$CE""
 			read INSTALL
 			if [[ "$INSTALL" = "install" ]]
 			then
@@ -9404,7 +9404,7 @@ function main_options
 		then
 			wififb_attack
 		else
-			echo -e ""$RS"Wifiphisher is not installed.Type '"$CE""$YS"install"$CE""$RS"' to install it."$CE""
+			echo -e ""$RS"Wifiphisher is not installed. Type '"$CE""$YS"install"$CE""$RS"' to install it."$CE""
 			read INSTALL
 			if [[ "$INSTALL" = "install" ]]
 			then

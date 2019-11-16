@@ -7,7 +7,7 @@ clear
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 if [[ "$DIR" != "/root/lscript" ]]
 then
-	echo -e "You didn't follow the github's simple install instructions.I will try to do it for you..."
+	echo -e "You didn't follow the github's simple install instructions. I will try to do it for you..."
 	sleep 4
 	if [[ -d /root/lscript ]]
 	then
@@ -60,20 +60,20 @@ then
 	mkdir /root/handshakes
 	echo -e "Made /root/handshake directory"
 else
-	echo -e "/root/handshakes directory detected.Good."
+	echo -e "/root/handshakes directory detected. Good."
 fi
 if [[ ! -d /root/wordlists ]]
 then
 	mkdir /root/wordlists
 	echo -e "Made /root/wordlists directory"
 else
-	echo -e "/root/wordlists directory detected.Good."
+	echo -e "/root/wordlists directory detected. Good."
 fi
 while true
 do
 clear
 echo -e "Are you \e[1;33mu\e[0mpdating or \e[1;33mi\e[0mnstalling the script?(\e[1;33mu\e[0m/\e[1;33mi\e[0m): "
-echo -e "Only use 'i' for the first time."
+echo -e "Only use 'i' ONLY for the first time."
 read UORI
 if [[ "$UORI" = "u" ]]
 then 

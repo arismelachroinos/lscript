@@ -3106,7 +3106,7 @@ function wifi_tools
 				./ZT.sh
 				cd
 			else
-				echo -e "You have to install it manually since its not on github.Sorry."
+				echo -e "You have to install it manually since its not on github. Sorry."
 				sleep 4
 				exec bash "$0"
 			fi
@@ -3826,55 +3826,55 @@ function remote_access
 	then
 		echo -e ""$YS"23"$CE") Demiguise             HTA encryption tool for RedTeams"
 	else
-		echo -e ""$RS"23"$CE") "$RS"Demiguise"$CE"              HTA encryption tool for RedTeams"
+		echo -e ""$RS"23"$CE") "$RS"Demiguise"$CE"             HTA encryption tool for RedTeams"
 	fi
 	if [[ -d /root/DKMC ]]
 	then
 		echo -e ""$YS"24"$CE") DKMC                  Malicious payload evasion tool into image"
 	else
-		echo -e ""$RS"24"$CE") "$RS"DKMC"$CE"                   Malicious payload evasion tool into image"
+		echo -e ""$RS"24"$CE") "$RS"DKMC"$CE"                  Malicious payload evasion tool into image"
 	fi
 	if [[ -d /usr/share/beef-xss ]]
 	then
 		echo -e ""$YS"25"$CE") Beef                  The browser exploitation framework"
 	else
-		echo -e ""$RS"25"$CE") "$RS"Beef"$CE"                   The browser exploitation framework"
+		echo -e ""$RS"25"$CE") "$RS"Beef"$CE"                  The browser exploitation framework"
 	fi
 	if [[ -d /root/Evil-Droid ]]
 	then
 		echo -e ""$YS"26"$CE") Evil-Droid            Penetrate android platforms"
 	else
-		echo -e ""$RS"26"$CE") "$RS"Evil-Droid"$CE"             Penetrate android platforms"
+		echo -e ""$RS"26"$CE") "$RS"Evil-Droid"$CE"            Penetrate android platforms"
 	fi
 	if [[ -d /root/EggShell ]]
 	then
 		echo -e ""$YS"27"$CE") EggShell              Penetrate android platforms"
 	else
-		echo -e ""$RS"27"$CE") "$RS"EggShell"$CE"               Penetrate android platforms"
+		echo -e ""$RS"27"$CE") "$RS"EggShell"$CE"              Penetrate android platforms"
 	fi
 	if [[ -d /root/Zerodoor ]]
 	then
 		echo -e ""$YS"28"$CE") Zerodoor              Penetrate android platforms"
 	else
-		echo -e ""$RS"28"$CE") "$RS"Zerodoor"$CE"               Penetrate android platforms"
+		echo -e ""$RS"28"$CE") "$RS"Zerodoor"$CE"              Penetrate android platforms"
 	fi
 	if [[ -d /root/cromos ]]
 	then
 		echo -e ""$YS"29"$CE") Cromos                Download and Inject code into Google Chrome extensions"
 	else
-		echo -e ""$RS"29"$CE") "$RS"Cromos"$CE"                 Download and Inject code into Google Chrome extensions"
+		echo -e ""$RS"29"$CE") "$RS"Cromos"$CE"                Download and Inject code into Google Chrome extensions"
 	fi
 	if [[ -d /root/AutoSploit ]]
 	then
 		echo -e ""$YS"30"$CE") AutoSploit            Automated Mass Exploiter"
 	else
-		echo -e ""$RS"30"$CE") "$RS"AutoSploit"$CE"             Automated Mass Exploiter"
+		echo -e ""$RS"30"$CE") "$RS"AutoSploit"$CE"            Automated Mass Exploiter"
 	fi
 	if [[ -d /root/Enigma ]]
 	then
 		echo -e ""$YS"31"$CE") Enigma                Multiplatform payload dropper"
 	else
-		echo -e ""$RS"31"$CE") "$RS"Enigma"$CE"                 Multiplatform payload dropper"
+		echo -e ""$RS"31"$CE") "$RS"Enigma"$CE"                Multiplatform payload dropper"
 	fi
 	echo -e ""$YS" b"$CE") Go back"
 	echo -e ""$YS"00"$CE") Main menu"
@@ -5270,7 +5270,7 @@ function website_tools
 		then
 			echo -e ""$YS" 8"$CE") InstaBurst            A faster way to brute force Instagram"
 		else
-			echo -e ""$RS" 8"$CE") "$RS"InstaBurst"$CE"             A faster way to brute force Instagram"
+			echo -e ""$RS" 8"$CE") "$RS"InstaBurst"$CE"            A faster way to brute force Instagram"
 		fi
 		if [[ -f /usr/local/bin/instagram-py ]]
 		then

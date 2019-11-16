@@ -10285,6 +10285,7 @@ check_if_ks
 		cloned=$?
 		if [[ "$cloned" == 1 ]]
 		then
+			apt install -y curl libcurl3  libcurl3-dev php5 php5-curl php5-cli
 			chmod +x INSTALL.sh && ./INSTALL.sh
 		fi
 	}

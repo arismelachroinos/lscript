@@ -1,6 +1,6 @@
-## Welcome to the LAZY script  v2.1.4
+## Welcome to the LAZY script  v2.1.6
 <p align="center">
-<img src="https://i.imgur.com/awIplS6.jpg"/>
+<img src="https://i.imgur.com/ct5U6Wv.jpg"/>
 <img src="https://i.imgur.com/pbq0DuE.jpg"/>
 <img src="https://i.imgur.com/QgTLKxR.jpg"/>
 <img src="https://i.imgur.com/oJIk2oG.jpg"/>
@@ -39,7 +39,7 @@ View your MAC faster
 
 	You can install whichever tool(s) you want from within lscript! 
 	Fluxion                         by Deltaxflux
-	WifiTe                          by derv82
+	Wifite2                         by derv82
 	Wifiphisher                     by George Chatzisofroniou
 	Zatacker                        by LawrenceThePentester
 	Morpheus                        by Pedro ubuntu  [ r00t-3xp10it ]
@@ -129,7 +129,7 @@ View your MAC faster
 # How to install (Kali Linux)
 (make sure you are a root user)
 
-**Be carefull.If you download it as a .zip file, it will not run.Make sure to follow these simple instructions.**
+**Be carefull. If you download it as a .zip file, it will not run. Make sure to follow these simple instructions.**
 
 **MADE FOR KALI LINUX**
 

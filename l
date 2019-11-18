@@ -1,12 +1,12 @@
 #! /bin/bash
 
 # set -x
-VERSION=2.1.5
+VERSION=2.1.6
 #Number of tools with keyboard shortcut support
 HOWMANYTOOLS=53
 BACKL="0"
 DONATIONS=13
-LATESTCHANGELOGLINES=26
+LATESTCHANGELOGLINES=14
 cd
 #############DEFAULTS###############
 function defaults_l
@@ -283,7 +283,7 @@ function banner
 	echo -e "$COL         ██║     ██╔══██║ ███╔╝    ╚██╔╝  $CE"
 	echo -e "$COL    The  ███████╗██║  ██║███████╗   ██║  script$CE"
 	echo -e "$COL         ╚══════╝╚═╝  ╚═╝╚══════╝   ╚═╝   $CE"
-	echo -e ""$YS"if"$CE") Ifconfig           "$YS"l"$CE") Local IPs & gateways "$RS"|"$CE"  "$YS"scan"$CE") Arp-scan network"
+	echo -e ""$YS"if"$CE") ifconfig           "$YS"l"$CE") Local IPs & gateways "$RS"|"$CE"  "$YS"scan"$CE") Arp-scan network"
 	if [[ "$WLANCHECKING" = "" ]]
 	then
 		echo -e ""$RS" 1"$CE") Enable "$RS"$WLANN"$CE"${SPACESN}"$RS"d1"$CE") Disable "$RS"$WLANN"$CE"${SPACESN}  "$RS"|"$CE" "$YS"start"$CE") Start monitor mode"
@@ -595,7 +595,7 @@ function listshortcuts
 		KSSET="./zirikatu.sh"
 	elif [[ "$nn" = "3" ]]
 	then
-		TITLE="Wifite"
+		TITLE="Wifite2"
 		NAMECD=""
 		KSSET="wifite"
 	elif [[ "$nn" = "4" ]]
@@ -651,8 +651,8 @@ function listshortcuts
 	elif [[ "$nn" = "14" ]]
 	then
 		TITLE="Xerxes"
-		NAMECD="cd /root/xerxes"
-		KSSET="./xerxes"
+		NAMECD="cd /root/Xerxes"
+		KSSET="./Xerxes"
 	elif [[ "$nn" = "15" ]]
 	then
 		TITLE="Katana"
@@ -1005,286 +1005,6 @@ do
 		fi
 	fi
 done
-#~ while true
-#~ do
-	#~ cd
-	#~ clear
-	#~ TERMINALTITLE="INSTALL/REINSTALL A TOOL"
-	#~ dash_calc
-	#~ printf '\033]2;INSTALL/REINSTALL A TOOL\a'
-	#~ echo -e ""$BS"Select a tool to install/reinstall"$CE""
-	#~ echo -e " "$YS"1"$CE") Fluxion      "$YS"21"$CE") 4nonimizer    "$YS"41"$CE") Infoga           "$YS"61"$CE") Wifi-Pumpkin"
-	#~ echo -e ""$YS" 2"$CE") Wifite       "$YS"22"$CE") Openvas       "$YS"42"$CE") nWatch           "$YS"62"$CE") Veil-Framework"
-	#~ echo -e ""$YS" 3"$CE") Wifiphisher  "$YS"23"$CE") BeeLogger     "$YS"43"$CE") Eternal scanner  "$YS"63"$CE") Leviathan"
-	#~ echo -e ""$YS" 4"$CE") Zatacker     "$YS"24"$CE") Ezsploit      "$YS"44"$CE") Eaphammer        "$YS"64"$CE") FakeImageExploiter"
-	#~ echo -e ""$YS" 5"$CE") Morpheus     "$YS"25"$CE") Pupy          "$YS"45"$CE") Dagon            "$YS"65"$CE") Avet"
-	#~ echo -e ""$YS" 6"$CE") Osrfconsole  "$YS"26"$CE") Zirikatu      "$YS"46"$CE") Lalin            "$YS"66"$CE") Gloom"
-	#~ echo -e ""$YS" 7"$CE") Hakku        "$YS"27"$CE") WiFi-autopwner"$YS"47"$CE") Knockmail        "$YS"67"$CE") Arcanus"
-	#~ echo -e ""$YS" 8"$CE") Trity        "$YS"28"$CE") Bully         "$YS"48"$CE") Kwetza           "$YS"68"$CE") MSFPC"
-	#~ echo -e ""$YS" 9"$CE") Cupp         "$YS"29"$CE") Anonsurf      "$YS"49"$CE") Ngrok            "$YS"69"$CE") MorphHTA"
-	#~ echo -e ""$YS"10"$CE") Dracnmap     "$YS"30"$CE") Anonym8       "$YS"50"$CE") Bleachbit        "$YS"70"$CE") LFISuite"
-	#~ echo -e ""$YS"11"$CE") Fern         "$YS"31"$CE") TheFatRat     "$YS"51"$CE") Vmr mdk          "$YS"71"$CE") UniByAv"
-	#~ echo -e ""$YS"12"$CE") Netdiscover  "$YS"32"$CE") Angry IP      "$YS"52"$CE") Hash Buster      "$YS"72"$CE") Demiguise"
-	#~ echo -e ""$YS"13"$CE") KickThemOut  "$YS"33"$CE") Sniper        "$YS"53"$CE") Findsploit       "$YS"73"$CE") Dkmc"
-	#~ echo -e ""$YS"14"$CE") Ghost-Phisher"$YS"34"$CE") ReconDog      "$YS"54"$CE") Howdoi           "$YS"74"$CE") MITMf"
-	#~ echo -e ""$YS"15"$CE") The Eye      "$YS"35"$CE") RED HAWK      "$YS"55"$CE") Operative-frmwork"$YS"75"$CE") Netool-toolkit"
-	#~ echo -e ""$YS"16"$CE") Xerxes       "$YS"36"$CE") WinPayloads   "$YS"56"$CE") Netattack2       "$YS"76"$CE") Patator"
-	#~ echo -e ""$YS"17"$CE") Mdk3-master  "$YS"37"$CE") Shellter      "$YS"57"$CE") Koadic           "$YS"77"$CE") Evil-Droid"
-	#~ echo -e ""$YS"18"$CE") Katana       "$YS"38"$CE") CHAOS         "$YS"58"$CE") Empire           "$YS"78"$CE") NoSQLMap"
-	#~ echo -e ""$YS"19"$CE") Airgeddon    "$YS"39"$CE") Routersploit  "$YS"59"$CE") Meterpr.-Paranoid"
-	#~ echo -e ""$YS"20"$CE") Websploit    "$YS"40"$CE") Geany         "$YS"60"$CE") Dr0p1t"
-	#~ echo -e ""$YS" b"$CE") Go back"
-	#~ echo -e ""$YS" 0"$CE") Exit"
-	#~ echo -e "Choose: "
-	#~ read REIN
-	#~ clear
-	#~ if [[ "$REIN" = "1" ]]
-	#~ then
-		#~ install_fluxion		
-	#~ elif [[ "$REIN" = "2" ]]
-	#~ then
-		#~ install_wifite
-	#~ elif [[ "$REIN" = "3" ]]
-	#~ then
-		#~ install_wifiphisher
-	#~ elif [[ "$REIN" = "4" ]]
-	#~ then
-		#~ install_zatacker
-	#~ elif [[ "$REIN" = "5" ]]
-	#~ then
-		#~ install_morpheus
-	#~ elif [[ "$REIN" = "6" ]]
-	#~ then
-		#~ install_osrframework			
-	#~ elif [[ "$REIN" = "7" ]]
-	#~ then
-		#~ install_hakku
-	#~ elif [[ "$REIN" = "8" ]]
-	#~ then
-		#~ install_trity
-	#~ elif [[ "$REIN" = "9" ]]
-	#~ then
-		#~ install_cupp
-	#~ elif [[ "$REIN" = "10" ]]
-	#~ then
-		#~ install_dracnmap
-	#~ elif [[ "$REIN" = "11" ]]
-	#~ then
-		#~ install_fern
-	#~ elif [[ "$REIN" = "12" ]]
-	#~ then
-		#~ install_netdiscover		
-	#~ elif [[ "$REIN" = "13" ]]
-	#~ then
-		#~ install_kickthemout
-	#~ elif [[ "$REIN" = "14" ]]
-	#~ then
-		#~ install_ghostphisher
-	#~ elif [[ "$REIN" = "15" ]]
-	#~ then
-		#~ install_theeye
-	#~ elif [[ "$REIN" = "16" ]]
-	#~ then
-		#~ install_xerxes
-	#~ elif [[ "$REIN" = "17" ]]
-	#~ then
-		#~ install_mdk3
-	#~ elif [[ "$REIN" = "18" ]]
-	#~ then
-		#~ install_katana
-	#~ elif [[ "$REIN" = "19" ]]
-	#~ then
-		#~ install_airgeddon
-	#~ elif [[ "$REIN" = "20" ]]
-	#~ then
-		#~ install_websploit
-	#~ elif [[ "$REIN" = "21" ]]
-	#~ then
-		#~ install_4nonimizer
-	#~ elif [[ "$REIN" = "22" ]]
-	#~ then
-		#~ install_openvas
-	#~ elif [[ "$REIN" = "23" ]]
-	#~ then
-		#~ install_beelogger
-	#~ elif [[ "$REIN" = "24" ]]
-	#~ then
-		#~ install_ezsploit
-	#~ elif [[ "$REIN" = "25" ]]
-	#~ then
-		#~ install_pupy
-	#~ elif [[ "$REIN" = "26" ]]
-	#~ then
-		#~ install_zirikatu
-	#~ elif [[ "$REIN" = "27" ]]
-	#~ then
-		#~ install_wifiautopwner
-	#~ elif [[ "$REIN" = "28" ]]
-	#~ then
-		#~ install_bully
-	#~ elif [[ "$REIN" = "29" ]]
-	#~ then
-		#~ install_anonsurf
-	#~ elif [[ "$REIN" = "30" ]]
-	#~ then
-		#~ install_anonym8
-	#~ elif [[ "$REIN" = "31" ]]
-	#~ then	
-		#~ install_thefatrat
-	#~ elif [[ "$REIN" = "32" ]]
-	#~ then
-		#~ install_angryip
-	#~ elif [[ "$REIN" = "33" ]]
-	#~ then
-		#~ install_sniper
-	#~ elif [[ "$REIN" = "34" ]]
-	#~ then
-		#~ install_recondog
-	#~ elif [[ "$REIN" = "35" ]]
-	#~ then
-		#~ install_redhawk
-	#~ elif [[ "$REIN" = "36" ]]
-	#~ then
-		#~ install_winpayloads
-	#~ elif [[ "$REIN" = "37" ]]
-	#~ then
-		#~ install_shellter
-	#~ elif [[ "$REIN" = "38" ]]
-	#~ then
-		#~ install_chaos
-	#~ elif [[ "$REIN" = "39" ]]
-	#~ then
-		#~ install_routersploit
-	#~ elif [[ "$REIN" = "40" ]]
-	#~ then
-		#~ install_geany
-	#~ elif [[ "$REIN" = "41" ]]
-	#~ then
-		#~ install_infoga
-	#~ elif [[ "$REIN" = "42" ]]
-	#~ then
-		#~ install_nwatch
-	#~ elif [[ "$REIN" = "43" ]]
-	#~ then
-		#~ install_eternalscanner
-	#~ elif [[ "$REIN" = "44" ]]
-	#~ then
-		#~ install_eaphammer
-	#~ elif [[ "$REIN" = "45" ]]
-	#~ then
-		#~ install_dagon
-	#~ elif [[ "$REIN" = "46" ]]
-	#~ then
-		#~ install_lalin
-	#~ elif [[ "$REIN" = "47" ]]
-	#~ then
-		#~ install_knockmail
-	#~ elif [[ "$REIN" = "48" ]]
-	#~ then
-		#~ install_kwetza
-	#~ elif [[ "$REIN" = "49" ]]
-	#~ then
-		#~ install_ngrok
-	#~ elif [[ "$REIN" = "50" ]]
-	#~ then
-		#~ install_bleachbit
-	#~ elif [[ "$REIN" = "51" ]]
-	#~ then
-		#~ install_vmr
-	#~ elif [[ "$REIN" = "52" ]]
-	#~ then
-		#~ install_hashbuster
-	#~ elif [[ "$REIN" = "53" ]]
-	#~ then
-		#~ install_findsploit
-	#~ elif [[ "$REIN" = "54" ]]
-	#~ then
-		#~ install_howdoi
-	#~ elif [[ "$REIN" = "55" ]]
-	#~ then
-		#~ install_operative
-	#~ elif [[ "$REIN" = "56" ]]
-	#~ then
-		#~ install_netattack2
-	#~ elif [[ "$REIN" = "57" ]]
-	#~ then
-		#~ install_koadic
-	#~ elif [[ "$REIN" = "58" ]]
-	#~ then
-		#~ install_empire
-	#~ elif [[ "$REIN" = "59" ]]
-	#~ then
-		#~ install_meterpreter_paranoid_mode
-	#~ elif [[ "$REIN" = "60" ]]
-	#~ then
-		#~ install_dropit_frmw
-	#~ elif [[ "$REIN" = "61" ]]
-	#~ then
-		#~ install_wifi_pumpkin
-	#~ elif [[ "$REIN" = "62" ]]
-	#~ then
-		#~ install_veil
-	#~ elif [[ "$REIN" = "63" ]]
-	#~ then
-		#~ install_leviathan
-	#~ elif [[ "$REIN" = "64" ]]
-	#~ then
-		#~ install_fake_image
-	#~ elif [[ "$REIN" = "65" ]]
-	#~ then
-		#~ install_avet
-	#~ elif [[ "$REIN" = "66" ]]
-	#~ then
-		#~ install_gloom
-	#~ elif [[ "$REIN" = "67" ]]
-	#~ then
-		#~ install_arcanus
-	#~ elif [[ "$REIN" = "68" ]]
-	#~ then
-		#~ install_msfpc
-	#~ elif [[ "$REIN" = "69" ]]
-	#~ then
-		#~ install_morphhta
-	#~ elif [[ "$REIN" = "70" ]]
-	#~ then
-		#~ install_lfi
-	#~ elif [[ "$REIN" = "71" ]]
-	#~ then
-		#~ install_unibyav
-	#~ elif [[ "$REIN" = "72" ]]
-	#~ then
-		#~ install_demiguise
-	#~ elif [[ "$REIN" = "73" ]]
-	#~ then
-		#~ install_dkmc
-	#~ elif [[ "$REIN" = "74" ]]
-	#~ then
-		#~ install_mitmf
-	#~ elif [[ "$REIN" = "75" ]]
-	#~ then
-		#~ install_netool
-	#~ elif [[ "$REIN" = "76" ]]
-	#~ then
-		#~ install_patator
-	#~ elif [[ "$REIN" = "77" ]]
-	#~ then
-		#~ install_evil_droid
-	#~ elif [[ "$REIN" = "78" ]]
-	#~ then
-		#~ install_nosqlmap
-	#~ elif [[ "$REIN" = "back" || "$REIN" = "b" ]]
-	#~ then
-		#~ clear
-		#~ break
-	#~ elif [[ "$REIN" = "00" ]]
-	#~ then	
-		#~ exec bash "$0"
-	#~ elif [[ "$REIN" = "0" ]]
-	#~ then
-		#~ clear
-		#~ exit
-	#~ fi
-	#~ done
 }
 function errors_menu
 {
@@ -3136,11 +2856,11 @@ function wifi_tools
 	else
 		echo -e ""$RS" 1"$CE") "$RS"Fluxion"$CE"               The future of MITM WPA attacks"
 	fi
-	if [[ -f /usr/bin/wifite ]]
+	if [[ -f /usr/sbin/wifite ]]
 	then
-		echo -e ""$YS" 2"$CE") Wifite                Automated wireless attack tool"
+		echo -e ""$YS" 2"$CE") Wifite2               Automated wireless attack tool"
 	else
-		echo -e ""$RS" 2"$CE") "$RS"Wifite"$CE"               Automated wireless attack tool"
+		echo -e ""$RS" 2"$CE") "$RS"Wifite2"$CE"               Automated wireless attack tool"
 	fi
 	if [[ -d /root/wifiphisher ]]
 	then
@@ -3220,7 +2940,7 @@ function wifi_tools
 	else
 		echo -e ""$RS"14"$CE") "$RS"The Eye"$CE"               Detects ARP poisoning DNS spoofing etc..."
 	fi
-	if [[ -d /root/xerxes ]]
+	if [[ -d /root/Xerxes ]]
 	then	
 		echo -e ""$YS"15"$CE") Xerxes                The most powerful DoS tool(CAUTION)"
 	else
@@ -3347,7 +3067,7 @@ function wifi_tools
 		fi
 	elif [[ "$APPP" = "2" ]]
 	then
-		if [[ -f /usr/bin/wifite ]]
+		if [[ -f /usr/sbin/wifite ]]
 		then
 			wifite
 		else
@@ -3386,7 +3106,7 @@ function wifi_tools
 				./ZT.sh
 				cd
 			else
-				echo -e "You have to install it manually since its not on github.Sorry."
+				echo -e "You have to install it manually since its not on github. Sorry."
 				sleep 4
 				exec bash "$0"
 			fi
@@ -3579,7 +3299,7 @@ function wifi_tools
 		fi
 	elif [[ "$APPP" = "15" ]]
 	then
-		if [[ -d "/root/xerxes" ]]
+		if [[ -d "/root/Xerxes" ]]
 		then
 			echo -e "Do you own the site you want to DoS?"$YNONLY""
 			read DOSTERM
@@ -3595,7 +3315,7 @@ function wifi_tools
 				sleep 4
 				gio open http://www.isitdownrightnow.com/"$SITEDOS".html
 				clear	
-				cd /root/xerxes
+				cd /root/Xerxes
 				SITEDOSX=www.$SITEDOS
 				echo -e "Press "$YS"any key"$CE" to start DoS on $SITEDOSX"
 				$READAK
@@ -4106,55 +3826,55 @@ function remote_access
 	then
 		echo -e ""$YS"23"$CE") Demiguise             HTA encryption tool for RedTeams"
 	else
-		echo -e ""$RS"23"$CE") "$RS"Demiguise"$CE"              HTA encryption tool for RedTeams"
+		echo -e ""$RS"23"$CE") "$RS"Demiguise"$CE"             HTA encryption tool for RedTeams"
 	fi
 	if [[ -d /root/DKMC ]]
 	then
 		echo -e ""$YS"24"$CE") DKMC                  Malicious payload evasion tool into image"
 	else
-		echo -e ""$RS"24"$CE") "$RS"DKMC"$CE"                   Malicious payload evasion tool into image"
+		echo -e ""$RS"24"$CE") "$RS"DKMC"$CE"                  Malicious payload evasion tool into image"
 	fi
 	if [[ -d /usr/share/beef-xss ]]
 	then
 		echo -e ""$YS"25"$CE") Beef                  The browser exploitation framework"
 	else
-		echo -e ""$RS"25"$CE") "$RS"Beef"$CE"                   The browser exploitation framework"
+		echo -e ""$RS"25"$CE") "$RS"Beef"$CE"                  The browser exploitation framework"
 	fi
 	if [[ -d /root/Evil-Droid ]]
 	then
 		echo -e ""$YS"26"$CE") Evil-Droid            Penetrate android platforms"
 	else
-		echo -e ""$RS"26"$CE") "$RS"Evil-Droid"$CE"             Penetrate android platforms"
+		echo -e ""$RS"26"$CE") "$RS"Evil-Droid"$CE"            Penetrate android platforms"
 	fi
 	if [[ -d /root/EggShell ]]
 	then
 		echo -e ""$YS"27"$CE") EggShell              Penetrate android platforms"
 	else
-		echo -e ""$RS"27"$CE") "$RS"EggShell"$CE"               Penetrate android platforms"
+		echo -e ""$RS"27"$CE") "$RS"EggShell"$CE"              Penetrate android platforms"
 	fi
 	if [[ -d /root/Zerodoor ]]
 	then
 		echo -e ""$YS"28"$CE") Zerodoor              Penetrate android platforms"
 	else
-		echo -e ""$RS"28"$CE") "$RS"Zerodoor"$CE"               Penetrate android platforms"
+		echo -e ""$RS"28"$CE") "$RS"Zerodoor"$CE"              Penetrate android platforms"
 	fi
 	if [[ -d /root/cromos ]]
 	then
 		echo -e ""$YS"29"$CE") Cromos                Download and Inject code into Google Chrome extensions"
 	else
-		echo -e ""$RS"29"$CE") "$RS"Cromos"$CE"                 Download and Inject code into Google Chrome extensions"
+		echo -e ""$RS"29"$CE") "$RS"Cromos"$CE"                Download and Inject code into Google Chrome extensions"
 	fi
 	if [[ -d /root/AutoSploit ]]
 	then
 		echo -e ""$YS"30"$CE") AutoSploit            Automated Mass Exploiter"
 	else
-		echo -e ""$RS"30"$CE") "$RS"AutoSploit"$CE"             Automated Mass Exploiter"
+		echo -e ""$RS"30"$CE") "$RS"AutoSploit"$CE"            Automated Mass Exploiter"
 	fi
 	if [[ -d /root/Enigma ]]
 	then
 		echo -e ""$YS"31"$CE") Enigma                Multiplatform payload dropper"
 	else
-		echo -e ""$RS"31"$CE") "$RS"Enigma"$CE"                 Multiplatform payload dropper"
+		echo -e ""$RS"31"$CE") "$RS"Enigma"$CE"                Multiplatform payload dropper"
 	fi
 	echo -e ""$YS" b"$CE") Go back"
 	echo -e ""$YS"00"$CE") Main menu"
@@ -5550,7 +5270,7 @@ function website_tools
 		then
 			echo -e ""$YS" 8"$CE") InstaBurst            A faster way to brute force Instagram"
 		else
-			echo -e ""$RS" 8"$CE") "$RS"InstaBurst"$CE"             A faster way to brute force Instagram"
+			echo -e ""$RS" 8"$CE") "$RS"InstaBurst"$CE"            A faster way to brute force Instagram"
 		fi
 		if [[ -f /usr/local/bin/instagram-py ]]
 		then
@@ -6458,7 +6178,7 @@ function tools_menu
 	echo -e ""$YS" 1"$CE") Wifi tools"
 	echo -e ""$YS" 2"$CE") Remote access"
 	echo -e ""$YS" 3"$CE") Information gathering"
-	echo -e ""$YS" 4"$CE") Webside tools"
+	echo -e ""$YS" 4"$CE") Website tools"
 	echo -e ""$YS" 5"$CE") Others"
 	echo -e ""$YS" 6"$CE") Install/reinstall a tool"
 	echo -e ""$YS" i"$CE") Info"
@@ -7753,7 +7473,7 @@ function mitmf_hook
 			cd
 		fi
 	else
-		echo -e ""$RS"Mitmf is not installed.type '"$CE""$YS"install"$CE""$RS"' to install it."
+		echo -e ""$RS"Mitmf is not installed. Type '"$CE""$YS"install"$CE""$RS"' to install it."
 		read INSTALL
 		if [[ "$INSTALL" = "install" ]]
 		then
@@ -8379,7 +8099,7 @@ function ngrok_option
 					fi
 			fi
 		else
-			echo -e ""$RS"Ngrok is not installed.type '"$CE""$YS"install"$CE""$RS"' to install it."
+			echo -e ""$RS"Ngrok is not installed. Type '"$CE""$YS"install"$CE""$RS"' to install it."
 			read INSTALL
 			if [[ "$INSTALL" = "install" ]]
 			then
@@ -8892,7 +8612,7 @@ function browser_exploiting
 							$READAK
 						fi
 				else
-					echo -e ""$RS"Mitmf is not installed.Type '"$CE""$YS"install"$CE""$RS"' to install it."
+					echo -e ""$RS"Mitmf is not installed. Type '"$CE""$YS"install"$CE""$RS"' to install it."
 					read INSTALL
 					if [[ "$INSTALL" = "install" ]]
 					then
@@ -9333,7 +9053,7 @@ function main_options
 	then
 		if [[ ! -f "/usr/local/bin/howdoi" ]]
 		then
-			echo -e ""$RS"Howdoi is not installed.type '"$CE""$YS"install"$CE""$RS"' to install it."
+			echo -e ""$RS"Howdoi is not installed. Type '"$CE""$YS"install"$CE""$RS"' to install it."
 			read INSTALL
 			if [[ "$INSTALL" = "install" ]]
 			then
@@ -9503,7 +9223,7 @@ function main_options
 	then
 		if [[ ! -f "/etc/init.d/anonym8.sh" ]]
 		then
-			echo -e ""$RS"Anonym8 is not installed.type '"$CE""$YS"install"$CE""$RS"' to install it."
+			echo -e ""$RS"Anonym8 is not installed. Type '"$CE""$YS"install"$CE""$RS"' to install it.$CE"
 			read INSTALL
 			if [[ "$INSTALL" = "install" ]]
 			then
@@ -9518,7 +9238,7 @@ function main_options
 	then
 		if [[ ! -f "/etc/init.d/anonym8.sh" ]]
 		then
-			echo -e ""$RS"Anonym8 is not installed.type '"$CE""$YS"install"$CE""$RS"' to install it."
+			echo -e ""$RS"Anonym8 is not installed. Type '"$CE""$YS"install"$CE""$RS"' to install it.$CE"
 			read INSTALL
 			if [[ "$INSTALL" = "install" ]]
 			then
@@ -9533,7 +9253,7 @@ function main_options
 	then
 		if [[ ! -f "/usr/bin/anonsurf" ]]
 		then
-			echo -e ""$RS"Anonsurf is not installed.type '"$CE""$YS"install"$CE""$RS"' to install it."
+			echo -e ""$RS"Anonsurf is not installed. Type '"$CE""$YS"install"$CE""$RS"' to install it.$CE"
 			read INSTALL
 			if [[ "$INSTALL" = "install" ]]
 			then
@@ -9548,7 +9268,7 @@ function main_options
 	then
 		if [[ ! -f "/usr/bin/anonsurf" ]]
 		then
-			echo -e ""$RS"Anonsurf is not installed.type '"$CE""$YS"install"$CE""$RS"' to install it."
+			echo -e ""$RS"Anonsurf is not installed. Type '"$CE""$YS"install"$CE""$RS"' to install it.$CE"
 			read INSTALL
 			if [[ "$INSTALL" = "install" ]]
 			then
@@ -9563,7 +9283,7 @@ function main_options
 	then
 		if [[ ! -f "/usr/bin/anonsurf" ]]
 		then
-			echo -e ""$RS"Anonsurf is not installed.type '"$CE""$YS"install"$CE""$RS"' to install it."
+			echo -e ""$RS"Anonsurf is not installed. Type '"$CE""$YS"install"$CE""$RS"' to install it.$CE"
 			read INSTALL
 			if [[ "$INSTALL" = "install" ]]
 			then
@@ -9578,7 +9298,7 @@ function main_options
 	then
 		if [[ ! -f "/usr/bin/anonsurf" ]]
 		then
-			echo -e ""$RS"Anonsurf is not installed.type '"$CE""$YS"install"$CE""$RS"' to install it."
+			echo -e ""$RS"Anonsurf is not installed. Type '"$CE""$YS"install"$CE""$RS"' to install it.$CE"
 			read INSTALL
 			if [[ "$INSTALL" = "install" ]]
 			then
@@ -9593,7 +9313,7 @@ function main_options
 	then
 		if [[ ! -f "/usr/bin/anonsurf" ]]
 		then
-			echo -e ""$RS"Anonsurf is not installed.type '"$CE""$YS"install"$CE""$RS"' to install it."
+			echo -e ""$RS"Anonsurf is not installed. Type '"$CE""$YS"install"$CE""$RS"' to install it.$CE"
 			read INSTALL
 			if [[ "$INSTALL" = "install" ]]
 			then
@@ -9641,7 +9361,7 @@ function main_options
 	then
 		clear
 		BACKL=1
-		cat "$LPATH"/Changelog | head -n 20
+		cat "$LPATH"/Changelog | head -n $LATESTCHANGELOGLINES
 		echo -e "$PAKTC"
 		$READAK
 		clear
@@ -9658,7 +9378,7 @@ function main_options
 		then
 			eternalblue_check
 		else
-			echo -e ""$RS"Wifiphisher is not installed.Type '"$CE""$YS"install"$CE""$RS"' to install it."$CE""
+			echo -e ""$RS"Wifiphisher is not installed. Type '"$CE""$YS"install"$CE""$RS"' to install it."$CE""
 			read INSTALL
 			if [[ "$INSTALL" = "install" ]]
 			then
@@ -9671,7 +9391,7 @@ function main_options
 		then
 			eternalblue
 		else
-			echo -e ""$RS"Wifiphisher is not installed.Type '"$CE""$YS"install"$CE""$RS"' to install it."$CE""
+			echo -e ""$RS"Wifiphisher is not installed. Type '"$CE""$YS"install"$CE""$RS"' to install it."$CE""
 			read INSTALL
 			if [[ "$INSTALL" = "install" ]]
 			then
@@ -9684,7 +9404,7 @@ function main_options
 		then
 			wififb_attack
 		else
-			echo -e ""$RS"Wifiphisher is not installed.Type '"$CE""$YS"install"$CE""$RS"' to install it."$CE""
+			echo -e ""$RS"Wifiphisher is not installed. Type '"$CE""$YS"install"$CE""$RS"' to install it."$CE""
 			read INSTALL
 			if [[ "$INSTALL" = "install" ]]
 			then
@@ -9765,6 +9485,11 @@ check_if_ks
 		foldname="fluxion"
 		gitlink="--recursive  https://github.com/FluxionNetwork/fluxion.git"
 		install_default
+		cloned=$?
+		if [[ "$cloned" == 1 ]]
+		then
+			apt-get install -y aircrack-ng bc curl cowpatty isc-dhcp-server hostapd lighttpd macchanger mdk3 nmap openssl php-cgi pyrit xterm rfkill unzip
+		fi
 		#~ wget https://fluxion.tk/fluxion-unstable.zip
 		#~ apt-get install -y unzip
 		#~ clear
@@ -9775,7 +9500,7 @@ check_if_ks
 	}
 	function install_wifite
 	{
-		apt-get install -y wifite
+		apt-get install -y wifite hcxdumptool hcxtools
 	}
 	function install_wifiphisher
 	{
@@ -9785,6 +9510,7 @@ check_if_ks
 		cloned=$?
 		if [[ "$cloned" == 1 ]]
 		then
+			apt-get install -y libnl-3-dev libnl-genl-3-dev
 			sudo python setup.py install
 		fi
 	}
@@ -9824,12 +9550,15 @@ check_if_ks
 	function install_trity
 	{
 		foldname="Trity"
-		gitlink="https://github.com/toxic-ig/Trity.git"
+		gitlink="https://github.com/samyoyo/Trity-1.git"
 		install_default
 		cloned=$?
 		if [[ "$cloned" == 1 ]]
 		then
-			sudo python install.py	
+			cd ~
+			mv ~/Trity-1/ ~/Trity/
+			cd "$foldname"
+			sudo python install.py
 		fi
 	}
 	function install_cupp
@@ -9907,13 +9636,13 @@ check_if_ks
 	}
 	function install_xerxes
 	{
-		foldname="xerxes"
-		gitlink="https://github.com/zanyarjamal/xerxes.git"
+		foldname="Xerxes"
+		gitlink="https://github.com/sepehrdaddev/Xerxes.git"
 		install_default
 		cloned=$?
 		if [[ "$cloned" == 1 ]]
 		then
-			gcc xerxes.c -o xerxes	
+			mv bash-completion/Xerxes .
 		fi
 	}
 	function install_mdk3
@@ -10131,7 +9860,7 @@ check_if_ks
 	}
 	function install_chaos
 	{
-		apt install golang upx-ucl -y
+		apt-get install -y golang upx-ucl -y
 		cd
 		foldname="CHAOS"
 		gitlink="https://github.com/tiagorlampert/CHAOS.git"
@@ -10145,7 +9874,7 @@ check_if_ks
 		cloned=$?
 		if [[ "$cloned" == 1 ]]
 		then
-			apt-get install python3-pip
+			apt-get install -y python3-pip
 			python3 -m pip install -r requirements.txt
 			python setup.py install
 		fi
@@ -10164,7 +9893,7 @@ check_if_ks
 	function install_nwatch
 	{
 		foldname="nWatch"
-		gitlink="https://github.com/suraj-root/nWatch.git"
+		gitlink="https://github.com/Cyber-Forensic/nWatch.git"
 		install_default
 		cloned=$?
 		if [[ "$cloned" == 1 ]]
@@ -10418,7 +10147,7 @@ check_if_ks
 		cloned=$?
 		if [[ "$cloned" == 1 ]]
 		then
-			./installer.sh --install
+			chmod +x installer.sh && ./installer.sh --install
 		fi
 	}
 	function install_veil
@@ -10532,7 +10261,7 @@ check_if_ks
 	}
 	function install_beef
 	{
-		apt-get install beef-xss
+		apt-get install -y beef-xss
 	}
 	function install_mitmf
 	{
@@ -10556,17 +10285,18 @@ check_if_ks
 	function install_netool
 	{
 		foldname="opensource"
-		gitlink="https://github.com/r00t-3xp10it/netool-toolkit"
+		gitlink="https://github.com/r00t-3xp10it/netool-toolkit opensource"
 		install_default
 		cloned=$?
 		if [[ "$cloned" == 1 ]]
 		then
+			apt-get install -y curl libcurl4 libcurl4-openssl-dev php7.3 php7.3-curl php7.3-cli evolution-data-server-common gnome-desktop3-data gnome-panel-data libecal-2.0-1 libedataserver-1.2-24 libgnome-desktop-3-18 libgweather-3-16 libical3
 			chmod +x INSTALL.sh && ./INSTALL.sh
 		fi
 	}
 	function install_sqlmap
 	{
-		apt-get install sqlmap
+		apt-get install -y sqlmap
 	}
 	function install_patator
 	{
@@ -10662,7 +10392,7 @@ check_if_ks
 			./install.sh
 		fi
 	}
-	function install_yuki-chan
+	function install_yuki
 	{
 		foldname="Yuki-Chan-The-Auto-Pentest"
 		gitlink="https://github.com/Yukinoshita47/Yuki-Chan-The-Auto-Pentest.git"

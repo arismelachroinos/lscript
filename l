@@ -9488,7 +9488,7 @@ check_if_ks
 		cloned=$?
 		if [[ "$cloned" == 1 ]]
 		then
-			apt-get install -y aircrack-ng bc curl cowpatty hostapd lighttpd macchanger mdk3 nmap openssl php-cgi pyrit xterm rfkill unzip
+			apt-get install -y aircrack-ng bc curl cowpatty dhcpd hostapd lighttpd macchanger mdk3 nmap openssl php-cgi pyrit xterm rfkill unzip
 		fi
 		#~ wget https://fluxion.tk/fluxion-unstable.zip
 		#~ apt-get install -y unzip

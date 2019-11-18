@@ -10290,7 +10290,7 @@ check_if_ks
 		cloned=$?
 		if [[ "$cloned" == 1 ]]
 		then
-			apt-get install -y curl libcurl3  libcurl3-dev php5 php5-curl php5-cli gnome-desktop-item-edit
+			apt-get install -y curl libcurl4 libcurl4-openssl-dev php7.3 php7.3-curl php7.3-cli evolution-data-server-common gnome-desktop3-data gnome-panel-data libecal-2.0-1 libedataserver-1.2-24 libgnome-desktop-3-18 libgweather-3-16 libical3
 			chmod +x INSTALL.sh && ./INSTALL.sh
 		fi
 	}

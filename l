@@ -9485,6 +9485,11 @@ check_if_ks
 		foldname="fluxion"
 		gitlink="--recursive  https://github.com/FluxionNetwork/fluxion.git"
 		install_default
+		cloned=$?
+		if [[ "$cloned" == 1 ]]
+		then
+			apt-get install -y aircrack-ng bc curl cowpatty hostapd lighttpd macchanger mdk3 nmap openssl php-cgi pyrit xterm rfkill unzip
+		fi
 		#~ wget https://fluxion.tk/fluxion-unstable.zip
 		#~ apt-get install -y unzip
 		#~ clear

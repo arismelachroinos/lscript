@@ -109,7 +109,7 @@ function local_ips()
 {
 	iffile=""$LPATH"/iftemp.txt"
 	#passing an interface if any
-	LF="$1"
+	LF=""
 	GREPP=$(ifconfig)
 	if [[ "$LF" = "" ]]
 	then
@@ -119,7 +119,7 @@ function local_ips()
 		if [[ $TEST != "" ]]
 		then
 			ifconfig "$ETH" > $iffile
-			LOCALETH=$(cat $iffile | grep " inet " | awk -F "inet " {'print $2'} | cut -d ' ' -f1)
+			LOCALETH=$(cat $iffile | grep " inet " | awk -F "inet " {'print '} | cut -d ' ' -f1)
 			cho=$(is_it_an_ip $LOCALETH)
 			if [[ "$cho" = 1 ]]
 			then
@@ -131,7 +131,7 @@ function local_ips()
 		if [[ $TEST != "" ]]
 		then
 			ifconfig $WLANN > $iffile
-			LOCALMA=$(cat $iffile | grep " inet " | awk -F "inet " {'print $2'} | cut -d ' ' -f1)
+			LOCALMA=$(cat $iffile | grep " inet " | awk -F "inet " {'print '} | cut -d ' ' -f1)
 			cho=$(is_it_an_ip $LOCALMA)
 			if [[ "$cho" = 1 ]]
 			then
@@ -143,7 +143,7 @@ function local_ips()
 		if [[ $TEST != "" ]]
 		then
 			ifconfig $WLANNM > $iffile
-			LOCALMO=$(cat $iffile | grep " inet " | awk -F "inet " {'print $2'} | cut -d ' ' -f1)
+			LOCALMO=$(cat $iffile | grep " inet " | awk -F "inet " {'print '} | cut -d ' ' -f1)
 			cho=$(is_it_an_ip $LOCALMO)
 			if [[ "$cho" = 1 ]]
 			then
@@ -162,7 +162,7 @@ function local_ips()
 		if [[ $TEST != "" ]]
 		then
 			ifconfig $LF > $iffile
-			LOCALM=$(cat $iffile | grep " inet " | awk -F "inet " {'print $2'} | cut -d ' ' -f1)
+			LOCALM=$(cat $iffile | grep " inet " | awk -F "inet " {'print '} | cut -d ' ' -f1)
 			cho=$(is_it_an_ip $LOCALM)
 			if [[ "$cho" = 1 ]]
 			then
@@ -175,8 +175,8 @@ function local_ips()
 function give_ip_take_zero()
 {
 	#passing an ip
-	GI1="$1"
-	GI2="$2"
+	GI1=""
+	GI2=""
 	if [[ "$GI1" = "" ]]
 	then
 		echo -e ""$RS"Error 7. No parameters passed"$CE""
@@ -196,7 +196,7 @@ function give_ip_take_zero()
 }
 function is_it_an_ip()
 {
-	IIA=$1
+	IIA=
 	IIAI=${#IIA}
 	if [[ "$IIA" = "" ]]
 	then
@@ -268,10 +268,10 @@ function check_wlans
 {
 	CC=$WLANN
 	WLANCHECKING=$(ifconfig | grep "$WLANN" )
-	#~ WLANCHECKING=$(ifconfig | awk -v c1="$CC" '$0 ~ c1 {print}')
+	#~ WLANCHECKING=$(ifconfig | awk -v c1="$CC" ' ~ c1 {print}')
 	CC=$WLANNM
 	WLANMCHECKING=$(ifconfig | grep "$WLANNM" )
-	#~ WLANMCHECKING=$(ifconfig | awk -v c1="$CC" '$0 ~ c1 {print}')
+	#~ WLANMCHECKING=$(ifconfig | awk -v c1="$CC" ' ~ c1 {print}')
 }
 function banner
 {
@@ -386,7 +386,7 @@ then
 	exit
 elif [[ "$MYINT" = "00" || "$MYINT" = "b" ]]
 then
-	exec bash "$0"
+	exec bash ""
 elif [[ "$MYINT" = "3" ]]
 then
 	MYINT="$ETH"
@@ -396,7 +396,7 @@ sleep 2
 clear
 echo -e "EXITING"
 sleep 1
-exec bash "$0"
+exec bash ""
 fi
 export MYINT
 }
@@ -937,7 +937,7 @@ do
 		exit
 	elif [[ "$ST" == 00 ]]
 	then
-		exec bash $0
+		exec bash 
 	elif [[ "$ST" == "r" ]]
 	then
 		p=0
@@ -1278,7 +1278,7 @@ done
 		#~ break
 	#~ elif [[ "$REIN" = "00" ]]
 	#~ then	
-		#~ exec bash "$0"
+		#~ exec bash ""
 	#~ elif [[ "$REIN" = "0" ]]
 	#~ then
 		#~ clear
@@ -1491,7 +1491,7 @@ then
 			exit
 		elif [[ "$nn" = "00" ]]
 		then
-			exec bash "$0"
+			exec bash ""
 		elif [[ "$nn" = "reset" ]]
 		then
 			rm -r "$KSPATH"/*
@@ -1514,7 +1514,7 @@ then
 		exit
 	elif [[ "$KS" = "00" ]]
 	then
-		exec bash "$0"
+		exec bash ""
 	fi
 done
 }
@@ -1665,7 +1665,7 @@ then
 	elif [[ "$MITMCH" = "00" ]]
 	then
 		clear
-		exec bash "$0"
+		exec bash ""
 	elif [[ "$MITMCH" = "0" ]]
 	then
 		clear
@@ -1752,7 +1752,7 @@ then
 	elif [[ "$MITMSET" = "4" ]]
 	then
 		echo -e "Clone a website to one of the following IP(s):"
-		ip addr | grep '/24' | awk -F "inet " {'print $2'} | cut -d '/' -f1
+		ip addr | grep '/24' | awk -F "inet " {'print '} | cut -d '/' -f1
 		echo -e "$PAKTC"
 		$READAK
 		gnome-terminal --geometry 66x40+999999+0 -e setoolkit
@@ -1762,7 +1762,7 @@ then
 		echo -e ""
 		echo -e "Enter your IP address that you started the server:"
 		echo -e "One of this/these:"
-		ip addr | grep '/24' | awk -F "inet " {'print $2'} | cut -d '/' -f1
+		ip addr | grep '/24' | awk -F "inet " {'print '} | cut -d '/' -f1
 		read -e SERVIP
 		echo -e "Enter the interface of that IP(e.g: wlan0):"
 		read -e INTIP
@@ -1800,7 +1800,7 @@ then
 	elif [[ "$MITMSET" = "00" ]]
 	then
 		clear
-		exec bash "$0"
+		exec bash ""
 	elif [[ "$MITMSET" = "0" ]]
 	then
 		clear
@@ -1814,7 +1814,7 @@ then
 elif [[ "$MITMATT" = "00" ]]
 then			
 	clear
-	exec bash "$0"
+	exec bash ""
 elif [[ "$MITMATT" = "0" ]]
 then
 	clear
@@ -2076,7 +2076,7 @@ do
 		fi
 	elif [[ "$DAGON" = 00 ]]
 	then
-		exec bash $0
+		exec bash 
 	elif [[ "$DAGON" = 0 ]]
 	then
 		clear
@@ -2099,38 +2099,38 @@ do
 		clear
 		echo -e ""$BS"Modes"$CE":"
 	pttr=$(cat <<EOF
-$YS  1$CE) ftp_login      : Brute-force FTP
-$YS  2$CE) ssh_login      : Brute-force SSH
-$YS  3$CE) telnet_login   : Brute-force Telnet
-$YS  4$CE) smtp_login     : Brute-force SMTP
-$YS  5$CE) smtp_vrfy      : Enumerate valid users using the SMTP VRFY command
-$YS  6$CE) smtp_rcpt      : Enumerate valid users using the SMTP RCPT TO command
-$YS  7$CE) finger_lookup  : Enumerate valid users using Finger
-$YS  8$CE) http_fuzz      : Brute-force HTTP/HTTPS
-$YS  9$CE) ajp_fuzz       : Brute-force AJP
-$YS 10$CE) pop_login      : Brute-force POP
-$YS 11$CE) pop_passd      : Brute-force poppassd (not POP3)
-$YS 12$CE) imap_login     : Brute-force IMAP
-$YS 13$CE) ldap_login     : Brute-force LDAP
-$YS 14$CE) smb_login      : Brute-force SMB
-$YS 15$CE) smb_lookupsid  : Brute-force SMB SID-lookup
-$YS 16$CE) rlogin_login   : Brute-force rlogin
-$YS 17$CE) vmauthd_login  : Brute-force VMware Authentication Daemon
-$YS 18$CE) mssql_login    : Brute-force MSSQL
-$YS 19$CE) oracle_login   : Brute-force Oracle
-$YS 20$CE) mysql_login    : Brute-force MySQL
-$YS 21$CE) mysql_query    : Brute-force MySQL queries
-$YS 22$CE) rdp_login      : Brute-force RDP (NLA)
-$YS 23$CE) pgsql_login    : Brute-force PostgreSQL
-$YS 24$CE) vnc_login      : Brute-force VNC
-$YS 25$CE) dns_forward    : Brute-force DNS
-$YS 26$CE) dns_reverse    : Brute-force DNS (reverse lookup subnets)
-$YS 27$CE) ike_enum       : Enumerate IKE transforms
-$YS 28$CE) snmp_login     : Brute-force SNMPv1/2 and SNMPv3
-$YS 29$CE) unzip_pass     : Brute-force the password of encrypted ZIP files
-$YS 30$CE) keystore_pass  : Brute-force the password of Java keystore files
-$YS 31$CE) sqlcipher_pass : Brute-force the password of SQLCipher-encrypted databases
-$YS 32$CE) umbraco_crack  : Crack Umbraco HMAC-SHA1 password hashes
+$YS  CE) ftp_login      : Brute-force FTP
+$YS  CE) ssh_login      : Brute-force SSH
+$YS  CE) telnet_login   : Brute-force Telnet
+$YS  CE) smtp_login     : Brute-force SMTP
+$YS  CE) smtp_vrfy      : Enumerate valid users using the SMTP VRFY command
+$YS  CE) smtp_rcpt      : Enumerate valid users using the SMTP RCPT TO command
+$YS  CE) finger_lookup  : Enumerate valid users using Finger
+$YS  CE) http_fuzz      : Brute-force HTTP/HTTPS
+$YS  CE) ajp_fuzz       : Brute-force AJP
+$YS CE) pop_login      : Brute-force POP
+$YS CE) pop_passd      : Brute-force poppassd (not POP3)
+$YS CE) imap_login     : Brute-force IMAP
+$YS CE) ldap_login     : Brute-force LDAP
+$YS CE) smb_login      : Brute-force SMB
+$YS CE) smb_lookupsid  : Brute-force SMB SID-lookup
+$YS CE) rlogin_login   : Brute-force rlogin
+$YS CE) vmauthd_login  : Brute-force VMware Authentication Daemon
+$YS CE) mssql_login    : Brute-force MSSQL
+$YS CE) oracle_login   : Brute-force Oracle
+$YS CE) mysql_login    : Brute-force MySQL
+$YS CE) mysql_query    : Brute-force MySQL queries
+$YS CE) rdp_login      : Brute-force RDP (NLA)
+$YS CE) pgsql_login    : Brute-force PostgreSQL
+$YS CE) vnc_login      : Brute-force VNC
+$YS CE) dns_forward    : Brute-force DNS
+$YS CE) dns_reverse    : Brute-force DNS (reverse lookup subnets)
+$YS CE) ike_enum       : Enumerate IKE transforms
+$YS CE) snmp_login     : Brute-force SNMPv1/2 and SNMPv3
+$YS CE) unzip_pass     : Brute-force the password of encrypted ZIP files
+$YS CE) keystore_pass  : Brute-force the password of Java keystore files
+$YS CE) sqlcipher_pass : Brute-force the password of SQLCipher-encrypted databases
+$YS CE) umbraco_crack  : Crack Umbraco HMAC-SHA1 password hashes
 EOF
 )
 	echo -e "$pttr"
@@ -2490,7 +2490,7 @@ function eaphammer_automation
 				elif [[ "$EAPH" = "00" ]]
 				then
 					clear
-					exec bash $0
+					exec bash 
 				elif [[ "$EAPH" = "0" ]]
 				then
 					clear
@@ -2810,7 +2810,7 @@ do
 			DBANN="-q"
 		fi
 		cd /root/Dr0p1t-Framework
-		python Dr0p1t.py $MALURL $DSTARTUP $DTASK $DLTPUP $DKILLANT $DRUNBAT $DRUNPOW $DRUNVBS $DUACASADMIN $DSPOOFEXT $DISZIP $DCOMPRESS $DDISUAC $DICON $DEVENT $DCOMPILE $DD32 $DD64 $DBANN
+		python Dr0p1t.py $MALURL $DSTARTUP $DTASK $DLTPUP $DKILLANT $DRUNBAT $DRUNPOW $DRUNVBS $DUACASADMIN $DSPOOFEXT $DISZIP $DCOMPRESS $DDISUAC $DICON $DEVENT $DCOMPILE $DDDDDBANN
 		echo -e "$PAKTGB"
 		$READAK
 		cd
@@ -3136,7 +3136,7 @@ function wifi_tools
 	else
 		echo -e ""$RS" 1"$CE") "$RS"Fluxion"$CE"               The future of MITM WPA attacks"
 	fi
-	if [[ -f /usr/bin/wifite ]]
+	if [[ which wifite ]]
 	then
 		echo -e ""$YS" 2"$CE") Wifite                Automated wireless attack tool"
 	else
@@ -3388,7 +3388,7 @@ function wifi_tools
 			else
 				echo -e "You have to install it manually since its not on github.Sorry."
 				sleep 4
-				exec bash "$0"
+				exec bash ""
 			fi
 		else
 			echo -e "$TNI"
@@ -3604,7 +3604,7 @@ function wifi_tools
 				clear
 				echo -e "Then never try this."
 				sleep 3
-				exec bash "$0"
+				exec bash ""
 			fi
 		else
 			echo -e "$TNI"
@@ -3922,7 +3922,7 @@ function wifi_tools
 					exit
 				elif [[ "$OSFR" = "00" ]]
 				then
-					exec bash "$0"
+					exec bash ""
 				elif [[ "$OSFR" = "back" || "$OSFR" = "b" ]]
 				then
 					break
@@ -3930,7 +3930,7 @@ function wifi_tools
 					echo -e "Wrong choice"
 					sleep 0.3
 					clear
-					exec bash "$0"
+					exec bash ""
 				fi
 			done
 		else
@@ -3950,7 +3950,7 @@ function wifi_tools
 	elif [[ "$APPP" = "00" ]]
 	then
 		clear
-		exec bash "$0"
+		exec bash ""
 	elif [[ "$APPP" = "back" || "$APPP" = "b" ]]
 	then
 		break
@@ -5081,7 +5081,7 @@ function remote_access
 			sleep 2
 			echo -e "Press "$YS"any key"$CE" to leave..."
 			$READAK
-			exec bash "$0"
+			exec bash ""
 		else
 			echo -e "$TNI"
 			read INSTALL
@@ -5126,7 +5126,7 @@ function remote_access
 				else
 					echo -e "Wrong choice.Returning to main manu..."
 					sleep 2
-					exec bash "$0"
+					exec bash ""
 				fi
 				clear
 				echo -e "Enter your ip: "
@@ -5146,7 +5146,7 @@ function remote_access
 				./pupysh.py
 			elif [[ "$PUPY" = "00" ]]
 			then
-				exec bash "$0"
+				exec bash ""
 			elif [[ "$PUPY" = "back" || "$PUPY" = "b" ]]
 			then
 				break
@@ -5226,7 +5226,7 @@ function remote_access
 	elif [[ "$KEYLOG" = "00" ]]
 	then
 		clear
-		exec bash "$0"
+		exec bash ""
 	elif [[ "$KEYLOG" = "0" ]]
 	then
 		clear
@@ -5461,7 +5461,7 @@ function information_gathering
 						exit
 					elif [[ "$OSFR" = "00" ]]
 					then
-						exec bash "$0"
+						exec bash ""
 					elif [[ "$OSFR" = "back" || "$OSFR" = "b" ]]
 					then
 						break
@@ -5469,7 +5469,7 @@ function information_gathering
 						echo -e "Wrong choice"
 						sleep 0.3
 						clear
-						exec bash "$0"
+						exec bash ""
 					fi
 				done
 			else
@@ -5487,7 +5487,7 @@ function information_gathering
 			exit
 		elif [[ "$INFOG" = 00 ]]
 		then
-			exec bash $0
+			exec bash 
 		elif [[ "$INFOG" = "back" || "$INFOG" = "b" ]]
 		then
 			break
@@ -5781,7 +5781,7 @@ function website_tools
 						exit
 					elif [[ "$C" == 00 ]]
 					then
-						exec bash $0
+						exec bash 
 					fi
 				done
 			else
@@ -5841,7 +5841,7 @@ function website_tools
 			exit
 		elif [[ "$WEB" = 00 ]]
 		then
-			exec bash $0
+			exec bash 
 		elif [[ "$WEB" = "back" || "$WEB" = "b" ]]
 		then
 			break
@@ -6026,7 +6026,7 @@ do
 	elif [[ "$OTHERT" = 00 ]]
 	then
 		clear
-		exec bash $0
+		exec bash 
 	elif [[ "$OTHERT" = "back" || "$OTHERT" = "b" ]]
 	then
 		break
@@ -6259,7 +6259,7 @@ function metasploit_menu
 		break
 	elif [[ "$METASP" = "00" ]]
 	then
-		exec bash "$0"
+		exec bash ""
 	elif [[ "$METASP" = "0" ]]
 	then
 		clear
@@ -6349,12 +6349,12 @@ function update_lscript
 				rm -rf /root/lscriptold
 				echo -e "Exiting..."
 				sleep 1
-				kill -9 $PPID
+				kill -PPID
 			else 
 				clear
 				echo -e "You didnt select "y" so you go back..."
 				sleep 3
-				exec bash "$0"
+				exec bash ""
 			fi
 		else
 			echo -e "There is no update available"
@@ -6365,7 +6365,7 @@ function update_lscript
 			sleep 1
 			echo -e "$PAKTGB"
 			$READAK	
-			exec bash "$0"
+			exec bash ""
 		fi
 	else
 		clear
@@ -6375,7 +6375,7 @@ function update_lscript
 		echo -e ""
 		echo -e "$PAKTGB"
 		$READAK
-		exec bash "$0"
+		exec bash ""
 	fi	
 }
 function hidden_shortcuts
@@ -6439,7 +6439,7 @@ function interface_menu
 		clear
 		echo -e "Then why did you come here? lol"
 		sleep 3
-		exec bash "$0"
+		exec bash ""
 	else
 		clear
 		rm "$LPATH"/wlan.txt
@@ -6550,7 +6550,7 @@ function public_ip
 		echo -e "$PAKTGB"
 		$READAK
 		clear
-		exec bash "$0"
+		exec bash ""
 	fi
 }
 function terms_of_use
@@ -6576,7 +6576,7 @@ function terms_of_use
 		echo -e "You didn't type 'YES' , so you cannot continue"
 		sleep 4
 	fi
-	exec bash "$0"
+	exec bash ""
 }
 function eternalblue
 {
@@ -6652,7 +6652,7 @@ function start_menu
 		iwconfig $WLANN mode monitor &> /dev/null && echo -e ""$YS"Done"$CE"" && O2=1
 		ifconfig $WLANN up
 	else
-		airmon-ng start $WLANN | grep "monitor mode" | awk -F "(" {'print $2'} | cut -d ')' -f1 &> /dev/null && echo -e ""$YS"Done"$CE"" && O2=1
+		airmon-ng start $WLANN | grep "monitor mode" | awk -F "(" {'print '} | cut -d ')' -f1 &> /dev/null && echo -e ""$YS"Done"$CE"" && O2=1
 	fi
 	if [[ -f "$LPATH"/settings/startmac.txt ]]
 	then
@@ -6861,7 +6861,7 @@ function new_terminal
 			echo -e "$PAKTGB"
 			$READAK
 			clear
-			exec bash "$0"
+			exec bash ""
 		else
 			CHECKWL=$(ifconfig | grep "$WLANN")
 			if [[ "$CHECKWL" == "" ]]
@@ -6883,7 +6883,7 @@ function new_terminal
 			export FJC
 			gnome-terminal --geometry 87x35+9999+0 -- lh1
 			sleep 1
-			exec bash "$0"
+			exec bash ""
 			break
 		elif [[ "$YORNAA" = "11" ]]
 		then
@@ -6892,7 +6892,7 @@ function new_terminal
 			sleep 1
 			gnome-terminal --geometry 80x25+9999+0 -- lh3
 			sleep 1
-			exec bash "$0"
+			exec bash ""
 			break
 		elif [[ "$YORNAA" = "12" ]]
 		then
@@ -6900,7 +6900,7 @@ function new_terminal
 			sleep 1
 			gnome-terminal --geometry 80x25+9999+0 -- lh4
 			sleep 1
-			exec bash "$0"
+			exec bash ""
 			break
 		fi
 	fi
@@ -6982,7 +6982,7 @@ function wififb_attack
 			$READAK
 		elif [[ "$wifimenu" == 'b' || "$wifimenu" == "back" || "$wifimenu" == 00 ]]
 		then
-			exec bash $0
+			exec bash 
 		fi
 	done
 }
@@ -7072,11 +7072,11 @@ function wififb_pass
 		do
 			USERNAME=""
 			PASS=""
-			USERNAME=$(cat $wififbfile | awk  -v nn="$n" '{if(NR==nn && /wfphshr-email=/)print}' | awk -F "email=" {'print $2'} | cut -d '&' -f1)
+			USERNAME=$(cat $wififbfile | awk  -v nn="$n" '{if(NR==nn && /wfphshr-email=/)print}' | awk -F "email=" {'print '} | cut -d '&' -f1)
 			if [[ ! "$USERNAME" == "" ]]
 			then
 				z=$((z+1))
-				PASS=$(cat $wififbfile | awk  -v nn="$n" '{if(NR==nn && /word=/)print}' | awk -F "word=" {'print $2'} | cut -d '' -f1)
+				PASS=$(cat $wififbfile | awk  -v nn="$n" '{if(NR==nn && /word=/)print}' | awk -F "word=" {'print '} | cut -d '' -f1)
 				if [[ "$PASS" == "" ]]
 				then
 					PASS="No password found"
@@ -7244,7 +7244,7 @@ do
 		break
 	elif [[ "$SQ" = 00 ]]
 	then
-		exec bash $0
+		exec bash 
 	elif [[ "$SQ" = 7 ]]
 	then
 		if [[ "$cls" = 0 ]]
@@ -7561,7 +7561,7 @@ do
 				##next line
 				LINED=$((LINED+1))
 			fi
-			CHH=$(echo "$CH" | awk -F "] " {'print $2'})
+			CHH=$(echo "$CH" | awk -F "] " {'print '})
 			if [[ "$CHH" = "" ]]
 			then
 				echo -e ""$RS"Error 21"$CE""
@@ -7682,7 +7682,7 @@ function cromos_menu
 				exit
 			elif [[ "$CROM" == 00 ]]
 			then
-				exec bach $0
+				exec bach 
 			fi
 		done
 	fi
@@ -7725,7 +7725,7 @@ function mitmf_hook
 			mitmfint="${in[$ints]}"
 			export mitmfint
 			clear
-			mitmfgate=$(route -n | grep "$mitmfint" | awk '{if($2!="0.0.0.0"){print $2}}')
+			mitmfgate=$(route -n | grep "$mitmfint" | awk '{if(!="0.0.0.0"){print }}')
 			export mitmfgate
 			clear
 			echo -e "Target's IP: "
@@ -7735,7 +7735,7 @@ function mitmf_hook
 			then
 				iffile=""$LPATH"/iftemp.txt"
 				ifconfig $mitmfint > $iffile
-				mitmflocalip=$(cat $iffile | grep " inet " | awk -F "inet " {'print $2'} | cut -d ' ' -f1)
+				mitmflocalip=$(cat $iffile | grep " inet " | awk -F "inet " {'print '} | cut -d ' ' -f1)
 			fi
 			clear
 			echo -e "hook.js URL path("$YS"Enter"$CE"=http://"$mitmflocalip":3000/hook.js): "
@@ -8031,8 +8031,8 @@ done
 function find_gateways()
 {
 	#example: find_gateways wlan0 interface
-	FG1="$1"
-	FG2="$2"
+	FG1=""
+	FG2=""
 	if [[ "$FG1" = "" ]]
 	then
 		echo -e ""$BS"Gateways"$CE": "
@@ -8040,7 +8040,7 @@ function find_gateways()
 		ethr=$(ifconfig | grep "$ETH")
 		if [[ "$ethr" != "" ]]
 		then
-			ethd=$(route -n | awk -v int1="$ETH" '{if(int1~$8 && $2!="IP" && $2!="0.0.0.0"){print $2}}')
+			ethd=$(route -n | awk -v int1="$ETH" '{if(int1~ && !="IP" && !="0.0.0.0"){print }}')
 			chi=$(is_it_an_ip "$ethd")
 			if [[ "$ethd" != "" && "$chi" = 1 ]]
 			then
@@ -8051,7 +8051,7 @@ function find_gateways()
 		wlanr=$(ifconfig | grep "$WLANN")
 		if [[ "$wlanr" != "" ]]
 		then
-			wland=$(route -n | awk -v int1="$WLANN" '{if(int1~$8 && $2!="IP" && $2!="0.0.0.0"){print $2}}')
+			wland=$(route -n | awk -v int1="$WLANN" '{if(int1~ && !="IP" && !="0.0.0.0"){print }}')
 			chi=$(is_it_an_ip "$wland")
 			if [[ "$wland" != "" && "$chi" = 1 ]]
 			then
@@ -8062,7 +8062,7 @@ function find_gateways()
 		wlanmr=$(ifconfig | grep "$WLANNM")
 		if [[ "$wlanmr" != "" ]]
 		then
-			wlanmd=$(route -n | awk -v int1="$WLANNM" '{if(int1~$8 && $2!="IP" && $2!="0.0.0.0"){print $2}}')
+			wlanmd=$(route -n | awk -v int1="$WLANNM" '{if(int1~ && !="IP" && !="0.0.0.0"){print }}')
 			chi=$(is_it_an_ip "$wlanmd")
 			if [[ "$wlanmd" != "" && "$chi" = 1 ]]
 			then
@@ -8080,7 +8080,7 @@ function find_gateways()
 			inttos=$(ifconfig | grep "$FG1")
 			if [[ "$inttos" != "" ]]
 			then
-				gate=$(route -n | awk -v int1="$FG1" '{if(int1~$8 && $2!="IP" && $2!="0.0.0.0"){print $2}}')
+				gate=$(route -n | awk -v int1="$FG1" '{if(int1~ && !="IP" && !="0.0.0.0"){print }}')
 				cho=$(is_it_an_ip "$gate")
 				if [[ "$cho" = 1 ]]
 				then
@@ -8095,7 +8095,7 @@ function find_gateways()
 			#~ if [[ "$iptos" != "" ]]
 			#~ then
 				#~ dot=$(give_ip_take_zero "$FG1" "dot")
-				#~ gate=$(route -n | awk -v int1="$dot" '{if(int1~$8 && $2!="IP" && $2!="0.0.0.0"){print $2}}')
+				#~ gate=$(route -n | awk -v int1="$dot" '{if(int1~ && !="IP" && !="0.0.0.0"){print }}')
 				#~ echo "$gate"
 				#~ cho=$(is_it_an_ip "$gate")
 				#~ if [[ "$cho" = 1 ]]
@@ -8392,7 +8392,7 @@ function geolocate_ip()
 {
 	locbool=1
 	echo -e ""$BS"Please wait..."$CE""
-	A1="$1"
+	A1=""
 	AA1=$(is_it_an_ip "$A1")
 	if [[ "$AA1" = 1 ]]
 	then
@@ -8471,11 +8471,11 @@ function ip_scan()
 while true
 do
 	#passing interface
-	IPF=$1
+	IPF=
 	#passing mode if any  (1=choosable   2=only rescanable)
 	#Mode 1 is for choosing and returning the IP.
 	#Mode 2 is for echoing the scan, not choosing.
-	MODE=$2
+	MODE=
 	export IPF
 	if [[ "$IPF" = "" ]]
 	then
@@ -8517,7 +8517,7 @@ do
 			do
 				#Hosts start from line 3
 				n1=$((n2+n))
-				host[$n]=$(cat "$tempfile" | awk -v an1="$n1" '{if(NR==an1 && $0 !~ /DUP:/){print $1}}')
+				host[$n]=$(cat "$tempfile" | awk -v an1="$n1" '{if(NR==an1 &&  !~ /DUP:/){print }}')
 				if [[ "${host[$n]}" = "" ]]
 				then
 					#sometimes there are duplicate IPs.This should remove them.
@@ -8535,8 +8535,8 @@ do
 					SPACESN=""${SPACESN}" "
 					numcalc=$(( numcalc+1 ))
 				done
-				mi[$n]=$(cat "$tempfile" | awk -v an1="$n1" '{if(NR==an1){print $2}}')
-				im[$n]=$(cat "$tempfile" | awk -v an1="$n1" '{if(NR==an1){print $3}}')
+				mi[$n]=$(cat "$tempfile" | awk -v an1="$n1" '{if(NR==an1){print }}')
+				im[$n]=$(cat "$tempfile" | awk -v an1="$n1" '{if(NR==an1){print }}')
 				if [[ "$MODE" = 1 ]]
 				then
 					echo -e ""$YS" $n"$CE") "${host[$n]}"${SPACESN}"${mi[$n]}"       "${im[$n]}""
@@ -8849,7 +8849,7 @@ function browser_exploiting
 						mitmfint="$SINT"
 						export mitmfint
 						clear
-						mitmfgate=$(route -n | grep "$mitmfint" | awk '{if($2!="0.0.0.0"){print $2}}')
+						mitmfgate=$(route -n | grep "$mitmfint" | awk '{if(!="0.0.0.0"){print }}')
 						isit=$(is_it_an_ip "$mitmfgate")
 						if [[ "$mitmfgate" != "" && "$isit" = 1 ]]
 						then
@@ -8860,7 +8860,7 @@ function browser_exploiting
 							then
 								iffile=""$LPATH"/iftemp.txt"
 								ifconfig $mitmfint > $iffile
-								mitmflocalip=$(cat $iffile | grep " inet " | awk -F "inet " {'print $2'} | cut -d ' ' -f1)
+								mitmflocalip=$(cat $iffile | grep " inet " | awk -F "inet " {'print '} | cut -d ' ' -f1)
 							else
 								echo -e ""$RS"ERROR 5. Could not find your local IP. Make sure you are connected to a network on interface "$SINT""$CE""
 								echo -e "$PAKTGB"
@@ -9141,7 +9141,7 @@ function settings_menu
 					break
 				elif [[ "$HOWCH" = 00 ]]
 				then
-					exec bash $0
+					exec bash 
 				elif [[ "$HOWCH" = 0 ]]
 				then
 					exit
@@ -9449,7 +9449,7 @@ function main_options
 	elif [[ "$YORNAA" = "l" ]]
 	then
 		clear 
-		exec bash "$0"
+		exec bash ""
 	elif [[ "$YORNAA" = "gg" ]]
 	then
 		geany /bin/lscript/l
@@ -9627,7 +9627,7 @@ function main_options
 		bruteforce_router
 	elif [[ "$YORNAA" = "exit" ]]
 	then
-		kill -9 $PPID
+		kill -PPID
 		exit
 	elif [[ "$YORNAA" = "update" ]]
 	then
@@ -9648,7 +9648,7 @@ function main_options
 	elif [[ "$YORNAA" = "" ]]
 	then
 		clear
-		exec bash "$0"
+		exec bash ""
 	elif [[ "$YORNAA" = "errors" ]]
 	then
 		errors_menu
@@ -10843,12 +10843,12 @@ then
 	main_options
 	if [[ "$BACKL" = "1" ]]
 	then
-		exec bash "$0"
+		exec bash ""
 		
 	else
 		echo -e "$PAKTGB"
 		$READAK
-		exec bash "$0"
+		exec bash ""
 	fi
 else
 	terms_of_use

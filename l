@@ -3136,7 +3136,7 @@ function wifi_tools
 	else
 		echo -e ""$RS" 1"$CE") "$RS"Fluxion"$CE"               The future of MITM WPA attacks"
 	fi
-	if [[ which wifite ]]
+	if [[ $(which wifite) ]]
 	then
 		echo -e ""$YS" 2"$CE") Wifite                Automated wireless attack tool"
 	else
@@ -3347,7 +3347,7 @@ function wifi_tools
 		fi
 	elif [[ "$APPP" = "2" ]]
 	then
-		if [[ -f /usr/bin/wifite ]]
+		if [[ $(which wifite) ]]
 		then
 			wifite
 		else

@@ -4,6 +4,8 @@ printf '\033]2;INSTALLER\a'
 echo -e "Press \e[1;33many key\e[0m to install the script..."
 read -n 1
 clear
+apt-get -y install gnome-terminal
+clear
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 if [[ "$DIR" != "/root/lscript" ]]
 then

@@ -129,12 +129,18 @@ View your MAC faster
 # How to install (Kali Linux)
 (make sure you are a root user)
 
+<p>
+	Official Installation Tutorial on Kali Linux 2020.5:
+	https://youtu.be/xcb5uwP5nSU
+</p>
+
 **Be carefull.If you download it as a .zip file, it will not run.Make sure to follow these simple instructions.**
 
 **MADE FOR KALI LINUX**
 
 ```
 cd
+apt-get update
 git clone https://github.com/arismelachroinos/lscript.git
 cd lscript
 chmod +x install.sh

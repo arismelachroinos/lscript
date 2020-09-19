@@ -9790,9 +9790,15 @@ check_if_ks
 	}
 	function install_zatacker
 	{
-		echo -e "I cannot install Zatacker. Please google how to do that yourself."
-		echo -e "$PAKTGB"
-		read
+		foldname="Zatacker"
+		gitlink="https://github.com/Sleek1598/Zatacker.git"
+		install_default
+		cloned=$?
+		if [[ "$cloned" == 1 ]]
+		then
+			chmod +x setup.sh
+			./setup.sh
+		fi
 	}
 	function install_morpheus
 	{

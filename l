@@ -5635,7 +5635,7 @@ function website_tools
 				read INSTALL
 				if [[ "$INSTALL" = "install" ]]
 				then
-					install_yuki
+					install_yuki-chan
 				else
 					continue
 				fi

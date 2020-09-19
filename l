@@ -3873,7 +3873,7 @@ function wifi_tools
 		cd
 	elif [[ "$APPP" = "7" ]]
 	then
-		if [[ -d "/root/hakkuframework" ]]
+		if [[ -d "/usr/lib/python3/dist-packages/osrframework" ]]
 		then
 			while true
 			do
@@ -5283,7 +5283,7 @@ function information_gathering
 		else
 			echo -e ""$RS" 6"$CE") "$RS"Operative-framework"$CE"   Get information on website or target"
 		fi
-		if [[ -d /root/osrframework ]]
+		if [[ -d /usr/lib/python3/dist-packages/osrframework ]]
 		then
 			echo -e ""$YS" 7"$CE") Osrfconsole           Perform accurate online researches"
 		else

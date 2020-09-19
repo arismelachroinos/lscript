@@ -776,7 +776,7 @@ function listshortcuts
 	elif [[ "$nn" = "38" ]]
 	then
 		TITLE="Veil"
-		NAMECD="cd /root/Veil"
+		NAMECD="cd /usr/share/veil"
 		KSSET="./Veil.py"
 	elif [[ "$nn" = "39" ]]
 	then
@@ -4048,7 +4048,7 @@ function remote_access
 	else
 		echo -e ""$RS"13"$CE") "$RS"Dr0p1t-Framework"$CE"      Create an advanced stealthy dropper"
 	fi
-	if [[ -d /root/Veil ]]
+	if [[ -d /usr/share/veil ]]
 	then
 		echo -e ""$YS"14"$CE") Veil-Framework        Generate payloads that bypass common anti-virus"
 	else
@@ -4245,9 +4245,9 @@ function remote_access
 		fi	
 	elif [[ "$KEYLOG" = "14" ]]
 	then
-		if [[ -d /root/Veil ]]
+		if [[ -d /usr/share/veil ]]
 		then
-			cd /root/Veil
+			cd /usr/share/veil
 			./Veil.py
 		else
 			echo -e "$TNI"
@@ -10425,14 +10425,15 @@ check_if_ks
 	}
 	function install_veil
 	{
-		foldname="Veil"
+		foldname="veil"
 		gitlink="https://github.com/Veil-Framework/Veil.git"
 		install_default
 		cloned=$?
 		if [[ "$cloned" == 1 ]]
 		then
-			cd setup
-			./setup.sh -c
+			mv /root/Veil /usr/share/veil
+			cd /usr/share/veil
+			./config/setup.sh --force --silent
 		fi
 	}
 	function install_leviathan

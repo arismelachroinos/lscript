@@ -3208,7 +3208,7 @@ function wifi_tools
 	else
 		echo -e ""$RS"12"$CE") "$RS"KickThemOut"$CE"           Kick devices off your network"
 	fi
-	if [[ -d "/usr/share/ghost-phisher" ]]
+	if [[ -d "/root/ghost-phisher" ]]
 	then	
 		echo -e ""$YS"13"$CE") Ghost-Phisher         Fake AP,MITM,Session hijacking etc..."
 	else

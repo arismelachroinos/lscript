@@ -10093,9 +10093,9 @@ check_if_ks
 		fi
 		echo -e "Downloading angryipscanner"
 		sleep 2
-		wget https://github.com/angryip/ipscan/releases/download/3.5.2/ipscan_3.5.2_amd64.deb
+		wget https://github.com/angryip/ipscan/releases/download/3.7.2/ipscan_3.7.2_amd64.deb
 		echo -e "Installing..."
-		dpkg -i ipscan_3.5.2*
+		dpkg -i ipscan_3.7.2*
 		echo -e "Done"
 		sleep 1
 	}

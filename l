@@ -10164,7 +10164,7 @@ check_if_ks
 	function install_nwatch
 	{
 		foldname="nWatch"
-		gitlink="https://github.com/suraj-root/nWatch.git"
+		gitlink="https://github.com/Cyber-Forensic/nWatch.git"
 		install_default
 		cloned=$?
 		if [[ "$cloned" == 1 ]]

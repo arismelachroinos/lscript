@@ -10555,7 +10555,7 @@ check_if_ks
 	}
 	function install_netool
 	{
-		foldname="opensource"
+		foldname="netool-toolkit"
 		gitlink="https://github.com/r00t-3xp10it/netool-toolkit"
 		install_default
 		cloned=$?

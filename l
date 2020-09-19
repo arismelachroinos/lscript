@@ -9908,7 +9908,7 @@ check_if_ks
 	function install_xerxes
 	{
 		foldname="xerxes"
-		gitlink="https://github.com/zanyarjamal/xerxes.git"
+		gitlink="https://github.com/XCHADXFAQ77X/XERXES.git"
 		install_default
 		cloned=$?
 		if [[ "$cloned" == 1 ]]

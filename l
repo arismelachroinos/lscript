@@ -10536,7 +10536,7 @@ check_if_ks
 		if [[ "$cloned" == 1 ]]
 		then
 			python installer.py
-			mv secHub /usr/share/secHub
+			mv /root/secHub /usr/share/sechub
 			chmod +x /usr/bin/sechub
 		fi
 	}

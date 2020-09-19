@@ -9824,7 +9824,7 @@ check_if_ks
 	function install_trity
 	{
 		foldname="Trity"
-		gitlink="https://github.com/toxic-ig/Trity.git"
+		gitlink="https://github.com/S4Y4N/Trity.git"
 		install_default
 		cloned=$?
 		if [[ "$cloned" == 1 ]]

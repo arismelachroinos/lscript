@@ -5412,7 +5412,7 @@ function information_gathering
 			fi
 		elif [[ "$INFOG" = "7" ]]
 		then
-			if [[ -d "/root/hakkuframework" ]]
+			if [[ -d "/usr/lib/python3/dist-packages/osrframework" ]]
 			then
 				while true
 				do

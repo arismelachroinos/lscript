@@ -770,9 +770,9 @@ function listshortcuts
 		KSSET="./Meterpreter_Paranoid_Mode.sh"
 	elif [[ "$nn" = "37" ]]
 	then
-		TITLE="Wifi-Pumpkin"
+		TITLE="Wifi-Pumpkin3"
 		NAMECD=""
-		KSSET="wifi-pumpkin"
+		KSSET="wifipumpkin3"
 	elif [[ "$nn" = "38" ]]
 	then
 		TITLE="Veil"
@@ -3292,11 +3292,11 @@ function wifi_tools
 	else
 		echo -e ""$RS"26"$CE") "$RS"Netattack2"$CE"            Advanced network scan and attack script"
 	fi
-	if [[ -f /usr/bin/wifi-pumpkin ]]
+	if [[ -f /usr/local/bin/wifipumpkin3 ]]
 	then
-		echo -e ""$YS"27"$CE") Wifi-Pumpkin          Framework for Rogue Wi-Fi Access Point Attack"
+		echo -e ""$YS"27"$CE") Wifi-Pumpkin3          Framework for Rogue Wi-Fi Access Point Attack"
 	else
-		echo -e ""$RS"27"$CE") "$RS"Wifi-Pumpkin"$CE"          Framework for Rogue Wi-Fi Access Point Attack"
+		echo -e ""$RS"27"$CE") "$RS"Wifi-Pumpkin3"$CE"          Framework for Rogue Wi-Fi Access Point Attack"
 	fi
 	if [[ -d /root/Gloom-Framework ]]
 	then
@@ -3807,15 +3807,15 @@ function wifi_tools
 		cd
 	elif [[ "$APPP" = "27" ]]
 	then
-		if [[ -f "/usr/bin/wifi-pumpkin" ]]
+		if [[ -f "/usr/local/bin/wifipumpkin3" ]]
 		then
-			wifi-pumpkin
+			wifi-pumpkin3
 		else
 			echo -e "$TNI"
 			read INSTALL
 			if [[ "$INSTALL" = "install" ]]
 			then
-				install_wifi_pumpkin
+				install_wifi_pumpkin3
 			else
 				continue
 			fi
@@ -10410,15 +10410,17 @@ check_if_ks
 			./install.sh
 		fi
 	}
-	function install_wifi_pumpkin
+	function install_wifi_pumpkin3
 	{
-		foldname="WiFi-Pumpkin"
-		gitlink="https://github.com/P0cL4bs/WiFi-Pumpkin.git"
+		foldname="wifipumpkin3"
+		gitlink="https://github.com/P0cL4bs/wifipumpkin3.git"
 		install_default
 		cloned=$?
 		if [[ "$cloned" == 1 ]]
 		then
-			./installer.sh --install
+			apt install libssl-dev libffi-dev build-essential
+			apt install python3-pyqt5
+			python3 setup.py install
 		fi
 	}
 	function install_veil

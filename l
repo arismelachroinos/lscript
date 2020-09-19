@@ -9807,7 +9807,7 @@ check_if_ks
 	}
 	function install_osrframework
 	{
-		pip install osrframework
+		pip3 install osrframework
 	}
 	function install_hakku
 	{

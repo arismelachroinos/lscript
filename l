@@ -651,7 +651,7 @@ function listshortcuts
 	elif [[ "$nn" = "14" ]]
 	then
 		TITLE="Xerxes"
-		NAMECD="cd /root/xerxes"
+		NAMECD="cd /root/XERXES"
 		KSSET="./xerxes"
 	elif [[ "$nn" = "15" ]]
 	then
@@ -3220,7 +3220,7 @@ function wifi_tools
 	else
 		echo -e ""$RS"14"$CE") "$RS"The Eye"$CE"               Detects ARP poisoning DNS spoofing etc..."
 	fi
-	if [[ -d /root/xerxes ]]
+	if [[ -d /root/XERXES ]]
 	then	
 		echo -e ""$YS"15"$CE") Xerxes                The most powerful DoS tool(CAUTION)"
 	else
@@ -3579,7 +3579,7 @@ function wifi_tools
 		fi
 	elif [[ "$APPP" = "15" ]]
 	then
-		if [[ -d "/root/xerxes" ]]
+		if [[ -d "/root/XERXES" ]]
 		then
 			echo -e "Do you own the site you want to DoS?"$YNONLY""
 			read DOSTERM
@@ -3595,7 +3595,7 @@ function wifi_tools
 				sleep 4
 				gio open http://www.isitdownrightnow.com/"$SITEDOS".html
 				clear	
-				cd /root/xerxes
+				cd /root/XERXES
 				SITEDOSX=www.$SITEDOS
 				echo -e "Press "$YS"any key"$CE" to start DoS on $SITEDOSX"
 				$READAK
@@ -9913,7 +9913,7 @@ check_if_ks
 	}
 	function install_xerxes
 	{
-		foldname="xerxes"
+		foldname="XERXES"
 		gitlink="https://github.com/XCHADXFAQ77X/XERXES.git"
 		install_default
 		cloned=$?

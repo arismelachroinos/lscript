@@ -3166,7 +3166,7 @@ function wifi_tools
 	#~ else
 		#~ echo -e ""$RS" 6"$CE") "$RS"Osrfconsole"$CE"           Checks usernames-phones to platforms etc.."
 	#~ fi
-	if [[ -d /root/opensource ]]
+	if [[ -d /root/netool-toolkit ]]
 	then
 		echo -e ""$YS" 6"$CE") Netool-toolkit        MitM pentesting opensource toolkit"
 	else

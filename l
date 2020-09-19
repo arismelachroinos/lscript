@@ -9851,7 +9851,7 @@ check_if_ks
 		cloned=$?
 		if [[ "$cloned" == 1 ]]
 		then
-			chmod +x Dracnmap-v*.sh
+			chmod +x Dracnmap-v2.2.sh
 		fi
 	}
 	function install_fern

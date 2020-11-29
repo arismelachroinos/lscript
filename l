@@ -650,8 +650,8 @@ function listshortcuts
 		KSSET="ghost-phisher"
 	elif [[ "$nn" = "14" ]]
 	then
-		TITLE="Xerxes"
-		NAMECD="cd /root/xerxes"
+		TITLE="XERXES"
+		NAMECD="cd /root/XERXES"
 		KSSET="./xerxes"
 	elif [[ "$nn" = "15" ]]
 	then
@@ -772,11 +772,11 @@ function listshortcuts
 	then
 		TITLE="Wifi-Pumpkin"
 		NAMECD=""
-		KSSET="wifi-pumpkin"
+		KSSET="wifipumpkin3"
 	elif [[ "$nn" = "38" ]]
 	then
 		TITLE="Veil"
-		NAMECD="cd /root/Veil"
+		NAMECD="cd /usr/share/veil"
 		KSSET="./Veil.py"
 	elif [[ "$nn" = "39" ]]
 	then
@@ -3166,7 +3166,7 @@ function wifi_tools
 	#~ else
 		#~ echo -e ""$RS" 6"$CE") "$RS"Osrfconsole"$CE"           Checks usernames-phones to platforms etc.."
 	#~ fi
-	if [[ -d /root/opensource ]]
+	if [[ -d /root/netool-toolkit ]]
 	then
 		echo -e ""$YS" 6"$CE") Netool-toolkit        MitM pentesting opensource toolkit"
 	else
@@ -3208,7 +3208,7 @@ function wifi_tools
 	else
 		echo -e ""$RS"12"$CE") "$RS"KickThemOut"$CE"           Kick devices off your network"
 	fi
-	if [[ -d "/usr/share/ghost-phisher" ]]
+	if [[ -d "/root/ghost-phisher" ]]
 	then	
 		echo -e ""$YS"13"$CE") Ghost-Phisher         Fake AP,MITM,Session hijacking etc..."
 	else
@@ -3220,7 +3220,7 @@ function wifi_tools
 	else
 		echo -e ""$RS"14"$CE") "$RS"The Eye"$CE"               Detects ARP poisoning DNS spoofing etc..."
 	fi
-	if [[ -d /root/xerxes ]]
+	if [[ -d /root/XERXES ]]
 	then	
 		echo -e ""$YS"15"$CE") Xerxes                The most powerful DoS tool(CAUTION)"
 	else
@@ -3292,7 +3292,7 @@ function wifi_tools
 	else
 		echo -e ""$RS"26"$CE") "$RS"Netattack2"$CE"            Advanced network scan and attack script"
 	fi
-	if [[ -f /usr/bin/wifi-pumpkin ]]
+	if [[ -f /usr/local/bin/wifipumpkin3 ]]
 	then
 		echo -e ""$YS"27"$CE") Wifi-Pumpkin          Framework for Rogue Wi-Fi Access Point Attack"
 	else
@@ -3579,7 +3579,7 @@ function wifi_tools
 		fi
 	elif [[ "$APPP" = "15" ]]
 	then
-		if [[ -d "/root/xerxes" ]]
+		if [[ -d "/root/XERXES" ]]
 		then
 			echo -e "Do you own the site you want to DoS?"$YNONLY""
 			read DOSTERM
@@ -3595,7 +3595,7 @@ function wifi_tools
 				sleep 4
 				gio open http://www.isitdownrightnow.com/"$SITEDOS".html
 				clear	
-				cd /root/xerxes
+				cd /root/XERXES
 				SITEDOSX=www.$SITEDOS
 				echo -e "Press "$YS"any key"$CE" to start DoS on $SITEDOSX"
 				$READAK
@@ -3807,9 +3807,9 @@ function wifi_tools
 		cd
 	elif [[ "$APPP" = "27" ]]
 	then
-		if [[ -f "/usr/bin/wifi-pumpkin" ]]
+		if [[ -f "/usr/local/bin/wifipumpkin3" ]]
 		then
-			wifi-pumpkin
+			wifipumpkin3
 		else
 			echo -e "$TNI"
 			read INSTALL
@@ -3873,7 +3873,7 @@ function wifi_tools
 		cd
 	elif [[ "$APPP" = "7" ]]
 	then
-		if [[ -d "/root/hakkuframework" ]]
+		if [[ -d "/usr/lib/python3/dist-packages/osrframework" ]]
 		then
 			while true
 			do
@@ -4048,7 +4048,7 @@ function remote_access
 	else
 		echo -e ""$RS"13"$CE") "$RS"Dr0p1t-Framework"$CE"      Create an advanced stealthy dropper"
 	fi
-	if [[ -d /root/Veil ]]
+	if [[ -d /usr/share/veil ]]
 	then
 		echo -e ""$YS"14"$CE") Veil-Framework        Generate payloads that bypass common anti-virus"
 	else
@@ -4245,9 +4245,9 @@ function remote_access
 		fi	
 	elif [[ "$KEYLOG" = "14" ]]
 	then
-		if [[ -d /root/Veil ]]
+		if [[ -d /usr/share/veil ]]
 		then
-			cd /root/Veil
+			cd /usr/share/veil
 			./Veil.py
 		else
 			echo -e "$TNI"
@@ -5283,7 +5283,7 @@ function information_gathering
 		else
 			echo -e ""$RS" 6"$CE") "$RS"Operative-framework"$CE"   Get information on website or target"
 		fi
-		if [[ -d /root/osrframework ]]
+		if [[ -d /usr/lib/python3/dist-packages/osrframework ]]
 		then
 			echo -e ""$YS" 7"$CE") Osrfconsole           Perform accurate online researches"
 		else
@@ -5412,7 +5412,7 @@ function information_gathering
 			fi
 		elif [[ "$INFOG" = "7" ]]
 		then
-			if [[ -d "/root/hakkuframework" ]]
+			if [[ -d "/usr/lib/python3/dist-packages/osrframework" ]]
 			then
 				while true
 				do
@@ -5635,7 +5635,7 @@ function website_tools
 				read INSTALL
 				if [[ "$INSTALL" = "install" ]]
 				then
-					install_yuki
+					install_yuki-chan
 				else
 					continue
 				fi
@@ -9790,9 +9790,15 @@ check_if_ks
 	}
 	function install_zatacker
 	{
-		echo -e "I cannot install Zatacker. Please google how to do that yourself."
-		echo -e "$PAKTGB"
-		read
+		foldname="Zatacker"
+		gitlink="https://github.com/Sleek1598/Zatacker.git"
+		install_default
+		cloned=$?
+		if [[ "$cloned" == 1 ]]
+		then
+			chmod +x setup.sh
+			./setup.sh
+		fi
 	}
 	function install_morpheus
 	{
@@ -9807,7 +9813,7 @@ check_if_ks
 	}
 	function install_osrframework
 	{
-		pip install osrframework
+		pip3 install osrframework
 	}
 	function install_hakku
 	{
@@ -9824,7 +9830,7 @@ check_if_ks
 	function install_trity
 	{
 		foldname="Trity"
-		gitlink="https://github.com/toxic-ig/Trity.git"
+		gitlink="https://github.com/S4Y4N/Trity.git"
 		install_default
 		cloned=$?
 		if [[ "$cloned" == 1 ]]
@@ -9851,7 +9857,7 @@ check_if_ks
 		cloned=$?
 		if [[ "$cloned" == 1 ]]
 		then
-			chmod +x Dracnmap.sh
+			chmod +x dracnmap-v2.2.sh
 		fi
 	}
 	function install_fern
@@ -9907,8 +9913,8 @@ check_if_ks
 	}
 	function install_xerxes
 	{
-		foldname="xerxes"
-		gitlink="https://github.com/zanyarjamal/xerxes.git"
+		foldname="XERXES"
+		gitlink="https://github.com/XCHADXFAQ77X/XERXES.git"
 		install_default
 		cloned=$?
 		if [[ "$cloned" == 1 ]]
@@ -10087,9 +10093,9 @@ check_if_ks
 		fi
 		echo -e "Downloading angryipscanner"
 		sleep 2
-		wget https://github.com/angryip/ipscan/releases/download/3.5.2/ipscan_3.5.2_amd64.deb
+		wget https://github.com/angryip/ipscan/releases/download/3.7.2/ipscan_3.7.2_amd64.deb
 		echo -e "Installing..."
-		dpkg -i ipscan_3.5.2*
+		dpkg -i ipscan_3.7.2_*
 		echo -e "Done"
 		sleep 1
 	}
@@ -10164,7 +10170,7 @@ check_if_ks
 	function install_nwatch
 	{
 		foldname="nWatch"
-		gitlink="https://github.com/suraj-root/nWatch.git"
+		gitlink="https://github.com/Cyber-Forensic/nWatch.git"
 		install_default
 		cloned=$?
 		if [[ "$cloned" == 1 ]]
@@ -10412,25 +10418,28 @@ check_if_ks
 	}
 	function install_wifi_pumpkin
 	{
-		foldname="WiFi-Pumpkin"
-		gitlink="https://github.com/P0cL4bs/WiFi-Pumpkin.git"
+		foldname="wifipumpkin3"
+		gitlink="https://github.com/P0cL4bs/wifipumpkin3.git"
 		install_default
 		cloned=$?
 		if [[ "$cloned" == 1 ]]
 		then
-			./installer.sh --install
+			apt install libssl-dev libffi-dev build-essential
+			apt install python3-pyqt5
+			python3 setup.py install
 		fi
 	}
 	function install_veil
 	{
-		foldname="Veil"
+		foldname="veil"
 		gitlink="https://github.com/Veil-Framework/Veil.git"
 		install_default
 		cloned=$?
 		if [[ "$cloned" == 1 ]]
 		then
-			cd setup
-			./setup.sh -c
+			mv /root/Veil /usr/share/veil
+			cd /usr/share/veil
+			./config/setup.sh --force --silent
 		fi
 	}
 	function install_leviathan
@@ -10527,6 +10536,7 @@ check_if_ks
 		if [[ "$cloned" == 1 ]]
 		then
 			python installer.py
+			mv secHub /usr/share/secHub
 			chmod +x /usr/bin/sechub
 		fi
 	}
@@ -10555,8 +10565,8 @@ check_if_ks
 	}
 	function install_netool
 	{
-		foldname="opensource"
-		gitlink="https://github.com/r00t-3xp10it/netool-toolkit"
+		foldname="netool-toolkit"
+		gitlink="https://github.com/r00t-3xp10it/netool-toolkit.git"
 		install_default
 		cloned=$?
 		if [[ "$cloned" == 1 ]]

@@ -642,7 +642,7 @@ function listshortcuts
 	then
 		TITLE="KickThemOut"
 		NAMECD="cd /root/kickthemout"
-		KSSET="python kickthemout.py"
+		KSSET="python3 kickthemout.py"
 	elif [[ "$nn" = "13" ]]
 	then
 		TITLE="Ghost-Phisher"
@@ -3531,7 +3531,7 @@ function wifi_tools
 		if [[ -d "/root/kickthemout" ]]
 		then
 			cd /root/kickthemout
-			python kickthemout.py
+			python3 kickthemout.py
 			cd
 		else
 			echo -e "$TNI"
@@ -9880,7 +9880,7 @@ check_if_ks
 		cloned=$?
 		if [[ "$cloned" == 1 ]]
 		then
-			sudo python -m pip install -r requirements.txt
+			sudo -H pip3 install -r requirements.txt
 		fi
 	}
 	function install_ghostphisher

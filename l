@@ -642,7 +642,7 @@ function listshortcuts
 	then
 		TITLE="KickThemOut"
 		NAMECD="cd /root/kickthemout"
-		KSSET="python3 kickthemout.py"
+		KSSET="python kickthemout.py"
 	elif [[ "$nn" = "13" ]]
 	then
 		TITLE="Ghost-Phisher"

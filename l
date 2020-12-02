@@ -10418,6 +10418,7 @@ check_if_ks
 		cloned=$?
 		if [[ "$cloned" == 1 ]]
 		then
+			chmod +x installer.sh
 			./installer.sh --install
 		fi
 	}

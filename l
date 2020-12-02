@@ -6711,6 +6711,11 @@ function stop_monitor
 }
 function spoof_email
 {
+if [[ ! -f /usr/bin/sendemail && ! -f /usr/sbin/sendemail ]]
+	then
+	install_sendemail
+	clear
+	fi
 while true
 do
 	sm=0
@@ -9759,6 +9764,10 @@ check_if_ks
 			cd "$foldname"
 			return 1
 		fi
+	}
+	function install_sendemail
+	{
+		apt-get install -y sendemail
 	}
 	function install_fluxion
 	{

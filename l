@@ -10429,8 +10429,8 @@ check_if_ks
 		cloned=$?
 		if [[ "$cloned" == 1 ]]
 		then
-			cd setup
-			./setup.sh -c
+			cd config
+			./setup.sh --force --silent
 		fi
 	}
 	function install_leviathan

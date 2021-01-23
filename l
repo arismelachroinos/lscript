@@ -9880,7 +9880,7 @@ check_if_ks
 		cloned=$?
 		if [[ "$cloned" == 1 ]]
 		then
-			sudo -H pip3 install -r requirements.txt
+			sudo pip3 install -r requirements.txt
 		fi
 	}
 	function install_ghostphisher

@@ -1,1 +1,2 @@
-console.log("fuck off")
+console.log("Don't care")
+

@@ -13,8 +13,6 @@
 </p>
 A video Hackersploit made : https://www.youtube.com/watch?v=oBpo5sElrMY
 
-A video sstec made:         https://www.youtube.com/watch?v=gSO7c2MN7TY
-
 **For feature-recommendation , add it on the "Issues" tab. NOW!**
 
 **I AM NOT RESPONSIBLE HOW YOU USE THIS TOOL.BE LEGAL AND NOT STUPID.**

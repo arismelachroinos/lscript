@@ -141,7 +141,7 @@ View your MAC faster
 ```
 cd
 apt-get update
-git clone https://github.com/arismelachroinos/lscript.git
+git clone https://github.com/Sleek1598/lscript.git
 cd lscript
 chmod +x install.sh
 ./install.sh

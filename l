@@ -627,12 +627,12 @@ function listshortcuts
 	then
 		TITLE="Cupp"
 		NAMECD="cd /root/cupp"
-		KSSET="python cupp.py -i"
+		KSSET="python3 cupp.py -i"
 	elif [[ "$nn" = "10" ]]
 	then
 		TITLE="Dracnmap"
 		NAMECD="cd /root/Dracnmap"
-		KSSET="./dracnmap-v*.sh"
+		KSSET="./dracnmap.sh"
 	elif [[ "$nn" = "11" ]]
 	then
 		TITLE="Fern"
@@ -662,7 +662,7 @@ function listshortcuts
 	then
 		TITLE="Airgeddon"
 		NAMECD="cd /root/airgeddon"
-		KSSET="./airgeddon.sh"
+		KSSET="bash airgeddon.sh"
 	elif [[ "$nn" = "17" ]]
 	then
 		TITLE="Websploit"
@@ -3476,7 +3476,7 @@ function wifi_tools
 		if [[ -d "/root/Dracnmap" ]]
 		then
 			cd /root/Dracnmap/
-			./dracnmap-v*.sh	
+			./dracnmap.sh	
 			cd		
 		else
 			echo -e "$TNI"
@@ -3493,7 +3493,7 @@ function wifi_tools
 		if [[ -d "/usr/share/fern-wifi-cracker" ]]
 		then
 			cd /root/Fern-Wifi-Cracker
-			python execute.py
+			python3 execute.py
 			cd
 		else
 			echo -e "$TNI"
@@ -3636,7 +3636,7 @@ function wifi_tools
 		if [[ -d "/root/airgeddon" ]]
 		then
 			cd /root/airgeddon
-			./airgeddon.sh
+			bash airgeddon.sh
 			cd
 		else
 			echo -e "$TNI"
@@ -9818,7 +9818,7 @@ check_if_ks
 	function install_hakku
 	{
 		foldname="hakkuframework"
-		gitlink="https://github.com/4shadoww/hakkuframework.git"
+		gitlink="https://github.com/charlesxsh/mdk3-master.git"
 		install_default
 		cloned=$?
 		if [[ "$cloned" == 1 ]]
@@ -9857,7 +9857,7 @@ check_if_ks
 		cloned=$?
 		if [[ "$cloned" == 1 ]]
 		then
-			chmod +x dracnmap-v2.2.sh
+			chmod +x dracnmap.sh
 		fi
 	}
 	function install_fern
@@ -9949,7 +9949,7 @@ check_if_ks
 	function install_airgeddon
 	{
 		foldname="airgeddon"
-		gitlink="https://github.com/v1s1t0r1sh3r3/airgeddon.git"
+		gitlink="--depth 1 https://github.com/v1s1t0r1sh3r3/airgeddon.git"
 		install_default
 		cloned=$?
 		if [[ "$cloned" == 1 ]]

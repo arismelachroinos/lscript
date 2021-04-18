@@ -90,7 +90,7 @@ View your MAC faster
 	Dr0p1t-Framework                by Karim Shoair
 	FakeImageExploiter              by r00t-3xp10it
 	Leviathan                       by Utku Sen, Ozge Barbaros
-	WiFi-Pumpkin                    by P0cL4bs
+	WiFi-Pumpkin3                   by P0cL4bs
 	Avet                            by govolution
 	Meterpreter_Paranoid_Mode-SSL   by r00t-3xp10it
 	Koadic                          by zerosum0x0
@@ -143,7 +143,7 @@ View your MAC faster
 ```
 cd
 apt-get update
-git clone https://github.com/arismelachroinos/lscript.git
+git clone https://github.com/Sleek1598/lscript.git
 cd lscript
 chmod +x install.sh
 ./install.sh

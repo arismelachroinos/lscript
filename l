@@ -1,9 +1,9 @@
 #! /bin/bash
 
 # set -x
-VERSION=2.1.6
+VERSION=2.1.6.0.0
 #Number of tools with keyboard shortcut support
-HOWMANYTOOLS=53
+HOWMANYTOOLS=98
 BACKL="0"
 DONATIONS=13
 LATESTCHANGELOGLINES=14
@@ -104,123 +104,8 @@ toolarray=(
 	
 	wififb="wififb"
 }
+
 ##############FUNCTIONS#############
-function local_ips()
-{
-	iffile=""$LPATH"/iftemp.txt"
-	#passing an interface if any
-	LF="$1"
-	GREPP=$(ifconfig)
-	if [[ "$LF" = "" ]]
-	then
-		echo -e ""$BS"Local IPs"$CE": "
-		TEST=$(echo "$GREPP" | grep "$ETH:")
-		n=0
-		if [[ $TEST != "" ]]
-		then
-			ifconfig "$ETH" > $iffile
-			LOCALETH=$(cat $iffile | grep " inet " | awk -F "inet " {'print $2'} | cut -d ' ' -f1)
-			cho=$(is_it_an_ip $LOCALETH)
-			if [[ "$cho" = 1 ]]
-			then
-				echo -e ""$ETH" = "$YS"$LOCALETH"$CE""
-				n=1
-			fi
-		fi
-		TEST=$(echo "$GREPP" | grep "$WLANN:")
-		if [[ $TEST != "" ]]
-		then
-			ifconfig $WLANN > $iffile
-			LOCALMA=$(cat $iffile | grep " inet " | awk -F "inet " {'print $2'} | cut -d ' ' -f1)
-			cho=$(is_it_an_ip $LOCALMA)
-			if [[ "$cho" = 1 ]]
-			then
-				echo -e "$WLANN = "$YS"$LOCALMA"$CE""
-				n=1
-			fi
-		fi
-		TEST=$(echo "$GREPP" | grep "$WLANNM:")
-		if [[ $TEST != "" ]]
-		then
-			ifconfig $WLANNM > $iffile
-			LOCALMO=$(cat $iffile | grep " inet " | awk -F "inet " {'print $2'} | cut -d ' ' -f1)
-			cho=$(is_it_an_ip $LOCALMO)
-			if [[ "$cho" = 1 ]]
-			then
-				echo -e "$WLANNM = "$YS"$LOCALMO"$CE""
-				n=1
-			fi
-		fi
-		if [[ "$n" = 0 ]]
-		then
-			echo -e ""$RS"No known interfaces found available"$CE""
-		fi
-		echo -e ""
-		find_gateways
-	else
-		TEST=$(echo "$GREPP" | grep "$LF:")
-		if [[ $TEST != "" ]]
-		then
-			ifconfig $LF > $iffile
-			LOCALM=$(cat $iffile | grep " inet " | awk -F "inet " {'print $2'} | cut -d ' ' -f1)
-			cho=$(is_it_an_ip $LOCALM)
-			if [[ "$cho" = 1 ]]
-			then
-				OUTPUT="$LOCALM"
-				echo -e "$OUTPUT"
-			fi
-		fi
-	fi
-}
-function give_ip_take_zero()
-{
-	#passing an ip
-	GI1="$1"
-	GI2="$2"
-	if [[ "$GI1" = "" ]]
-	then
-		echo -e ""$RS"Error 7. No parameters passed"$CE""
-		sleep 3
-	else
-		ip1=$(echo -e "$GI1" | cut -d '.' -f1)
-		ip2=$(echo -e "$GI1" | cut -d '.' -f2)
-		ip3=$(echo -e "$GI1" | cut -d '.' -f3)
-		if [[ "$GI2" = "" ]]
-		then
-			OUTPUT=""$ip1"."$ip2"."$ip3".0"
-		else
-			OUTPUT=""$ip1"."$ip2"."$ip3"."
-		fi
-			echo "$OUTPUT"
-	fi
-}
-function is_it_an_ip()
-{
-	IIA=$1
-	IIAI=${#IIA}
-	if [[ "$IIA" = "" ]]
-	then
-		echo -e ""$RS"Error 9. No parameteres passed"
-		sleep 2
-	else
-		if [[ "$IIAI" -le 15 && "$IIAI" -ge 7 ]]
-		then
-			echo 1
-		else
-			echo 0
-		fi
-	fi
-}
-function latest_changelog
-{
-	clear
-	printf '\033]2;LATEST CHANGELOG\a'
-	echo -e ""$BS"Wellcome to version $VERSION"$CE""
-	echo -e "What is included in this update: "
-	cat "$LPATH"/Changelog | head -n $LATESTCHANGELOGLINES
-	echo -e "$PAKTC"
-	$READAK
-}
 function finish 
 {
   echo -e ""$RS"Hard kill detected.."$CE""
@@ -283,598 +168,45 @@ function banner
 	echo -e "$COL         ██║     ██╔══██║ ███╔╝    ╚██╔╝  $CE"
 	echo -e "$COL    The  ███████╗██║  ██║███████╗   ██║  script$CE"
 	echo -e "$COL         ╚══════╝╚═╝  ╚═╝╚══════╝   ╚═╝   $CE"
-	echo -e ""$YS"if"$CE") ifconfig           "$YS"l"$CE") Local IPs & gateways "$RS"|"$CE"  "$YS"scan"$CE") Arp-scan network"
-	if [[ "$WLANCHECKING" = "" ]]
-	then
-		echo -e ""$RS" 1"$CE") Enable "$RS"$WLANN"$CE"${SPACESN}"$RS"d1"$CE") Disable "$RS"$WLANN"$CE"${SPACESN}  "$RS"|"$CE" "$YS"start"$CE") Start monitor mode"
-		echo -e ""$RS" 2"$CE") Enable "$RS"$WLANNM"$CE"${SPACESM}"$RS"d2"$CE") Disable "$RS"$WLANNM"$CE"${SPACESM}  "$RS"|"$CE"  "$YS"stop"$CE") Stop monitor mode"
-	else
-		echo -e ""$YS" 1"$CE") Enable $WLANN${SPACESN}"$YS"d1"$CE") Disable $WLANN${SPACESN}  "$RS"|"$CE" "$YS"start"$CE") Start monitor mode"
-		echo -e ""$YS" 2"$CE") Enable $WLANNM${SPACESM}"$YS"d2"$CE") Disable $WLANNM${SPACESM}  "$RS"|"$CE"  "$YS"stop"$CE") Stop monitor mode"
-	fi
-	echo -e ""$YS" 3"$CE") Change MAC        "$YS"d3"$CE") Restore original MAC "$RS"|"$CE""$YS"update"$CE") Check for updates"
-	if [[ -f /usr/bin/anonym8 ]]
-	then
-	echo -e ""$YS" 4"$CE") Enable anonym8    "$YS"d4"$CE") Disable anonym8      "$RS"|"$CE""$YS"errors"$CE") Fix some errors"
-	else
-	echo -e ""$RS" 4"$CE") Enable anonym8    "$RS"d4"$CE") Disable anonym8      "$RS"|"$CE""$YS"errors"$CE") Fix some errors"
-	fi
-	if [[ -f /usr/bin/anonsurf ]]
-	then
-	echo -e ""$YS" 5"$CE") Enable anonsurf   "$YS"d5"$CE") Disable anonsurf     "$RS"|"$CE"    "$YS"ks"$CE") Keyboard shortucts"
-	echo -e ""$YS" 6"$CE") Anonsurf's status "$YS"d6"$CE") Restart anonsurf     "$RS"|"$CE""$YS"     d"$CE") Buy me a coffee"
-	else
-	echo -e ""$RS" 5"$CE") Enable anonsurf   "$RS"d5"$CE") Disable anonsurf     "$RS"|"$CE"    "$YS"ks"$CE") Keyboard shortucts"
-	echo -e ""$RS" 6"$CE") Anonsurf's status "$RS"d6"$CE") Restart anonsurf     "$RS"|"$CE"     "$YS"d"$CE") Buy me a coffee"
-	fi
-	echo -e ""$YS" 7"$CE") View public IP                             "$RS"|"$CE"     "$YS"s"$CE") Go to settings menu"
-	echo -e ""$YS" 8"$CE") View MAC"
-	echo -e ""$YS" 9"$CE") TOOLS             "$YS"15"$CE") Spoof EMAIL           "$YS"22"$CE") Show bandwidth"
-	if [[ -f /root/ngrok ]]
-	then
-		echo -e ""$YS"10"$CE") Handshake         "$YS"16"$CE") Ngrok port forward"
-	else
-		echo -e ""$YS"10"$CE") Handshake         "$RS"16"$CE") "$RS"Ngrok"$CE" port forward"
-	fi
-	if [[ -f /usr/local/bin/howdoi ]]
-	then
-		echo -e ""$YS"11"$CE") Find WPS pin      "$YS"17"$CE") Ask (Howdoi tool)"
-	else
-		echo -e ""$YS"11"$CE") Find WPS pin      "$RS"17"$CE") Ask ("$RS"Howdoi"$CE" tool)"
-	fi
-	echo -e ""$YS"12"$CE") WEP menu          "$YS"18"$CE") Auto-exploit browser"
-	echo -e ""$YS"13"$CE") MITM              "$YS"19"$CE") Geolocate an IP"
-	echo -e ""$YS"14"$CE") Metasploit        "$YS"20"$CE") Bruteforce login"   
-	echo -e ""$YS" 0"$CE") Exit              "$YS"21"$CE") Sqlmap automated"
+	echo -e ""$YS" 9"$CE") TOOLS"
 	echo "Choose: "
 	read -e YORNAA
 	#~ echo "$YORNNA"
 	#~ history -s "$YORNNA"
 	clear
 }
-function enable_wlan
-{
-	O4=0
-	echo -e "Enabling $WLANN..."
-	rfkill unblock wifi &> /dev/null; rfkill unblock all &> /dev/null
-	ifconfig $WLANN up &>/dev/null && echo -e ""$YS"Done"$CE"" && O4=1  || echo -e ""$RS"Error. I can't find your wireless adapter"$CE""
-}
-function disable_wlan
-{
-	echo -e "Disabling $WLANN..."
-	rfkill unblock wifi &> /dev/null; rfkill unblock all &> /dev/null
-	ifconfig $WLANN down &>/dev/null && echo -e ""$YS"Done"$CE"" && O4=1 || echo -e ""$RS"Error. I can't find your wireless adapter."$CE""
-}
-function interface_selection
-{
-if [[ "$WLANCHECKING" = "" ]]
-then
-	echo -e ""$RS" 1"$CE") $WLANN"
-else
-	echo -e ""$YS" 1"$CE") $WLANN"
-fi
-if [[ "$WLANMCHECKING" = "" ]]
-then
-	echo -e ""$RS" 2"$CE") $WLANNM"
-else
-	echo -e ""$YS" 2"$CE") $WLANNM"
-fi
-echo -e ""$YS" 3"$CE") "$ETH""
-echo -e ""$YS" b"$CE") Main menu"
-echo -e ""$YS" 0"$CE") EXIT"
-echo -e "Choose: "
-read -e MYINT
-if [[ "$MYINT" = "2" ]]
-then
-	if [[ "$WLANMCHECKING" = "" ]]
-	then
-		MYINT="OFF"
-	else
-		MYINT="$WLANNM"
-	fi
-elif [[ "$MYINT" = "1" ]]
-then
-	if [[ "$WLANCHECKING" = "" ]]
-	then
-		MYINT="OFF"
-	else
-		MYINT="$WLANN"
-	fi
-elif [[ "$MYINT" = "0" ]]
-then
-	clear
-	exit
-elif [[ "$MYINT" = "00" || "$MYINT" = "b" ]]
-then
-	exec bash "$0"
-elif [[ "$MYINT" = "3" ]]
-then
-	MYINT="$ETH"
-else
-echo -e "Wrong choice..."
-sleep 2
-clear
-echo -e "EXITING"
-sleep 1
-exec bash "$0"
-fi
-export MYINT
-}
-function change_mac
-{
-	interface_selection
-	clear
-	if [[ "$MYINT" = "OFF" ]]
-	then
-		echo -e "Interface not available"
-		sleep 2
-	else
-		echo -e "Change it to a random or specific?("$YS"r"$CE"/"$YS"s"$CE")("$YS"Enter"$CE"=r): "
-		read -e RORS
-		clear
-		if [[ "$RORS" != "s" ]]
-		then
-			echo -e "Changing mac address of $MYINT to a random one..."
-			ifconfig $MYINT down
-			macchanger -r $MYINT
-			ifconfig $MYINT up
-			echo -e "Done."
-		else
-			echo -e "Enter the MAC you want:"
-			read -e SMAC
-			echo -e "Changing mac address of $MYINT to $SMAC..."
-			ifconfig $MYINT down
-			macchanger -m $SMAC $MYINT
-			ifconfig $MYINT up
-			echo -e "Done."
-		fi
-	fi
-}
-function set_interface_number
-{
-clear
-while true
-do
-echo -e "Enter the name of your wireless interface when in "$RS"managed"$CE" mode("$YS"Enter"$CE"=wlan0): "
-read MANAGED
-if [[ "$MANAGED" = "" ]]
-then
-	MANAGED="wlan0"
-fi
-echo -e "Enter the name of your wireless interface when in "$RS"monitor"$CE" mode("$YS"Enter"$CE"=wlan0mon): "
-read MONITOR
-if [[ "$MONITOR" = "" ]]
-then
-	MONITOR="wlan0mon"
-fi
-echo -e "Enter the name of your wired interface("$YS"Enter"$CE"="eth0"): "
-read WIRED
-if [[ "$WIRED" = "" ]]
-then
-	WIRED="eth0"
-fi
-	echo "$MANAGED" > "$LPATH"/wlan.txt
-	echo "$MONITOR" > "$LPATH"/wlanmon.txt
-	echo "$WIRED" > "$LPATH"/eth.txt
-	echo -e ""$YS"Done"$CE""
-	sleep 1
-	clear
-	echo -e ""$BS"If you want to change it, type "$CE""$YS"interface"$CE""$BS" any time"$CE""
-	sleep 3
-	echo -e "$PAKTC"
-	$READAK	
-	BACKL="1"
-	break
-done
-}
-function checkifalready
-{
-	GOOD="1"
-	num=1
-	while [ $num -le 20 ]
-	do
-		if [[ "$CHECKKS" = "$num" ]]
-		then
-			GOOD="0"
-			echo -e ""$RS"This shortcut is already in use by the script."$CE""
-			sleep 3
-		fi
-		num=$(( num+1 ))
-	done
-	if [[ "$GOOD" = "1" ]]
-	then
-		if [[ "$CHECKKS" = "etercheck" || "$CHECKKS" = "eternalblue" || "$CHECKKS" = "changelog" || "$CHECKKS" = "wififb" || "$CHECKKS" = "nessusstop" || "$CHECKKS" = "nessusstart" || "$CHECKKS" = "pstop" || "$CHECKKS" = "pstart" || "$CHECKKS" = "astop" || "$CHECKKS" = "astart" || "$CHECKKS" = "settings" || "$CHECKKS" = "donate" || "$CHECKKS" = "d" || "$CHECKKS" = "s" || "$CHECKKS" = "g" || "$CHECKKS" = "l" || "$CHECKKS" = "" || "$CHECKKS" = "if" || "$CHECKKS" = "ifconfig" || "$CHECKKS" = "interfaces" || "$CHECKKS" = "interface" || "$CHECKKS" = "errors" || "$CHECKKS" = "00" || "$CHECKKS" = "exit" || "$CHECKKS" = "update" || "$CHECKKS" = "d1" || "$CHECKKS" = "d2" || "$CHECKKS" = "d3" || "$CHECKKS" = "d4" || "$CHECKKS" = "d5" || "$CHECKKS" = "d6" || "$CHECKKS" = "d7" || "$CHECKKS" = "gg" || "$CHECKKS" = "ks" ]]
-		then
-			GOOD="0"
-			echo -e ""$RS"This shortcut is already in use by the script."$CE""
-			sleep 3
-		fi
-	fi
-	if [[ "$CHECKKS" = "delete" ]]
-	then
-		GOOD="0"
-	fi
-	#~ if [[ "$CHECKKS" = "b" || "$CHECKKS" = "back" ]]
-	#~ then
-		#~ GOOD="0"
-	#~ fi
-	if [[ "$GOOD" = "1" ]]
-	then
-		BACKUPTITLE="$TITLE"
-		BACKUPNN="$nn"
-		num=1
-		while [[ $num -le "$HOWMANYTOOLS" ]]
-		do
-		nn="$num"
-		listshortcuts
-		if [[ -f ""$KSPATH"/"$TITLE"/"$TITLE"ks.txt" ]]
-		then
-			read KSIFALREADY < "$KSPATH"/"$TITLE"/"$TITLE"ks.txt
-			if [[ "$CHECKKS" == "$KSIFALREADY" ]]
-			then
-				echo -e ""$RS"Shortcut '"$CHECKKS"' is already in use by "$TITLE""$CE""
-				GOOD=0
-				sleep 3
-			fi
-		fi
-		num=$(( num+1 ))
-		done
-		nn="$BACKUPNN"
-		TITLE="$BACKUPTITLE"
-	fi
-	clear
-}	
-function createshortcut
-{
-if [[ ! -d ""$KSPATH"/$TITLE" ]]
-then
-	mkdir "$KSPATH"/"$TITLE"
-fi
-clear
-echo -e "Enter the keyboard shortcut that will open "$TITLE" from lscript's main menu"
-echo -e "(e.g: "$YS""$TITLE""$CE")"
-echo -e "To delete it , type:   "$YS"delete"$CE""
-echo -e ""$YS" b"$CE") Go back"
-read CHECKKS
-if [[ "$CHECKKS" = "back" || "$CHECKKS" = "b" ]]
-then
-	clear
-	BACKKS=1
-	break
-else
-	BACKKS=0
-	if [[ "$BACKKS" == 0 ]]
-	then
-		CHECKKSBACKUP="$CHECKKS"
-		NAMECDBACKUP="$NAMECD"
-		KSSETBACKUP="$KSSET"
-		checkifalready
-		CHECKKS="$CHECKKSBACKUP"
-		NAMECD="$NAMECDBACKUP"
-		KSSET="$KSSETBACKUP"
-		if [[ "$GOOD" = "1" ]]
-		then
-			echo -e "Shortcut is ok.Setting it up..."
-			sleep 1
-			echo "$CHECKKS" > "$KSPATH"/"$TITLE"/"$TITLE"ks.txt
-			echo "$NAMECD" > "$KSPATH"/"$TITLE"/"$TITLE".txt
-			echo "$KSSET" > "$KSPATH"/"$TITLE"/"$TITLE"2.txt
-			echo -e "Done!"
-			echo -e "$PAKTGB"
-			$READAK
-			clear
-			#break
-		else
-			clear
-			echo -e "Removing shortcut for "$TITLE"..."
-			rm -r "$KSPATH"/"$TITLE"
-			sleep 1
-			echo -e "Done."
-			echo -e "$PAKTGB"
-			$READAK
-			clear
-			#break
-		fi
-	else
-		break
-	fi
-fi
-}
-function listshortcuts
-{	
-	EXTRA1=""
-	if [[ "$nn" = "1" ]]
-	then
-		TITLE="Fluxion"
-		NAMECD="cd /root/fluxion"
-		KSSET="./fluxion*"
-	elif [[ "$nn" = "2" ]]
-	then
-		TITLE="Zirikatu"
-		NAMECD="cd /root/zirikatu"
-		KSSET="./zirikatu.sh"
-	elif [[ "$nn" = "3" ]]
-	then
-		TITLE="Wifite2"
-		NAMECD=""
-		KSSET="wifite"
-	elif [[ "$nn" = "4" ]]
-	then
-		TITLE="Wifiphisher"
-		NAMECD=""
-		KSSET="wifiphisher"
-	elif [[ "$nn" = "5" ]]
-	then
-		TITLE="Zatacker"
-		NAMECD="cd /root/Zatacker"
-		KSSET="./ZT.sh"
-	elif [[ "$nn" = "6" ]]
-	then
-		TITLE="Morpheus"
-		NAMECD="cd /root/morpheus"
-		KSSET="./morpheus.sh"
-	elif [[ "$nn" = "7" ]]
-	then
-		TITLE="Hakku"
-		NAMECD="cd /root/hakkuframework"
-		KSSET="./hakku"
-	elif [[ "$nn" = "8" ]]
-	then
-		TITLE="Trity"
-		NAMECD=""
-		KSSET="trity"
-	elif [[ "$nn" = "9" ]]
-	then
-		TITLE="Cupp"
-		NAMECD="cd /root/cupp"
-		KSSET="python cupp.py -i"
-	elif [[ "$nn" = "10" ]]
-	then
-		TITLE="Dracnmap"
-		NAMECD="cd /root/Dracnmap"
-		KSSET="./dracnmap-v*.sh"
-	elif [[ "$nn" = "11" ]]
-	then
-		TITLE="Fern"
-		NAMECD=""
-		KSSET="fern-wifi-cracker"
-	elif [[ "$nn" = "12" ]]
-	then
-		TITLE="KickThemOut"
-		NAMECD="cd /root/kickthemout"
-		KSSET="python kickthemout.py"
-	elif [[ "$nn" = "13" ]]
-	then
-		TITLE="Ghost-Phisher"
-		NAMECD=""
-		KSSET="ghost-phisher"
-	elif [[ "$nn" = "14" ]]
-	then
-		TITLE="Xerxes"
-		NAMECD="cd /root/Xerxes"
-		KSSET="./Xerxes"
-	elif [[ "$nn" = "15" ]]
-	then
-		TITLE="Katana"
-		NAMECD=""
-		KSSET="ktf.console"
-	elif [[ "$nn" = "16" ]]
-	then
-		TITLE="Airgeddon"
-		NAMECD="cd /root/airgeddon"
-		KSSET="./airgeddon.sh"
-	elif [[ "$nn" = "17" ]]
-	then
-		TITLE="Websploit"
-		NAMECD=""
-		KSSET="websploit"
-	elif [[ "$nn" = "18" ]]
-	then
-		TITLE="BeeLogger"
-		NAMECD="cd /root/BeeLogger"
-		KSSET="python bee.py"
-	elif [[ "$nn" = "19" ]]
-	then
-		TITLE="Ezsploit"
-		NAMECD="cd /root/exsploit"
-		KSSET="./ezsploit.sh"
-	elif [[ "$nn" = "20" ]]
-	then
-		TITLE="Pupy"
-		NAMECD="cd /root/pupy/pupy"
-		KSSET="./pupysh.py"
-	elif [[ "$nn" = "21" ]]
-	then
-		TITLE="TheFatRat"
-		NAMECD="cd /root/TheFatRat"
-		KSSET="./fatrat"
-	elif [[ "$nn" = "22" ]]
-	then
-		TITLE="Angry_IP_Scanner"
-		NAMECD=" "
-		KSSET="ipscan"
-	#~ elif [[ "$nn" = "23" ]]
-	#~ then
-		#~ TITLE="Sniper"
-		#~ NAMECD='read -p 'DOMAIN:' DOMAIN'
-		#~ KSSET="sniper $DOMAIN"
-	elif [[ "$nn" = "23" ]]
-	then
-		TITLE="ReconDog"
-		NAMECD="cd /root/ReconDog"
-		KSSET="python dog.py"
-	elif [[ "$nn" = "24" ]]
-	then
-		TITLE="RED_HAWK"
-		NAMECD="cd /root/RED_HAWK"
-		KSSET="php rhawk.php"
-	elif [[ "$nn" = "25" ]]
-	then
-		TITLE="Winpayloads"
-		NAMECD="cd /root/Winpayloads"
-		KSSET="./WinPayloads.py"
-	elif [[ "$nn" = "26" ]]
-	then
-		TITLE="CHAOS"
-		NAMECD="cd /root/CHAOS"
-		KSSET="go run CHAOS.go"
-	elif [[ "$nn" = "27" ]]
-	then
-		TITLE="Routersploit"
-		NAMECD="cd /root/routersploit"
-		KSSET="./rsf.py"
-	elif [[ "$nn" = "28" ]]
-	then
-		TITLE="nWatch"
-		NAMECD="cd /root/nWatch"
-		KSSET="python nwatch.py"
-	elif [[ "$nn" = "29" ]]
-	then
-		TITLE="Eternal_scanner"
-		NAMECD="cd /root/eternal_scanner"
-		KSSET="./escan"
-	elif [[ "$nn" = "30" ]]
-	then
-		TITLE="LALIN"
-		NAMECD="cd /root/LALIN"
-		KSSET="./Lalin.sh"
-	elif [[ "$nn" = "31" ]]
-	then
-		TITLE="Shellter"
-		NAMECD=""
-		KSSET="shellter"
-	elif [[ "$nn" = "32" ]]
-	then
-		TITLE="Netattack2"
-		NAMECD="cd /root/netattack2"
-		KSSET="python2 netattack2.py"
-	elif [[ "$nn" = "33" ]]
-	then
-		TITLE="Operative-framework"
-		NAMECD="cd /root/operative-framework"
-		KSSET="python operative.py"
-	elif [[ "$nn" = "34" ]]
-	then
-		TITLE="Koadic"
-		NAMECD="cd /root/koadic"
-		KSSET="./koadic"
-	elif [[ "$nn" = "35" ]]
-	then
-		TITLE="Empire"
-		NAMECD="cd /root/Empire"
-		KSSET="./empire"
-	elif [[ "$nn" = "36" ]]
-	then
-		TITLE="Meterpreter_Paranoid_Mode"
-		NAMECD="cd /root/Meterpreter_Paranoid_Mode-SSL"
-		KSSET="./Meterpreter_Paranoid_Mode.sh"
-	elif [[ "$nn" = "37" ]]
-	then
-		TITLE="Wifi-Pumpkin"
-		NAMECD=""
-		KSSET="wifi-pumpkin"
-	elif [[ "$nn" = "38" ]]
-	then
-		TITLE="Veil"
-		NAMECD="cd /root/Veil"
-		KSSET="./Veil.py"
-	elif [[ "$nn" = "39" ]]
-	then
-		TITLE="Leviathan"
-		NAMECD="cd /root/leviathan"
-		KSSET="python leviathan.py"
-	elif [[ "$nn" = "40" ]]
-	then
-		TITLE="Gloom-Framework"
-		NAMECD="cd /root/Gloom-Framework"
-		KSSET="python gloom.py"
-	elif [[ "$nn" = "41" ]]
-	then
-		TITLE="Arcanus"
-		NAMECD="cd /root/ARCANUS"
-		KSSET="./ARCANUS"
-	elif [[ "$nn" = "42" ]]
-	then
-		TITLE="LFISuite"
-		NAMECD="cd /root/LFISuite"
-		KSSET="python lfisuite.py"
-	elif [[ "$nn" = "43" ]]
-	then
-		TITLE="DKMC"
-		NAMECD="cd /root/DKMC"
-		KSSET="python dkmc.py"
-	elif [[ "$nn" = "44" ]]
-	then
-		TITLE="SecHub"
-		NAMECD=""
-		KSSET="sechub"
-	elif [[ "$nn" = "45" ]]
-	then
-		TITLE="Beef-xss"
-		NAMECD="cd /usr/share/beef-xss"
-		KSSET="./beef"
-	elif [[ "$nn" = "46" ]]
-	then
-		TITLE="Evil-Droid"
-		NAMECD="cd /root/Evil-Droid"
-		KSSET="./evil-droid"
-	elif [[ "$nn" = "47" ]]
-	then
-		TITLE="NoSQLMap"
-		NAMECD="cd /root/NoSQLMap"
-		KSSET="python nosqlmap.py"
-	elif [[ "$nn" = "48" ]]
-	then
-		TITLE="EggShell"
-		NAMECD="cd /root/EggShell"
-		KSSET="python eggshell.py"
-	elif [[ "$nn" = "49" ]]
-	then
-		TITLE="Zerodoor"
-		NAMECD="cd /root/Zerodoor"
-		KSSET="python zerodoor.py"
-	elif [[ "$nn" = "50" ]]
-	then
-		TITLE="AutoSploit"
-		NAMECD="cd /root/AutoSploit"
-		KSSET="python autosploit.py"
-	elif [[ "$nn" = "51" ]]
-	then
-		TITLE="Enigma"
-		NAMECD="cd /root/Enigma"
-		KSSET="python enigma.py"
-	elif [[ "$nn" = "52" ]]
-	then
-		TITLE="SocialFish"
-		NAMECD="cd /root/SocialFish"
-		KSSET="python SocialFish.py"
-	elif [[ "$nn" = "53" ]]
-	then
-		TITLE="Yuki-Chan-The-Auto-Pentest"
-		NAMECD="cd /root/Yuki-Chan-The-Auto-Pentest"
-		KSSET="./yuki.sh"
-	fi
-}
+
 function reinstall_tools
 {
 while true
 do
 	clear
 		#counting the tools
-	TOOLSNUM=${#toolarray[@]}
-	HALFTOOLS=$((TOOLSNUM/2+1))
-		#number for 2ond column
-	CLMN2=$((HALFTOOLS+1))
-	CLMN2TOOLS=$((TOOLSNUM/2+1))
+	TOOLSNUM=30
+	THIRDTOOLS=$((TOOLSNUM/3+1))
+
+		#number for 2nd column
+	CLMN2=$((THIRDTOOLS+1))
+	CLMN2TOOLS=$((TOOLSNUM/3+1))
+
+		#number for 3rd column
+	CLMN3=$((THIRDTOOLS+THIRDTOOLS+1))
+	CLMN3TOOLS=$((THIRDTOOLS*2))
+
+	echo -e "TOOLSNUM="$TOOLSNUM
+
+	read XYZ
+
 		#alphabetically sort tools
 	readarray -t toolarraysorted < <(for a in "${toolarray[@]}"; do echo "$a"; done | sort)
-	echo -e ""$BS"Select out of $TOOLSNUM tools to install/update:"$CE""
+	echo -e ""$BS"Select out of $TOOLSNUM tools to install/update please:"$CE""
+
 		#set colour of selected
 	SEL="$YS"
 	n=0
-	while [[ "$n" -lt "$HALFTOOLS" ]]
+	while [[ "$n" -lt "$THIRDTOOLS" ]]
 	do
-			#start echoing from number 1 instead of number 0(fist array)
+			#start echoing from number 1 instead of number 0 (first array)
 		k=$((n+1))
 			#fixing the spaces to sort output better
 		if [[ "$k" -le 9 ]]
@@ -886,18 +218,19 @@ do
 		else
 			m="$k"
 		fi
-			#calculating how many spaces needed for correct output
+			#calculating how many spaces needed for correct output of COL2
 		size=${#toolarraysorted["$n"]}
 		calc=$(( 35-size ))
 		numcalc=1
-		SPACES=""
+		SPACES1=""
 		while [[ "$numcalc" != "$calc" ]]
 		do
-			SPACES=""${SPACES}" "
+			SPACES1=""${SPACES}" "
 			numcalc=$(( numcalc+1 ))
 		done
 		COL1=""
 		COL2=""
+		COL3=""
 		if [[ "${selected["$n"]}" == 1 ]]
 		then
 			COL1="$SEL"
@@ -906,24 +239,36 @@ do
 		then
 			COL2="$SEL"
 		fi
+		if [[ "${selected["$CLMN3TOOLS"]}" == 1 ]]
+		then
+			COL3="$SEL"
+		fi
+		
 		if [[ "${toolarraysorted["$CLMN2TOOLS"]}" == "" ]]
 		then
 			echo -e ""$YS"${m}"$CE") "$COL1""${toolarraysorted["$n"]}""$CE""
 		else
-			echo -e ""$YS"${m}"$CE") "$COL1""${toolarraysorted["$n"]}""$CE"${SPACES}"$YS""$CLMN2""$CE") "$COL2""${toolarraysorted["$CLMN2TOOLS"]}""$CE""
+			if [[ "${toolarraysorted["$CLMN3TOOLS"]}" == "" ]]
+			then
+				echo -e ""$YS"${m}"$CE") "$COL1""${toolarraysorted["$n"]}""$CE"${SPACES1}"$YS""$CLMN2""$CE") "$COL2""${toolarraysorted["$CLMN2TOOLS"]}""$CE""
+			else
+				echo -e ""$YS"${m}"$CE") "$COL1""${toolarraysorted["$n"]}""$CE"${SPACES1}"$YS""$CLMN2""$CE") "$COL2""${toolarraysorted["$CLMN2TOOLS"]}""$CE"${SPACES2}"$YS""$CLMN3""$CE") "$COL3""${toolarraysorted["$CLMN3TOOLS"]}""$CE""
+			fi
 		fi
 		n=$((n+1))
 		CLMN2=$((CLMN2+1))
 		CLMN2TOOLS=$((CLMN2TOOLS+1))
+		CLMN3=$((CLMN2+1))
+		CLMN3TOOLS=$((CLMN3TOOLS+1))
 	done
 	echo -e "  "$YS"b"$CE") Go back"
 	echo -e "  "$YS"s"$CE") Start installing selected tools"
 	echo -e "  "$YS"r"$CE") Reset selection"
 	if [[ "$NOCONFIRM" == 1 ]]
 	then
-		echo -e "  "$YS"n"$CE") "$YS"No confirmation"$CE""
+		echo -e "  "$YS"n"$CE") "$YS"No confirmation (On)"$CE""
 	else
-		echo -e "  "$YS"n"$CE") No confirmation"
+		echo -e "  "$YS"n"$CE") No confirmation (Off)"
 	fi
 	echo -e "  "$YS"0"$CE") Exit"
 	echo -e "  Choose: "
@@ -1006,6 +351,9 @@ do
 	fi
 done
 }
+
+
+
 function errors_menu
 {
 while true
@@ -6175,35 +5523,15 @@ function tools_menu
 	TERMINALTITLE="TOOLS"
 	dash_calc
 	printf '\033]2;TOOLS\a'
-	echo -e ""$YS" 1"$CE") Wifi tools"
-	echo -e ""$YS" 2"$CE") Remote access"
-	echo -e ""$YS" 3"$CE") Information gathering"
-	echo -e ""$YS" 4"$CE") Website tools"
-	echo -e ""$YS" 5"$CE") Others"
 	echo -e ""$YS" 6"$CE") Install/reinstall a tool"
-	echo -e ""$YS" i"$CE") Info"
+	echo ""
 	echo -e ""$YS" b"$CE") Go back"
 	#~ echo -e ""$YS"00"$CE") Main menu"
 	echo -e ""$YS" 0"$CE") EXIT"
 	echo "Choose: "
 	read -e CATEG
 	clear
-		if [[ "$CATEG" = "1" ]]
-		then
-			wifi_tools
-		elif [[ "$CATEG" = "2" ]]
-		then
-			remote_access
-		elif [[ "$CATEG" = "3" ]]
-		then
-			information_gathering
-		elif [[ "$CATEG" = "4" ]]
-		then
-			website_tools
-		elif [[ "$CATEG" = "5" ]]
-		then
-			other_tools
-		elif [[ "$CATEG" = "6" ]]
+		if [[ "$CATEG" = "6" ]]
 		then
 			NOCONFIRM=0
 			reinstall_tools
@@ -10532,43 +9860,10 @@ then
 	one_time_per_launch_ks
 fi
 ####################################
-if [[ -f ""$LPATH"/IAGREE.txt" ]]
-then
 
-	if [[ ! -f ""$LPATH"/wlan.txt" ]]
-	then
-		set_interface_number
-	fi
-	if [[ ! -f ""$LPATH"/wlanmon.txt" ]]
-	then
-		set_interface_number
-	fi
-	if [[ ! -f ""$LPATH"/eth.txt" ]]
-	then
-		set_interface_number
-	fi
 	clear
-	WLANNM=$(cat "$LPATH"/wlanmon.txt)
-	WLANN=$(cat "$LPATH"/wlan.txt)
-	ETH=$(cat "$LPATH"/eth.txt)	
-#setting iftop's interface
-	if [[ -f "$LPATH"/settings/iftopint.txt ]]
-	then
-		read iftopint < "$LPATH"/settings/iftopint.txt
-	else
-		iftopint="$WLANN"
-	fi
-	export iftopint
-	export WLANNM
-	export WLANN
-	export ETH
 	managed_spaces
 	monitor_spaces
-	if [[ ! -f "$LPATH"/latestchangelog.txt ]]
-	then
-		echo -e "1" > "$LPATH"/latestchangelog.txt
-		latest_changelog
-	fi		
 	banner
 	main_options
 	if [[ "$BACKL" = "1" ]]
@@ -10580,6 +9875,3 @@ then
 		$READAK
 		exec bash "$0"
 	fi
-else
-	terms_of_use
-fi

@@ -6391,8 +6391,8 @@ function hidden_shortcuts
 	echo -e ""$YS"  changelog"$CE") View the changelog of the lscript versions"
 	echo -e ""$YS"     pstart"$CE") Service postgresql start"
 	echo -e ""$YS"      pstop"$CE") Service postgresql stop"
-	echo -e ""$YS"     nstart"$CE") Service network-manager start"
-	echo -e ""$YS"      nstop"$CE") Service network-manager stop"
+	echo -e ""$YS"     nstart"$CE") Service NetworkManager start"
+	echo -e ""$YS"      nstop"$CE") Service NetworkManager stop"
 	echo -e ""$YS"     astart"$CE") Service apache2 start"
 	echo -e ""$YS"      astop"$CE") Service apache2 stop"
 	echo -e ""$YS"nessusstart"$CE") Start Nessus"
@@ -6706,8 +6706,8 @@ function stop_monitor
 	else
 		airmon-ng stop $WLANNM &>/dev/null && echo -e ""$YS"Done"$CE"" && O2=1 || echo -e ""$RS"Error stoping monitor mode."$CE""
 	fi
-	echo -e "Starting network-manager service..."
-	service network-manager start && echo -e ""$YS"Done"$CE"" && O3=1 || echo -e ""$RS"Error starting network-manager service"$CE""
+	echo -e "Starting NetworkManager service..."
+	service NetworkManager start && echo -e ""$YS"Done"$CE"" && O3=1 || echo -e ""$RS"Error starting NetworkManager service"$CE""
 }
 function spoof_email
 {
@@ -9404,10 +9404,10 @@ function main_options
 		service postgresql stop && echo -e ""$YS"Done"$CE"" || echo -e ""$RS"Error"$CE""
 	elif [[ "$YORNAA" = "nstart" ]]
 	then
-		service network-manager start && echo -e ""$YS"Done"$CE"" || echo -e ""$RS"Error"$CE""
+		service NetworkManager start && echo -e ""$YS"Done"$CE"" || echo -e ""$RS"Error"$CE""
 	elif [[ "$YORNAA" = "nstop" ]]
 	then
-		service network-manager stop && echo -e ""$YS"Done"$CE"" || echo -e ""$RS"Error"$CE""
+		service NetworkManager stop && echo -e ""$YS"Done"$CE"" || echo -e ""$RS"Error"$CE""
 	elif [[ "$YORNAA" = "astart" ]]
 	then
 		service apache2 start && echo -e ""$YS"Done"$CE"" || echo -e ""$RS"Error"$CE""

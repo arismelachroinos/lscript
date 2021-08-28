@@ -6707,7 +6707,7 @@ function stop_monitor
 		airmon-ng stop $WLANNM &>/dev/null && echo -e ""$YS"Done"$CE"" && O2=1 || echo -e ""$RS"Error stoping monitor mode."$CE""
 	fi
 	echo -e "Starting network-manager service..."
-	service network-manager start && echo -e ""$YS"Done"$CE"" && O3=1 || echo -e ""$RS"Error starting network-manager service"$CE""
+	service NetworkManager start && echo -e ""$YS"Done"$CE"" && O3=1 || echo -e ""$RS"Error starting NetworkManager service"$CE""
 }
 function spoof_email
 {
